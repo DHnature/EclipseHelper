@@ -20,6 +20,7 @@ import org.eclipse.ui.internal.browser.WebBrowserView;
 public class EventLoggerStartup implements IStartup {
 
 	public void earlyStartup() {
+		System.out.println(" Early Startup");
 		final IPartListener partListener = new IPartListener() {
 		    @Override
 		    public void partOpened(IWorkbenchPart part) {
@@ -44,7 +45,7 @@ public class EventLoggerStartup implements IStartup {
 
 							@Override
 							public void changing(LocationEvent event) {
-								// TODO Auto-generated method stub
+								System.out.println("Changing location: " + event.location);
 								
 							}
 		                });
@@ -69,16 +70,17 @@ public class EventLoggerStartup implements IStartup {
 		                swtBrowser.addLocationListener(new LocationListener() {
 		                    @Override
 		                    public void changed(LocationEvent event) {
-		                        System.out.println(event.location);
+		                        System.out.println("Changed Location: " + event.location);
 		                    }
 
 							@Override
 							public void changing(LocationEvent event) {
-								// TODO Auto-generated method stub
+								System.out.println("Changing location: " + event.location);
 								
 							}
 		                });
 		            } catch (Exception e) {
+		            	e.printStackTrace();
 		            }
 		        }
 		    }
@@ -112,19 +114,22 @@ public class EventLoggerStartup implements IStartup {
 		final IPageListener pageListener = new IPageListener() {
 		    @Override
 		    public void pageOpened(IWorkbenchPage page) {
+		    	System.out.println("Page opened" + page.getLabel());
 		        page.addPartListener(partListener);
 		    }
 //		    ...
 
 			@Override
 			public void pageActivated(IWorkbenchPage page) {
+		    	System.out.println("Page activated" + page.getLabel());
+
 				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void pageClosed(IWorkbenchPage page) {
-				// TODO Auto-generated method stub
+				System.out.println("Part closed");
 				
 			}
 		};
@@ -132,12 +137,15 @@ public class EventLoggerStartup implements IStartup {
 		final IWindowListener windowListener = new IWindowListener() {
 		    @Override
 		    public void windowOpened(IWorkbenchWindow window) {
+		    	System.out.println(" Window opened, adding page listener");
 		        window.addPageListener(pageListener);
 		    }
 //		    ...
 
 			@Override
 			public void windowActivated(IWorkbenchWindow window) {
+		    	System.out.println(" window deactivated");
+
 				// TODO Auto-generated method stub
 				
 			}
@@ -164,10 +172,13 @@ public class EventLoggerStartup implements IStartup {
 
 		    if (activePage != null)
 		    {
+		    	System.out.println("active page, addin part listener");
 		        activePage.addPartListener(partListener);
 		    }
 		    else
 		    {
+		    	System.out.println("adding page listener");
+
 		        activeWindow.addPageListener(pageListener);
 		    }
 		}
@@ -176,10 +187,14 @@ public class EventLoggerStartup implements IStartup {
 		    for (IWorkbenchWindow window : PlatformUI.getWorkbench().getWorkbenchWindows())
 		    {
 		        for (IWorkbenchPage page : window.getPages()) {
+			    	System.out.println(" page, addin part listener");
+
 		            page.addPartListener(partListener);
 		        }
 		        window.addPageListener(pageListener);
 		    }
+	    	System.out.println(" page, addin platform window listener");
+
 
 		    PlatformUI.getWorkbench().addWindowListener(windowListener);
 		}       
