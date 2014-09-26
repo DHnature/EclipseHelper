@@ -88,12 +88,14 @@ public class EventLoggerStartup implements IStartup {
 
 			@Override
 			public void partActivated(IWorkbenchPart part) {
+				System.out.println("part activated");
 				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void partBroughtToTop(IWorkbenchPart part) {
+				System.out.println("part on top");
 				// TODO Auto-generated method stub
 				
 			}
@@ -144,7 +146,8 @@ public class EventLoggerStartup implements IStartup {
 
 			@Override
 			public void windowActivated(IWorkbenchWindow window) {
-		    	System.out.println(" window deactivated");
+		    	System.out.println(" window activated");
+//		        window.addPageListener(pageListener);
 
 				// TODO Auto-generated method stub
 				
@@ -187,13 +190,13 @@ public class EventLoggerStartup implements IStartup {
 		    for (IWorkbenchWindow window : PlatformUI.getWorkbench().getWorkbenchWindows())
 		    {
 		        for (IWorkbenchPage page : window.getPages()) {
-			    	System.out.println(" page, addin part listener");
+			    	System.out.println("startup page, addin part listener");
 
 		            page.addPartListener(partListener);
 		        }
 		        window.addPageListener(pageListener);
 		    }
-	    	System.out.println(" page, addin platform window listener");
+	    	System.out.println(" startup page, addin platform window listener");
 
 
 		    PlatformUI.getWorkbench().addWindowListener(windowListener);
