@@ -15,7 +15,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.debug.core,
  org.eclipse.jdt.core,
  org.eclipse.swt,
- org.junit
+ org.junit,
+ org.eclipse.ui.browser;bundle-version="3.4.100"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: edu.cmu.scs.fluorite.jar,
