@@ -104,8 +104,12 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 			isTestingSet.add(iExample);
 
 			if (!isj48ModelBuilt) {
+				long startTime = System.currentTimeMillis();
 				buildJ48Model();
 				isj48ModelBuilt = true;
+				System.out.println(" Built J48 model in m:" + (System.currentTimeMillis() - startTime));
+
+				
 			}
 
 			double predictedClass = j48Model.classifyInstance(isTestingSet

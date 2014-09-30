@@ -679,6 +679,7 @@ public class EventRecorder {
 			public void run() {
 				// do not predict status commands, this can cause a circular
 				// reference
+				System.out.println("New thread:" + Thread.currentThread().getName());
 
 				if (!newCommand.getCommandType().equals("PredictionCommand"))
 					statusPredictor.processEvent(newCommand);

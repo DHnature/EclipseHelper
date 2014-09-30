@@ -119,6 +119,7 @@ public class DifficultyRobot implements Mediator {
 	
 	public void saveToLog(StatusManagerDetails prediction)
     {
+		System.out.println("Saving to log:" + prediction);
 		 PredictionType predictionType = PredictionType.MakingProgress;
 		 if(prediction.predictionValue.equals("NO"))
          {
