@@ -55,11 +55,11 @@ import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import trace.recorder.MacroRecordingStarted;
+import trace.recorder.NewMacroCommand;
 import buddylist.database.DatabaseConnection;
 import buddylist.database.DatabaseUtils;
-
 import difficultyPrediction.DifficultyRobot;
-
 import edu.cmu.scs.fluorite.actions.FindAction;
 import edu.cmu.scs.fluorite.commands.BaseDocumentChangeEvent;
 import edu.cmu.scs.fluorite.commands.FileOpenCommand;
@@ -386,6 +386,7 @@ public class EventRecorder {
 	}
 
 	public void start() {
+		MacroRecordingStarted.newCase(this);
 		EventLoggerConsole.getConsole().writeln("***Started macro recording",
 				EventLoggerConsole.Type_RecordingCommand);
 		mCommands = new LinkedList<ICommand>();
@@ -622,6 +623,7 @@ public class EventRecorder {
 
 		long timestamp = Calendar.getInstance().getTime().getTime();
 		timestamp -= mStartTimestamp;
+		NewMacroCommand.newCase(newCommand.getName(), timestamp, this);
 		EventLoggerConsole.getConsole().writeln(
 				"*Command added to macro: " + newCommand.getName()
 						+ "\ttimestamp: " + timestamp,

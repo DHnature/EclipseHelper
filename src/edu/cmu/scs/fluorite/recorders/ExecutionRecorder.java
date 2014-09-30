@@ -16,6 +16,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.texteditor.ITextEditorActionDefinitionIds;
 
+import trace.recorder.ExcludedCommand;
 import edu.cmu.scs.fluorite.commands.CopyCommand;
 import edu.cmu.scs.fluorite.commands.CutCommand;
 import edu.cmu.scs.fluorite.commands.EclipseCommand;
@@ -98,6 +99,7 @@ public class ExecutionRecorder extends BaseRecorder implements
 			if (!commandId.equals("eventlogger.actions.recordMacro")
 					&& !commandId
 							.equals(IWorkbenchCommandConstants.EDIT_FIND_AND_REPLACE)) {
+				ExcludedCommand.newCase(commandId, this);
 				EventLoggerConsole.getConsole().writeln(
 						"Not recording command (it's in the exclude list): "
 								+ commandId, EventLoggerConsole.Type_Standard);
