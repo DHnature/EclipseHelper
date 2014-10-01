@@ -677,6 +677,7 @@ public class EventRecorder {
 
 		// TODO here is where I can process the events probably should do this
 		// in a thread
+		// this should be done in a producer consumer thread rather than a new thread
 		Runnable myTask = new Runnable() {
 			@Override
 			public void run() {
