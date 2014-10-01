@@ -11,11 +11,13 @@ import java.util.Calendar;
 
 
 
+
 import trace.difficultyPrediction.NewPredictionEvent;
 import trace.difficultyPrediction.NewExtractedFeatures;
 import trace.difficultyPrediction.NewPrediction;
 import trace.difficultyPrediction.PredictionValueToStatus;
 import trace.difficultyPrediction.StatusAggregationStarted;
+import util.trace.Tracer;
 //import database.Status;
 import difficultyPrediction.eventAggregation.DiscreteChunks;
 import difficultyPrediction.eventAggregation.EventAggregator;
@@ -63,8 +65,8 @@ public class DifficultyRobot implements Mediator {
 	
 	//Aggregate events using aggregator class
 	public void processEvent(ICommand e) {
-		NewPredictionEvent.newCase(this);
-		System.out.println("difficultyRobot.processEvent");
+//		NewPredictionEvent.newCase(this);
+		Tracer.info(this, "difficultyRobot.processEvent");
 
 			eventAggregator.eventAggregationStrategy.performAggregation(e, eventAggregator);
 	}
@@ -73,7 +75,7 @@ public class DifficultyRobot implements Mediator {
 	public void eventAggregator_HandOffEvents(EventAggregator aggregator,
 			EventAggregatorDetails details) {
 
-		System.out.println("difficultyRobot.handoffevents");
+		Tracer.info(this,"difficultyRobot.handoffevents");
 		this.featureExtractor.featureExtractionStrategy.performFeatureExtraction(details.actions, featureExtractor);
 		NewExtractedFeatures.newCase(this);
 
@@ -84,7 +86,7 @@ public class DifficultyRobot implements Mediator {
 	@Override
 	public void featureExtractor_HandOffFeatures(FeatureExtractor extractor,
 			FeatureExtractorDetails details) {
-		System.out.println("difficultyRobot.featureExtractor");
+		Tracer.info(this, "difficultyRobot.featureExtractor");
 		statusInformation = new StatusInformation();
 		statusInformation.setEditRatio(details.editRatio);
 		statusInformation.setDebugRatio(details.debugRatio);
@@ -101,7 +103,7 @@ public class DifficultyRobot implements Mediator {
 	public void predictionManager_HandOffPrediction(PredictionManager manager,
 			PredictionManagerDetails details) {
 		StatusAggregationStarted.newCase(this);
-		System.out.println("difficultyRobot.handOffPrediction");
+		Tracer.info(this, "difficultyRobot.handOffPrediction");
 		statusInformation.predictedClass = "Prediction";
 		statusInformation.prediction = details.predictionValue;
 		statusInformation.timeStamp = new Date(Calendar.getInstance().getTimeInMillis());
@@ -115,7 +117,7 @@ public class DifficultyRobot implements Mediator {
 	@Override
 	public void statusManager_HandOffStatus(StatusManager manager,
 			StatusManagerDetails details) {
-		System.out.println("difficultyRobot.handOffStatus");
+		Tracer.info(this, "difficultyRobot.handOffStatus");
 		 StatusPrediction statusPrediction = new StatusPrediction();
          statusPrediction.timeStamp = new Date(Calendar.getInstance().getTimeInMillis());
          statusPrediction.prediction = details.predictionValue;
@@ -136,7 +138,7 @@ public class DifficultyRobot implements Mediator {
 	
 	public void saveToLog(StatusManagerDetails prediction)
     {
-		System.out.println("Saving to log:" + prediction);
+		Tracer.info(this, "Saving to log:" + prediction);
 		PredictionValueToStatus.newCase(this);
 		 PredictionType predictionType = PredictionType.MakingProgress;
 		 if(prediction.predictionValue.equals("NO"))

@@ -57,6 +57,7 @@ import org.w3c.dom.Element;
 
 import trace.recorder.MacroRecordingStarted;
 import trace.recorder.NewMacroCommand;
+import util.trace.session.ThreadCreated;
 import buddylist.database.DatabaseConnection;
 import buddylist.database.DatabaseUtils;
 import difficultyPrediction.DifficultyRobot;
@@ -681,6 +682,7 @@ public class EventRecorder {
 			public void run() {
 				// do not predict status commands, this can cause a circular
 				// reference
+				ThreadCreated.newCase(Thread.currentThread().getName(), "", this);
 				System.out.println("New thread:" + Thread.currentThread().getName());
 
 				if (!newCommand.getCommandType().equals("PredictionCommand"))

@@ -15,6 +15,7 @@ import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IOConsole;
 import org.eclipse.ui.console.IOConsoleOutputStream;
 
+import util.trace.Tracer;
 import edu.cmu.scs.fluorite.plugin.Activator;
 import edu.cmu.scs.fluorite.preferences.Initializer;
 
@@ -72,7 +73,8 @@ public class EventLoggerConsole extends IOConsole {
 	}
 
 	public void write(String data, int type) {
-		System.out.println(data);
+//		System.out.println(data);
+		Tracer.info(this, data);
 		if (type != Type_Error
 				&& type != Type_DebugInfo
 				&& !Activator.getDefault().getPreferenceStore()
