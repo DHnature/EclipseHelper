@@ -143,6 +143,14 @@ public class EventRecorder {
 
 	private static TrayItem trayItem;
 	private static ToolTip ballonTip;
+	
+	enum PredictorThreadOption {
+		USE_CURRENT_THREAD,
+		NO_PROCESSING,
+		THREAD_PER_ACTION,
+		SINGLE_THREAD
+	} ;
+	PredictorThreadOption predictorThreadOption = PredictorThreadOption.THREAD_PER_ACTION;
 
 	private final static Logger LOGGER = Logger.getLogger(EventRecorder.class
 			.getName());
@@ -678,6 +686,11 @@ public class EventRecorder {
 		// TODO here is where I can process the events probably should do this
 		// in a thread
 		// this should be done in a producer consumer thread rather than a new thread
+//		if (predictorThreadOption == PredictorThreadOption.THREAD_PER_ACTION) {
+			switch (predictorThreadOption) {
+			case NO_PROCESSING:
+				break;
+			case THREAD_PER_ACTION:
 		Runnable myTask = new Runnable() {
 			@Override
 			public void run() {
@@ -713,6 +726,38 @@ public class EventRecorder {
 		};
 		Thread myThread = new Thread(myTask);
 		myThread.start();
+		break;
+			case USE_CURRENT_THREAD: 
+				//  copy and paste code in above arm
+				if (!newCommand.getCommandType().equals("PredictionCommand"))
+					statusPredictor.processEvent(newCommand);
+				else {
+					// need to display prediction, but this should be done on
+					// the UI thread
+					PlatformUI.getWorkbench().getDisplay()
+							.asyncExec(new Runnable() {
+								@Override
+								public void run() {
+									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
+									changeStatusInHelpView(predictionCommand);
+								}
+							});
+					PlatformUI.getWorkbench().getDisplay()
+							.asyncExec(new Runnable() {
+								@Override
+								public void run() {
+									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
+									changeStatusInHelpView(predictionCommand);
+								}
+							});
+
+				}
+			case SINGLE_THREAD:
+				// to be implemented
+				System.out.println ("Single Thread option not implemented");
+				break;
+			}
+		
 
 		// Log to the file.
 		while (commands.size() > 1
