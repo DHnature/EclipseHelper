@@ -65,8 +65,8 @@ public class DifficultyRobot implements Mediator {
 	
 	//Aggregate events using aggregator class
 	public void processEvent(ICommand e) {
-//		NewPredictionEvent.newCase(this);
-		Tracer.info(this, "difficultyRobot.processEvent");
+		NewPredictionEvent.newCase(this);
+//		Tracer.info(this, "difficultyRobot.processEvent");
 
 			eventAggregator.eventAggregationStrategy.performAggregation(e, eventAggregator);
 	}
@@ -77,7 +77,6 @@ public class DifficultyRobot implements Mediator {
 
 		Tracer.info(this,"difficultyRobot.handoffevents");
 		this.featureExtractor.featureExtractionStrategy.performFeatureExtraction(details.actions, featureExtractor);
-		NewExtractedFeatures.newCase(this);
 
 		
 	}
@@ -93,7 +92,9 @@ public class DifficultyRobot implements Mediator {
 		statusInformation.setNavigationRatio(details.navigationRatio);
 		statusInformation.setRemoveRatio(details.removeRatio);
 		statusInformation.setFocusRatio(details.focusRatio);
-		this.predictionManager.predictionStrategy.predictSituatation(details.editRatio, details.debugRatio, details.navigationRatio, details.focusRatio, details.removeRatio);
+		NewExtractedFeatures.newCase(statusInformation, this);
+
+		this.predictionManager.predictionStrategy.predictSituation(details.editRatio, details.debugRatio, details.navigationRatio, details.focusRatio, details.removeRatio);
 		NewPrediction.newCase(this);
 
 	}

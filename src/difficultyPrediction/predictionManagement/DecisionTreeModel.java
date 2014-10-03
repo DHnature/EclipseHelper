@@ -41,7 +41,7 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 
 	}
 
-	public void predictSituatation(double editRatio, double debugRatio,
+	public void predictSituation(double editRatio, double debugRatio,
 			double navigationRatio, double focusRatio, double removeRatio) {
 		String predictedValue = "NO";
 		try {

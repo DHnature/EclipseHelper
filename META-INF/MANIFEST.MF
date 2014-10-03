@@ -26,7 +26,9 @@ Bundle-ClassPath: edu.cmu.scs.fluorite.jar,
  lib/smackx-debug.jar,
  lib/smackx.jar,
  lib/joda-time-2.2.jar,
- lib/oeall22.jar
+ lib/oeall22.jar,
+ lib/jackson-core-asl-1.9.13.jar,
+ lib/jackson-mapper-asl-1.9.13.jar
 Bundle-Vendor: UNC Chapel HIll
 Export-Package: .,
  edu.cmu.scs.fluorite.actions,

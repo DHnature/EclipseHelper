@@ -1,6 +1,10 @@
 package difficultyPrediction;
 
+import java.io.IOException;
+import java.io.StringWriter;
 import java.sql.Date;
+
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class StatusInformation {
 	public double editRatio;
@@ -14,6 +18,7 @@ public class StatusInformation {
 	public StatusKind statusKind;
 	public String userName;
 	public String userId;
+	ObjectMapper mapper = new ObjectMapper();
 	public double getEditRatio() {
 		return editRatio;
 	}
@@ -80,4 +85,16 @@ public class StatusInformation {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	// can be pasted onto any class that needs to be JSON serialized
+	public String toString() {
+		try {
+            StringWriter writer = new StringWriter();
+            mapper.writeValue(writer, this);
+            return writer.toString();
+        } catch (IOException e) {
+            System.out.println("Unable to write .json file");
+            return "{}";
+        }
+	}
+	
 }
