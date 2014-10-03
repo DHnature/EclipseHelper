@@ -116,7 +116,7 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 					.instance(0));
 			predictedValue = isTestingSet.classAttribute().value(
 					(int) predictedClass);
-			System.out.println("Predicted Value: " + predictedValue);
+//			System.out.println("Predicted Value: " + predictedValue);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

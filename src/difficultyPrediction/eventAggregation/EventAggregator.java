@@ -2,6 +2,7 @@ package difficultyPrediction.eventAggregation;
 
 import java.util.List;
 
+import trace.difficultyPrediction.NewEventSegmentAggregation;
 import difficultyPrediction.Mediator;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
@@ -39,6 +40,7 @@ public class EventAggregator {
 		if(mediator != null) {
 			EventAggregatorDetails args = new EventAggregatorDetails(genericActions);
 			args.startTimeStamp = this.startTimestamp;
+			NewEventSegmentAggregation.newCase(args, this);
 			mediator.eventAggregator_HandOffEvents(this, args);
 		}
 	}

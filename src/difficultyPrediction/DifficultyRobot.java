@@ -95,7 +95,7 @@ public class DifficultyRobot implements Mediator {
 		NewExtractedFeatures.newCase(statusInformation, this);
 
 		this.predictionManager.predictionStrategy.predictSituation(details.editRatio, details.debugRatio, details.navigationRatio, details.focusRatio, details.removeRatio);
-		NewPrediction.newCase(this);
+//		NewPrediction.newCase(this);
 
 	}
 

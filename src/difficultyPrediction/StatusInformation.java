@@ -18,7 +18,6 @@ public class StatusInformation {
 	public StatusKind statusKind;
 	public String userName;
 	public String userId;
-	ObjectMapper mapper = new ObjectMapper();
 	public double getEditRatio() {
 		return editRatio;
 	}
@@ -85,6 +84,8 @@ public class StatusInformation {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
+	ObjectMapper mapper = new ObjectMapper();
+
 	// can be pasted onto any class that needs to be JSON serialized
 	public String toString() {
 		try {

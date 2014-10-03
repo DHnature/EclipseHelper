@@ -56,10 +56,12 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import trace.logger.LogFileCreated;
+import trace.logger.LogHandlerBound;
 import trace.logger.MacroCommandsLogBegin;
 import trace.logger.MacroCommandsLogEnd;
 import trace.recorder.MacroRecordingStarted;
 import trace.recorder.NewMacroCommand;
+import trace.recorder.RecordedCommandsCleared;
 import util.trace.session.ThreadCreated;
 import buddylist.database.DatabaseConnection;
 import buddylist.database.DatabaseUtils;
@@ -543,6 +545,7 @@ public class EventRecorder {
 			handler.setFormatter(new FluoriteXMLFormatter(getStartTimestamp()));
 
 			LOGGER.addHandler(handler);
+			LogHandlerBound.newCase(handler, this);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -776,6 +779,7 @@ public class EventRecorder {
 			mCommands.removeFirst();
 		}
 		MacroCommandsLogEnd.newCase(commands, this);
+		RecordedCommandsCleared.newCase(commands, this);
 
 
 		StyledText styledText = Utilities.getStyledText(Utilities

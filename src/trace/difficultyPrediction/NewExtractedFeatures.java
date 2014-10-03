@@ -20,7 +20,7 @@ public class NewExtractedFeatures extends TraceableInfo {
 
 	public static NewExtractedFeatures newCase(String aMessage, StatusInformation aStatusInformation, Object aFinder) {
 		if (shouldInstantiate(NewExtractedFeatures.class)) {
-		NewExtractedFeatures retVal = new NewExtractedFeatures("", aStatusInformation, aFinder);
+		NewExtractedFeatures retVal = new NewExtractedFeatures(aMessage, aStatusInformation, aFinder);
 		retVal.announce();
 		return retVal;
 		}

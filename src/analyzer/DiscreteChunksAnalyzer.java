@@ -1,6 +1,5 @@
 package analyzer;
 
-import trace.difficultyPrediction.NewEventSegment;
 import difficultyPrediction.eventAggregation.EventAggregationStrategy;
 import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.eventAggregation.EventAggregatorArray;
@@ -36,7 +35,7 @@ public class DiscreteChunksAnalyzer implements EventAggregationStrategy {
 			}
 		} else {
 			if (actions.size() % m_numberOfEvents == 0) {
-				NewEventSegment.newCase(this);
+//				NewEventSegment.newCase(this);
 				
 				eventAggregator.onEventsHandOff(actions);
 				//do something with events here
