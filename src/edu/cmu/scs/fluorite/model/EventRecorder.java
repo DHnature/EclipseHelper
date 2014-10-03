@@ -156,6 +156,10 @@ public class EventRecorder {
 		SINGLE_THREAD
 	} ;
 	PredictorThreadOption predictorThreadOption = PredictorThreadOption.THREAD_PER_ACTION;
+//	PredictorThreadOption predictorThreadOption = PredictorThreadOption.USE_CURRENT_THREAD;
+//	PredictorThreadOption predictorThreadOption = PredictorThreadOption.NO_PROCESSING;
+
+
 
 	private final static Logger LOGGER = Logger.getLogger(EventRecorder.class
 			.getName());
@@ -761,6 +765,7 @@ public class EventRecorder {
 							});
 
 				}
+				break;
 			case SINGLE_THREAD:
 				// to be implemented
 				System.out.println ("Single Thread option not implemented");
