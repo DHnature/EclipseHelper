@@ -55,6 +55,9 @@ import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import trace.logger.LogFileCreated;
+import trace.logger.MacroCommandsLogBegin;
+import trace.logger.MacroCommandsLogEnd;
 import trace.recorder.MacroRecordingStarted;
 import trace.recorder.NewMacroCommand;
 import util.trace.session.ThreadCreated;
@@ -490,9 +493,11 @@ public class EventRecorder {
 		updateIncrementalFindMode();
 
 		// Flush the commands that are not yet logged into the file.
+		MacroCommandsLogBegin.newCase(mCommands, this);
 		for (ICommand command : mCommands) {
 			LOGGER.log(Level.FINE, null, command);
 		}
+		MacroCommandsLogEnd.newCase(mCommands, this);
 
 		try {
 			IWorkbench workbench = PlatformUI.getWorkbench();
@@ -531,6 +536,7 @@ public class EventRecorder {
 			outputFile = new File(logLocation,
 					EventRecorder.getUniqueMacroNameByTimestamp(
 							getStartTimestamp(), false));
+			LogFileCreated.newCase(outputFile.getName(), this);
 
 			FileHandler handler = new FileHandler(outputFile.getPath());
 			handler.setEncoding("UTF-8");
@@ -758,7 +764,7 @@ public class EventRecorder {
 				break;
 			}
 		
-
+		MacroCommandsLogBegin.newCase(commands, this);
 		// Log to the file.
 		while (commands.size() > 1
 				&& commands.getFirst() == mCommands.getFirst()) {
@@ -769,6 +775,8 @@ public class EventRecorder {
 			commands.removeFirst();
 			mCommands.removeFirst();
 		}
+		MacroCommandsLogEnd.newCase(commands, this);
+
 
 		StyledText styledText = Utilities.getStyledText(Utilities
 				.getActiveEditor());
