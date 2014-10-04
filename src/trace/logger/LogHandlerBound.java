@@ -2,6 +2,8 @@ package trace.logger;
 
 import java.util.logging.FileHandler;
 
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import trace.plugin.PluginEarlyStarted;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
 
@@ -22,6 +24,8 @@ public class LogHandlerBound extends TraceableInfo{
     				")");
     }
     public static LogHandlerBound newCase (String aMessage, FileHandler aFileHandler,  Object aFinder) {
+    	if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(LogHandlerBound.class))
+	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(LogHandlerBound.class) + ") " +aMessage);
     	if (shouldInstantiate(LogHandlerBound.class)) {
     	LogHandlerBound retVal = new LogHandlerBound(aMessage, aFileHandler, aFinder);
     	retVal.announce();

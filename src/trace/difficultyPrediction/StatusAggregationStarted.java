@@ -1,5 +1,7 @@
 package trace.difficultyPrediction;
 
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import trace.plugin.PluginEarlyStarted;
 import util.trace.Traceable;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
@@ -12,6 +14,8 @@ public class StatusAggregationStarted extends TraceableInfo {
 	}
 	
 	public static StatusAggregationStarted newCase(String aMessage, Object aFinder) {
+		if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(StatusAggregationStarted.class))
+	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(StatusAggregationStarted.class) + ") " +aMessage);
 		if (shouldInstantiate(StatusAggregationStarted.class)) {
 		StatusAggregationStarted retVal = new StatusAggregationStarted("", aFinder);
 		retVal.announce();

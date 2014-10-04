@@ -17,12 +17,14 @@ import org.eclipse.ui.internal.browser.BrowserViewer;
 import org.eclipse.ui.internal.browser.WebBrowserEditor;
 import org.eclipse.ui.internal.browser.WebBrowserView;
 
+import trace.plugin.EclipseHelperTracerSetter;
 import trace.plugin.PluginEarlyStarted;
 
 public class EventLoggerStartup implements IStartup {
 
 	public void earlyStartup() {
 //		System.out.println(" Early Startup");
+		EclipseHelperTracerSetter.trace();
 		PluginEarlyStarted.newCase(this);
 		final IPartListener partListener = new IPartListener() {
 		    @Override

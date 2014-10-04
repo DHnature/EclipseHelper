@@ -1,6 +1,8 @@
 package trace.difficultyPrediction;
 
 import difficultyPrediction.StatusInformation;
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import trace.plugin.PluginEarlyStarted;
 import util.trace.Traceable;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
@@ -19,6 +21,8 @@ public class NewExtractedFeatures extends TraceableInfo {
 
 
 	public static NewExtractedFeatures newCase(String aMessage, StatusInformation aStatusInformation, Object aFinder) {
+		if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(NewExtractedFeatures.class))
+	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(NewExtractedFeatures.class) + ") " +aMessage);
 		if (shouldInstantiate(NewExtractedFeatures.class)) {
 		NewExtractedFeatures retVal = new NewExtractedFeatures(aMessage, aStatusInformation, aFinder);
 		retVal.announce();

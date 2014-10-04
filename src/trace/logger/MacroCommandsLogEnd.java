@@ -3,6 +3,8 @@ package trace.logger;
 import java.util.LinkedList;
 
 import edu.cmu.scs.fluorite.commands.ICommand;
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import trace.plugin.PluginEarlyStarted;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
 
@@ -23,6 +25,8 @@ public class MacroCommandsLogEnd extends TraceableInfo{
     				")");
     }
     public static MacroCommandsLogEnd newCase (String aMessage, LinkedList<ICommand> aCommands,  Object aFinder) {
+    	if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(MacroCommandsLogEnd.class))
+	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(MacroCommandsLogEnd.class) + ") " +aMessage);
     	if (shouldInstantiate(MacroCommandsLogEnd.class)) {
     	MacroCommandsLogEnd retVal = new MacroCommandsLogEnd(aMessage, aCommands, aFinder);
     	retVal.announce();

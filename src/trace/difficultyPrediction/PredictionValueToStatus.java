@@ -1,5 +1,7 @@
 package trace.difficultyPrediction;
 
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import trace.plugin.PluginEarlyStarted;
 import util.trace.Traceable;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
@@ -12,6 +14,8 @@ public class PredictionValueToStatus extends TraceableInfo {
 	}
 	
 	public static PredictionValueToStatus newCase(String aMessage, Object aFinder) {
+		if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(PredictionValueToStatus.class))
+	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(PredictionValueToStatus.class) + ") " +aMessage);
 		if (shouldInstantiate(PredictionValueToStatus.class)) {
 		PredictionValueToStatus retVal = new PredictionValueToStatus("", aFinder);
 		retVal.announce();

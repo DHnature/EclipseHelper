@@ -1,5 +1,8 @@
 package trace.recorder;
 
+import edu.cmu.scs.fluorite.model.EventRecorder;
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import trace.plugin.PluginStopped;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
 
@@ -24,12 +27,16 @@ public class NewMacroCommand extends TraceableInfo{
     				+ "," + aRelativeTimeStamp + ")");
     }
     public static NewMacroCommand newCase (String aMessage, String aCommandName, long aRelativeTimeStamp, Object aFinder) {
+    	if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(NewMacroCommand.class))
+    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println(Tracer.infoPrintBody(MacroRecordingStarted.class) + ") " + aMessage);
     	if (shouldInstantiate(NewMacroCommand.class)) {
     	NewMacroCommand retVal = new NewMacroCommand(aMessage, aCommandName, aRelativeTimeStamp, aFinder);
     	retVal.announce();
     	return retVal;
     	}
 		Tracer.info(aFinder, aMessage);
+		Tracer.info(NewMacroCommand.class, aMessage);
+
     	return null;
     }
     public static NewMacroCommand newCase (String aCommandName, long aRelativeTimeStamp, Object aFinder) {

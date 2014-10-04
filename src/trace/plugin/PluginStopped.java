@@ -1,5 +1,8 @@
 package trace.plugin;
 
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import trace.recorder.MacroRecordingStarted;
+import trace.recorder.NewMacroCommand;
 import util.trace.Traceable;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
@@ -12,12 +15,15 @@ public class PluginStopped extends TraceableInfo {
 	}
 	
 	public static PluginStopped newCase(String aMessage, Object aFinder) {
+		if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(PluginStopped.class))
+	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(PluginStopped.class) + ") " +aMessage);
 		if (shouldInstantiate(PluginStopped.class)) {
 		PluginStopped retVal = new PluginStopped("", aFinder);
 		retVal.announce();
 		return retVal;
 		}
 		Tracer.info(aFinder, aMessage);
+		Tracer.info(PluginStopped.class, aMessage);
 
 		return null;
 	}

@@ -1,6 +1,8 @@
 package trace.difficultyPrediction;
 
 import difficultyPrediction.eventAggregation.EventAggregatorDetails;
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import trace.plugin.PluginEarlyStarted;
 import util.trace.Traceable;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
@@ -19,6 +21,8 @@ public class NewEventSegmentAggregation extends TraceableInfo {
 
 
 	public static NewEventSegmentAggregation newCase(String aMessage, EventAggregatorDetails aEventAggregatorDetails, Object aFinder) {
+		if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(NewEventSegmentAggregation.class))
+	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(NewEventSegmentAggregation.class) + ") " +aMessage);
 		if (shouldInstantiate(NewEventSegmentAggregation.class)) {
 			NewEventSegmentAggregation retVal = new NewEventSegmentAggregation(aMessage, aEventAggregatorDetails, aFinder);
 		retVal.announce();

@@ -1,5 +1,7 @@
 package trace.logger;
 
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import trace.plugin.PluginEarlyStarted;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
 
@@ -20,6 +22,8 @@ public class LogFileCreated extends TraceableInfo{
     				")");
     }
     public static LogFileCreated newCase (String aMessage, String aFileName,  Object aFinder) {
+    	if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(LogFileCreated.class))
+	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(LogFileCreated.class) + ") " +aMessage);
     	if (shouldInstantiate(LogFileCreated.class)) {
     	LogFileCreated retVal = new LogFileCreated(aMessage, aFileName, aFinder);
     	retVal.announce();
