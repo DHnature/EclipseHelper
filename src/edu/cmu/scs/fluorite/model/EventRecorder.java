@@ -59,6 +59,7 @@ import trace.logger.LogFileCreated;
 import trace.logger.LogHandlerBound;
 import trace.logger.MacroCommandsLogBegin;
 import trace.logger.MacroCommandsLogEnd;
+import trace.plugin.PluginThreadCreated;
 import trace.plugin.PluginStopped;
 import trace.recorder.MacroRecordingStarted;
 import trace.recorder.NewMacroCommand;
@@ -711,7 +712,7 @@ public class EventRecorder {
 			public void run() {
 				// do not predict status commands, this can cause a circular
 				// reference
-				ThreadCreated.newCase(Thread.currentThread().getName(), "", this);
+				PluginThreadCreated.newCase(Thread.currentThread().getName(), "", this);
 				System.out.println("New thread:" + Thread.currentThread().getName());
 
 				if (!newCommand.getCommandType().equals("PredictionCommand"))

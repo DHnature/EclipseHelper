@@ -15,8 +15,8 @@ public class PluginStopped extends TraceableInfo {
 	}
 	
 	public static PluginStopped newCase(String aMessage, Object aFinder) {
-		if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(PluginStopped.class))
-	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(PluginStopped.class) + ") " +aMessage);
+//		if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(PluginStopped.class))
+//	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(PluginStopped.class) + ") " +aMessage);
 		if (shouldInstantiate(PluginStopped.class)) {
 		PluginStopped retVal = new PluginStopped("", aFinder);
 		retVal.announce();

@@ -25,8 +25,12 @@ public class MacroCommandsLogBegin extends TraceableInfo{
     				")");
     }
     public static MacroCommandsLogBegin newCase (String aMessage, LinkedList<ICommand> aCommands,  Object aFinder) {
+    	try {
     	if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(MacroCommandsLogBegin.class))
 	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(MacroCommandsLogBegin.class) + ") " +aMessage);
+    	} catch (Exception e) {
+    		System.out.println("MacroCommandsLogBegin" + e);
+    	}
     	if (shouldInstantiate(MacroCommandsLogBegin.class)) {
     	MacroCommandsLogBegin retVal = new MacroCommandsLogBegin(aMessage, aCommands, aFinder);
     	retVal.announce();

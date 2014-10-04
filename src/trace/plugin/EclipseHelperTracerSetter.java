@@ -19,6 +19,7 @@ import util.trace.MessagePrefixKind;
 import util.trace.Traceable;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
+import util.trace.session.ThreadCreated;
 
 
 public class EclipseHelperTracerSetter {
@@ -51,6 +52,7 @@ public class EclipseHelperTracerSetter {
 
 		Tracer.setKeywordPrintStatus(PluginEarlyStarted.class, true);
 		Tracer.setKeywordPrintStatus(PluginStarted.class, true);
+		Tracer.setKeywordPrintStatus(PluginStopped.class, true);
 		Tracer.setKeywordPrintStatus(MacroRecordingStarted.class, true);
 		Tracer.setKeywordPrintStatus(ExcludedCommand.class, true);
 		Tracer.setKeywordPrintStatus(NewMacroCommand.class, true);
@@ -66,6 +68,7 @@ public class EclipseHelperTracerSetter {
 		Tracer.setKeywordPrintStatus(MacroCommandsLogBegin.class, true);
 		Tracer.setKeywordPrintStatus(MacroCommandsLogEnd.class, true);
 		Tracer.setKeywordPrintStatus(HelpViewCreated.class, true);
+		Tracer.setKeywordPrintStatus(PluginThreadCreated.class, true);
 
 		
 
