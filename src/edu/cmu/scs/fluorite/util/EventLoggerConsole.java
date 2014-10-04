@@ -14,14 +14,19 @@ import org.eclipse.ui.console.ConsolePlugin;
 import org.eclipse.ui.console.IConsole;
 import org.eclipse.ui.console.IOConsole;
 import org.eclipse.ui.console.IOConsoleOutputStream;
+import org.eclipse.ui.console.MessageConsole;
+import org.eclipse.ui.console.MessageConsoleStream;
 
 import util.trace.Tracer;
 import edu.cmu.scs.fluorite.plugin.Activator;
 import edu.cmu.scs.fluorite.preferences.Initializer;
 
-public class EventLoggerConsole extends IOConsole {
+//public class EventLoggerConsole extends IOConsole {
+public class EventLoggerConsole extends MessageConsole {
+
 	private static EventLoggerConsole mConsole;
 	private static final String ConsoleName = "EventLogger.Macro_Console";
+	public static final String CONSOLE_NAME = "Event Logger";
 	public static final int Type_Standard = 1;
 	public static final int Type_Error = 2;
 	public static final int Type_RecordingCommand = 3;
@@ -32,10 +37,14 @@ public class EventLoggerConsole extends IOConsole {
 	public static final Color Blue = new Color(Display.getDefault(), 0, 0, 255);
 	public static final Color Purple = new Color(Display.getDefault(), 128, 0,
 			128);
+	MessageConsoleStream messageConsoleStream;
 
 	public EventLoggerConsole() {
-		super("Event Logger", null);
+//		super("Event Logger", null);
+		super(CONSOLE_NAME, null);
+
 		mConsole = null;
+		messageConsoleStream = newMessageStream();
 	}
 
 	public void write(Exception e) {
@@ -59,6 +68,10 @@ public class EventLoggerConsole extends IOConsole {
 			}
 		}
 	}
+	
+	public MessageConsoleStream getMessageConsoleStream() {
+		return messageConsoleStream;
+	}
 
 	public void writeln(String data) {
 		writeln(data, Type_Standard);
@@ -73,8 +86,8 @@ public class EventLoggerConsole extends IOConsole {
 	}
 
 	public void write(String data, int type) {
-//		System.out.println(data);
-		Tracer.info(this, data);
+		System.out.println(data);
+//		Tracer.info(this, data);
 		if (type != Type_Error
 				&& type != Type_DebugInfo
 				&& !Activator.getDefault().getPreferenceStore()

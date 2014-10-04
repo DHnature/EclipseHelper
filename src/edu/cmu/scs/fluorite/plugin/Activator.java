@@ -10,6 +10,7 @@ import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.ui.progress.UIJob;
 import org.osgi.framework.BundleContext;
 
+import trace.plugin.PluginStarted;
 import edu.cmu.scs.fluorite.model.EventRecorder;
 import edu.cmu.scs.fluorite.preferences.Initializer;
 
@@ -50,6 +51,7 @@ public class Activator extends AbstractUIPlugin {
 
 				@Override
 				public IStatus runInUIThread(IProgressMonitor arg0) {
+					PluginStarted.newCase(this);
 					EventRecorder.getInstance().start();
 					return Status.OK_STATUS;
 				}

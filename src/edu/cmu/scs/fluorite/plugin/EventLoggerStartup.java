@@ -17,13 +17,13 @@ import org.eclipse.ui.internal.browser.BrowserViewer;
 import org.eclipse.ui.internal.browser.WebBrowserEditor;
 import org.eclipse.ui.internal.browser.WebBrowserView;
 
-import trace.plugin.PluginStarted;
+import trace.plugin.PluginEarlyStarted;
 
 public class EventLoggerStartup implements IStartup {
 
 	public void earlyStartup() {
 //		System.out.println(" Early Startup");
-		PluginStarted.newCase(this);
+		PluginEarlyStarted.newCase(this);
 		final IPartListener partListener = new IPartListener() {
 		    @Override
 		    public void partOpened(IWorkbenchPart part) {
