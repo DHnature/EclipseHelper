@@ -24,6 +24,8 @@ import org.eclipse.swt.custom.CTabFolder;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.custom.CTabItem;
 
+import trace.view.help.HelpViewCreated;
+
 public class HelpViewPart extends ViewPart {
 	public HelpViewPart() {
 	}
@@ -58,6 +60,7 @@ public class HelpViewPart extends ViewPart {
 		fd_btnMakingProgress.left = new FormAttachment(0, 5);
 		btnMakingProgress.setLayoutData(fd_btnMakingProgress);
 		btnMakingProgress.setText(StatusConsts.PROGRESS_TEXT);
+		HelpViewCreated.newCase(parent, this);
 		btnMakingProgress.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				DifficulyStatusCommand command = new DifficulyStatusCommand(Status.Making_Progress);

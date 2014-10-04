@@ -59,6 +59,7 @@ import trace.logger.LogFileCreated;
 import trace.logger.LogHandlerBound;
 import trace.logger.MacroCommandsLogBegin;
 import trace.logger.MacroCommandsLogEnd;
+import trace.plugin.PluginStopped;
 import trace.recorder.MacroRecordingStarted;
 import trace.recorder.NewMacroCommand;
 import trace.recorder.RecordedCommandsCleared;
@@ -492,6 +493,7 @@ public class EventRecorder {
 	}
 
 	public void stop() {
+		PluginStopped.newCase(this);
 		if (mStarted == false) {
 			return;
 		}
