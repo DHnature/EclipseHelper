@@ -20,7 +20,9 @@ public class MainConsoleUI {
 
 	public static Hashtable<String, String> participants = new Hashtable<String, String>();
 
-	public static final String PARTICIPANT_INFORMATION_DIRECTORY = "//Users//jasoncarter//Documents//Barrier_User_Study_Logs//";
+//	public static final String PARTICIPANT_INFORMATION_DIRECTORY = "//Users//jasoncarter//Documents//Barrier_User_Study_Logs//";
+	public static final String PARTICIPANT_INFORMATION_DIRECTORY = "data/ExperimentalData/";
+
 	public static final String PARTICIPANT_INFORMATION_FILE = "Participant_Info.csv";
 	public static final String DEFAULT_NUMBER_OF_SEGMENTS = "50";
 	public static final String ALL_PARTICIPANTS = "All";

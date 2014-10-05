@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -67,6 +68,8 @@ import trace.recorder.RecordedCommandsCleared;
 import util.trace.session.ThreadCreated;
 import buddylist.database.DatabaseConnection;
 import buddylist.database.DatabaseUtils;
+import difficultyPrediction.ADifficultyPredictionRunnable;
+import difficultyPrediction.DifficultyPredictionRunnable;
 import difficultyPrediction.DifficultyRobot;
 import edu.cmu.scs.fluorite.actions.FindAction;
 import edu.cmu.scs.fluorite.commands.BaseDocumentChangeEvent;
@@ -151,15 +154,21 @@ public class EventRecorder {
 	private static TrayItem trayItem;
 	private static ToolTip ballonTip;
 	
+	protected Thread difficultyPredictionThread;	
+	protected DifficultyPredictionRunnable difficultyPredictionRunnable;
+	protected BlockingQueue<ICommand> pendingPredictionCommands;
+	
 	enum PredictorThreadOption {
 		USE_CURRENT_THREAD,
 		NO_PROCESSING,
 		THREAD_PER_ACTION,
 		SINGLE_THREAD
 	} ;
-	PredictorThreadOption predictorThreadOption = PredictorThreadOption.THREAD_PER_ACTION;
+//	PredictorThreadOption predictorThreadOption = PredictorThreadOption.THREAD_PER_ACTION;
 //	PredictorThreadOption predictorThreadOption = PredictorThreadOption.USE_CURRENT_THREAD;
 //	PredictorThreadOption predictorThreadOption = PredictorThreadOption.NO_PROCESSING;
+	PredictorThreadOption predictorThreadOption = PredictorThreadOption.SINGLE_THREAD;
+
 
 
 
@@ -404,6 +413,21 @@ public class EventRecorder {
 			mScheduledTasks.add(runnable);
 		}
 	}
+	
+	protected void maybeCreateDifficultyPredictionThread() {
+		if (predictorThreadOption == PredictorThreadOption.SINGLE_THREAD && pendingPredictionCommands == null) {
+			// create the difficulty prediction thread
+			difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
+			pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
+			difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
+			difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
+			difficultyPredictionThread.setPriority(Math.min(
+					Thread.currentThread().getPriority(),
+					DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
+			difficultyPredictionThread.start();
+			PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
+			}
+	}
 
 	public void start() {
 		MacroRecordingStarted.newCase(this);
@@ -415,6 +439,7 @@ public class EventRecorder {
 		mCurrentlyExecutingCommand = false;
 		mRecordCommands = true;
 		mStartTimestamp = Calendar.getInstance().getTime().getTime();
+		maybeCreateDifficultyPredictionThread();
 
 		// have to create the tray icon on the UI thread
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
@@ -468,6 +493,9 @@ public class EventRecorder {
 		for (Runnable runnable : mScheduledTasks) {
 			runnable.run();
 		}
+		
+	
+		
 	}
 
 	private final static String ICON_PATH = "icons/spy.png";
@@ -491,6 +519,10 @@ public class EventRecorder {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static TrayItem getTrayItem() {
+		return trayItem;
 	}
 
 	public void stop() {
@@ -534,6 +566,7 @@ public class EventRecorder {
 		// purge timer events.
 		getTimer().cancel();
 		getTimer().purge();
+		pendingPredictionCommands.add(null);
 	}
 
 	private void initializeLogger() {
@@ -770,8 +803,10 @@ public class EventRecorder {
 				}
 				break;
 			case SINGLE_THREAD:
+				maybeCreateDifficultyPredictionThread(); // got a null pointer once, just to be safe
 				// to be implemented
-				System.out.println ("Single Thread option not implemented");
+//				System.out.println ("Single Thread option not implemented");
+				pendingPredictionCommands.add(newCommand); // do not block
 				break;
 			}
 		
