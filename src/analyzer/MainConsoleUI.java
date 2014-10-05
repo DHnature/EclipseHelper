@@ -156,9 +156,22 @@ public class MainConsoleUI {
 				+ participantFiles.size() + " file(s)");
 		System.out.println();
 		for (int i = 0; i < participantFiles.size(); i++) {
-			List<ICommand> commands = reader.readAll(participantDirectory
-					+ participantFiles.get(i));
+			String aFileName = participantDirectory
+					+ participantFiles.get(i);
+//			List<ICommand> commands = reader.readAll(participantDirectory
+//					+ participantFiles.get(i));
+			System.out.println("Reading " + aFileName);
+//			List<ICommand> commands;
+			try {
+			List<ICommand> commands = reader.readAll(aFileName);
 			listOfListOFcommands.add(commands);
+
+			} catch (Exception e) {
+				System.out.println("Could not read file" + aFileName + e);
+				
+			}
+			
+//			listOfListOFcommands.add(commands);
 		}
 
 		return listOfListOFcommands;

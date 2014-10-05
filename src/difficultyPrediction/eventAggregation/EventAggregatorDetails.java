@@ -27,13 +27,15 @@ public class EventAggregatorDetails {
 
 	// can be pasted onto any class that needs to be JSON serialized
 		public String toString() {
-			try {
-	            StringWriter writer = new StringWriter();
-	            mapper.writeValue(writer, this);
-	            return writer.toString();
-	        } catch (IOException e) {
-	            System.out.println("Unable to write .json file");
-	            return "{}";
-	        }
+//			try {
+//	            StringWriter writer = new StringWriter();
+//	            mapper.writeValue(writer, this);
+//	            return writer.toString();
+//	        } catch (Exception e) {
+//	            System.out.println("Unable to write .json file");
+//	            
+//	            return super.toString();
+//	        }
+			return "EventAggregation (" + startTimeStamp + ", " + actions.toString() + ")";
 		}
 }

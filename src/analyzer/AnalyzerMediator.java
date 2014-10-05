@@ -26,7 +26,8 @@ public class AnalyzerMediator implements Mediator {
 	public AnalyzerMediator(String participantId) {
 		featureExtractorAnalyzer = new FeatureExtractorAnalyzer(this);
 		featureExtractorAnalyzer.featureExtractionStrategy = new ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime();
-		 file = new File("/users/jasoncarter/filename.txt");
+//		 file = new File("/users/jasoncarter/filename.txt");
+		 file = new File(MainConsoleUI.PARTICIPANT_INFORMATION_DIRECTORY + "filename.txt");
 		 if (!file.exists()) {
 				try {
 					file.createNewFile();
@@ -72,7 +73,8 @@ public class AnalyzerMediator implements Mediator {
 		System.out.println(timestamp.toString("MM-dd-yyyy H:mm:ss"));
 		try
 		{
-		    String filename= "/users/jasoncarter/filename.csv";
+//		    String filename= "/users/jasoncarter/filename.csv";
+		    String filename = MainConsoleUI.PARTICIPANT_INFORMATION_DIRECTORY + "filename.csv";
 		    FileWriter fw = new FileWriter(filename,true); //the true will append the new data
 		   
 		    fw.write(""+ details.insertionRatio);
