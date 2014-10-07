@@ -149,7 +149,7 @@ public class MainConsoleUI {
 			String participantId) {
 		List<List<ICommand>> listOfListOFcommands = new Vector<List<ICommand>>();
 		String participantDirectory = PARTICIPANT_INFORMATION_DIRECTORY
-				+ participantId + "//";
+				+ participantId + "/";
 		File folder = new File(participantDirectory);
 		List<String> participantFiles = getFilesForFolder(folder);
 		System.out.println("Particpant " + participantId + " has "
