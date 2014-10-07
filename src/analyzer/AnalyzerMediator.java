@@ -23,11 +23,16 @@ public class AnalyzerMediator implements Mediator {
 	FeatureExtractorAnalyzer featureExtractorAnalyzer;
 	File file;
 	String participantId;
-	public AnalyzerMediator(String participantId) {
+	String dataFolder;
+	public AnalyzerMediator(String aSpreadsheetFolder, String aParticipantId) {
+		participantId = aParticipantId;
+		dataFolder = aSpreadsheetFolder;
 		featureExtractorAnalyzer = new FeatureExtractorAnalyzer(this);
 		featureExtractorAnalyzer.featureExtractionStrategy = new ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime();
 //		 file = new File("/users/jasoncarter/filename.txt");
-		 file = new File(MainConsoleUI.PARTICIPANT_INFORMATION_DIRECTORY + "filename.txt");
+//		 file = new File(MainConsoleUI.PARTICIPANT_INFORMATION_DIRECTORY + "filename.txt");
+		 file = new File(dataFolder+ "filename.txt");
+
 		 if (!file.exists()) {
 				try {
 					file.createNewFile();
@@ -74,7 +79,7 @@ public class AnalyzerMediator implements Mediator {
 		try
 		{
 //		    String filename= "/users/jasoncarter/filename.csv";
-		    String filename = MainConsoleUI.PARTICIPANT_INFORMATION_DIRECTORY + "filename.csv";
+		    String filename = dataFolder + "ratios.csv";
 		    FileWriter fw = new FileWriter(filename,true); //the true will append the new data
 		   
 		    fw.write(""+ details.insertionRatio);

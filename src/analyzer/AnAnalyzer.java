@@ -115,13 +115,13 @@ public class AnAnalyzer {
 //				String aParticipantFolder = participants.
 				String aParticipanttFolder = participants.get(aParticipantId);
 				commandsList = convertXMLLogToObjects(aParticipanttFolder);
-				 MainConsoleUI.processCommands(commandsList, numberOfSegments,aParticipanttFolder);
+				 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments,aParticipanttFolder);
 			}
 		} else {
 			String aParticipanttFolder = participants.get(participantId);
 
 			commandsList =  convertXMLLogToObjects(aParticipanttFolder);
-			 MainConsoleUI.processCommands(commandsList, numberOfSegments, aParticipanttFolder);
+			 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments, aParticipanttFolder);
 		}
 
 		logsLoaded = true;

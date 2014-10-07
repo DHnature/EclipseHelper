@@ -89,11 +89,11 @@ public class MainConsoleUI {
 					String aParticipantId = participantIds
 							.nextElement();
 					commandsList = convertXMLLogToObjects(aParticipantId);
-					processCommands(commandsList, numberOfSegments,aParticipantId);
+					processCommands(PARTICIPANT_INFORMATION_DIRECTORY, commandsList, numberOfSegments,aParticipantId);
 				}
 			} else {
 				commandsList = convertXMLLogToObjects(participantId);
-				processCommands(commandsList, numberOfSegments, participantId);
+				processCommands(PARTICIPANT_INFORMATION_DIRECTORY, commandsList, numberOfSegments, participantId);
 			}
 
 		} else {
@@ -102,11 +102,11 @@ public class MainConsoleUI {
 
 	}
 
-	public static void processCommands(List<List<ICommand>> commandsList,
+	public static void processCommands(String aFolder, List<List<ICommand>> commandsList,
 			String numberOfSegments, String participantId) {
 		
 		
-		Mediator mediator = new AnalyzerMediator(participantId);
+		Mediator mediator = new AnalyzerMediator(aFolder, participantId);
 		EventAggregator eventAggregator = new EventAggregator(mediator);
 		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer(numberOfSegments));
 		
