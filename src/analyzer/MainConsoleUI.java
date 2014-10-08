@@ -12,7 +12,7 @@ import java.util.Scanner;
 import java.util.Vector;
 
 import difficultyPrediction.Mediator;
-import difficultyPrediction.eventAggregation.EventAggregator;
+import difficultyPrediction.eventAggregation.AnEventAggregator;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.util.LogReader;
 
@@ -107,7 +107,7 @@ public class MainConsoleUI {
 		
 		
 		Mediator mediator = new AnalyzerMediator(aFolder, participantId);
-		EventAggregator eventAggregator = new EventAggregator(mediator);
+		AnEventAggregator eventAggregator = new AnEventAggregator(mediator);
 		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer(numberOfSegments));
 		
 		long startTimeStamp = 0;

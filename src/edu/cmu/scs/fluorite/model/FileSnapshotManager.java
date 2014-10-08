@@ -3,6 +3,8 @@ package edu.cmu.scs.fluorite.model;
 import java.util.HashMap;
 import java.util.Map;
 
+import trace.recorder.NewFileSnapshot;
+
 public class FileSnapshotManager {
 
 	private static FileSnapshotManager instance = null;
@@ -39,5 +41,6 @@ public class FileSnapshotManager {
 		}
 
 		mSnapshotMap.put(fullPath, currentContent);
+		NewFileSnapshot.newCase(fullPath, currentContent, this);
 	}
 }

@@ -8,7 +8,7 @@ import edu.cmu.scs.fluorite.commands.EclipseCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 
-public class Percentage {
+public class APercentageCalculator {
 	public final static int DEBUG_EVENT_INDEX = 0;
 	public final static int SEARCH_EVENT_INDEX = 1;
 	public final static int EDIT_EVENT_INDEX = 2;

@@ -19,15 +19,15 @@ import trace.difficultyPrediction.PredictionValueToStatus;
 import trace.difficultyPrediction.StatusAggregationStarted;
 import util.trace.Tracer;
 //import database.Status;
-import difficultyPrediction.eventAggregation.DiscreteChunks;
-import difficultyPrediction.eventAggregation.EventAggregator;
-import difficultyPrediction.eventAggregation.EventAggregatorDetails;
+import difficultyPrediction.eventAggregation.ADisjointDiscreteChunks;
+import difficultyPrediction.eventAggregation.AnEventAggregator;
+import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
 import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEvents;
-import difficultyPrediction.featureExtraction.FeatureExtractor;
+import difficultyPrediction.featureExtraction.ARatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.FeatureExtractorDetails;
 import difficultyPrediction.predictionManagement.DecisionTreeModel;
-import difficultyPrediction.predictionManagement.PredictionManager;
-import difficultyPrediction.predictionManagement.PredictionManagerDetails;
+import difficultyPrediction.predictionManagement.APredictionManager;
+import difficultyPrediction.predictionManagement.APredictionManagerDetails;
 import difficultyPrediction.statusManager.StatusAggregationDiscreteChunks;
 import difficultyPrediction.statusManager.StatusManager;
 import difficultyPrediction.statusManager.StatusManagerDetails;
@@ -39,21 +39,21 @@ import edu.cmu.scs.fluorite.model.EventRecorder;
 public class DifficultyRobot implements Mediator {
 	//Server server;
 	String id = "";
-	EventAggregator eventAggregator;
-	FeatureExtractor featureExtractor;
-	PredictionManager predictionManager;
+	AnEventAggregator eventAggregator;
+	ARatioBasedFeatureExtractor featureExtractor;
+	APredictionManager predictionManager;
 	StatusManager statusManager;
 	private StatusInformation statusInformation;
 	
 	public DifficultyRobot(String id) {
 		this.id = id;
-		eventAggregator = new EventAggregator(this);
-		eventAggregator.eventAggregationStrategy = new DiscreteChunks();
+		eventAggregator = new AnEventAggregator(this);
+		eventAggregator.eventAggregationStrategy = new ADisjointDiscreteChunks();
 		
-		featureExtractor = new FeatureExtractor(this);
+		featureExtractor = new ARatioBasedFeatureExtractor(this);
 		featureExtractor.featureExtractionStrategy = new ExtractRatiosBasedOnNumberOfEvents();
 		
-		predictionManager = new PredictionManager(this);
+		predictionManager = new APredictionManager(this);
 		predictionManager.predictionStrategy = new DecisionTreeModel(predictionManager);
 		
 		statusManager = new StatusManager(this);
@@ -72,8 +72,8 @@ public class DifficultyRobot implements Mediator {
 	}
 	
 	//Takes aggregated events and uses a separate thread to compute features
-	public void eventAggregator_HandOffEvents(EventAggregator aggregator,
-			EventAggregatorDetails details) {
+	public void eventAggregator_HandOffEvents(AnEventAggregator aggregator,
+			AnEventAggregatorDetails details) {
 
 		Tracer.info(this,"difficultyRobot.handoffevents");
 		this.featureExtractor.featureExtractionStrategy.performFeatureExtraction(details.actions, featureExtractor);
@@ -83,7 +83,7 @@ public class DifficultyRobot implements Mediator {
 
 
 	@Override
-	public void featureExtractor_HandOffFeatures(FeatureExtractor extractor,
+	public void featureExtractor_HandOffFeatures(ARatioBasedFeatureExtractor extractor,
 			FeatureExtractorDetails details) {
 		Tracer.info(this, "difficultyRobot.featureExtractor");
 		statusInformation = new StatusInformation();
@@ -101,8 +101,8 @@ public class DifficultyRobot implements Mediator {
 
 
 	@Override
-	public void predictionManager_HandOffPrediction(PredictionManager manager,
-			PredictionManagerDetails details) {
+	public void predictionManager_HandOffPrediction(APredictionManager manager,
+			APredictionManagerDetails details) {
 		StatusAggregationStarted.newCase(this);
 		Tracer.info(this, "difficultyRobot.handOffPrediction");
 		statusInformation.predictedClass = "Prediction";

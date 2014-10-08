@@ -3,12 +3,12 @@ package difficultyPrediction.metrics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HoldPredictions {
+public class APredictionHolder {
 	public int numberOfYes;
 	public int numberOfNo;
 	public List<String> predictions;
 	
-	public HoldPredictions() {
+	public APredictionHolder() {
 		this.predictions = new ArrayList<String>();
 	}
 

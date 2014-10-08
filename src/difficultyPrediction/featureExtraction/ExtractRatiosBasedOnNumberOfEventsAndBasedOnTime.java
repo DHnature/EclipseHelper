@@ -4,7 +4,7 @@ import java.util.List;
 
 import analyzer.FeatureExtractorAnalyzer;
 import analyzer.TimeandEventBasedPercentage;
-import difficultyPrediction.metrics.Percentage;
+import difficultyPrediction.metrics.APercentageCalculator;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 public class ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime implements
@@ -27,7 +27,7 @@ public class ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime implements
 
 	@Override
 	public void performFeatureExtraction(List<ICommand> actions,
-			FeatureExtractor featureExtractor) {
+			ARatioBasedFeatureExtractor featureExtractor) {
 		
 //		List<Double> percentages = null;
 //		percentages = metrics.computeMetrics(actions);	

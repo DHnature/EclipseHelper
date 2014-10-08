@@ -2,11 +2,11 @@ package difficultyPrediction.featureExtraction;
 
 import difficultyPrediction.Mediator;
 
-public class FeatureExtractor {
+public class ARatioBasedFeatureExtractor {
 	
 	Mediator mediator;
 	
-	public FeatureExtractor(Mediator mediator) {
+	public ARatioBasedFeatureExtractor(Mediator mediator) {
 		this.mediator = mediator;
 	}
 	

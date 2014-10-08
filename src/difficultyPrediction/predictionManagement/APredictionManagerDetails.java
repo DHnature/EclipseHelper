@@ -1,8 +1,8 @@
 package difficultyPrediction.predictionManagement;
 
-public class PredictionManagerDetails {
+public class APredictionManagerDetails {
 	
-	public PredictionManagerDetails(String predictionValue) {
+	public APredictionManagerDetails(String predictionValue) {
 		this.predictionValue = predictionValue;
 	}
 	public String predictionValue;

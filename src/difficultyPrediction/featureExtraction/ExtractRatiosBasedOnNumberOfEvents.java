@@ -2,7 +2,7 @@ package difficultyPrediction.featureExtraction;
 
 import java.util.List;
 
-import difficultyPrediction.metrics.Percentage;
+import difficultyPrediction.metrics.APercentageCalculator;
 
 import edu.cmu.scs.fluorite.commands.ICommand;
 public class ExtractRatiosBasedOnNumberOfEvents implements
@@ -12,7 +12,7 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
 		
 	}
 	
-	private Percentage metrics = new Percentage();
+	private APercentageCalculator metrics = new APercentageCalculator();
 	
 	 private static final int NAVIGATION_PERCENTAGE = 0;
      private static final int DEBUG_PERCENTAGE = 1;
@@ -20,7 +20,7 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
      private static final int EDIT_PERCENTAGE = 3;
      private static final int REMOVE_PERCENTAGE = 4;
 	
-	public void performFeatureExtraction(List<ICommand> actions, FeatureExtractor featureExtractor) {
+	public void performFeatureExtraction(List<ICommand> actions, ARatioBasedFeatureExtractor featureExtractor) {
 			List<Double> percentages = null;
 			percentages = metrics.computeMetrics(actions);
 			featureExtractor.onFeatureHandOff(percentages.get(EDIT_PERCENTAGE), percentages.get(DEBUG_PERCENTAGE), 

@@ -8,16 +8,16 @@ import java.util.List;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import edu.cmu.scs.fluorite.commands.ICommand;
-public class EventAggregatorDetails {
+public class AnEventAggregatorDetails {
 	
 	public List<ICommand> actions;
 	public long startTimeStamp;
 	
-	public EventAggregatorDetails () {
+	public AnEventAggregatorDetails () {
 		actions = new ArrayList<ICommand>();
 	}
 	
-	public EventAggregatorDetails(List<ICommand> actions) {
+	public AnEventAggregatorDetails(List<ICommand> actions) {
 		this.actions = new ArrayList<ICommand>();
 		for(ICommand event : actions) {
 			this.actions.add(event);

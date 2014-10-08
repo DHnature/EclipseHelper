@@ -9,7 +9,7 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.PlatformUI;
 
-import difficultyPrediction.eventAggregation.DiscreteChunks;
+import difficultyPrediction.eventAggregation.ADisjointDiscreteChunks;
 import difficultyPrediction.eventAggregation.EventAggregationStrategy;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;
@@ -19,7 +19,7 @@ import edu.cmu.scs.fluorite.viewpart.HelpViewPart;
 
 public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnable{
 	public static final int NUM_PENDING_SEGMENTS = 4;
-	public static final int NUM_PENDING_COMMANDS = NUM_PENDING_SEGMENTS*DiscreteChunks.DEFAULT_IGNORE_NUM;
+	public static final int NUM_PENDING_COMMANDS = NUM_PENDING_SEGMENTS*ADisjointDiscreteChunks.DEFAULT_IGNORE_NUM;
 	BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue(NUM_PENDING_COMMANDS);
 	protected DifficultyRobot statusPredictor = null;
 	ICommand newCommand;

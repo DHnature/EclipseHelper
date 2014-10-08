@@ -56,6 +56,7 @@ import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import trace.listenerRegistration.PartListenerAdded;
 import trace.logger.LogFileCreated;
 import trace.logger.LogHandlerBound;
 import trace.logger.MacroCommandsLogBegin;
@@ -454,6 +455,7 @@ public class EventRecorder {
 			IPartService service = window.getPartService();
 			if (service != null) {
 				service.addPartListener(PartRecorder.getInstance());
+				PartListenerAdded.newCase(PartRecorder.getInstance(), this);
 
 				if (service.getActivePart() instanceof IEditorPart) {
 					PartRecorder.getInstance().partActivated(

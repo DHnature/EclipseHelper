@@ -11,6 +11,7 @@ import trace.logger.MacroCommandsLogBegin;
 import trace.logger.MacroCommandsLogEnd;
 import trace.recorder.ExcludedCommand;
 import trace.recorder.MacroRecordingStarted;
+import trace.recorder.NewFileSnapshot;
 import trace.recorder.NewMacroCommand;
 import trace.recorder.RecordedCommandsCleared;
 import trace.view.help.HelpViewCreated;
@@ -69,6 +70,7 @@ public class EclipseHelperTracerSetter {
 		Tracer.setKeywordPrintStatus(MacroCommandsLogEnd.class, true);
 		Tracer.setKeywordPrintStatus(HelpViewCreated.class, true);
 		Tracer.setKeywordPrintStatus(PluginThreadCreated.class, true);
+		Tracer.setKeywordPrintStatus(NewFileSnapshot.class, true);
 
 		
 

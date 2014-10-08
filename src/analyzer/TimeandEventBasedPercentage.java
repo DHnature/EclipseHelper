@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
-import difficultyPrediction.metrics.Percentage;
+import difficultyPrediction.metrics.APercentageCalculator;
 import edu.cmu.scs.fluorite.commands.CompliationCommand;
 import edu.cmu.scs.fluorite.commands.EclipseCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -16,10 +16,10 @@ public class TimeandEventBasedPercentage {
 	public final static int DELETION_EVENT_INDEX = 6;
 	public final static int EXCEPTION_EVENT_INDEX = 7;
 	// this class computes percentages
-	private Percentage percentage;
+	private APercentageCalculator percentage;
 	private long savedTimeStamp;
 	public TimeandEventBasedPercentage() {
-		percentage = new Percentage();
+		percentage = new APercentageCalculator();
 		savedTimeStamp = 0;
 	}
 
@@ -36,14 +36,14 @@ public class TimeandEventBasedPercentage {
 	}
 	public static double computeDebugPercentage(ArrayList<Integer> eventData) {
 		double numberOfDebugEvents = eventData
-				.get(Percentage.DEBUG_EVENT_INDEX);
+				.get(APercentageCalculator.DEBUG_EVENT_INDEX);
 		double numberOfSearchEvents = eventData
-				.get(Percentage.SEARCH_EVENT_INDEX);
-		double numberOfEditEvents = eventData.get(Percentage.EDIT_EVENT_INDEX);
+				.get(APercentageCalculator.SEARCH_EVENT_INDEX);
+		double numberOfEditEvents = eventData.get(APercentageCalculator.EDIT_EVENT_INDEX);
 		double numberOfFocusEvents = eventData
-				.get(Percentage.FOCUS_EVENT_INDEX);
+				.get(APercentageCalculator.FOCUS_EVENT_INDEX);
 		double numberOfRemoveEvents = eventData
-				.get(Percentage.REMOVE_EVENT_INDEX);
+				.get(APercentageCalculator.REMOVE_EVENT_INDEX);
 		double numberOfInsertionEvents = eventData.get(INSERTION_EVENT_INDEX);
 		double numberOfDeletionEvents = eventData.get(DELETION_EVENT_INDEX);
 		double debugPercentage = 0;
@@ -59,14 +59,14 @@ public class TimeandEventBasedPercentage {
 	public static double computeNavigationPercentage(
 			ArrayList<Integer> eventData) {
 		double numberOfDebugEvents = eventData
-				.get(Percentage.DEBUG_EVENT_INDEX);
+				.get(APercentageCalculator.DEBUG_EVENT_INDEX);
 		double numberOfSearchEvents = eventData
-				.get(Percentage.SEARCH_EVENT_INDEX);
-		double numberOfEditEvents = eventData.get(Percentage.EDIT_EVENT_INDEX);
+				.get(APercentageCalculator.SEARCH_EVENT_INDEX);
+		double numberOfEditEvents = eventData.get(APercentageCalculator.EDIT_EVENT_INDEX);
 		double numberOfFocusEvents = eventData
-				.get(Percentage.FOCUS_EVENT_INDEX);
+				.get(APercentageCalculator.FOCUS_EVENT_INDEX);
 		double numberOfRemoveEvents = eventData
-				.get(Percentage.REMOVE_EVENT_INDEX);
+				.get(APercentageCalculator.REMOVE_EVENT_INDEX);
 		double numberOfInsertionEvents = eventData.get(INSERTION_EVENT_INDEX);
 		double numberOfDeletionEvents = eventData.get(DELETION_EVENT_INDEX);
 
@@ -82,14 +82,14 @@ public class TimeandEventBasedPercentage {
 
 	public static double computeInsertionPercentage(ArrayList<Integer> eventData) {
 		double numberOfDebugEvents = eventData
-				.get(Percentage.DEBUG_EVENT_INDEX);
+				.get(APercentageCalculator.DEBUG_EVENT_INDEX);
 		double numberOfSearchEvents = eventData
-				.get(Percentage.SEARCH_EVENT_INDEX);
-		double numberOfEditEvents = eventData.get(Percentage.EDIT_EVENT_INDEX);
+				.get(APercentageCalculator.SEARCH_EVENT_INDEX);
+		double numberOfEditEvents = eventData.get(APercentageCalculator.EDIT_EVENT_INDEX);
 		double numberOfFocusEvents = eventData
-				.get(Percentage.FOCUS_EVENT_INDEX);
+				.get(APercentageCalculator.FOCUS_EVENT_INDEX);
 		double numberOfRemoveEvents = eventData
-				.get(Percentage.REMOVE_EVENT_INDEX);
+				.get(APercentageCalculator.REMOVE_EVENT_INDEX);
 		double numberOfInsertionEvents = eventData.get(INSERTION_EVENT_INDEX);
 		double numberOfDeletionEvents = eventData.get(DELETION_EVENT_INDEX);
 
@@ -106,14 +106,14 @@ public class TimeandEventBasedPercentage {
 
 	public static double computeDeletionPercentage(ArrayList<Integer> eventData) {
 		double numberOfDebugEvents = eventData
-				.get(Percentage.DEBUG_EVENT_INDEX);
+				.get(APercentageCalculator.DEBUG_EVENT_INDEX);
 		double numberOfSearchEvents = eventData
-				.get(Percentage.SEARCH_EVENT_INDEX);
-		double numberOfEditEvents = eventData.get(Percentage.EDIT_EVENT_INDEX);
+				.get(APercentageCalculator.SEARCH_EVENT_INDEX);
+		double numberOfEditEvents = eventData.get(APercentageCalculator.EDIT_EVENT_INDEX);
 		double numberOfFocusEvents = eventData
-				.get(Percentage.FOCUS_EVENT_INDEX);
+				.get(APercentageCalculator.FOCUS_EVENT_INDEX);
 		double numberOfRemoveEvents = eventData
-				.get(Percentage.REMOVE_EVENT_INDEX);
+				.get(APercentageCalculator.REMOVE_EVENT_INDEX);
 		double numberOfInsertionEvents = eventData.get(INSERTION_EVENT_INDEX);
 		double numberOfDeletionEvents = eventData.get(DELETION_EVENT_INDEX);
 
@@ -129,14 +129,14 @@ public class TimeandEventBasedPercentage {
 
 	public static double computeFocusPercentage(ArrayList<Integer> eventData) {
 		double numberOfDebugEvents = eventData
-				.get(Percentage.DEBUG_EVENT_INDEX);
+				.get(APercentageCalculator.DEBUG_EVENT_INDEX);
 		double numberOfSearchEvents = eventData
-				.get(Percentage.SEARCH_EVENT_INDEX);
-		double numberOfEditEvents = eventData.get(Percentage.EDIT_EVENT_INDEX);
+				.get(APercentageCalculator.SEARCH_EVENT_INDEX);
+		double numberOfEditEvents = eventData.get(APercentageCalculator.EDIT_EVENT_INDEX);
 		double numberOfFocusEvents = eventData
-				.get(Percentage.FOCUS_EVENT_INDEX);
+				.get(APercentageCalculator.FOCUS_EVENT_INDEX);
 		double numberOfRemoveEvents = eventData
-				.get(Percentage.REMOVE_EVENT_INDEX);
+				.get(APercentageCalculator.REMOVE_EVENT_INDEX);
 		double numberOfInsertionEvents = eventData.get(INSERTION_EVENT_INDEX);
 		double numberOfDeletionEvents = eventData.get(DELETION_EVENT_INDEX);
 
@@ -153,14 +153,14 @@ public class TimeandEventBasedPercentage {
 	public static double computeRemoveEventsPercentage(
 			ArrayList<Integer> eventData) {
 		double numberOfDebugEvents = eventData
-				.get(Percentage.DEBUG_EVENT_INDEX);
+				.get(APercentageCalculator.DEBUG_EVENT_INDEX);
 		double numberOfSearchEvents = eventData
-				.get(Percentage.SEARCH_EVENT_INDEX);
-		double numberOfEditEvents = eventData.get(Percentage.EDIT_EVENT_INDEX);
+				.get(APercentageCalculator.SEARCH_EVENT_INDEX);
+		double numberOfEditEvents = eventData.get(APercentageCalculator.EDIT_EVENT_INDEX);
 		double numberOfFocusEvents = eventData
-				.get(Percentage.FOCUS_EVENT_INDEX);
+				.get(APercentageCalculator.FOCUS_EVENT_INDEX);
 		double numberOfRemoveEvents = eventData
-				.get(Percentage.REMOVE_EVENT_INDEX);
+				.get(APercentageCalculator.REMOVE_EVENT_INDEX);
 		double numberOfInsertionEvents = eventData.get(INSERTION_EVENT_INDEX);
 		double numberOfDeletionEvents = eventData.get(DELETION_EVENT_INDEX);
 
@@ -178,7 +178,7 @@ public class TimeandEventBasedPercentage {
 	{
 		double numberOfExceptionsPerRun = 0;
 		double numberOfDebugEvents = eventData
-				.get(Percentage.DEBUG_EVENT_INDEX);
+				.get(APercentageCalculator.DEBUG_EVENT_INDEX);
 		double numberOfExceptions = eventData.get(EXCEPTION_EVENT_INDEX);
 		
 		if(numberOfDebugEvents > 0)
@@ -198,7 +198,7 @@ public class TimeandEventBasedPercentage {
 		double debugPercentage = computeDebugPercentage(metrics);
 		double editPercentage = 0;//computeEditPercentage(metrics);
 		double navigationPercentage = computeNavigationPercentage(metrics);
-		double removePercentage = Percentage
+		double removePercentage = APercentageCalculator
 				.computeRemoveEventsPercentage(metrics);
 		double focusPercentage = computeFocusPercentage(metrics);
 		double insertionPercentage = computeInsertionPercentage(metrics);

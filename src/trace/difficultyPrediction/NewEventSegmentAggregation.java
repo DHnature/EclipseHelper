@@ -1,6 +1,6 @@
 package trace.difficultyPrediction;
 
-import difficultyPrediction.eventAggregation.EventAggregatorDetails;
+import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
 import edu.cmu.scs.fluorite.util.EventLoggerConsole;
 import trace.plugin.PluginEarlyStarted;
 import util.trace.Traceable;
@@ -9,18 +9,18 @@ import util.trace.Tracer;
 
 
 public class NewEventSegmentAggregation extends TraceableInfo {
-	EventAggregatorDetails eventAggregatorDetails;
-	public NewEventSegmentAggregation(String aMessage, EventAggregatorDetails aEventAggregatorDetails, Object aFinder) {
+	AnEventAggregatorDetails eventAggregatorDetails;
+	public NewEventSegmentAggregation(String aMessage, AnEventAggregatorDetails aEventAggregatorDetails, Object aFinder) {
 		super(aMessage, aFinder);
 	}
 	
 	
-	public EventAggregatorDetails getEventAggregatorDetails() {
+	public AnEventAggregatorDetails getEventAggregatorDetails() {
 		return eventAggregatorDetails;
 	}
 
 
-	public static NewEventSegmentAggregation newCase(String aMessage, EventAggregatorDetails aEventAggregatorDetails, Object aFinder) {
+	public static NewEventSegmentAggregation newCase(String aMessage, AnEventAggregatorDetails aEventAggregatorDetails, Object aFinder) {
 		if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(NewEventSegmentAggregation.class))
 	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(NewEventSegmentAggregation.class) + ") " +aMessage);
 		if (shouldInstantiate(NewEventSegmentAggregation.class)) {
@@ -32,7 +32,7 @@ public class NewEventSegmentAggregation extends TraceableInfo {
 		return null;
 	}
 
-	public static NewEventSegmentAggregation newCase(EventAggregatorDetails aEventAggregatorDetails, Object aFinder) {
+	public static NewEventSegmentAggregation newCase(AnEventAggregatorDetails aEventAggregatorDetails, Object aFinder) {
 		String aMessage = aEventAggregatorDetails.toString();
 		return newCase(aMessage, aEventAggregatorDetails, aFinder);
 //		MacroRecordingStarted retVal = new MacroRecordingStarted("", aFinder);

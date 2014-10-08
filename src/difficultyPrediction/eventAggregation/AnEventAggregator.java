@@ -7,7 +7,7 @@ import difficultyPrediction.Mediator;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 
-public class EventAggregator {
+public class AnEventAggregator {
 	
 	private long startTimestamp = 0;
 	public long getStartTimestamp()
@@ -20,7 +20,7 @@ public class EventAggregator {
 		this.startTimestamp = startTimeStamp;
 	}
 	
-	public EventAggregator(Mediator mediator) {
+	public AnEventAggregator(Mediator mediator) {
 		this.mediator = mediator;
 	}
 	
@@ -38,7 +38,7 @@ public class EventAggregator {
 	
 	public void onEventsHandOff(List<ICommand> genericActions) {
 		if(mediator != null) {
-			EventAggregatorDetails args = new EventAggregatorDetails(genericActions);
+			AnEventAggregatorDetails args = new AnEventAggregatorDetails(genericActions);
 			args.startTimeStamp = this.startTimestamp;
 			NewEventSegmentAggregation.newCase(args, this);
 			mediator.eventAggregator_HandOffEvents(this, args);

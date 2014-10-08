@@ -7,7 +7,7 @@ import java.net.URL;
 import weka.classifiers.trees.*;
 
 public class DecisionTreeModel implements PredictionManagerStrategy {
-	public PredictionManager predictionManager;
+	public APredictionManager predictionManager;
 
 	private J48 j48Model = new J48();
 
@@ -16,7 +16,7 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 	private String WEKA_DATA_FILE_LOCATION = "data/userStudy2010.arff";
 
 
-	public DecisionTreeModel(PredictionManager predictionManager) {
+	public DecisionTreeModel(APredictionManager predictionManager) {
 		this.predictionManager = predictionManager;
 	}
 

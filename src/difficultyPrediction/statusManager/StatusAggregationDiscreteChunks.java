@@ -1,6 +1,6 @@
 package difficultyPrediction.statusManager;
 
-import difficultyPrediction.metrics.HoldPredictions;
+import difficultyPrediction.metrics.APredictionHolder;
 
 public class StatusAggregationDiscreteChunks implements StatusManagerStrategy{
 	public StatusManager manager;
@@ -8,7 +8,7 @@ public class StatusAggregationDiscreteChunks implements StatusManagerStrategy{
 	private static final String PROGRESS = "NO";
 	private static final int MAX_PERCENTAGE = 60;
 	private static final int WHOLE_PERCENTAGE = 100; //Uhh? haha
-	private HoldPredictions holdPredictions = new HoldPredictions();
+	private APredictionHolder holdPredictions = new APredictionHolder();
 	private int numberOfPredictionsForDominantStatus = 5;
 	
 	public StatusAggregationDiscreteChunks(StatusManager manager) {
