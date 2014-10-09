@@ -29,7 +29,7 @@ public class MacroCommandsLogBegin extends TraceableInfo{
     	if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(MacroCommandsLogBegin.class))
 	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(MacroCommandsLogBegin.class) + ") " +aMessage);
     	} catch (Exception e) {
-    		System.out.println("MacroCommandsLogBegin" + e);
+    		System.out.println("MacroCommandsLogBegin: " + e);
     	}
     	if (shouldInstantiate(MacroCommandsLogBegin.class)) {
     	MacroCommandsLogBegin retVal = new MacroCommandsLogBegin(aMessage, aCommands, aFinder);

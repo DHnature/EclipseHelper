@@ -12,6 +12,8 @@ import java.util.Calendar;
 
 
 
+
+
 import trace.difficultyPrediction.NewPredictionEvent;
 import trace.difficultyPrediction.NewExtractedFeatures;
 import trace.difficultyPrediction.NewPrediction;
@@ -25,6 +27,8 @@ import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
 import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEvents;
 import difficultyPrediction.featureExtraction.ARatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.AFeatureExtractorDetails;
+import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
+import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.predictionManagement.DecisionTreeModel;
 import difficultyPrediction.predictionManagement.APredictionManager;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
@@ -43,12 +47,14 @@ public class DifficultyRobot implements Mediator {
 	ARatioBasedFeatureExtractor featureExtractor;
 	APredictionManager predictionManager;
 	StatusManager statusManager;
-	private StatusInformation statusInformation;
+	private AStatusInformation statusInformation;
 	
 	public DifficultyRobot(String id) {
 		this.id = id;
 		eventAggregator = new AnEventAggregator(this);
-		eventAggregator.eventAggregationStrategy = new ADisjointDiscreteChunks();
+//		eventAggregator.eventAggregationStrategy = new ADisjointDiscreteChunks();
+		eventAggregator.setEventAggregationStrategy(new ADisjointDiscreteChunks());
+
 		
 		featureExtractor = new ARatioBasedFeatureExtractor(this);
 		featureExtractor.featureExtractionStrategy = new ExtractRatiosBasedOnNumberOfEvents();
@@ -68,7 +74,9 @@ public class DifficultyRobot implements Mediator {
 		NewPredictionEvent.newCase(this);
 //		Tracer.info(this, "difficultyRobot.processEvent");
 
-			eventAggregator.eventAggregationStrategy.performAggregation(e, eventAggregator);
+//			eventAggregator.eventAggregationStrategy.performAggregation(e, eventAggregator);
+			eventAggregator.getEventAggregationStrategy().performAggregation(e, eventAggregator);
+
 	}
 	
 	//Takes aggregated events and uses a separate thread to compute features
@@ -83,18 +91,18 @@ public class DifficultyRobot implements Mediator {
 
 
 	@Override
-	public void featureExtractor_HandOffFeatures(ARatioBasedFeatureExtractor extractor,
-			AFeatureExtractorDetails details) {
+	public void featureExtractor_HandOffFeatures(RatioBasedFeatureExtractor extractor,
+			RatioFeatures details) {
 		Tracer.info(this, "difficultyRobot.featureExtractor");
-		statusInformation = new StatusInformation();
-		statusInformation.setEditRatio(details.editRatio);
-		statusInformation.setDebugRatio(details.debugRatio);
-		statusInformation.setNavigationRatio(details.navigationRatio);
-		statusInformation.setRemoveRatio(details.removeRatio);
-		statusInformation.setFocusRatio(details.focusRatio);
+		statusInformation = new AStatusInformation();
+		statusInformation.setEditRatio(details.getEditRatio());
+		statusInformation.setDebugRatio(details.getDebugRatio());
+		statusInformation.setNavigationRatio(details.getNavigationRatio());
+		statusInformation.setRemoveRatio(details.getRemoveRatio());
+		statusInformation.setFocusRatio(details.getFocusRatio());
 		NewExtractedFeatures.newCase(statusInformation, this);
 
-		this.predictionManager.predictionStrategy.predictSituation(details.editRatio, details.debugRatio, details.navigationRatio, details.focusRatio, details.removeRatio);
+		this.predictionManager.predictionStrategy.predictSituation(details.getEditRatio(), details.getDebugRatio(), details.getNavigationRatio(), details.getFocusRatio(), details.getRemoveRatio());
 //		NewPrediction.newCase(this);
 
 	}

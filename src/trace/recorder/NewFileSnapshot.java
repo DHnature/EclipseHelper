@@ -42,7 +42,7 @@ public class NewFileSnapshot extends TraceableInfo{
     }
     public static NewFileSnapshot newCase (String aFileName,  String aFileContents,  Object aFinder) {
     	String aMessage = toString(aFileName, aFileContents);
-    	return newCase(aMessage, aFileName, aFinder);
+    	return newCase(aMessage, aFileName, aFileContents, aFinder);
 //    	ExcludedCommand retVal = new ExcludedCommand(aMessage, aFileName, aFinder);
 //    	retVal.announce();
 //    	return retVal;

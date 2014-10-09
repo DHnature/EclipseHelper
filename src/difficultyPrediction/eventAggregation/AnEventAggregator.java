@@ -7,7 +7,7 @@ import difficultyPrediction.Mediator;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 
-public class AnEventAggregator {
+public class AnEventAggregator implements EventAggeragator {
 	
 	private long startTimestamp = 0;
 	public long getStartTimestamp()
@@ -25,7 +25,7 @@ public class AnEventAggregator {
 	}
 	
 	Mediator mediator;
-	public EventAggregationStrategy eventAggregationStrategy;
+	 EventAggregationStrategy eventAggregationStrategy;
 	
 	
 	public void setEventAggregationStrategy(EventAggregationStrategy strat) {

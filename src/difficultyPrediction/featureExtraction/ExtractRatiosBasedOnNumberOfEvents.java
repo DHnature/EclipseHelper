@@ -20,7 +20,7 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
      private static final int EDIT_PERCENTAGE = 3;
      private static final int REMOVE_PERCENTAGE = 4;
 	
-	public void performFeatureExtraction(List<ICommand> actions, ARatioBasedFeatureExtractor featureExtractor) {
+	public void performFeatureExtraction(List<ICommand> actions, RatioBasedFeatureExtractor featureExtractor) {
 			List<Double> percentages = null;
 			percentages = metrics.computeMetrics(actions);
 			featureExtractor.onFeatureHandOff(percentages.get(EDIT_PERCENTAGE), percentages.get(DEBUG_PERCENTAGE), 

@@ -12,8 +12,9 @@ import difficultyPrediction.Mediator;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
 import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime;
-import difficultyPrediction.featureExtraction.ARatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.AFeatureExtractorDetails;
+import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
+import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.predictionManagement.APredictionManager;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
 import difficultyPrediction.statusManager.StatusManager;
@@ -54,25 +55,25 @@ public class AnalyzerMediator implements Mediator {
 	}
 
 	@Override
-	public void featureExtractor_HandOffFeatures(ARatioBasedFeatureExtractor extractor,
-			AFeatureExtractorDetails details) {
+	public void featureExtractor_HandOffFeatures(RatioBasedFeatureExtractor extractor,
+			RatioFeatures details) {
 
-		System.out.println("Insertion ratio:" + details.insertionRatio);
-		System.out.println("Deletion ratio:" + details.deletionRatio);
-		System.out.println("Debug ratio:" + details.debugRatio);
-		System.out.println("Navigation ratio:" + details.navigationRatio);
-		System.out.println("Focus ratio:" + details.focusRatio);
-		System.out.println("Remove ratio:" + details.removeRatio);
+		System.out.println("Insertion ratio:" + details.getInsertionRatio());
+		System.out.println("Deletion ratio:" + details.getDeletionRatio());
+		System.out.println("Debug ratio:" + details.getDebugRatio());
+		System.out.println("Navigation ratio:" + details.getNavigationRatio());
+		System.out.println("Focus ratio:" + details.getFocusRatio());
+		System.out.println("Remove ratio:" + details.getRemoveRatio());
 		System.out.println("features have been computed");
 		
-		java.util.Date time=new java.util.Date((long)details.savedTimeStamp);
+		java.util.Date time=new java.util.Date((long)details.getSavedTimeStamp());
 		Calendar mydate = Calendar.getInstance();
-		mydate.setTimeInMillis(details.savedTimeStamp);
+		mydate.setTimeInMillis(details.getSavedTimeStamp());
 		
 		//mydate.get(Calendar.HOUR)
 		//mydate.get(Calendar.MINUTE)
 		//mydate.get(Calendar.SECOND)
-		DateTime timestamp = new DateTime(details.savedTimeStamp);
+		DateTime timestamp = new DateTime(details.getSavedTimeStamp());
 		//timestamp.get(timestamp)
 		
 		System.out.println(timestamp.toString("MM-dd-yyyy H:mm:ss"));
@@ -82,17 +83,17 @@ public class AnalyzerMediator implements Mediator {
 		    String filename = dataFolder + "ratios.csv";
 		    FileWriter fw = new FileWriter(filename,true); //the true will append the new data
 		   
-		    fw.write(""+ details.insertionRatio);
+		    fw.write(""+ details.getInsertionRatio());
 		    fw.write(",");
-		    fw.write("" + details.deletionRatio);
+		    fw.write("" + details.getDeletionRatio());
 		    fw.write(",");
-		    fw.write("" + details.debugRatio);
+		    fw.write("" + details.getDebugRatio());
 		    fw.write(",");
-		    fw.write("" + details.navigationRatio);
+		    fw.write("" + details.getNavigationRatio());
 		    fw.write(",");
-		    fw.write("" + details.focusRatio);
+		    fw.write("" + details.getFocusRatio());
 		    fw.write(",");
-			fw.write("" + details.removeRatio);
+			fw.write("" + details.getRemoveRatio());
 			fw.write(",");
 			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
 			fw.write("\n");

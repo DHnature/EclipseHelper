@@ -123,7 +123,9 @@ public class MainConsoleUI {
 					//((DiscreteChunksAnalyzer)eventAggregator.eventAggregationStrategy).setStartTimeStamp(startTimeStamp);
 					
 					
-					eventAggregator.eventAggregationStrategy.performAggregation(commands.get(i), eventAggregator);
+//					eventAggregator.eventAggregationStrategy.performAggregation(commands.get(i), eventAggregator);
+					eventAggregator.getEventAggregationStrategy().performAggregation(commands.get(i), eventAggregator);
+
 					
 					// try to see if you can use the event aggreator to split
 					// the events

@@ -30,5 +30,6 @@ public interface RatioFeatures {
 	public void setRemoveTimeRatio(double removeTimeRatio) ;
 	public long getSavedTimeStamp();
 	public void setSavedTimeStamp(long savedTimeStamp) ;
+	public double getEditRatio();
 
 }

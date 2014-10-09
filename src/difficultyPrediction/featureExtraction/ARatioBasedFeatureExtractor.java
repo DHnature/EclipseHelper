@@ -2,7 +2,7 @@ package difficultyPrediction.featureExtraction;
 
 import difficultyPrediction.Mediator;
 
-public class ARatioBasedFeatureExtractor {
+public class ARatioBasedFeatureExtractor implements RatioBasedFeatureExtractor {
 	
 	Mediator mediator;
 	
@@ -12,6 +12,10 @@ public class ARatioBasedFeatureExtractor {
 	
 	public FeatureExtractionStrategy featureExtractionStrategy;
 	
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor#onFeatureHandOff(double, double, double, double, double)
+	 */
+	@Override
 	public void onFeatureHandOff(double editRatio, double debugRatio, double navigationRatio, double focusRatio,
 			double removeRatio) {
 		if (mediator != null)                           //Any handlers attached to this event?  
@@ -27,7 +31,11 @@ public class ARatioBasedFeatureExtractor {
         }
 	}
 	
-	 public void onFeatureHandOff(double editRatio, double debugRatio, double navigationRatio, double focusRatio, double removeRatio, double exceptionsPerRun)
+	 /* (non-Javadoc)
+	 * @see difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor#onFeatureHandOff(double, double, double, double, double, double)
+	 */
+	@Override
+	public void onFeatureHandOff(double editRatio, double debugRatio, double navigationRatio, double focusRatio, double removeRatio, double exceptionsPerRun)
      {
 		 if (mediator != null)                           //Any handlers attached to this event?  
 	        {

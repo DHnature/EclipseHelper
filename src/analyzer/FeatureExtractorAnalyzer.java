@@ -62,21 +62,21 @@ public class FeatureExtractorAnalyzer {
 		if (mediator != null) // Any handlers attached to this event?
 		{
 			AFeatureExtractorDetails args = new AFeatureExtractorDetails();
-			args.editRatio = editRatio;
-			args.debugRatio = debugRatio;
-			args.navigationRatio = navigationRatio;
-			args.focusRatio = focusRatio;
-			args.removeRatio = removeRatio;
-			args.exceptionsPerRun = exceptionsPerRun;
-			args.insertionRatio = insertionRatio;
-			args.deletionRatio = deletionRatio;
-			args.insertionTimeRatio = insertionTimeRatio;
-			args.deletionTimeRatio = deletionTimeRatio;
-			args.debugTimeRatio = debugTimeRatio;
-			args.navigationTimeRatio = navigationTimeRatio;
-			args.focusTimeRatio = focusTimeRatio;
-			args.removeTimeRatio = removeTimeRatio;
-			args.savedTimeStamp = metrics.getCurrentTimeStamp();
+			args.setEditRatio(editRatio);
+			args.setDebugRatio(debugRatio);
+			args.setNavigationRatio(navigationRatio);
+			args.setFocusRatio(focusRatio);
+			args.setRemoveRatio(removeRatio);
+			args.setExceptionsPerRun(exceptionsPerRun);
+			args.setInsertionRatio(insertionRatio);
+			args.setDeletionRatio(deletionRatio);
+			args.setInsertionTimeRatio(insertionTimeRatio);
+			args.setDeletionTimeRatio(deletionTimeRatio);
+			args.setDebugTimeRatio(debugTimeRatio);
+			args.setNavigationTimeRatio(navigationTimeRatio);
+			args.setFocusTimeRatio(focusTimeRatio);
+			args.setRemoveTimeRatio(removeTimeRatio);
+			args.setSavedTimeStamp(metrics.getCurrentTimeStamp());
 			mediator.featureExtractor_HandOffFeatures(null, args); // Raise
 			// the event
 		}

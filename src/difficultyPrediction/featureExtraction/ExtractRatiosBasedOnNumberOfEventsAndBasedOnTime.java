@@ -27,7 +27,7 @@ public class ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime implements
 
 	@Override
 	public void performFeatureExtraction(List<ICommand> actions,
-			ARatioBasedFeatureExtractor featureExtractor) {
+			RatioBasedFeatureExtractor featureExtractor) {
 		
 //		List<Double> percentages = null;
 //		percentages = metrics.computeMetrics(actions);	
