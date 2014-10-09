@@ -24,7 +24,7 @@ import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
 import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEvents;
 import difficultyPrediction.featureExtraction.ARatioBasedFeatureExtractor;
-import difficultyPrediction.featureExtraction.FeatureExtractorDetails;
+import difficultyPrediction.featureExtraction.AFeatureExtractorDetails;
 import difficultyPrediction.predictionManagement.DecisionTreeModel;
 import difficultyPrediction.predictionManagement.APredictionManager;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
@@ -84,7 +84,7 @@ public class DifficultyRobot implements Mediator {
 
 	@Override
 	public void featureExtractor_HandOffFeatures(ARatioBasedFeatureExtractor extractor,
-			FeatureExtractorDetails details) {
+			AFeatureExtractorDetails details) {
 		Tracer.info(this, "difficultyRobot.featureExtractor");
 		statusInformation = new StatusInformation();
 		statusInformation.setEditRatio(details.editRatio);

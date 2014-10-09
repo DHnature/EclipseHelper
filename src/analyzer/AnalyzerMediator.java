@@ -13,7 +13,7 @@ import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
 import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime;
 import difficultyPrediction.featureExtraction.ARatioBasedFeatureExtractor;
-import difficultyPrediction.featureExtraction.FeatureExtractorDetails;
+import difficultyPrediction.featureExtraction.AFeatureExtractorDetails;
 import difficultyPrediction.predictionManagement.APredictionManager;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
 import difficultyPrediction.statusManager.StatusManager;
@@ -55,7 +55,7 @@ public class AnalyzerMediator implements Mediator {
 
 	@Override
 	public void featureExtractor_HandOffFeatures(ARatioBasedFeatureExtractor extractor,
-			FeatureExtractorDetails details) {
+			AFeatureExtractorDetails details) {
 
 		System.out.println("Insertion ratio:" + details.insertionRatio);
 		System.out.println("Deletion ratio:" + details.deletionRatio);
