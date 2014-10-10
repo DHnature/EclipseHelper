@@ -56,6 +56,7 @@ import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import config.FactoriesSelector;
 import trace.listenerRegistration.PartListenerAdded;
 import trace.logger.LogFileCreated;
 import trace.logger.LogHandlerBound;
@@ -431,6 +432,7 @@ public class EventRecorder {
 	}
 
 	public void start() {
+		FactoriesSelector.configureFactories();
 		MacroRecordingStarted.newCase(this);
 		EventLoggerConsole.getConsole().writeln("***Started macro recording",
 				EventLoggerConsole.Type_RecordingCommand);

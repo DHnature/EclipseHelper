@@ -1,6 +1,6 @@
 package difficultyPrediction.featureExtraction;
 
-public class AFeatureExtractorDetails implements RatioFeatures {
+public class ARatioFeatures implements RatioFeatures {
 	 double editRatio;
 	 double debugRatio;
 	 double navigationRatio;
@@ -16,6 +16,10 @@ public class AFeatureExtractorDetails implements RatioFeatures {
 	 double focusTimeRatio;
 	 double removeTimeRatio;
 	 long savedTimeStamp;
+	 
+	 public ARatioFeatures() {
+		 
+	 }
 	public double getEditRatio() {
 		return editRatio;
 	}

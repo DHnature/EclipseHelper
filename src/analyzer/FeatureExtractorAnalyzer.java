@@ -4,7 +4,9 @@ import java.util.List;
 
 import difficultyPrediction.Mediator;
 import difficultyPrediction.featureExtraction.FeatureExtractionStrategy;
-import difficultyPrediction.featureExtraction.AFeatureExtractorDetails;
+import difficultyPrediction.featureExtraction.ARatioFeatures;
+import difficultyPrediction.featureExtraction.RatioFeatures;
+import difficultyPrediction.featureExtraction.RatioFeaturesFactorySelector;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 public class FeatureExtractorAnalyzer {
@@ -61,7 +63,8 @@ public class FeatureExtractorAnalyzer {
 			double removeTimeRatio) {
 		if (mediator != null) // Any handlers attached to this event?
 		{
-			AFeatureExtractorDetails args = new AFeatureExtractorDetails();
+//			ARatioFeatures args = new ARatioFeatures();
+			RatioFeatures args = RatioFeaturesFactorySelector.createRatioFeatures();
 			args.setEditRatio(editRatio);
 			args.setDebugRatio(debugRatio);
 			args.setNavigationRatio(navigationRatio);

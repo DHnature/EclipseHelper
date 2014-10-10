@@ -20,7 +20,7 @@ public class ARatioBasedFeatureExtractor implements RatioBasedFeatureExtractor {
 			double removeRatio) {
 		if (mediator != null)                           //Any handlers attached to this event?  
         {
-            AFeatureExtractorDetails args = new AFeatureExtractorDetails();
+            ARatioFeatures args = new ARatioFeatures();
             args.editRatio = editRatio;
             args.debugRatio = debugRatio;
             args.navigationRatio = navigationRatio;
@@ -39,13 +39,14 @@ public class ARatioBasedFeatureExtractor implements RatioBasedFeatureExtractor {
      {
 		 if (mediator != null)                           //Any handlers attached to this event?  
 	        {
-	            AFeatureExtractorDetails args = new AFeatureExtractorDetails();
-	            args.editRatio = editRatio;
-	            args.debugRatio = debugRatio;
-	            args.navigationRatio = navigationRatio;
-	            args.focusRatio = focusRatio;
-	            args.removeRatio = removeRatio;
-	            args.exceptionsPerRun = exceptionsPerRun;
+//	            ARatioFeatures args = new ARatioFeatures();
+				RatioFeatures args = RatioFeaturesFactorySelector.createRatioFeatures();
+	            args.setEditRatio(editRatio);
+	            args.setDebugRatio(debugRatio);
+	            args.setNavigationRatio(navigationRatio);
+	            args.setFocusRatio(focusRatio);
+	            args.setRemoveRatio(removeRatio);
+	            args.setExceptionsPerRun(exceptionsPerRun);
 	            mediator.featureExtractor_HandOffFeatures(this, args);                       //Raise the event  
 	        }
 		 

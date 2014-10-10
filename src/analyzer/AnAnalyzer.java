@@ -10,6 +10,7 @@ import java.util.Vector;
 
 import javax.swing.JFileChooser;
 
+import config.FactoriesSelector;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.util.LogReader;
 import util.annotations.Column;
@@ -86,6 +87,7 @@ public class AnAnalyzer {
 	boolean logsLoaded;
 	@Visible(false)
     public void loadLogs() {
+		FactoriesSelector.configureFactories();
 		String participantId = parameters.getParticipants().getValue();
 		String numberOfSegments = "" + parameters.getSegmentLength();
 

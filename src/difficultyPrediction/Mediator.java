@@ -2,7 +2,7 @@ package difficultyPrediction;
 
 import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
-import difficultyPrediction.featureExtraction.AFeatureExtractorDetails;
+import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.predictionManagement.APredictionManager;
