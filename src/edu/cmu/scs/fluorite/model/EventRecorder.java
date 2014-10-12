@@ -29,6 +29,8 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.eclipse.core.runtime.ListenerList;
+import org.eclipse.core.variables.IStringVariableManager;
+import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.debug.core.DebugPlugin;
 import org.eclipse.swt.events.FocusListener;
 import org.eclipse.swt.graphics.Image;
@@ -92,6 +94,7 @@ import edu.cmu.scs.fluorite.recorders.ExecutionRecorder;
 import edu.cmu.scs.fluorite.recorders.PartRecorder;
 import edu.cmu.scs.fluorite.recorders.ShellRecorder;
 import edu.cmu.scs.fluorite.recorders.StyledTextEventRecorder;
+import edu.cmu.scs.fluorite.recorders.VariableValueRecorder;
 import edu.cmu.scs.fluorite.util.EventLoggerConsole;
 import edu.cmu.scs.fluorite.util.Utilities;
 import edu.cmu.scs.fluorite.viewpart.HelpViewPart;
@@ -480,6 +483,15 @@ public class EventRecorder {
 		// listen for adding breakpoints and removing breakpoints
 		DebugPlugin.getDefault().getBreakpointManager()
 				.addBreakpointListener(BreakPointRecorder.getInstance());
+		
+//		try {
+//			VariablesPlugin plugIn = VariablesPlugin.getDefault();
+//			IStringVariableManager manager = plugIn.getStringVariableManager();
+//			manager.addValueVariableListener(VariableValueRecorder.getInstance());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		
 
 		initializeLogger();
 
@@ -561,9 +573,16 @@ public class EventRecorder {
 			e.printStackTrace();
 		}
 
+//		try {
+//			DebugPlugin.getDefault().removeDebugEventListener(
+//					DebugEventSetRecorder.getInstance());
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+		
 		try {
-			DebugPlugin.getDefault().removeDebugEventListener(
-					DebugEventSetRecorder.getInstance());
+			VariablesPlugin.getDefault().getStringVariableManager().removeValueVariableListener(
+					VariableValueRecorder.getInstance());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
