@@ -168,4 +168,8 @@ public class Insert extends BaseDocumentChangeEvent {
 			e.printStackTrace();
 		}
 	}
+	
+//	public String toString() {
+//		return getName();
+//	}
 }

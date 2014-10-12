@@ -178,4 +178,8 @@ public class FileOpenCommand extends BaseDocumentChangeEvent {
 			doc.set(getSnapshot());
 		}
 	}
+	
+//	public String toString() {
+//		return getName();
+//	}
 }
