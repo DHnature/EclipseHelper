@@ -17,8 +17,10 @@ import org.eclipse.ui.internal.browser.BrowserViewer;
 import org.eclipse.ui.internal.browser.WebBrowserEditor;
 import org.eclipse.ui.internal.browser.WebBrowserView;
 
-import trace.plugin.EclipseHelperTracerSetter;
 import trace.plugin.PluginEarlyStarted;
+import trace.setter.EclipseHelperTracerSetter;
+import trace.workbench.PartActivated;
+import trace.workbench.PartOpened;
 
 public class EventLoggerStartup implements IStartup {
 
@@ -29,6 +31,7 @@ public class EventLoggerStartup implements IStartup {
 		final IPartListener partListener = new IPartListener() {
 		    @Override
 		    public void partOpened(IWorkbenchPart part) {
+		    	PartOpened.newCase(part, this);
 		        if (part instanceof WebBrowserEditor)
 		        {
 		            WebBrowserEditor editor = (WebBrowserEditor) part;
@@ -93,6 +96,7 @@ public class EventLoggerStartup implements IStartup {
 
 			@Override
 			public void partActivated(IWorkbenchPart part) {
+				PartActivated.newCase(part, this);
 				System.out.println("part activated");
 				// TODO Auto-generated method stub
 				

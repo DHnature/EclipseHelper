@@ -34,7 +34,7 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 		while (true) {
 		try {
 			 newCommand = pendingCommands.take();
-			 if (newCommand == null) // stop event
+			 if (newCommand instanceof AnEndOfQueueCommand) // stop event
 				 break;
 			if (!newCommand.getCommandType().equals("PredictionCommand"))
 				statusPredictor.processEvent(newCommand);

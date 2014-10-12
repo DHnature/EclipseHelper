@@ -23,7 +23,7 @@ public class NewFileSnapshot extends TraceableInfo{
 	
     public static String toString(String aFileName, String aFileContents) {
     	return("(" + 
-    				aFileName + "," + aFileContents.substring(0, 60) + "..." +
+    				aFileName + "," + aFileContents.substring(0, Math.min(60, aFileContents.length())) + "..." +
     				")");
     }
     public static NewFileSnapshot newCase (String aMessage, String aFileName,  String aFileContents, Object aFinder) {

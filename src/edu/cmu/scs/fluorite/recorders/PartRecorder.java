@@ -5,6 +5,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 
+import trace.workbench.PartActivated;
+import trace.workbench.PartOpened;
 import edu.cmu.scs.fluorite.commands.FileOpenCommand;
 import edu.cmu.scs.fluorite.model.FileSnapshotManager;
 import edu.cmu.scs.fluorite.util.Utilities;
@@ -36,6 +38,7 @@ public class PartRecorder extends BaseRecorder implements IPartListener {
 	}
 
 	public void partActivated(IWorkbenchPart part) {
+		PartActivated.newCase(part, this);
 		if (part instanceof IEditorPart) {
 			if (getRecorder().getEditor() == part) {
 				return;
@@ -82,7 +85,7 @@ public class PartRecorder extends BaseRecorder implements IPartListener {
 	}
 
 	public void partOpened(IWorkbenchPart part) {
-		// TODO Auto-generated method stub
+		PartOpened.newCase(part, this);
 
 	}
 

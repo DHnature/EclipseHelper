@@ -57,7 +57,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import config.FactoriesSelector;
-import trace.listenerRegistration.PartListenerAdded;
 import trace.logger.LogFileCreated;
 import trace.logger.LogHandlerBound;
 import trace.logger.MacroCommandsLogBegin;
@@ -67,10 +66,12 @@ import trace.plugin.PluginStopped;
 import trace.recorder.MacroRecordingStarted;
 import trace.recorder.NewMacroCommand;
 import trace.recorder.RecordedCommandsCleared;
+import trace.workbench.PartListenerAdded;
 import util.trace.session.ThreadCreated;
 import buddylist.database.DatabaseConnection;
 import buddylist.database.DatabaseUtils;
 import difficultyPrediction.ADifficultyPredictionRunnable;
+import difficultyPrediction.AnEndOfQueueCommand;
 import difficultyPrediction.DifficultyPredictionRunnable;
 import difficultyPrediction.DifficultyRobot;
 import edu.cmu.scs.fluorite.actions.FindAction;
@@ -457,7 +458,7 @@ public class EventRecorder {
 			IPartService service = window.getPartService();
 			if (service != null) {
 				service.addPartListener(PartRecorder.getInstance());
-				PartListenerAdded.newCase(PartRecorder.getInstance(), this);
+				PartListenerAdded.newCase(service, PartRecorder.getInstance(), this);
 
 				if (service.getActivePart() instanceof IEditorPart) {
 					PartRecorder.getInstance().partActivated(
@@ -570,7 +571,7 @@ public class EventRecorder {
 		// purge timer events.
 		getTimer().cancel();
 		getTimer().purge();
-		pendingPredictionCommands.add(null);
+		pendingPredictionCommands.add(new AnEndOfQueueCommand());
 	}
 
 	private void initializeLogger() {

@@ -1,4 +1,4 @@
-package trace.plugin;
+package trace.setter;
 
 import trace.difficultyPrediction.NewEventSegmentAggregation;
 import trace.difficultyPrediction.NewExtractedFeatures;
@@ -9,12 +9,18 @@ import trace.difficultyPrediction.StatusAggregationStarted;
 import trace.logger.LogFileCreated;
 import trace.logger.MacroCommandsLogBegin;
 import trace.logger.MacroCommandsLogEnd;
+import trace.plugin.PluginEarlyStarted;
+import trace.plugin.PluginStarted;
+import trace.plugin.PluginStopped;
+import trace.plugin.PluginThreadCreated;
 import trace.recorder.ExcludedCommand;
 import trace.recorder.MacroRecordingStarted;
 import trace.recorder.NewFileSnapshot;
 import trace.recorder.NewMacroCommand;
 import trace.recorder.RecordedCommandsCleared;
 import trace.view.help.HelpViewCreated;
+import trace.workbench.PartActivated;
+import trace.workbench.PartOpened;
 import util.trace.ImplicitKeywordKind;
 import util.trace.MessagePrefixKind;
 import util.trace.Traceable;
@@ -71,6 +77,9 @@ public class EclipseHelperTracerSetter {
 		Tracer.setKeywordPrintStatus(HelpViewCreated.class, true);
 		Tracer.setKeywordPrintStatus(PluginThreadCreated.class, true);
 		Tracer.setKeywordPrintStatus(NewFileSnapshot.class, true);
+		Tracer.setKeywordPrintStatus(PartActivated.class, true);
+		Tracer.setKeywordPrintStatus(PartOpened.class, true);
+
 
 		
 
