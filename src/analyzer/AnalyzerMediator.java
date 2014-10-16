@@ -15,8 +15,8 @@ import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEvents
 import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
-import difficultyPrediction.predictionManagement.APredictionManager;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
+import difficultyPrediction.predictionManagement.PredictionManager;
 import difficultyPrediction.statusManager.StatusManager;
 import difficultyPrediction.statusManager.StatusManagerDetails;
 
@@ -111,7 +111,7 @@ public class AnalyzerMediator implements Mediator {
 	
 
 	@Override
-	public void predictionManager_HandOffPrediction(APredictionManager manager,
+	public void predictionManager_HandOffPrediction(PredictionManager manager,
 			APredictionManagerDetails details) {
 		// not used
 

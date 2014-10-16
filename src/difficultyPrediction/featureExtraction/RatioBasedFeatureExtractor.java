@@ -9,4 +9,9 @@ public interface RatioBasedFeatureExtractor {
 			double navigationRatio, double focusRatio, double removeRatio,
 			double exceptionsPerRun);
 
+	FeatureExtractionStrategy getFeatureExtractionStrategy();
+
+	void setFeatureExtractionStrategy(
+			FeatureExtractionStrategy featureExtractionStrategy);
+
 }

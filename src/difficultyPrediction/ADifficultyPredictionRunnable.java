@@ -68,6 +68,32 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 		}
 		
 	}
+//	public  void processCommand(ICommand newCommand) {
+//		if (!newCommand.getCommandType().equals("PredictionCommand"))
+//			statusPredictor.processEvent(newCommand);
+//		else {
+//			// need to display prediction, but this should be done on
+//			// the UI thread
+//			PlatformUI.getWorkbench().getDisplay()
+//					.asyncExec(new Runnable() {
+//						@Override
+//						public void run() {
+//							PredictionCommand predictionCommand = (PredictionCommand) newCommand;
+//							changeStatusInHelpView(predictionCommand);
+//						}
+//					});
+//			PlatformUI.getWorkbench().getDisplay()
+//					.asyncExec(new Runnable() {
+//						@Override
+//						public void run() {
+//							PredictionCommand predictionCommand = (PredictionCommand) newCommand;
+//							changeStatusInHelpView(predictionCommand);
+//						}
+//					});
+//
+//		}
+//		
+//	}
 	public void changeStatusInHelpView(PredictionCommand predictionCommand) {
 		String status = "";
 		switch (predictionCommand.getPredictionType()) {

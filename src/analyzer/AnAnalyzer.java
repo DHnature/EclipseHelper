@@ -9,17 +9,21 @@ import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
+import java.util.concurrent.BlockingQueue;
 
 import javax.swing.JFileChooser;
 
 import org.joda.time.DateTime;
 
 import config.FactoriesSelector;
+import difficultyPrediction.ADifficultyPredictionRunnable;
+import difficultyPrediction.DifficultyPredictionRunnable;
 import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.util.LogReader;
+import trace.plugin.PluginThreadCreated;
 import util.annotations.Column;
 import util.annotations.Row;
 import util.annotations.Visible;
@@ -40,6 +44,9 @@ public class AnAnalyzer {
 	FileSetterModel participantsFolder;
 	AParametersSelector parameters;
 	LogReader reader;
+	protected Thread difficultyPredictionThread;	
+	protected DifficultyPredictionRunnable difficultyPredictionRunnable;
+	protected BlockingQueue<ICommand> pendingPredictionCommands;
 	public AnAnalyzer() {
 		DifficultyPredictionSettings.setReplayMode(true);
 		DifficultyPredictionSettings.setSegmentLength(SEGMENT_LENGTH);
@@ -50,6 +57,16 @@ public class AnAnalyzer {
 		parameters = new AParametersSelector(this);
 		parameters.getParticipants().addChoice(ALL_PARTICIPANTS);
 		parameters.getParticipants().setValue(ALL_PARTICIPANTS);
+//		difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
+//		pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
+//		difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
+//		difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
+//		difficultyPredictionThread.setPriority(Math.min(
+//				Thread.currentThread().getPriority(),
+//				DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
+//		difficultyPredictionThread.start();
+//		PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
+		 
 		
 	}
 	@Row(0)
@@ -138,6 +155,27 @@ public class AnAnalyzer {
 		}
 
 		logsLoaded = true;
+	}
+	
+	public void processParticipant(String aParticipantId) {
+		String aParticipantFolder = participants.get(aParticipantId);
+
+		commandsList =  convertXMLLogToObjects(aParticipantFolder);
+		DifficultyPredictionSettings.setRatiosFileName(aParticipantFolder + "ratios.csv");
+		difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
+		pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
+		difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
+		difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
+		difficultyPredictionThread.setPriority(Math.min(
+				Thread.currentThread().getPriority(),
+				DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
+		difficultyPredictionThread.start();
+		PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
+//		for (ICommand aCommand: commandsList) {
+//			
+//		}
+		
+
 	}
 	public  List<List<ICommand>> convertXMLLogToObjects(
 			String aFolderName) {

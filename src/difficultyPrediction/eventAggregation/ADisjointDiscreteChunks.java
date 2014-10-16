@@ -20,7 +20,7 @@ public class ADisjointDiscreteChunks implements EventAggregationStrategy {
 	}
 
 	public void performAggregation(ICommand event,
-			AnEventAggregator eventAggregator) {
+			EventAggeragator eventAggregator) {
 
 		actions.addEvents(event);
 
@@ -45,5 +45,7 @@ public class ADisjointDiscreteChunks implements EventAggregationStrategy {
 	}
 
 	private EventAggregatorArray actions = new EventAggregatorArray();
+
+	
 
 }

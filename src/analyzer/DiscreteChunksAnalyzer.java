@@ -1,5 +1,6 @@
 package analyzer;
 
+import difficultyPrediction.eventAggregation.EventAggeragator;
 import difficultyPrediction.eventAggregation.EventAggregationStrategy;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.EventAggregatorArray;
@@ -23,7 +24,7 @@ public class DiscreteChunksAnalyzer implements EventAggregationStrategy {
 
 	@Override
 	public void performAggregation(ICommand event,
-			AnEventAggregator eventAggregator) {
+			EventAggeragator eventAggregator) {
 		actions.addEvents(event);
 		if (ignoreEvents) {
 			System.out

@@ -11,8 +11,10 @@ public class ARatioBasedFeatureExtractor implements RatioBasedFeatureExtractor {
 		this.mediator = mediator;
 	}
 	
-	public FeatureExtractionStrategy featureExtractionStrategy;
+	 FeatureExtractionStrategy featureExtractionStrategy;
 	
+	
+
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor#onFeatureHandOff(double, double, double, double, double)
 	 */
@@ -53,6 +55,15 @@ public class ARatioBasedFeatureExtractor implements RatioBasedFeatureExtractor {
 	        }
 		 
      }
+	@Override
+	public FeatureExtractionStrategy getFeatureExtractionStrategy() {
+		return featureExtractionStrategy;
+	}
+	@Override
+	public void setFeatureExtractionStrategy(
+			FeatureExtractionStrategy featureExtractionStrategy) {
+		this.featureExtractionStrategy = featureExtractionStrategy;
+	}
 	 
 	 
 	
