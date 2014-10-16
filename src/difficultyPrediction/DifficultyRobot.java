@@ -14,8 +14,10 @@ import java.util.Calendar;
 
 
 
+
+import analyzer.AnAnalyzer;
 import trace.difficultyPrediction.NewPredictionEvent;
-import trace.difficultyPrediction.NewExtractedFeatures;
+import trace.difficultyPrediction.NewExtractedStatusInformation;
 import trace.difficultyPrediction.NewPrediction;
 import trace.difficultyPrediction.PredictionValueToStatus;
 import trace.difficultyPrediction.StatusAggregationStarted;
@@ -100,7 +102,8 @@ public class DifficultyRobot implements Mediator {
 		statusInformation.setNavigationRatio(details.getNavigationRatio());
 		statusInformation.setRemoveRatio(details.getRemoveRatio());
 		statusInformation.setFocusRatio(details.getFocusRatio());
-		NewExtractedFeatures.newCase(statusInformation, this);
+		NewExtractedStatusInformation.newCase(statusInformation, this);
+		AnAnalyzer.maybeRecordFeatures(details);
 
 		this.predictionManager.predictionStrategy.predictSituation(details.getEditRatio(), details.getDebugRatio(), details.getNavigationRatio(), details.getFocusRatio(), details.getRemoveRatio());
 //		NewPrediction.newCase(this);

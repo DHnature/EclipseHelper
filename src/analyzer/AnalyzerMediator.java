@@ -107,6 +107,8 @@ public class AnalyzerMediator implements Mediator {
 		
 
 	}
+	
+	
 
 	@Override
 	public void predictionManager_HandOffPrediction(APredictionManager manager,

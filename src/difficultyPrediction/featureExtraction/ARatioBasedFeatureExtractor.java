@@ -1,5 +1,6 @@
 package difficultyPrediction.featureExtraction;
 
+import trace.difficultyPrediction.NewExtractedFeatures;
 import difficultyPrediction.Mediator;
 
 public class ARatioBasedFeatureExtractor implements RatioBasedFeatureExtractor {
@@ -20,13 +21,14 @@ public class ARatioBasedFeatureExtractor implements RatioBasedFeatureExtractor {
 			double removeRatio) {
 		if (mediator != null)                           //Any handlers attached to this event?  
         {
-            ARatioFeatures args = new ARatioFeatures();
-            args.editRatio = editRatio;
-            args.debugRatio = debugRatio;
-            args.navigationRatio = navigationRatio;
-            args.focusRatio = focusRatio;
-            args.removeRatio = removeRatio;
-            args.exceptionsPerRun = 0;
+            RatioFeatures args = new ARatioFeatures();
+            args.setEditRatio(editRatio);
+            args.setDebugRatio(debugRatio);
+            args.setNavigationRatio(navigationRatio);
+            args.setFocusRatio(focusRatio);
+            args.setRemoveRatio(removeRatio);
+            args.setExceptionsPerRun(0);
+            NewExtractedFeatures.newCase(args, this);
             mediator.featureExtractor_HandOffFeatures(this, args);                       //Raise the event  
         }
 	}

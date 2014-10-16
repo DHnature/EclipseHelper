@@ -3,14 +3,21 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
 
+import org.joda.time.DateTime;
+
 import config.FactoriesSelector;
+import difficultyPrediction.DifficultyPredictionSettings;
+import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
+import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.util.LogReader;
 import util.annotations.Column;
@@ -25,7 +32,7 @@ public class AnAnalyzer {
 	public static final String PARTICIPANT_INFORMATION_DIRECTORY = "data/ExperimentalData/";
 
 	public static final String PARTICIPANT_INFORMATION_FILE = "Participant_Info.csv";
-	public static final String DEFAULT_NUMBER_OF_SEGMENTS = "50";
+	public static final int SEGMENT_LENGTH = 50;
 	public static final String ALL_PARTICIPANTS = "All";
 	static Hashtable<String, String> participants = new Hashtable<String, String>();
 	List<List<ICommand>> commandsList;
@@ -34,6 +41,9 @@ public class AnAnalyzer {
 	AParametersSelector parameters;
 	LogReader reader;
 	public AnAnalyzer() {
+		DifficultyPredictionSettings.setReplayMode(true);
+		DifficultyPredictionSettings.setSegmentLength(SEGMENT_LENGTH);
+
 		reader = new LogReader();
 		participantsFolder = new AFileSetterModel(JFileChooser.DIRECTORIES_ONLY);
 		participantsFolder.setText(MainConsoleUI.PARTICIPANT_INFORMATION_DIRECTORY);
@@ -96,7 +106,7 @@ public class AnAnalyzer {
 			participantId = ALL_PARTICIPANTS;
 		
 		if(numberOfSegments.equalsIgnoreCase(""))
-			numberOfSegments = DEFAULT_NUMBER_OF_SEGMENTS;
+			numberOfSegments = "" + SEGMENT_LENGTH;
 		
 		//todo need to ask for discrete chunks or sliding window
 		//may d for discrete and s for sliding window
@@ -123,6 +133,7 @@ public class AnAnalyzer {
 			String aParticipanttFolder = participants.get(participantId);
 
 			commandsList =  convertXMLLogToObjects(aParticipanttFolder);
+			DifficultyPredictionSettings.setRatiosFileName(aParticipanttFolder + "ratios.csv");
 			 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments, aParticipanttFolder);
 		}
 
@@ -184,6 +195,61 @@ public class AnAnalyzer {
 		OEFrame frame = ObjectEditor.edit(new AnAnalyzer());
 		frame.setSize(550, 200);
 		
+	}
+	
+	public static void maybeRecordFeatures(RatioFeatures details) {
+		if (!DifficultyPredictionSettings.isReplayMode()) 
+			return;
+		String aFileName = DifficultyPredictionSettings.getRatiosFileName();
+
+		System.out.println("Insertion ratio:" + details.getInsertionRatio());
+		System.out.println("Deletion ratio:" + details.getDeletionRatio());
+		System.out.println("Debug ratio:" + details.getDebugRatio());
+		System.out.println("Navigation ratio:" + details.getNavigationRatio());
+		System.out.println("Focus ratio:" + details.getFocusRatio());
+		System.out.println("Remove ratio:" + details.getRemoveRatio());
+		System.out.println("features have been computed");
+		
+		java.util.Date time=new java.util.Date((long)details.getSavedTimeStamp());
+		Calendar mydate = Calendar.getInstance();
+		mydate.setTimeInMillis(details.getSavedTimeStamp());
+		
+		//mydate.get(Calendar.HOUR)
+		//mydate.get(Calendar.MINUTE)
+		//mydate.get(Calendar.SECOND)
+		DateTime timestamp = new DateTime(details.getSavedTimeStamp());
+		//timestamp.get(timestamp)
+		
+		System.out.println(timestamp.toString("MM-dd-yyyy H:mm:ss"));
+		try
+		{
+//		    String filename= "/users/jasoncarter/filename.csv";
+//		    String filename = dataFolder + "ratios.csv";
+		    FileWriter fw = new FileWriter(aFileName,true); //the true will append the new data
+		   
+		    fw.write(""+ details.getInsertionRatio());
+		    fw.write(",");
+		    fw.write("" + details.getDeletionRatio());
+		    fw.write(",");
+		    fw.write("" + details.getDebugRatio());
+		    fw.write(",");
+		    fw.write("" + details.getNavigationRatio());
+		    fw.write(",");
+		    fw.write("" + details.getFocusRatio());
+		    fw.write(",");
+			fw.write("" + details.getRemoveRatio());
+			fw.write(",");
+			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
+			fw.write("\n");
+		    fw.close();
+		}
+		catch(IOException ioe)
+		{
+		    System.err.println("IOException: " + ioe.getMessage());
+		}
+		
+		
+
 	}
 
 }
