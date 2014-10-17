@@ -6,7 +6,7 @@ import trace.difficultyPrediction.NewEventSegmentAggregation;
 import difficultyPrediction.Mediator;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
-public interface EventAggeragator {
+public interface EventAggregator {
 	public long getStartTimestamp();
 	
 	public void setStartTimeStamp(long startTimeStamp);

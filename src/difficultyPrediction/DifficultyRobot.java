@@ -28,7 +28,7 @@ import util.trace.Tracer;
 import difficultyPrediction.eventAggregation.ADisjointDiscreteChunks;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
-import difficultyPrediction.eventAggregation.EventAggeragator;
+import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEvents;
 import difficultyPrediction.featureExtraction.ARatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.ARatioFeatures;
@@ -49,7 +49,7 @@ import edu.cmu.scs.fluorite.model.EventRecorder;
 public class DifficultyRobot implements Mediator {
 	//Server server;
 	String id = "";
-	EventAggeragator eventAggregator;
+	EventAggregator eventAggregator;
 	RatioBasedFeatureExtractor featureExtractor;
 	PredictionManager predictionManager;
 	StatusManager statusManager;
@@ -76,6 +76,7 @@ public class DifficultyRobot implements Mediator {
 	
 	
 	//Aggregate events using aggregator class
+	@Override
 	public void processEvent(ICommand e) {
 		NewPredictionEvent.newCase(this);
 //		Tracer.info(this, "difficultyRobot.processEvent");
@@ -185,12 +186,12 @@ public class DifficultyRobot implements Mediator {
 	}
 
 
-	public EventAggeragator getEventAggregator() {
+	public EventAggregator getEventAggregator() {
 		return eventAggregator;
 	}
 
 
-	public void setEventAggregator(EventAggeragator eventAggregator) {
+	public void setEventAggregator(EventAggregator eventAggregator) {
 		this.eventAggregator = eventAggregator;
 	}
 

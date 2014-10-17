@@ -9,8 +9,10 @@ import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
 
 import difficultyPrediction.Mediator;
+import difficultyPrediction.StatusInformation;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
+import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime;
 import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
@@ -19,6 +21,7 @@ import difficultyPrediction.predictionManagement.APredictionManagerDetails;
 import difficultyPrediction.predictionManagement.PredictionManager;
 import difficultyPrediction.statusManager.StatusManager;
 import difficultyPrediction.statusManager.StatusManagerDetails;
+import edu.cmu.scs.fluorite.commands.ICommand;
 
 public class AnalyzerMediator implements Mediator {
 	FeatureExtractorAnalyzer featureExtractorAnalyzer;
@@ -122,6 +125,72 @@ public class AnalyzerMediator implements Mediator {
 			StatusManagerDetails details) {
 		// not used
 
+	}
+
+	@Override
+	public void processEvent(ICommand e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public EventAggregator getEventAggregator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setEventAggregator(EventAggregator eventAggregator) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public RatioBasedFeatureExtractor getFeatureExtractor() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setFeatureExtractor(RatioBasedFeatureExtractor featureExtractor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public PredictionManager getPredictionManager() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setPredictionManager(PredictionManager predictionManager) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public StatusManager getStatusManager() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setStatusManager(StatusManager statusManager) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public StatusInformation getStatusInformation() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setStatusInformation(StatusInformation statusInformation) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -21,52 +21,59 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 	public static final int NUM_PENDING_SEGMENTS = 4;
 	public static final int NUM_PENDING_COMMANDS = NUM_PENDING_SEGMENTS*ADisjointDiscreteChunks.DEFAULT_IGNORE_NUM;
 	BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue(NUM_PENDING_COMMANDS);
-	protected DifficultyRobot statusPredictor = null;
+	protected Mediator mediator = null;
 	ICommand newCommand;
 	protected ToolTip ballonTip;
 //	protected TrayItem trayItem;
 
 	
 	public ADifficultyPredictionRunnable() {
-		statusPredictor = new DifficultyRobot("");
+		mediator = new DifficultyRobot("");
 	}
+
 	public void run() {
 		while (true) {
-		try {
-			 newCommand = pendingCommands.take();
-			 if (newCommand instanceof AnEndOfQueueCommand) // stop event
-				 break;
-			if (!newCommand.getCommandType().equals("PredictionCommand"))
-				statusPredictor.processEvent(newCommand);
-			else {
-				// need to display prediction, but this should be done on
-				// the UI thread
-				PlatformUI.getWorkbench().getDisplay()
-						.asyncExec(new Runnable() {
-							@Override
-							public void run() {
-								PredictionCommand predictionCommand = (PredictionCommand) newCommand;
-								changeStatusInHelpView(predictionCommand);
-							}
-						});
-				PlatformUI.getWorkbench().getDisplay()
-						.asyncExec(new Runnable() {
-							@Override
-							public void run() {
-								PredictionCommand predictionCommand = (PredictionCommand) newCommand;
-								changeStatusInHelpView(predictionCommand);
-							}
-						});
+			try {
+				newCommand = pendingCommands.take();
+				if (newCommand instanceof AnEndOfQueueCommand) // stop event
+					break;
+				if (!newCommand.getCommandType().equals("PredictionCommand"))
+					mediator.processEvent(newCommand);
+				else {
+					if (DifficultyPredictionSettings.isReplayMode()) {
+						System.out.println("Prediction: "
+								+ ((PredictionCommand) newCommand)
+										.getPredictionType());
+					} else {
+						// need to display prediction, but this should be done
+						// on
+						// the UI thread
+						PlatformUI.getWorkbench().getDisplay()
+								.asyncExec(new Runnable() {
+									@Override
+									public void run() {
+										PredictionCommand predictionCommand = (PredictionCommand) newCommand;
+										changeStatusInHelpView(predictionCommand);
+									}
+								});
+						PlatformUI.getWorkbench().getDisplay()
+								.asyncExec(new Runnable() {
+									@Override
+									public void run() {
+										PredictionCommand predictionCommand = (PredictionCommand) newCommand;
+										changeStatusInHelpView(predictionCommand);
+									}
+								});
 
+					}
+				}
+
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		
-			
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
-		}
-		
+
 	}
 //	public  void processCommand(ICommand newCommand) {
 //		if (!newCommand.getCommandType().equals("PredictionCommand"))
@@ -131,8 +138,8 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 	public BlockingQueue<ICommand> getPendingCommands() {
 		return pendingCommands;
 	}
-	public DifficultyRobot getStatusPredictor() {
-		return statusPredictor;
+	public Mediator getMediator() {
+		return mediator;
 	}
 	public ToolTip getBallonTip() {
 		return ballonTip;

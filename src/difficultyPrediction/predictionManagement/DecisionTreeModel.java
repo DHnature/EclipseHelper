@@ -1,9 +1,14 @@
 package difficultyPrediction.predictionManagement;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+
+import org.eclipse.ui.part.PluginDropAdapter;
+
+import difficultyPrediction.DifficultyPredictionSettings;
 import weka.classifiers.trees.*;
 
 public class DecisionTreeModel implements PredictionManagerStrategy {
@@ -25,10 +30,19 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 		URL url;
 
 		try {
+			//platform:/plugin/
+			InputStream inputStream;
+			if (DifficultyPredictionSettings.isReplayMode()) {
+				inputStream = new FileInputStream( WEKA_DATA_FILE_LOCATION);
+			} else {
 			url = new URL(edu.cmu.scs.fluorite.plugin.Activator.getDefault()
 					.getDescriptor().getInstallURL(), WEKA_DATA_FILE_LOCATION);
+			
 
-			InputStream inputStream = url.openConnection().getInputStream();
+//			InputStream inputStream = url.openConnection().getInputStream();
+			inputStream = url.openConnection().getInputStream();
+			}
+
 
 			isTrainingSet = new weka.core.Instances(new BufferedReader(
 					new InputStreamReader(inputStream)));

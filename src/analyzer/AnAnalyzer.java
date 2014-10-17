@@ -17,8 +17,12 @@ import org.joda.time.DateTime;
 
 import config.FactoriesSelector;
 import difficultyPrediction.ADifficultyPredictionRunnable;
+import difficultyPrediction.AnEndOfQueueCommand;
 import difficultyPrediction.DifficultyPredictionRunnable;
 import difficultyPrediction.DifficultyPredictionSettings;
+import difficultyPrediction.Mediator;
+import difficultyPrediction.eventAggregation.AnEventAggregator;
+import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -57,15 +61,7 @@ public class AnAnalyzer {
 		parameters = new AParametersSelector(this);
 		parameters.getParticipants().addChoice(ALL_PARTICIPANTS);
 		parameters.getParticipants().setValue(ALL_PARTICIPANTS);
-//		difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
-//		pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
-//		difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
-//		difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
-//		difficultyPredictionThread.setPriority(Math.min(
-//				Thread.currentThread().getPriority(),
-//				DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
-//		difficultyPredictionThread.start();
-//		PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
+
 		 
 		
 	}
@@ -109,7 +105,8 @@ public class AnAnalyzer {
 		directoryLoaded = true;		
 	}
 	public boolean preLoadLogs() {
-		return directoryLoaded && !logsLoaded;
+		return directoryLoaded;
+//				&& !logsLoaded;
 	}
 	boolean logsLoaded;
 	@Visible(false)
@@ -137,21 +134,22 @@ public class AnAnalyzer {
 			for (String aParticipantId:participantIds) {
 				if (aParticipantId.equals(ALL_PARTICIPANTS))
 					continue;
+				// integrated analyzer
+				processParticipant(participantId);
 
-				
-//				String aParticipantId = participantIds
-//						.nextElement();
-//				String aParticipantFolder = participants.
-				String aParticipanttFolder = participants.get(aParticipantId);
-				commandsList = convertXMLLogToObjects(aParticipanttFolder);
-				 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments,aParticipanttFolder);
+// jason's code
+//				String aParticipanttFolder = participants.get(aParticipantId);
+//				commandsList = convertXMLLogToObjects(aParticipanttFolder);
+//				 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments,aParticipanttFolder);
 			}
 		} else {
 			String aParticipanttFolder = participants.get(participantId);
-
-			commandsList =  convertXMLLogToObjects(aParticipanttFolder);
-			DifficultyPredictionSettings.setRatiosFileName(aParticipanttFolder + "ratios.csv");
-			 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments, aParticipanttFolder);
+			processParticipant(participantId);
+// jason's code, separator mediator
+//			commandsList =  convertXMLLogToObjects(aParticipanttFolder);
+//			DifficultyPredictionSettings.setRatiosFileName(aParticipanttFolder + "ratios.csv");
+//			processParticipant(participantId);
+//			 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments, aParticipanttFolder);
 		}
 
 		logsLoaded = true;
@@ -171,6 +169,42 @@ public class AnAnalyzer {
 				DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
 		difficultyPredictionThread.start();
 		PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
+		Mediator mediator = difficultyPredictionRunnable.getMediator();
+		EventAggregator eventAggregator = mediator.getEventAggregator();
+		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer("" + DifficultyPredictionSettings.getSegmentLength()));
+		
+		long startTimeStamp = 0;
+		for (int index = 0; index < commandsList.size(); index++) {
+			List<ICommand> commands = commandsList.get(index);
+			for (int i = 0; i < commands.size(); i++) {
+				if ((commands.get(i).getTimestamp() == 0)
+						&& (commands.get(i).getTimestamp2() > 0)) {
+					// this is the starttimestamp
+					startTimeStamp = commands.get(i).getTimestamp2();
+				} else {
+					eventAggregator.setStartTimeStamp(startTimeStamp);
+					try {
+						pendingPredictionCommands.put(commands.get(i));
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+//					eventAggregator.getEventAggregationStrategy().performAggregation(commands.get(i), eventAggregator);
+
+					
+					
+				}
+
+			}
+		}
+		pendingPredictionCommands.add(new AnEndOfQueueCommand());
+		try {
+			difficultyPredictionThread.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 //		for (ICommand aCommand: commandsList) {
 //			
 //		}
