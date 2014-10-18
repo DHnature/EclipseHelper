@@ -268,6 +268,9 @@ public class AnAnalyzer {
 		for (int i = 0; i < participantFiles.size(); i++) {
 			String aFileName = fullName
 					+ participantFiles.get(i);
+			if (!aFileName.endsWith(".xml"))
+				continue;
+				
 //			List<ICommand> commands = reader.readAll(participantDirectory
 //					+ participantFiles.get(i));
 			System.out.println("Reading " + aFileName);
