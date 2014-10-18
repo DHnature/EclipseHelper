@@ -2,6 +2,7 @@ package analyzer;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,7 +38,12 @@ import bus.uigen.models.AFileSetterModel;
 import bus.uigen.models.FileSetterModel;
 
 public class AnAnalyzer {
+	public static final String PARTICIPANT_DIRECTORY = "data/";
+	public static final String EXPERIMENTAL_DATA = "ExperimentalData/";
+	public static final String OUTPUT_DATA = "OutputData/";
+
 	public static final String PARTICIPANT_INFORMATION_DIRECTORY = "data/ExperimentalData/";
+	public static final String PARTICIPANT_OUTPUT_DIRECTORY = "data/OutputData/";
 
 	public static final String PARTICIPANT_INFORMATION_FILE = "Participant_Info.csv";
 	public static final int SEGMENT_LENGTH = 50;
@@ -45,7 +51,7 @@ public class AnAnalyzer {
 	static Hashtable<String, String> participants = new Hashtable<String, String>();
 	List<List<ICommand>> commandsList;
 
-	FileSetterModel participantsFolder;
+	FileSetterModel participantsFolder, ouputFolder, experimentalData;
 	AParametersSelector parameters;
 	LogReader reader;
 	protected Thread difficultyPredictionThread;	
@@ -57,7 +63,7 @@ public class AnAnalyzer {
 
 		reader = new LogReader();
 		participantsFolder = new AFileSetterModel(JFileChooser.DIRECTORIES_ONLY);
-		participantsFolder.setText(MainConsoleUI.PARTICIPANT_INFORMATION_DIRECTORY);
+		participantsFolder.setText(PARTICIPANT_DIRECTORY);
 		parameters = new AParametersSelector(this);
 		parameters.getParticipants().addChoice(ALL_PARTICIPANTS);
 		parameters.getParticipants().setValue(ALL_PARTICIPANTS);
@@ -86,7 +92,8 @@ public class AnAnalyzer {
 		BufferedReader br = null;
 		try {
 			br = new BufferedReader(new FileReader(
-					PARTICIPANT_INFORMATION_DIRECTORY
+					participantsFolder.getLabel().getText() + EXPERIMENTAL_DATA
+//					PARTICIPANT_INFORMATION_DIRECTORY
 							+ PARTICIPANT_INFORMATION_FILE));
 			String word = null;
 			while ((word = br.readLine()) != null) {
@@ -157,9 +164,35 @@ public class AnAnalyzer {
 	
 	public void processParticipant(String aParticipantId) {
 		String aParticipantFolder = participants.get(aParticipantId);
+		String aFullParticipantOutputFolderName =participantsFolder.getText() + OUTPUT_DATA + aParticipantFolder + "/";
+		File anOutputFolder = new File(aFullParticipantOutputFolderName);
+		if (!anOutputFolder.exists())
+			anOutputFolder.mkdirs();
+		String aFullRatiosFileName = aFullParticipantOutputFolderName + "ratios.csv";		
+		File aRatiosFile = new File(aFullRatiosFileName);
+		if (!aRatiosFile.exists())
+		try {
+			aRatiosFile.createNewFile();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		try {
+			FileOutputStream writer = new FileOutputStream(aRatiosFile);
+			writer.close();
+
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 
 		commandsList =  convertXMLLogToObjects(aParticipantFolder);
-		DifficultyPredictionSettings.setRatiosFileName(aParticipantFolder + "ratios.csv");
+		DifficultyPredictionSettings.setRatiosFileName(aFullRatiosFileName);
 		difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
 		pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
 		difficultyPredictionThread = new Thread(difficultyPredictionRunnable);

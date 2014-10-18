@@ -26,7 +26,7 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 	}
 
 	private void buildJ48Model() {
-		weka.core.Instances isTrainingSet;
+		weka.core.Instances trainingSet;
 		URL url;
 
 		try {
@@ -44,10 +44,10 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 			}
 
 
-			isTrainingSet = new weka.core.Instances(new BufferedReader(
+			trainingSet = new weka.core.Instances(new BufferedReader(
 					new InputStreamReader(inputStream)));
-			isTrainingSet.setClassIndex(isTrainingSet.numAttributes() - 1);
-			j48Model.buildClassifier(isTrainingSet);
+			trainingSet.setClassIndex(trainingSet.numAttributes() - 1);
+			j48Model.buildClassifier(trainingSet);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -89,11 +89,11 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 			fvWekaAttributes.addElement(ClassAttribute);
 
 			// Create an empty training set
-			weka.core.Instances isTestingSet = new weka.core.Instances("Rel",
+			weka.core.Instances testingSet = new weka.core.Instances("Rel",
 					fvWekaAttributes, 10);
 
 			// Set class index
-			isTestingSet.setClassIndex(5);
+			testingSet.setClassIndex(5);
 
 			// Create the instance
 			weka.core.Instance iExample = new weka.core.Instance(5);
@@ -115,7 +115,7 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 					removeRatio);
 
 			// add the instance
-			isTestingSet.add(iExample);
+			testingSet.add(iExample);
 
 			if (!isj48ModelBuilt) {
 				long startTime = System.currentTimeMillis();
@@ -126,9 +126,9 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 				
 			}
 
-			double predictedClass = j48Model.classifyInstance(isTestingSet
+			double predictedClass = j48Model.classifyInstance(testingSet
 					.instance(0));
-			predictedValue = isTestingSet.classAttribute().value(
+			predictedValue = testingSet.classAttribute().value(
 					(int) predictedClass);
 //			System.out.println("Predicted Value: " + predictedValue);
 		} catch (Exception e) {
