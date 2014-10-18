@@ -165,6 +165,7 @@ public class AnAnalyzer {
 	public void processParticipant(String aParticipantId) {
 		String aParticipantFolder = participants.get(aParticipantId);
 		String aFullParticipantOutputFolderName =participantsFolder.getText() + OUTPUT_DATA + aParticipantFolder + "/";
+		String aFullParticipantDataFolderName =participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/";
 		File anOutputFolder = new File(aFullParticipantOutputFolderName);
 		if (!anOutputFolder.exists())
 			anOutputFolder.mkdirs();
@@ -191,7 +192,7 @@ public class AnAnalyzer {
 		
 		
 
-		commandsList =  convertXMLLogToObjects(aParticipantFolder);
+		commandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
 		DifficultyPredictionSettings.setRatiosFileName(aFullRatiosFileName);
 		difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
 		pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
@@ -248,8 +249,9 @@ public class AnAnalyzer {
 			String aFolderName) {
 		
 		List<List<ICommand>> listOfListOFcommands = new Vector<List<ICommand>>();
-		String fullName = participantsFolder.getText()
-				+ aFolderName + "/";
+//		String fullName = participantsFolder.getText()
+//				+ aFolderName + "/";
+		String fullName =	aFolderName;
 		File folder = new File(fullName);
 		if (!folder.exists()) {
 			System.out.println("folder does not exist:" + fullName);
