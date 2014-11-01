@@ -47,6 +47,7 @@ public class AParametersSelector  {
 	}
 	@Row(1)
 	@Column(0)
+	@Explanation("Load the names of the participants in the selected folder")
 	public void loadDirectory() {
 		if (analyzer != null)
 			analyzer.loadDirectory();
@@ -63,6 +64,7 @@ public class AParametersSelector  {
 	}
 	@Row(1)
 	@Column(1)
+	@Explanation("Loads the logs of a specific participant or all based on the participant selection")
     public void loadLogs() {
 		if (analyzer != null)
 			analyzer.loadLogs();

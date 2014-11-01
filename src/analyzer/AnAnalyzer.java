@@ -34,6 +34,7 @@ import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.util.LogReader;
 import trace.plugin.PluginThreadCreated;
 import util.annotations.Column;
+import util.annotations.Explanation;
 import util.annotations.Row;
 import util.annotations.Visible;
 import bus.uigen.OEFrame;
@@ -368,13 +369,13 @@ public class AnAnalyzer implements Analyzer  {
 			return;
 		String aFileName = DifficultyPredictionSettings.getRatiosFileName();
 
-		System.out.println("Insertion ratio:" + details.getInsertionRatio());
-		System.out.println("Deletion ratio:" + details.getDeletionRatio());
-		System.out.println("Debug ratio:" + details.getDebugRatio());
-		System.out.println("Navigation ratio:" + details.getNavigationRatio());
-		System.out.println("Focus ratio:" + details.getFocusRatio());
-		System.out.println("Remove ratio:" + details.getRemoveRatio());
-		System.out.println("features have been computed");
+//		System.out.println("Insertion ratio:" + details.getInsertionRatio());
+//		System.out.println("Deletion ratio:" + details.getDeletionRatio());
+//		System.out.println("Debug ratio:" + details.getDebugRatio());
+//		System.out.println("Navigation ratio:" + details.getNavigationRatio());
+//		System.out.println("Focus ratio:" + details.getFocusRatio());
+//		System.out.println("Remove ratio:" + details.getRemoveRatio());
+//		System.out.println("features have been computed");
 		
 		java.util.Date time=new java.util.Date((long)details.getSavedTimeStamp());
 		Calendar mydate = Calendar.getInstance();
@@ -386,7 +387,7 @@ public class AnAnalyzer implements Analyzer  {
 		DateTime timestamp = new DateTime(details.getSavedTimeStamp());
 		//timestamp.get(timestamp)
 		
-		System.out.println(timestamp.toString("MM-dd-yyyy H:mm:ss"));
+//		System.out.println(timestamp.toString("MM-dd-yyyy H:mm:ss"));
 		try
 		{
 //		    String filename= "/users/jasoncarter/filename.csv";
@@ -421,6 +422,7 @@ public class AnAnalyzer implements Analyzer  {
 	 * @see analyzer.Analyzer#getDifficultyEventProcessor()
 	 */
 	@Override
+	@Visible(false)
 	public DifficultyPredictionPluginEventProcessor getDifficultyEventProcessor() {
 		return difficultyEventProcessor;
 	}
