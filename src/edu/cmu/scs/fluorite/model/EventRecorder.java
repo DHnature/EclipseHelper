@@ -73,6 +73,7 @@ import util.trace.session.ThreadCreated;
 import buddylist.database.DatabaseConnection;
 import buddylist.database.DatabaseUtils;
 import difficultyPrediction.ADifficultyPredictionRunnable;
+import difficultyPrediction.ADifficultyPredictionPluginEventProcessor;
 import difficultyPrediction.AnEndOfQueueCommand;
 import difficultyPrediction.DifficultyPredictionRunnable;
 import difficultyPrediction.DifficultyRobot;
@@ -155,25 +156,25 @@ public class EventRecorder {
 	private List<Runnable> mScheduledTasks;
 
 	private static EventRecorder instance = null;
-	private static DifficultyRobot statusPredictor = null;
+//	private static DifficultyRobot statusPredictor = null;
 
 	private static TrayItem trayItem;
-	private static ToolTip ballonTip;
+//	private static ToolTip balloonTip;
 	
-	protected Thread difficultyPredictionThread;	
-	protected DifficultyPredictionRunnable difficultyPredictionRunnable;
-	protected BlockingQueue<ICommand> pendingPredictionCommands;
-	
-	enum PredictorThreadOption {
-		USE_CURRENT_THREAD,
-		NO_PROCESSING,
-		THREAD_PER_ACTION,
-		SINGLE_THREAD
-	} ;
-//	PredictorThreadOption predictorThreadOption = PredictorThreadOption.THREAD_PER_ACTION;
-//	PredictorThreadOption predictorThreadOption = PredictorThreadOption.USE_CURRENT_THREAD;
-//	PredictorThreadOption predictorThreadOption = PredictorThreadOption.NO_PROCESSING;
-	PredictorThreadOption predictorThreadOption = PredictorThreadOption.SINGLE_THREAD;
+//	protected Thread difficultyPredictionThread;	
+//	protected DifficultyPredictionRunnable difficultyPredictionRunnable;
+//	protected BlockingQueue<ICommand> pendingPredictionCommands;
+//	
+//	enum PredictorThreadOption {
+//		USE_CURRENT_THREAD,
+//		NO_PROCESSING,
+//		THREAD_PER_ACTION,
+//		SINGLE_THREAD
+//	} ;
+////	PredictorThreadOption predictorThreadOption = PredictorThreadOption.THREAD_PER_ACTION;
+////	PredictorThreadOption predictorThreadOption = PredictorThreadOption.USE_CURRENT_THREAD;
+////	PredictorThreadOption predictorThreadOption = PredictorThreadOption.NO_PROCESSING;
+//	PredictorThreadOption predictorThreadOption = PredictorThreadOption.SINGLE_THREAD;
 
 
 
@@ -201,7 +202,7 @@ public class EventRecorder {
 
 		mScheduledTasks = new ArrayList<Runnable>();
 
-		statusPredictor = new DifficultyRobot("");
+//		statusPredictor = new DifficultyRobot("");
 	}
 
 	public void setCurrentlyExecutingCommand(boolean executingCommand) {
@@ -420,23 +421,23 @@ public class EventRecorder {
 		}
 	}
 	
-	protected void maybeCreateDifficultyPredictionThread() {
-		if (predictorThreadOption == PredictorThreadOption.SINGLE_THREAD && pendingPredictionCommands == null) {
-			// create the difficulty prediction thread
-			difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
-			pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
-			difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
-			difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
-			difficultyPredictionThread.setPriority(Math.min(
-					Thread.currentThread().getPriority(),
-					DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
-			difficultyPredictionThread.start();
-			PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
-			}
-	}
+//	protected void maybeCreateDifficultyPredictionThread() {
+//		if (predictorThreadOption == PredictorThreadOption.SINGLE_THREAD && pendingPredictionCommands == null) {
+//			// create the difficulty prediction thread
+//			difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
+//			pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
+//			difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
+//			difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
+//			difficultyPredictionThread.setPriority(Math.min(
+//					Thread.currentThread().getPriority(),
+//					DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
+//			difficultyPredictionThread.start();
+//			PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
+//			}
+//	}
 
 	public void start() {
-		FactoriesSelector.configureFactories();
+//		FactoriesSelector.configureFactories();
 		MacroRecordingStarted.newCase(this);
 		EventLoggerConsole.getConsole().writeln("***Started macro recording",
 				EventLoggerConsole.Type_RecordingCommand);
@@ -446,7 +447,8 @@ public class EventRecorder {
 		mCurrentlyExecutingCommand = false;
 		mRecordCommands = true;
 		mStartTimestamp = Calendar.getInstance().getTime().getTime();
-		maybeCreateDifficultyPredictionThread();
+		ADifficultyPredictionPluginEventProcessor.getInstance().start();
+//		maybeCreateDifficultyPredictionThread();
 
 		// have to create the tray icon on the UI thread
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
@@ -590,7 +592,8 @@ public class EventRecorder {
 		// purge timer events.
 		getTimer().cancel();
 		getTimer().purge();
-		pendingPredictionCommands.add(new AnEndOfQueueCommand());
+		ADifficultyPredictionPluginEventProcessor.getInstance().stop();
+//		pendingPredictionCommands.add(new AnEndOfQueueCommand());
 	}
 
 	private void initializeLogger() {
@@ -760,80 +763,82 @@ public class EventRecorder {
 		// in a thread
 		// this should be done in a producer consumer thread rather than a new thread
 //		if (predictorThreadOption == PredictorThreadOption.THREAD_PER_ACTION) {
-			switch (predictorThreadOption) {
-			case NO_PROCESSING:
-				break;
-			case THREAD_PER_ACTION:
-		Runnable myTask = new Runnable() {
-			@Override
-			public void run() {
-				// do not predict status commands, this can cause a circular
-				// reference
-				PluginThreadCreated.newCase(Thread.currentThread().getName(), "", this);
-				System.out.println("New thread:" + Thread.currentThread().getName());
-
-				if (!newCommand.getCommandType().equals("PredictionCommand"))
-					statusPredictor.processEvent(newCommand);
-				else {
-					// need to display prediction, but this should be done on
-					// the UI thread
-					PlatformUI.getWorkbench().getDisplay()
-							.asyncExec(new Runnable() {
-								@Override
-								public void run() {
-									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
-									changeStatusInHelpView(predictionCommand);
-								}
-							});
-					PlatformUI.getWorkbench().getDisplay()
-							.asyncExec(new Runnable() {
-								@Override
-								public void run() {
-									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
-									changeStatusInHelpView(predictionCommand);
-								}
-							});
-
-				}
-			}
-		};
-		Thread myThread = new Thread(myTask);
-		myThread.start();
-		break;
-			case USE_CURRENT_THREAD: 
-				//  copy and paste code in above arm
-				if (!newCommand.getCommandType().equals("PredictionCommand"))
-					statusPredictor.processEvent(newCommand);
-				else {
-					// need to display prediction, but this should be done on
-					// the UI thread
-					PlatformUI.getWorkbench().getDisplay()
-							.asyncExec(new Runnable() {
-								@Override
-								public void run() {
-									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
-									changeStatusInHelpView(predictionCommand);
-								}
-							});
-					PlatformUI.getWorkbench().getDisplay()
-							.asyncExec(new Runnable() {
-								@Override
-								public void run() {
-									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
-									changeStatusInHelpView(predictionCommand);
-								}
-							});
-
-				}
-				break;
-			case SINGLE_THREAD:
-				maybeCreateDifficultyPredictionThread(); // got a null pointer once, just to be safe
-				// to be implemented
-//				System.out.println ("Single Thread option not implemented");
-				pendingPredictionCommands.add(newCommand); // do not block
-				break;
-			}
-		
+		// start of processing code
+//			switch (predictorThreadOption) {
+//			case NO_PROCESSING:
+//				break;
+//			case THREAD_PER_ACTION:
+//		Runnable myTask = new Runnable() {
+//			@Override
+//			public void run() {
+//				// do not predict status commands, this can cause a circular
+//				// reference
+//				PluginThreadCreated.newCase(Thread.currentThread().getName(), "", this);
+//				System.out.println("New thread:" + Thread.currentThread().getName());
+//
+//				if (!newCommand.getCommandType().equals("PredictionCommand"))
+//					statusPredictor.processEvent(newCommand);
+//				else {
+//					// need to display prediction, but this should be done on
+//					// the UI thread
+//					PlatformUI.getWorkbench().getDisplay()
+//							.asyncExec(new Runnable() {
+//								@Override
+//								public void run() {
+//									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
+//									changeStatusInHelpView(predictionCommand);
+//								}
+//							});
+//					PlatformUI.getWorkbench().getDisplay()
+//							.asyncExec(new Runnable() {
+//								@Override
+//								public void run() {
+//									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
+//									changeStatusInHelpView(predictionCommand);
+//								}
+//							});
+//
+//				}
+//			}
+//		};
+//		Thread myThread = new Thread(myTask);
+//		myThread.start();
+//		break;
+//			case USE_CURRENT_THREAD: 
+//				//  copy and paste code in above arm
+//				if (!newCommand.getCommandType().equals("PredictionCommand"))
+//					statusPredictor.processEvent(newCommand);
+//				else {
+//					// need to display prediction, but this should be done on
+//					// the UI thread
+//					PlatformUI.getWorkbench().getDisplay()
+//							.asyncExec(new Runnable() {
+//								@Override
+//								public void run() {
+//									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
+//									changeStatusInHelpView(predictionCommand);
+//								}
+//							});
+//					PlatformUI.getWorkbench().getDisplay()
+//							.asyncExec(new Runnable() {
+//								@Override
+//								public void run() {
+//									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
+//									changeStatusInHelpView(predictionCommand);
+//								}
+//							});
+//
+//				}
+//				break;
+//			case SINGLE_THREAD:
+//				maybeCreateDifficultyPredictionThread(); // got a null pointer once, just to be safe
+//				// to be implemented
+////				System.out.println ("Single Thread option not implemented");
+//				pendingPredictionCommands.add(newCommand); // do not block
+//				break;
+//			}
+		// end of thread code
+		ADifficultyPredictionPluginEventProcessor.getInstance().recordCommand(newCommand);
 		MacroCommandsLogBegin.newCase(commands, this);
 		// Log to the file.
 		while (commands.size() > 1
@@ -907,40 +912,40 @@ public class EventRecorder {
 		}
 	}
 
-	public void changeStatusInHelpView(PredictionCommand predictionCommand) {
-		String status = "";
-		switch (predictionCommand.getPredictionType()) {
-		case MakingProgress:
-			status = StatusConsts.MAKING_PROGRESS_STATUS;
-			break;
-		case HavingDifficulty:
-			status = StatusConsts.SLOW_PROGRESS_STATUS;
-			break;
-		case Indeterminate:
-			status = StatusConsts.INDETERMINATE;
-			break;
-		}
+//	public void changeStatusInHelpView(PredictionCommand predictionCommand) {
+//		String status = "";
+//		switch (predictionCommand.getPredictionType()) {
+//		case MakingProgress:
+//			status = StatusConsts.MAKING_PROGRESS_STATUS;
+//			break;
+//		case HavingDifficulty:
+//			status = StatusConsts.SLOW_PROGRESS_STATUS;
+//			break;
+//		case Indeterminate:
+//			status = StatusConsts.INDETERMINATE;
+//			break;
+//		}
+//
+//		showStatusInBallonTip(status);
+//		HelpViewPart.displayStatusInformation(status);
+//	}
 
-		showStatusInBallonTip(status);
-		HelpViewPart.displayStatusInformation(status);
-	}
-
-	private void showStatusInBallonTip(String status) {
-		if (ballonTip == null) {
-			ballonTip = new ToolTip(PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getShell(), SWT.BALLOON
-					| SWT.ICON_INFORMATION);
-
-		}
-
-		if (!ballonTip.isDisposed()) {
-			ballonTip.setMessage("Status: " + status);
-			ballonTip.setText("Status Change Notification");
-			trayItem.setToolTip(ballonTip);
-			ballonTip.setVisible(true);
-		}
-
-	}
+//	private void showStatusInBallonTip(String status) {
+//		if (balloonTip == null) {
+//			balloonTip = new ToolTip(PlatformUI.getWorkbench()
+//					.getActiveWorkbenchWindow().getShell(), SWT.BALLOON
+//					| SWT.ICON_INFORMATION);
+//
+//		}
+//
+//		if (!balloonTip.isDisposed()) {
+//			balloonTip.setMessage("Status: " + status);
+//			balloonTip.setText("Status Change Notification");
+//			trayItem.setToolTip(balloonTip);
+//			balloonTip.setVisible(true);
+//		}
+//
+//	}
 
 	private boolean isCombineEnabled(ICommand newCommand, ICommand lastCommand,
 			boolean isDocChange) {

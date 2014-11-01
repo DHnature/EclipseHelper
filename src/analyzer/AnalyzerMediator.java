@@ -192,5 +192,6 @@ public class AnalyzerMediator implements Mediator {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 }

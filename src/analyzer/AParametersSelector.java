@@ -14,7 +14,7 @@ import util.models.DynamicEnum;
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
 public class AParametersSelector  {
 	DynamicEnum<String> participants;
-	AnAnalyzer analyzer;
+	Analyzer analyzer;
 	
 	public AParametersSelector(List<String> aParticipants) {
 		participants = new ADynamicEnum(aParticipants);
@@ -22,7 +22,7 @@ public class AParametersSelector  {
 	public AParametersSelector(String[] aParticipants) {
 		participants = new ADynamicEnum(Common.arrayToArrayList(aParticipants));
 	}
-	public AParametersSelector(AnAnalyzer anAnalyzer) {
+	public AParametersSelector(Analyzer anAnalyzer) {
 		participants = new ADynamicEnum();
 		analyzer = anAnalyzer;
 	}

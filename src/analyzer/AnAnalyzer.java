@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Hashtable;
 import java.util.List;
@@ -17,8 +18,11 @@ import javax.swing.JFileChooser;
 import org.joda.time.DateTime;
 
 import config.FactoriesSelector;
+import difficultyPrediction.ADifficultyPredictionPluginEventProcessor;
 import difficultyPrediction.ADifficultyPredictionRunnable;
 import difficultyPrediction.AnEndOfQueueCommand;
+import difficultyPrediction.DifficultyPredictionEventListener;
+import difficultyPrediction.DifficultyPredictionPluginEventProcessor;
 import difficultyPrediction.DifficultyPredictionRunnable;
 import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.Mediator;
@@ -37,7 +41,7 @@ import bus.uigen.ObjectEditor;
 import bus.uigen.models.AFileSetterModel;
 import bus.uigen.models.FileSetterModel;
 
-public class AnAnalyzer {
+public class AnAnalyzer implements Analyzer  {
 	public static final String PARTICIPANT_DIRECTORY = "data/";
 	public static final String EXPERIMENTAL_DATA = "ExperimentalData/";
 	public static final String OUTPUT_DATA = "OutputData/";
@@ -49,14 +53,17 @@ public class AnAnalyzer {
 	public static final int SEGMENT_LENGTH = 50;
 	public static final String ALL_PARTICIPANTS = "All";
 	static Hashtable<String, String> participants = new Hashtable<String, String>();
-	List<List<ICommand>> commandsList;
+	List<List<ICommand>> nestedCommandsList;
 
 	FileSetterModel participantsFolder, ouputFolder, experimentalData;
 	AParametersSelector parameters;
 	LogReader reader;
-	protected Thread difficultyPredictionThread;	
-	protected DifficultyPredictionRunnable difficultyPredictionRunnable;
-	protected BlockingQueue<ICommand> pendingPredictionCommands;
+//	protected Thread difficultyPredictionThread;	
+//	protected DifficultyPredictionRunnable difficultyPredictionRunnable;
+//	protected BlockingQueue<ICommand> pendingPredictionCommands;
+	DifficultyPredictionPluginEventProcessor difficultyEventProcessor;
+	List<AnalyzerListener> listeners = new ArrayList();
+	
 	public AnAnalyzer() {
 		DifficultyPredictionSettings.setReplayMode(true);
 		DifficultyPredictionSettings.setSegmentLength(SEGMENT_LENGTH);
@@ -71,22 +78,42 @@ public class AnAnalyzer {
 		 
 		
 	}
+	/* (non-Javadoc)
+	 * @see analyzer.Analyzer#getParticipantsFolder()
+	 */
+	@Override
 	@Row(0)
 	public FileSetterModel getParticipantsFolder() {
 		return participantsFolder;
 	}
+	/* (non-Javadoc)
+	 * @see analyzer.Analyzer#getParticipantsFolderName()
+	 */
+	@Override
 	@Visible(false)
 	public String getParticipantsFolderName() {
 		return participantsFolder.getText();
 	}
+	/* (non-Javadoc)
+	 * @see analyzer.Analyzer#setParticipantsFolderName(java.lang.String)
+	 */
+	@Override
 	@Visible(false)
 	public void setParticipantsFolderName(String aName) {
 		 participantsFolder.setText(aName);
 	}
 	boolean directoryLoaded;
+	/* (non-Javadoc)
+	 * @see analyzer.Analyzer#preLoadDirectory()
+	 */
+	@Override
 	public boolean preLoadDirectory() {
 		return !directoryLoaded;
 	}
+	/* (non-Javadoc)
+	 * @see analyzer.Analyzer#loadDirectory()
+	 */
+	@Override
 	@Visible(false)
 	public void loadDirectory() {
 		BufferedReader br = null;
@@ -111,11 +138,19 @@ public class AnAnalyzer {
 		}
 		directoryLoaded = true;		
 	}
+	/* (non-Javadoc)
+	 * @see analyzer.Analyzer#preLoadLogs()
+	 */
+	@Override
 	public boolean preLoadLogs() {
 		return directoryLoaded;
 //				&& !logsLoaded;
 	}
 	boolean logsLoaded;
+	/* (non-Javadoc)
+	 * @see analyzer.Analyzer#loadLogs()
+	 */
+	@Override
 	@Visible(false)
     public void loadLogs() {
 		FactoriesSelector.configureFactories();
@@ -162,6 +197,10 @@ public class AnAnalyzer {
 		logsLoaded = true;
 	}
 	
+	/* (non-Javadoc)
+	 * @see analyzer.Analyzer#processParticipant(java.lang.String)
+	 */
+	@Override
 	public void processParticipant(String aParticipantId) {
 		String aParticipantFolder = participants.get(aParticipantId);
 		String aFullParticipantOutputFolderName =participantsFolder.getText() + OUTPUT_DATA + aParticipantFolder + "/";
@@ -192,24 +231,30 @@ public class AnAnalyzer {
 		
 		
 
-		commandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
+		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
 		DifficultyPredictionSettings.setRatiosFileName(aFullRatiosFileName);
-		difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
-		pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
-		difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
-		difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
-		difficultyPredictionThread.setPriority(Math.min(
-				Thread.currentThread().getPriority(),
-				DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
-		difficultyPredictionThread.start();
-		PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
-		Mediator mediator = difficultyPredictionRunnable.getMediator();
+		difficultyEventProcessor = new ADifficultyPredictionPluginEventProcessor();
+		ADifficultyPredictionPluginEventProcessor.setInstance(difficultyEventProcessor);
+		difficultyEventProcessor.start();
+		Mediator mediator = difficultyEventProcessor.getDifficultyPredictionRunnable().getMediator();
+
+//		difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
+//		pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
+//		difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
+//		difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
+//		difficultyPredictionThread.setPriority(Math.min(
+//				Thread.currentThread().getPriority(),
+//				DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
+//		difficultyPredictionThread.start();
+//		PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
+//		Mediator mediator = difficultyPredictionRunnable.getMediator();
 		EventAggregator eventAggregator = mediator.getEventAggregator();
 		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer("" + DifficultyPredictionSettings.getSegmentLength()));
-		
+		notifyNewParticipant(aParticipantId);
+
 		long startTimeStamp = 0;
-		for (int index = 0; index < commandsList.size(); index++) {
-			List<ICommand> commands = commandsList.get(index);
+		for (int index = 0; index < nestedCommandsList.size(); index++) {
+			List<ICommand> commands = nestedCommandsList.get(index);
 			for (int i = 0; i < commands.size(); i++) {
 				if ((commands.get(i).getTimestamp() == 0)
 						&& (commands.get(i).getTimestamp2() > 0)) {
@@ -218,8 +263,12 @@ public class AnAnalyzer {
 				} else {
 					eventAggregator.setStartTimeStamp(startTimeStamp);
 					try {
-						pendingPredictionCommands.put(commands.get(i));
-					} catch (InterruptedException e) {
+//						pendingPredictionCommands.put(commands.get(i));
+//						System.out.println("Put command:" + commands.get(i) );
+						difficultyEventProcessor.recordCommand(commands.get(i));
+//					} catch (InterruptedException e) {
+					} catch (Exception e) {
+
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
@@ -232,9 +281,12 @@ public class AnAnalyzer {
 
 			}
 		}
-		pendingPredictionCommands.add(new AnEndOfQueueCommand());
+		difficultyEventProcessor.stop();
+
+//		pendingPredictionCommands.add(new AnEndOfQueueCommand());
 		try {
-			difficultyPredictionThread.join();
+//			difficultyPredictionThread.join();
+			difficultyEventProcessor.getDifficultyPredictionThread().join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -245,6 +297,10 @@ public class AnAnalyzer {
 		
 
 	}
+	/* (non-Javadoc)
+	 * @see analyzer.Analyzer#convertXMLLogToObjects(java.lang.String)
+	 */
+	@Override
 	public  List<List<ICommand>> convertXMLLogToObjects(
 			String aFolderName) {
 		
@@ -289,6 +345,10 @@ public class AnAnalyzer {
 
 		return listOfListOFcommands;
 	}
+	/* (non-Javadoc)
+	 * @see analyzer.Analyzer#getParameters()
+	 */
+	@Override
 	@Row(1)
 	public AParametersSelector getParameters() {
 		return parameters;
@@ -301,11 +361,7 @@ public class AnAnalyzer {
 //	public void setSegmentLength(int newVal) {
 //		this.segmentLength = newVal;
 //	}
-	public static void main (String[] args) {
-		OEFrame frame = ObjectEditor.edit(new AnAnalyzer());
-		frame.setSize(550, 200);
-		
-	}
+	
 	
 	public static void maybeRecordFeatures(RatioFeatures details) {
 		if (!DifficultyPredictionSettings.isReplayMode()) 
@@ -360,6 +416,48 @@ public class AnAnalyzer {
 		
 		
 
+	}
+	/* (non-Javadoc)
+	 * @see analyzer.Analyzer#getDifficultyEventProcessor()
+	 */
+	@Override
+	public DifficultyPredictionPluginEventProcessor getDifficultyEventProcessor() {
+		return difficultyEventProcessor;
+	}
+	/* (non-Javadoc)
+	 * @see analyzer.Analyzer#setDifficultyEventProcessor(difficultyPrediction.DifficultyPredictionPluginEventProcessor)
+	 */
+	@Override
+	public void setDifficultyEventProcessor(
+			DifficultyPredictionPluginEventProcessor difficultyEventProcessor) {
+		this.difficultyEventProcessor = difficultyEventProcessor;
+	}
+	@Override
+	public void addAnalyzerListener(AnalyzerListener aListener) {
+		listeners.add(aListener);
+	}
+	@Override
+	public void removeAnalyzerListener(AnalyzerListener aListener) {
+		listeners.remove(aListener);
+	}
+	@Override
+	public void notifyNewParticipant(String anId) {
+		for (AnalyzerListener aListener:listeners) {
+			aListener.newParticipant(anId);
+		}
+	}
+	
+	
+	static Analyzer instance;
+	public static void getInstance() {
+		if (instance == null) {
+			instance = new AnAnalyzer();
+		}
+	}
+	public static void main (String[] args) {
+		OEFrame frame = ObjectEditor.edit(new AnAnalyzer());
+		frame.setSize(550, 200);
+		
 	}
 
 }
