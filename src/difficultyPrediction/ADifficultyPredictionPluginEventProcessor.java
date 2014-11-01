@@ -11,6 +11,7 @@ import org.eclipse.ui.PlatformUI;
 
 import trace.plugin.PluginThreadCreated;
 import config.FactoriesSelector;
+import difficultyPrediction.extension.ADifficultyPredictionRegistry;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;
@@ -42,6 +43,8 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	
 	public ADifficultyPredictionPluginEventProcessor() {
 		statusPredictor = new DifficultyRobot(""); // should this  be in start?
+		if (!DifficultyPredictionSettings.isReplayMode()) 
+			ADifficultyPredictionRegistry.getInstance().registerDifficultyPredictionListeners(this);
 
 	}
 	/* (non-Javadoc)

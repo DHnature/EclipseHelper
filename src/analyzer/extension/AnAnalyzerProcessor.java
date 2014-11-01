@@ -1,6 +1,7 @@
 package analyzer.extension;
 
 import difficultyPrediction.DifficultyPredictionEventListener;
+import difficultyPrediction.extension.APrintingDifficultyPredictionListener;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import bus.uigen.OEFrame;
@@ -9,35 +10,14 @@ import analyzer.AnAnalyzer;
 import analyzer.Analyzer;
 import analyzer.AnalyzerListener;
 
-public class AnAnalyzerProcessor implements AnalyzerProcessor{
+public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener implements AnalyzerProcessor{
 	static Analyzer analyzer;
 	static AnalyzerProcessor analyzerProcessor;
 	
-	@Override
-	public void recordCommand(ICommand newCommand) {
-		System.out.println("New Command:" + newCommand);
-
-		
-	}
-	@Override
-	public void start() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void stop() {
-		// TODO Auto-generated method stub
-		
-	}
-	@Override
-	public void newRatios(RatioFeatures newVal) {
-		System.out.println("New Ratios:" + newVal);
-
-		
-	}
+	
 	@Override
 	public void newParticipant(String anId) {
-		System.out.println("New Participant:" + anId);
+		System.out.println("Extension**New Participant:" + anId);
 		analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);		
 		
 	}
