@@ -20,7 +20,9 @@ import edu.cmu.scs.fluorite.viewpart.HelpViewPart;
 public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnable{
 	public static final int NUM_PENDING_SEGMENTS = 4;
 	public static final int NUM_PENDING_COMMANDS = NUM_PENDING_SEGMENTS*ADisjointDiscreteChunks.DEFAULT_IGNORE_NUM;
-	BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue(NUM_PENDING_COMMANDS);
+//	BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue(NUM_PENDING_COMMANDS);
+	BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue();
+
 	protected Mediator mediator = null;
 	ICommand newCommand;
 	protected ToolTip ballonTip;
@@ -35,8 +37,16 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 		while (true) {
 			try {
 				newCommand = pendingCommands.take();
-				if (newCommand instanceof AnEndOfQueueCommand) // stop event
+//				System.out.println("Taken command:" + newCommand);
+				if (newCommand instanceof AnEndOfQueueCommand) {// stop event 
+					ADifficultyPredictionPluginEventProcessor.getInstance().notifyStop();
 					break;
+				} else if (newCommand instanceof AStartOfQueueCommand) {
+					ADifficultyPredictionPluginEventProcessor.getInstance().notifyStart();
+					continue;
+
+				}
+				ADifficultyPredictionPluginEventProcessor.getInstance().notifyRecordCommand(newCommand);
 				if (!newCommand.getCommandType().equals("PredictionCommand"))
 					mediator.processEvent(newCommand);
 				else {

@@ -108,6 +108,7 @@ public class DifficultyRobot implements Mediator {
 		statusInformation.setRemoveRatio(details.getRemoveRatio());
 		statusInformation.setFocusRatio(details.getFocusRatio());
 		NewExtractedStatusInformation.newCase(statusInformation, this);
+		ADifficultyPredictionPluginEventProcessor.getInstance().notifyNewRatios(details);
 		AnAnalyzer.maybeRecordFeatures(details);
 
 		this.predictionManager.getPredictionStrategy().predictSituation(details.getEditRatio(), details.getDebugRatio(), details.getNavigationRatio(), details.getFocusRatio(), details.getRemoveRatio());

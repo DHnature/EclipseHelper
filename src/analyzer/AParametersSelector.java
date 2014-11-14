@@ -14,7 +14,7 @@ import util.models.DynamicEnum;
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
 public class AParametersSelector  {
 	DynamicEnum<String> participants;
-	AnAnalyzer analyzer;
+	Analyzer analyzer;
 	
 	public AParametersSelector(List<String> aParticipants) {
 		participants = new ADynamicEnum(aParticipants);
@@ -22,7 +22,7 @@ public class AParametersSelector  {
 	public AParametersSelector(String[] aParticipants) {
 		participants = new ADynamicEnum(Common.arrayToArrayList(aParticipants));
 	}
-	public AParametersSelector(AnAnalyzer anAnalyzer) {
+	public AParametersSelector(Analyzer anAnalyzer) {
 		participants = new ADynamicEnum();
 		analyzer = anAnalyzer;
 	}
@@ -47,6 +47,7 @@ public class AParametersSelector  {
 	}
 	@Row(1)
 	@Column(0)
+	@Explanation("Load the names of the participants in the selected folder")
 	public void loadDirectory() {
 		if (analyzer != null)
 			analyzer.loadDirectory();
@@ -63,6 +64,7 @@ public class AParametersSelector  {
 	}
 	@Row(1)
 	@Column(1)
+	@Explanation("Loads the logs of a specific participant or all based on the participant selection")
     public void loadLogs() {
 		if (analyzer != null)
 			analyzer.loadLogs();
