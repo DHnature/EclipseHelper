@@ -1,15 +1,20 @@
 package analyzer;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 import java.util.concurrent.BlockingQueue;
 
@@ -47,6 +52,7 @@ public class AnAnalyzer implements Analyzer  {
 	public static final String EXPERIMENTAL_DATA = "ExperimentalData/";
 	public static final String OUTPUT_DATA = "OutputData/";
 	public static final String ECLIPSE_FOLDER = "Eclipse/";
+	public static final String BROWSER_FOLDER = "Browser/";
 
 
 	public static final String PARTICIPANT_INFORMATION_DIRECTORY = "data/ExperimentalData/";
@@ -200,6 +206,59 @@ public class AnAnalyzer implements Analyzer  {
 		logsLoaded = true;
 	}
 	
+	public void processBrowserHistoryOfFolder (String aFolderName) {
+		String fullName =	aFolderName;
+		File folder = new File(fullName);
+		if (!folder.exists()) {
+			System.out.println("folder does not exist:" + fullName);
+			return;
+		}
+		if (!folder.isDirectory()) {
+			System.out.println("folder not a directory:" + fullName);
+			return;
+		}
+		List<String> participantFiles = MainConsoleUI.getFilesForFolder(folder);
+		System.out.println("Particpant " + aFolderName + " has "
+				+ participantFiles.size() + " file(s)");
+		System.out.println();
+		for (int i = 0; i < participantFiles.size(); i++) {
+			String aFileName = fullName
+					+ participantFiles.get(i);
+			if (!aFileName.endsWith(".txt"))
+				continue;
+				
+//			List<ICommand> commands = reader.readAll(participantDirectory
+//					+ participantFiles.get(i));
+			System.out.println("Reading " + aFileName);
+			processBrowserHistoryOfFile(aFileName);
+//			
+			
+//			listOfListOFcommands.add(commands);
+		}
+
+	
+	}
+	
+	public void processBrowserHistoryOfFile(String aFileName) {
+		try {
+		FileInputStream fis = new FileInputStream(aFileName);
+		 
+		//Construct BufferedReader from InputStreamReader
+		BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+	 
+		String line = null;
+		while ((line = br.readLine()) != null) {
+//			System.out.println(line);
+			notifyNewBrowseLine(line);
+		}
+	 
+		br.close();
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+	}
+	
 	/* (non-Javadoc)
 	 * @see analyzer.Analyzer#processParticipant(java.lang.String)
 	 */
@@ -232,7 +291,7 @@ public class AnAnalyzer implements Analyzer  {
 			e.printStackTrace();
 		}
 		
-		
+		processBrowserHistoryOfFolder(participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/" + BROWSER_FOLDER);
 
 		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
 		DifficultyPredictionSettings.setRatiosFileName(aFullRatiosFileName);
@@ -451,6 +510,19 @@ public class AnAnalyzer implements Analyzer  {
 		}
 	}
 	
+	@Override
+	public void notifyNewBrowseLine(String aLine) {
+		for (AnalyzerListener aListener:listeners) {
+			aListener.newBrowseLine(aLine);
+			String[] parts = aLine.split("\t");
+			String[] dateParts = parts[0].split(" ");
+			String dateString = dateParts[0] + " " + dateParts[1];
+			Date aDate = new Date(dateString);
+			aListener.newBrowseEntries(aDate, parts[1], parts[2]);
+		}
+	}
+	
+	
 	
 	static Analyzer instance;
 	public static void getInstance() {
@@ -459,6 +531,9 @@ public class AnAnalyzer implements Analyzer  {
 		}
 	}
 	public static void main (String[] args) {
+		
+		
+		
 		OEFrame frame = ObjectEditor.edit(new AnAnalyzer());
 		frame.setSize(550, 200);
 		

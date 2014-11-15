@@ -1,5 +1,7 @@
 package analyzer.extension;
 
+import java.util.Date;
+
 import difficultyPrediction.DifficultyPredictionEventListener;
 import difficultyPrediction.extension.APrintingDifficultyPredictionListener;
 import difficultyPrediction.featureExtraction.RatioFeatures;
@@ -28,6 +30,17 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		OEFrame frame = ObjectEditor.edit(analyzer);
 		frame.setSize(550, 200);
 		
+	}
+	@Override
+	public void newBrowseLine(String aLine) {
+		System.out.println("Browse line:" + aLine);
+		
+	}
+	@Override
+	public void newBrowseEntries(Date aDate, String aSearchString, String aURL) {
+		System.out.println("Browse Date:" + aDate);
+		System.out.println("Search string:" + aSearchString);
+		System.out.println("Search string:" + aURL);		
 	}
 
 }

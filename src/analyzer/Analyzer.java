@@ -42,4 +42,6 @@ public interface Analyzer {
 
 	void notifyNewParticipant(String anId);
 
+	void notifyNewBrowseLine(String aLine);
+
 }

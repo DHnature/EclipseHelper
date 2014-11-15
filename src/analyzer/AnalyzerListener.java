@@ -1,6 +1,6 @@
 package analyzer;
 
-public interface AnalyzerListener {
+public interface AnalyzerListener extends BrowseHistoryListener{
 	void newParticipant(String anId);
 
 }
