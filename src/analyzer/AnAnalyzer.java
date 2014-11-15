@@ -46,6 +46,8 @@ public class AnAnalyzer implements Analyzer  {
 	public static final String PARTICIPANT_DIRECTORY = "data/";
 	public static final String EXPERIMENTAL_DATA = "ExperimentalData/";
 	public static final String OUTPUT_DATA = "OutputData/";
+	public static final String ECLIPSE_FOLDER = "Eclipse/";
+
 
 	public static final String PARTICIPANT_INFORMATION_DIRECTORY = "data/ExperimentalData/";
 	public static final String PARTICIPANT_OUTPUT_DIRECTORY = "data/OutputData/";
@@ -205,7 +207,7 @@ public class AnAnalyzer implements Analyzer  {
 	public void processParticipant(String aParticipantId) {
 		String aParticipantFolder = participants.get(aParticipantId);
 		String aFullParticipantOutputFolderName =participantsFolder.getText() + OUTPUT_DATA + aParticipantFolder + "/";
-		String aFullParticipantDataFolderName =participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/";
+		String aFullParticipantDataFolderName =participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/" + ECLIPSE_FOLDER;
 		File anOutputFolder = new File(aFullParticipantOutputFolderName);
 		if (!anOutputFolder.exists())
 			anOutputFolder.mkdirs();
