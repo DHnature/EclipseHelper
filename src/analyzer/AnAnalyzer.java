@@ -178,7 +178,7 @@ public class AnAnalyzer implements Analyzer  {
 				if (aParticipantId.equals(ALL_PARTICIPANTS))
 					continue;
 				// integrated analyzer
-				processParticipant(participantId);
+				processParticipant(aParticipantId);
 
 // jason's code
 //				String aParticipanttFolder = participants.get(aParticipantId);
