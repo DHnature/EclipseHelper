@@ -272,13 +272,19 @@ public class AnAnalyzer implements Analyzer  {
 			anOutputFolder.mkdirs();
 		String aFullRatiosFileName = aFullParticipantOutputFolderName + "ratios.csv";		
 		File aRatiosFile = new File(aFullRatiosFileName);
-		if (!aRatiosFile.exists())
+		if (aRatiosFile.exists()) {
+			DifficultyPredictionSettings.setRatioFileExists(true);
+
+		} else {
+//		if (!aRatiosFile.exists())
 		try {
+			DifficultyPredictionSettings.setRatioFileExists(false);
 			aRatiosFile.createNewFile();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+			
 		try {
 			FileOutputStream writer = new FileOutputStream(aRatiosFile);
 			writer.close();
@@ -289,6 +295,7 @@ public class AnAnalyzer implements Analyzer  {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}
 		}
 		
 		processBrowserHistoryOfFolder(participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/" + BROWSER_FOLDER);
@@ -427,6 +434,8 @@ public class AnAnalyzer implements Analyzer  {
 	
 	public static void maybeRecordFeatures(RatioFeatures details) {
 		if (!DifficultyPredictionSettings.isReplayMode()) 
+			return;
+		if (DifficultyPredictionSettings.isRatioFileExists())
 			return;
 		String aFileName = DifficultyPredictionSettings.getRatiosFileName();
 

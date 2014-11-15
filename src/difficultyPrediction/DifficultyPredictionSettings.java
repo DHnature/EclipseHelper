@@ -2,6 +2,7 @@ package difficultyPrediction;
 
 public class DifficultyPredictionSettings {
 	static String ratiosFileName;
+	static boolean ratioFileExists;
 	static boolean replayMode;
 	static int segmentLength = 50;
 
@@ -30,6 +31,14 @@ public class DifficultyPredictionSettings {
 
 	public static void setRatiosFileName(String ratiosFileName) {
 		DifficultyPredictionSettings.ratiosFileName = ratiosFileName;
+	}
+
+	public static boolean isRatioFileExists() {
+		return ratioFileExists;
+	}
+
+	public static void setRatioFileExists(boolean ratioFileExists) {
+		DifficultyPredictionSettings.ratioFileExists = ratioFileExists;
 	}
 	
 	
