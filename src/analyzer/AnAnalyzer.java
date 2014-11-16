@@ -62,6 +62,7 @@ public class AnAnalyzer implements Analyzer  {
 	public static final int SEGMENT_LENGTH = 50;
 	public static final String ALL_PARTICIPANTS = "All";
 	static Hashtable<String, String> participants = new Hashtable<String, String>();
+	static long startTimeStamp;
 	List<List<ICommand>> nestedCommandsList;
 
 	FileSetterModel participantsFolder, ouputFolder, experimentalData;
@@ -72,6 +73,7 @@ public class AnAnalyzer implements Analyzer  {
 //	protected BlockingQueue<ICommand> pendingPredictionCommands;
 	DifficultyPredictionPluginEventProcessor difficultyEventProcessor;
 	List<AnalyzerListener> listeners = new ArrayList();
+	
 //	boolean newRatioFiles;
 	
 	
@@ -286,7 +288,9 @@ public class AnAnalyzer implements Analyzer  {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-			
+		}
+		// erase file if it exists
+		if (aRatiosFile.exists() && DifficultyPredictionSettings.isNewRatioFiles())	
 		try {
 			FileOutputStream writer = new FileOutputStream(aRatiosFile);
 			writer.close();
@@ -298,7 +302,7 @@ public class AnAnalyzer implements Analyzer  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		}
+		
 		
 		processBrowserHistoryOfFolder(participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/" + BROWSER_FOLDER);
 
@@ -323,7 +327,7 @@ public class AnAnalyzer implements Analyzer  {
 		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer("" + DifficultyPredictionSettings.getSegmentLength()));
 		notifyNewParticipant(aParticipantId);
 
-		long startTimeStamp = 0;
+		startTimeStamp = 0;
 		for (int index = 0; index < nestedCommandsList.size(); index++) {
 			List<ICommand> commands = nestedCommandsList.get(index);
 			for (int i = 0; i < commands.size(); i++) {
@@ -465,14 +469,21 @@ public class AnAnalyzer implements Analyzer  {
 //		System.out.println("Remove ratio:" + details.getRemoveRatio());
 //		System.out.println("features have been computed");
 		
-		java.util.Date time=new java.util.Date((long)details.getSavedTimeStamp());
+		long absoluteTime = startTimeStamp + details.getSavedTimeStamp();
+		
+//		java.util.Date time=new java.util.Date((long)details.getSavedTimeStamp());
+		java.util.Date time=new Date(absoluteTime);
+
 		Calendar mydate = Calendar.getInstance();
-		mydate.setTimeInMillis(details.getSavedTimeStamp());
+//		mydate.setTimeInMillis(details.getSavedTimeStamp());
+		mydate.setTimeInMillis(absoluteTime);
 		
 		//mydate.get(Calendar.HOUR)
 		//mydate.get(Calendar.MINUTE)
 		//mydate.get(Calendar.SECOND)
-		DateTime timestamp = new DateTime(details.getSavedTimeStamp());
+//		DateTime timestamp = new DateTime(details.getSavedTimeStamp());
+		DateTime timestamp = new DateTime(absoluteTime);
+
 		//timestamp.get(timestamp)
 		
 //		System.out.println(timestamp.toString("MM-dd-yyyy H:mm:ss"));
@@ -494,7 +505,11 @@ public class AnAnalyzer implements Analyzer  {
 		    fw.write(",");
 			fw.write("" + details.getRemoveRatio());
 			fw.write(",");
-			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
+			String timeStampString = time.toString();
+			timeStampString = timestamp.toString("MM-dd-yyyy H:mm:ss");
+//			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
+//			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
+			fw.write("" + timeStampString);
 			fw.write("\n");
 		    fw.close();
 		}

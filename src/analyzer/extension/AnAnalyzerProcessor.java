@@ -6,6 +6,7 @@ import java.util.Map;
 
 import difficultyPrediction.DifficultyPredictionEventListener;
 import difficultyPrediction.extension.APrintingDifficultyPredictionListener;
+import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import bus.uigen.OEFrame;
@@ -63,10 +64,14 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	}
 	@Override
 	public void newRatios(RatioFeatures newVal) {
-		System.out.println("Extension**New Ratios:" + newVal);		
+		currentTime += newVal.getSavedTimeStamp();
+		System.out.println("Extension**New Ratios:" + newVal + " at time:" + currentTime);		
 	}
 	public void startTimeStamp(long aStartTimeStamp) {
-		System.out.println("Extension**Difficulty Prediction Started");		
+		System.out.println("Extension**Difficulty Prediction Started");	
+		currentTime = aStartTimeStamp;
+		RatioFeatures aRatioFetaures = new ARatioFeatures();
+		newRatios(aRatioFetaures);
 
 	}
 	public static void main (String[] args) {
