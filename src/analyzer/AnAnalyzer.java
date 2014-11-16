@@ -224,7 +224,7 @@ public class AnAnalyzer implements Analyzer  {
 		List<String> participantFiles = MainConsoleUI.getFilesForFolder(folder);
 		System.out.println("Particpant " + aFolderName + " has "
 				+ participantFiles.size() + " file(s)");
-		System.out.println();
+//		System.out.println();
 		for (int i = 0; i < participantFiles.size(); i++) {
 			String aFileName = fullName
 					+ participantFiles.get(i);
@@ -258,7 +258,7 @@ public class AnAnalyzer implements Analyzer  {
 	 
 		br.close();
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println("ProcessBrowserHstory" + e);
 		}
 		
 	}
@@ -269,6 +269,7 @@ public class AnAnalyzer implements Analyzer  {
 	@Override
 	public void processParticipant(String aParticipantId) {
 		String aParticipantFolder = participants.get(aParticipantId);
+//		notifyNewParticipant(aParticipantId);
 		String aFullParticipantOutputFolderName =participantsFolder.getText() + OUTPUT_DATA + aParticipantFolder + "/";
 		String aFullParticipantDataFolderName =participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/" + ECLIPSE_FOLDER;
 		File anOutputFolder = new File(aFullParticipantOutputFolderName);
@@ -304,7 +305,6 @@ public class AnAnalyzer implements Analyzer  {
 		}
 		
 		
-		processBrowserHistoryOfFolder(participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/" + BROWSER_FOLDER);
 
 		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
 		DifficultyPredictionSettings.setRatiosFileName(aFullRatiosFileName);
@@ -338,6 +338,8 @@ public class AnAnalyzer implements Analyzer  {
 							&& (aCommand.getTimestamp2() > 0)) {
 					// this is the starttimestamp
 					startTimeStamp = commands.get(i).getTimestamp2();
+					difficultyEventProcessor.recordCommand(aCommand);
+
 					notifyStartTimeStamp(startTimeStamp);
 					
 				} else {
@@ -363,7 +365,9 @@ public class AnAnalyzer implements Analyzer  {
 
 			}
 		}
+
 		difficultyEventProcessor.stop();
+
 
 //		pendingPredictionCommands.add(new AnEndOfQueueCommand());
 		try {
@@ -373,6 +377,8 @@ public class AnAnalyzer implements Analyzer  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		processBrowserHistoryOfFolder(participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/" + BROWSER_FOLDER);
+
 //		for (ICommand aCommand: commandsList) {
 //			
 //		}
@@ -570,7 +576,12 @@ public class AnAnalyzer implements Analyzer  {
 		}
 	}
 	
-	
+	public void notifyFinishedBrowser(String aLine) {
+		for (AnalyzerListener aListener:listeners) {
+			aListener.finishedBrowserLines();
+			
+		}
+	}
 	
 	static Analyzer instance;
 	public static void getInstance() {

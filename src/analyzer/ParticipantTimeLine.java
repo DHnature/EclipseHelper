@@ -32,17 +32,19 @@ public interface ParticipantTimeLine {
 
 	public abstract void setTimeStampList(List<Long> timeStampList);
 
-	public abstract List<Integer> getPredictionList();
+	public abstract List<Integer> getPredictions();
 
-	public abstract void setPredictionList(List<Integer> predictionList);
+	public abstract void setPredictions(List<Integer> predictionList);
 
-	public abstract List<Integer> getPredictionCorrection();
+	public abstract List<Integer> getPredictionCorrections();
 
-	public abstract void setPredictionCorrection(
+	public abstract void setPredictionCorrections(
 			List<Integer> predictionCorrection);
 
-	public abstract List<WebLink> getWebLinks();
+	public abstract List<List<WebLink>> getWebLinks();
 
-	public abstract void setWebLinks(List<WebLink> webLinks);
+	public abstract void setWebLinks(List<List<WebLink>> webLinks);
+	public int getIndexBefore(long aTimeStamp) ;
+
 
 }

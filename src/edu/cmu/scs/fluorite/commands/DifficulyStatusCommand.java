@@ -204,4 +204,8 @@ public class DifficulyStatusCommand extends AbstractCommand {
 		return false;
 	}
 
+	public Status getStatus() {
+		return mUserStatus;
+	}
+
 }

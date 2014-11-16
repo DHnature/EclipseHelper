@@ -13,13 +13,13 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 	private List<Long> timeStampList = new ArrayList<Long>();
 	protected List<Integer> predictionList = new ArrayList<Integer>();
 	protected List<Integer> predictionCorrection = new ArrayList<Integer>();
-	protected List<WebLink> webLinks = new ArrayList<WebLink>();
+	protected List<List<WebLink>> webLinks = new ArrayList();
 	public AParticipantTimeLine(List<Double> insertionList,
 			List<Double> deletionList, List<Double> debugList,
 			List<Double> navigationList, List<Double> focusList,
 			List<Double> removeList, List<Long> timeStampList,
 			List<Integer> predictionList, List<Integer> predictionCorrection,
-			List<WebLink> webLinks) {
+			List<List<WebLink>> webLinks) {
 		super();
 		this.insertionList = insertionList;
 		this.deletionList = deletionList;
@@ -138,46 +138,55 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 	 * @see analyzer.ParticipantTimeLine#getPredictionList()
 	 */
 	@Override
-	public List<Integer> getPredictionList() {
+	public List<Integer> getPredictions() {
 		return predictionList;
 	}
 	/* (non-Javadoc)
 	 * @see analyzer.ParticipantTimeLine#setPredictionList(java.util.List)
 	 */
 	@Override
-	public void setPredictionList(List<Integer> predictionList) {
+	public void setPredictions(List<Integer> predictionList) {
 		this.predictionList = predictionList;
 	}
 	/* (non-Javadoc)
 	 * @see analyzer.ParticipantTimeLine#getPredictionCorrection()
 	 */
 	@Override
-	public List<Integer> getPredictionCorrection() {
+	public List<Integer> getPredictionCorrections() {
 		return predictionCorrection;
 	}
 	/* (non-Javadoc)
 	 * @see analyzer.ParticipantTimeLine#setPredictionCorrection(java.util.List)
 	 */
 	@Override
-	public void setPredictionCorrection(List<Integer> predictionCorrection) {
+	public void setPredictionCorrections(List<Integer> predictionCorrection) {
 		this.predictionCorrection = predictionCorrection;
 	}
 	/* (non-Javadoc)
 	 * @see analyzer.ParticipantTimeLine#getWebLinks()
 	 */
 	@Override
-	public List<WebLink> getWebLinks() {
+	public List<List<WebLink>> getWebLinks() {
 		return webLinks;
 	}
 	/* (non-Javadoc)
 	 * @see analyzer.ParticipantTimeLine#setWebLinks(java.util.List)
 	 */
 	@Override
-	public void setWebLinks(List<WebLink> webLinks) {
+	public void setWebLinks(List<List<WebLink>> webLinks) {
 		this.webLinks = webLinks;
 	}
 	
-
+	@Override
+	public int getIndexBefore(long aTimeStamp) {
+		for (int anIndex = 0; anIndex < timeStampList.size(); anIndex++ ) {
+			long aSavedTimeStamp = timeStampList.get(anIndex);
+			if (aSavedTimeStamp > aTimeStamp) {
+				return anIndex > 0? anIndex-1:0;
+			}
+		}
+		return timeStampList.size() -1; 
+	}
 	
 	
 
