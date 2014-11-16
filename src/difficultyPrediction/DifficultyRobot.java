@@ -91,6 +91,7 @@ public class DifficultyRobot implements Mediator {
 			AnEventAggregatorDetails details) {
 
 		Tracer.info(this,"difficultyRobot.handoffevents");
+		
 		this.featureExtractor.getFeatureExtractionStrategy().performFeatureExtraction(details.actions, featureExtractor);
 
 		

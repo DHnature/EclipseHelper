@@ -23,8 +23,10 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
 	public void performFeatureExtraction(List<ICommand> actions, RatioBasedFeatureExtractor featureExtractor) {
 			List<Double> percentages = null;
 			percentages = metrics.computeMetrics(actions);
+			ICommand lastCommand = actions.get(actions.size() - 1);
+			long timeStamp = lastCommand.getTimestamp();
 			featureExtractor.onFeatureHandOff(percentages.get(EDIT_PERCENTAGE), percentages.get(DEBUG_PERCENTAGE), 
-                    percentages.get(NAVIGATION_PERCENTAGE), percentages.get(FOCUS_PERCENTAGE), percentages.get(REMOVE_PERCENTAGE));		
+                    percentages.get(NAVIGATION_PERCENTAGE), percentages.get(FOCUS_PERCENTAGE), percentages.get(REMOVE_PERCENTAGE), timeStamp);		
 	}
 
 }

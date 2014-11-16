@@ -72,6 +72,8 @@ public class AnAnalyzer implements Analyzer  {
 //	protected BlockingQueue<ICommand> pendingPredictionCommands;
 	DifficultyPredictionPluginEventProcessor difficultyEventProcessor;
 	List<AnalyzerListener> listeners = new ArrayList();
+//	boolean newRatioFiles;
+	
 	
 	public AnAnalyzer() {
 		DifficultyPredictionSettings.setReplayMode(true);
@@ -325,16 +327,23 @@ public class AnAnalyzer implements Analyzer  {
 		for (int index = 0; index < nestedCommandsList.size(); index++) {
 			List<ICommand> commands = nestedCommandsList.get(index);
 			for (int i = 0; i < commands.size(); i++) {
-				if ((commands.get(i).getTimestamp() == 0)
-						&& (commands.get(i).getTimestamp2() > 0)) {
+				ICommand aCommand = commands.get(i);
+//				if ((commands.get(i).getTimestamp() == 0)
+//						&& (commands.get(i).getTimestamp2() > 0)) {
+				if ((aCommand.getTimestamp() == 0)
+							&& (aCommand.getTimestamp2() > 0)) {
 					// this is the starttimestamp
 					startTimeStamp = commands.get(i).getTimestamp2();
+					notifyStartTimeStamp(startTimeStamp);
+					
 				} else {
-					eventAggregator.setStartTimeStamp(startTimeStamp);
+					eventAggregator.setStartTimeStamp(startTimeStamp); // not sure this is ever useful
 					try {
 //						pendingPredictionCommands.put(commands.get(i));
 //						System.out.println("Put command:" + commands.get(i) );
-						difficultyEventProcessor.recordCommand(commands.get(i));
+//						difficultyEventProcessor.recordCommand(commands.get(i));
+						difficultyEventProcessor.recordCommand(aCommand);
+
 //					} catch (InterruptedException e) {
 					} catch (Exception e) {
 
@@ -422,6 +431,15 @@ public class AnAnalyzer implements Analyzer  {
 	public AParametersSelector getParameters() {
 		return parameters;
 	}
+//	@Visible(false)
+//	@Override
+//	public boolean isNewRatioFiles() {
+//		return DifficultyPredictionSettings.isNewRatioFiles();
+//	}
+//	@Override
+//	public void setNewRatioFiles(boolean newRatioFiles) {
+//		this.newRatioFiles = newRatioFiles;
+//	}
 	//	int segmentLength = 50;
 //	@Row(1)
 //	public int getSegmentLength() {
@@ -435,7 +453,7 @@ public class AnAnalyzer implements Analyzer  {
 	public static void maybeRecordFeatures(RatioFeatures details) {
 		if (!DifficultyPredictionSettings.isReplayMode()) 
 			return;
-		if (DifficultyPredictionSettings.isRatioFileExists())
+		if (!DifficultyPredictionSettings.isNewRatioFiles() && DifficultyPredictionSettings.isRatioFileExists())
 			return;
 		String aFileName = DifficultyPredictionSettings.getRatiosFileName();
 
@@ -516,6 +534,12 @@ public class AnAnalyzer implements Analyzer  {
 	public void notifyNewParticipant(String anId) {
 		for (AnalyzerListener aListener:listeners) {
 			aListener.newParticipant(anId);
+		}
+	}
+	@Override
+	public void notifyStartTimeStamp(long aStartTimeStamp) {
+		for (AnalyzerListener aListener:listeners) {
+			aListener.startTimeStamp(aStartTimeStamp);
 		}
 	}
 	

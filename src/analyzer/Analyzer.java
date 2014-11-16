@@ -44,4 +44,10 @@ public interface Analyzer {
 
 	void notifyNewBrowseLine(String aLine);
 
+	void notifyStartTimeStamp(long aStartTimeStamp);
+
+//	boolean isNewRatioFiles();
+//
+//	void setNewRatioFiles(boolean newRatioFiles);
+
 }

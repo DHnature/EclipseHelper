@@ -4,6 +4,7 @@ public class DifficultyPredictionSettings {
 	static String ratiosFileName;
 	static boolean ratioFileExists;
 	static boolean replayMode;
+	static boolean newRatioFiles;
 	static int segmentLength = 50;
 
 	public DifficultyPredictionSettings() {
@@ -39,6 +40,14 @@ public class DifficultyPredictionSettings {
 
 	public static void setRatioFileExists(boolean ratioFileExists) {
 		DifficultyPredictionSettings.ratioFileExists = ratioFileExists;
+	}
+
+	public static boolean isNewRatioFiles() {
+		return newRatioFiles;
+	}
+
+	public static void setNewRatioFiles(boolean newRatioFiles) {
+		DifficultyPredictionSettings.newRatioFiles = newRatioFiles;
 	}
 	
 	

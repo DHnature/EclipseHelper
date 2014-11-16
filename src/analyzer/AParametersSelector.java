@@ -2,6 +2,7 @@ package analyzer;
 
 import java.util.List;
 
+import difficultyPrediction.DifficultyPredictionSettings;
 import bus.uigen.ObjectEditor;
 import util.annotations.Column;
 import util.annotations.Explanation;
@@ -69,6 +70,19 @@ public class AParametersSelector  {
 		if (analyzer != null)
 			analyzer.loadLogs();
 		
+	}
+	@Row(1)
+	@Column(2)
+	public boolean isNewRatioFiles() {
+		
+		
+		return DifficultyPredictionSettings.isNewRatioFiles();
+	}
+	
+	public void setNewRatioFiles(boolean newRatioFiles) {
+//		if (analyzer != null)
+//			 analyzer.setNewRatioFiles(newRatioFiles);
+		DifficultyPredictionSettings.setNewRatioFiles(newRatioFiles);
 	}
 //	@Column(1)
 //	@Explanation("The set of problems in the selected module for which folders have been downloaded. Changing the problem automatically selects the corresponding download folder provided a valid folder has been slected for one of the problems in the module once.")

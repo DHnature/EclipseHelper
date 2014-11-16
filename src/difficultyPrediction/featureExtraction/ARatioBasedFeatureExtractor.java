@@ -20,7 +20,7 @@ public class ARatioBasedFeatureExtractor implements RatioBasedFeatureExtractor {
 	 */
 	@Override
 	public void onFeatureHandOff(double editRatio, double debugRatio, double navigationRatio, double focusRatio,
-			double removeRatio) {
+			double removeRatio, long timeStamp) {
 		if (mediator != null)                           //Any handlers attached to this event?  
         {
             RatioFeatures args = new ARatioFeatures();
@@ -30,6 +30,7 @@ public class ARatioBasedFeatureExtractor implements RatioBasedFeatureExtractor {
             args.setFocusRatio(focusRatio);
             args.setRemoveRatio(removeRatio);
             args.setExceptionsPerRun(0);
+            args.setSavedTimeStamp(timeStamp);
             NewExtractedFeatures.newCase(args, this);
             mediator.featureExtractor_HandOffFeatures(this, args);                       //Raise the event  
         }
