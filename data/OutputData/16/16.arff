@@ -1,0 +1,13 @@
+@Relation programmer-weka.filters.supervised.instance.SMOTE-C0-K5-P100.0-S1-weka.filters.supervised.instance.SMOTE-C0-K5-P100.0-S1-weka.filters.supervised.instance.SMOTE-C0-K5-P100.0-S1-weka.filters.supervised.instance.SMOTE-C0-K5-P100.0-S1
+
+@Attribute searchPercentage numeric
+@Attribute debugPercentage numeric
+@Attribute focusPercentage numeric
+@Attribute editPercentage numeric
+@Attribute removePercentage numeric
+@Attribute stuck {YES,NO}
+
+@data
+2.7027027027027026,0.0,48.64864864864865,48.64864864864865,0.0,NO
+0.0,0.0,0.0,100.0,0.0,NO
+2.941176470588235,0.0,70.58823529411765,26.47058823529412,0.0,NO
