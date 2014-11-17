@@ -5,4 +5,5 @@ import analyzer.AnalyzerListener;
 
 public interface AnalyzerProcessor extends AnalyzerListener, DifficultyPredictionEventListener {
 
+
 }

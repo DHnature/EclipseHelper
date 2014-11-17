@@ -14,6 +14,10 @@ public class APrintingDifficultyPredictionListener implements DifficultyPredicti
 	public void start() {
 		System.out.println("Extension**Difficulty Prediction Started");		
 	}
+	public void startTimeStamp(long aStartTimeStamp) {
+		System.out.println("Extension**Difficulty Prediction Started");		
+
+	}
 	@Override
 	public void stop() {
 		System.out.println("Extension**Difficulty Prediction Stopped");			

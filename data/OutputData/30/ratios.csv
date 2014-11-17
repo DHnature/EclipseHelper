@@ -1,0 +1,122 @@
+09-11-2013 15:13:48, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0, 1, [About the JFC and Swing (The Java™ Tutorials > Creating a GUI With JFC/Swing > Getting Started with Swing)	http://docs.oracle.com/javase/tutorial/uiswing/start/about.html, Lesson: Getting Started with Swing (The Java™ Tutorials > Creating a GUI With JFC/Swing)	http://docs.oracle.com/javase/tutorial/uiswing/start/, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCkQFjAA&url=http://docs.oracle.com/javase/tutorial/uiswing/start/&ei=EsYwUv20JYXO9gS70oDIDw&usg=AFQjCNHCRMnD2GPvi394GU1WZSA_pccNAQ&bvm=bv.52109249,d.eWU	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCkQFjAA&url=http%3A%2F%2Fdocs.oracle.com%2Fjavase%2Ftutorial%2Fuiswing%2Fstart%2F&ei=EsYwUv20JYXO9gS70oDIDw&usg=AFQjCNHCRMnD2GPvi394GU1WZSA_pccNAQ&bvm=bv.52109249,d.eWU, getting started java swing - Google Search	https://www.google.com/search?q=swing+awt+toolkit&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a&channel=fflb#channel=fflb&q=getting+started+java+swing&rls=org.mozilla:en-US%3Aofficial, swing awt toolkit - Google Search	https://www.google.com/search?q=swing+awt+toolkit&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a&channel=fflb, Welcome to Google Docs	https://accounts.google.com/ServiceLogin?service=wise&passive=1209600&continue=https%3A%2F%2Fdocs.google.com%2Fspreadsheet%2Fccc%3Fkey%3D0ArHQa4WGNbxBdGZQUlVCUm9MVDc3OGI1b01Rb2VSX0E&followup=https%3A%2F%2Fdocs.google.com%2Fspreadsheet%2Fccc%3Fkey%3D0ArHQa4WGNbxBdGZQUlVCUm9MVDc3OGI1b01Rb2VSX0E#gid=0, https://www.google.com/accounts/ServiceLogin?service=wise&passive=1209600&continue=https://docs.google.com/spreadsheet/ccc?key=0ArHQa4WGNbxBdGZQUlVCUm9MVDc3OGI1b01Rb2VSX0E&followup=https://docs.google.com/spreadsheet/ccc?key=0ArHQa4WGNbxBdGZQUlVCUm9MVDc3OGI1b01Rb2VSX0E#gid=0	https://www.google.com/accounts/ServiceLogin?service=wise&passive=1209600&continue=https://docs.google.com/spreadsheet/ccc?key%3D0ArHQa4WGNbxBdGZQUlVCUm9MVDc3OGI1b01Rb2VSX0E&followup=https://docs.google.com/spreadsheet/ccc?key%3D0ArHQa4WGNbxBdGZQUlVCUm9MVDc3OGI1b01Rb2VSX0E#gid=0, https://docs.google.com/spreadsheet/ccc?key=0ArHQa4WGNbxBdGZQUlVCUm9MVDc3OGI1b01Rb2VSX0E#gid=0	https://docs.google.com/spreadsheet/ccc?key=0ArHQa4WGNbxBdGZQUlVCUm9MVDc3OGI1b01Rb2VSX0E#gid=0]
+09-11-2013 15:36:02, 0.0, 0.0, 0.0, 2.5, 85.0, 0.0, 0, -1, null
+09-11-2013 15:36:23, 0.0, 0.0, 54.761904761904766, 0.0, 4.761904761904762, 0.0, 0, -1, [HelloWorldSwing.java	http://docs.oracle.com/javase/tutorial/displayCode.html?code=http://docs.oracle.com/javase/tutorial/uiswing/examples/start/HelloWorldSwingProject/src/start/HelloWorldSwing.java, Getting Started with Swing: Examples (The Java™ Tutorials > Creating a GUI with Swing > Getting Started with Swing)	http://docs.oracle.com/javase/tutorial/uiswing/examples/start/index.html, http://docs.oracle.com/javase/tutorial/information/examples.html	http://docs.oracle.com/javase/tutorial/information/examples.html, Compiling and Running Swing Programs (The Java™ Tutorials > Creating a GUI With JFC/Swing > Getting Started with Swing)	http://docs.oracle.com/javase/tutorial/uiswing/start/compile.html]
+09-11-2013 15:38:11, 0.0, 0.0, 12.0, 0.0, 16.0, 0.0, 0, -1, null
+09-11-2013 15:38:33, 0.0, 0.0, 41.30434782608695, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:39:00, 0.0, 0.0, 59.09090909090909, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:39:25, 0.0, 0.0, 24.390243902439025, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:40:21, 0.0, 0.0, 5.0, 7.5, 10.0, 0.0, 0, -1, null
+09-11-2013 15:40:40, 0.0, 0.0, 69.44444444444444, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:41:21, 0.0, 0.0, 56.25, 6.25, 0.0, 0.0, 0, -1, null
+09-11-2013 15:42:40, 0.0, 0.0, 46.15384615384615, 3.8461538461538463, 7.6923076923076925, 0.0, 0, -1, [Graphics Demo	http://www.d.umn.edu/~gshute/java/swing/demos/GraphicsDemo.html, Swing Graphics	http://www.d.umn.edu/~gshute/java/swing/graphics.html, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=4&ved=0CD4QFjAD&url=http://www.d.umn.edu/~gshute/java/swing/graphics.html&ei=uscwUuTzNIqA9QTy6oGwDw&usg=AFQjCNEMYPDHeaxELHMM1zhVWklBuKfBxA&bvm=bv.52109249,d.eWU	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=4&ved=0CD4QFjAD&url=http%3A%2F%2Fwww.d.umn.edu%2F~gshute%2Fjava%2Fswing%2Fgraphics.html&ei=uscwUuTzNIqA9QTy6oGwDw&usg=AFQjCNEMYPDHeaxELHMM1zhVWklBuKfBxA&bvm=bv.52109249,d.eWU, Java Swing custom shapes (2D Graphics) - Stack Overflow	http://stackoverflow.com/questions/2483533/java-swing-custom-shapes-2d-graphics, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCsQFjAA&url=http://stackoverflow.com/questions/2483533/java-swing-custom-shapes-2d-graphics&ei=uscwUuTzNIqA9QTy6oGwDw&usg=AFQjCNE8glaIbM44uNz0cSZ5fMAKqjGYiA&bvm=bv.52109249,d.eWU	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCsQFjAA&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F2483533%2Fjava-swing-custom-shapes-2d-graphics&ei=uscwUuTzNIqA9QTy6oGwDw&usg=AFQjCNE8glaIbM44uNz0cSZ5fMAKqjGYiA&bvm=bv.52109249,d.eWU, java swing shapes - Google Search	https://www.google.com/search?q=java+swing+shapes&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a&channel=fflb]
+09-11-2013 15:46:14, 0.0, 0.0, 53.84615384615385, 0.0, 15.384615384615385, 0.0, 0, -1, null
+09-11-2013 15:47:13, 0.0, 0.0, 41.17647058823529, 2.941176470588235, 5.88235294117647, 0.0, 0, -1, null
+09-11-2013 15:47:58, 0.0, 0.0, 39.39393939393939, 3.0303030303030303, 0.0, 0.0, 0, -1, null
+09-11-2013 15:48:21, 0.0, 0.0, 47.82608695652174, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:48:34, 0.0, 0.0, 55.81395348837209, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:49:02, 0.0, 0.0, 34.375, 3.125, 6.25, 0.0, 0, -1, null
+09-11-2013 15:49:44, 0.0, 0.0, 65.0, 2.5, 5.0, 0.0, 0, -1, null
+09-11-2013 15:49:56, 0.0, 0.0, 77.77777777777779, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:50:06, 0.0, 0.0, 67.44186046511628, 0.0, 0.0, 0.0, 0, -1, [java - displaying an image in swing - Stack Overflow	http://stackoverflow.com/questions/2025813/displaying-an-image-in-swing, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&ved=0CDcQFjAC&url=http://stackoverflow.com/questions/2025813/displaying-an-image-in-swing&ei=rMkwUvjgBIaQ9QSg0YGYBA&usg=AFQjCNFaEbkY76NdGeJyZ9fvEofC5iw2hA&bvm=bv.52109249,d.eWU&cad=rja	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&ved=0CDcQFjAC&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F2025813%2Fdisplaying-an-image-in-swing&ei=rMkwUvjgBIaQ9QSg0YGYBA&usg=AFQjCNFaEbkY76NdGeJyZ9fvEofC5iw2hA&bvm=bv.52109249,d.eWU&cad=rja, swing displaying graphics - Google Search	https://www.google.com/search?q=swing+displaying+graphics&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a&channel=fflb]
+09-11-2013 15:52:05, 0.0, 0.0, 67.44186046511628, 0.0, 9.30232558139535, 0.0, 0, -1, null
+09-11-2013 15:52:12, 0.0, 0.0, 51.11111111111111, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:52:36, 0.0, 0.0, 85.1063829787234, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:53:14, 0.0, 0.0, 68.42105263157895, 0.0, 2.631578947368421, 0.0, 0, -1, null
+09-11-2013 15:55:04, 0.0, 0.0, 52.17391304347826, 13.043478260869565, 21.73913043478261, 0.0, 0, -1, null
+09-11-2013 15:55:38, 0.0, 0.0, 43.58974358974359, 2.564102564102564, 0.0, 0.0, 0, -1, [gui - How to draw a filled circle in Java? - Stack Overflow	http://stackoverflow.com/questions/2509561/how-to-draw-a-filled-circle-in-java, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&sqi=2&ved=0CCkQFjAA&url=http://stackoverflow.com/questions/2509561/how-to-draw-a-filled-circle-in-java&ei=w8owUtfOApLO8wSdvIHYBw&usg=AFQjCNFogfaeZcLnIC-cJDUMhAxjjbQt0g&bvm=bv.52109249,d.eWU	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&sqi=2&ved=0CCkQFjAA&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F2509561%2Fhow-to-draw-a-filled-circle-in-java&ei=w8owUtfOApLO8wSdvIHYBw&usg=AFQjCNFogfaeZcLnIC-cJDUMhAxjjbQt0g&bvm=bv.52109249,d.eWU, java swing circle - Google Search	https://www.google.com/search?q=swing+displaying+graphics&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a&channel=fflb#channel=fflb&q=java+swing+circle&rls=org.mozilla:en-US%3Aofficial]
+09-11-2013 15:56:28, 0.0, 0.0, 78.57142857142857, 0.0, 4.761904761904762, 0.0, 0, -1, null
+09-11-2013 15:56:38, 0.0, 0.0, 72.3404255319149, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:56:45, 0.0, 0.0, 90.0, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:57:41, 0.0, 0.0, 78.57142857142857, 9.523809523809524, 0.0, 0.0, 0, -1, null
+09-11-2013 15:57:57, 0.0, 0.0, 78.26086956521739, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:58:15, 0.0, 0.0, 78.04878048780488, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:58:24, 0.0, 0.0, 70.2127659574468, 0.0, 2.127659574468085, 0.0, 0, -1, null
+09-11-2013 15:58:45, 0.0, 0.0, 72.72727272727273, 0.0, 2.272727272727273, 0.0, 0, -1, null
+09-11-2013 15:58:58, 0.0, 0.0, 74.46808510638297, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 15:59:28, 0.0, 0.0, 58.82352941176471, 0.0, 5.88235294117647, 0.0, 0, -1, null
+09-11-2013 15:59:49, 0.0, 0.0, 31.57894736842105, 0.0, 5.263157894736842, 0.0, 0, -1, null
+09-11-2013 16:01:16, 0.0, 0.0, 50.0, 0.0, 20.588235294117645, 0.0, 0, -1, null
+09-11-2013 16:01:45, 0.0, 0.0, 51.28205128205128, 0.0, 12.82051282051282, 0.0, 0, -1, null
+09-11-2013 16:02:17, 0.0, 0.0, 43.24324324324324, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:03:11, 0.0, 0.0, 24.324324324324326, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:03:29, 0.0, 0.0, 41.30434782608695, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:03:46, 0.0, 0.0, 55.81395348837209, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:04:10, 0.0, 0.0, 38.095238095238095, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:04:38, 0.0, 0.0, 40.54054054054054, 0.0, 5.405405405405405, 0.0, 0, -1, null
+09-11-2013 16:04:53, 0.0, 0.0, 64.28571428571429, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:06:01, 0.0, 0.0, 43.333333333333336, 3.3333333333333335, 0.0, 0.0, 0, -1, null
+09-11-2013 16:07:17, 0.0, 0.0, 57.14285714285714, 2.857142857142857, 11.428571428571429, 0.0, 0, -1, [How to Write a Key Listener (The Java™ Tutorials > Creating a GUI With JFC/Swing > Writing Event Listeners)	http://docs.oracle.com/javase/tutorial/uiswing/events/keylistener.html, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CC0QFjAA&url=http://docs.oracle.com/javase/tutorial/uiswing/events/keylistener.html&ei=h80wUou2OZLy9gSbgIGwAQ&usg=AFQjCNE8vEjnZOlzO4kkQChaONzMA_aJOQ&bvm=bv.52109249,d.eWU	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CC0QFjAA&url=http%3A%2F%2Fdocs.oracle.com%2Fjavase%2Ftutorial%2Fuiswing%2Fevents%2Fkeylistener.html&ei=h80wUou2OZLy9gSbgIGwAQ&usg=AFQjCNE8vEjnZOlzO4kkQChaONzMA_aJOQ&bvm=bv.52109249,d.eWU, java swing key listener - Google Search	https://www.google.com/search?q=java+swing+key+listener&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a&channel=fflb]
+09-11-2013 16:09:43, 0.0, 0.0, 33.33333333333333, 2.7777777777777777, 22.22222222222222, 0.0, 0, -1, null
+09-11-2013 16:10:15, 0.0, 0.0, 37.142857142857146, 0.0, 11.428571428571429, 0.0, 0, -1, null
+09-11-2013 16:11:30, 0.0, 0.0, 25.925925925925924, 0.0, 14.814814814814813, 0.0, 0, -1, null
+09-11-2013 16:12:03, 0.0, 0.0, 18.91891891891892, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:12:37, 0.0, 0.0, 60.97560975609756, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:13:09, 0.0, 0.0, 34.285714285714285, 0.0, 5.714285714285714, 0.0, 0, -1, null
+09-11-2013 16:13:55, 0.0, 0.0, 57.14285714285714, 0.0, 9.523809523809524, 0.0, 0, -1, null
+09-11-2013 16:14:11, 0.0, 0.0, 52.63157894736842, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:15:12, 0.0, 0.0, 27.586206896551722, 3.4482758620689653, 13.793103448275861, 0.0, 0, -1, null
+09-11-2013 16:16:25, 0.0, 0.0, 50.0, 2.7777777777777777, 33.33333333333333, 0.0, 0, -1, null
+09-11-2013 16:17:24, 0.0, 0.0, 41.17647058823529, 2.941176470588235, 11.76470588235294, 0.0, 0, -1, null
+09-11-2013 16:18:01, 0.0, 0.0, 42.10526315789473, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:18:29, 0.0, 0.0, 37.142857142857146, 0.0, 5.714285714285714, 0.0, 0, -1, null
+09-11-2013 16:18:50, 0.0, 0.0, 16.216216216216218, 0.0, 5.405405405405405, 0.0, 0, -1, null
+09-11-2013 16:19:26, 0.0, 0.0, 53.84615384615385, 2.564102564102564, 5.128205128205128, 0.0, 0, -1, null
+09-11-2013 16:20:21, 0.0, 0.0, 51.42857142857142, 0.0, 22.857142857142858, 0.0, 0, -1, null
+09-11-2013 16:21:30, 0.0, 0.0, 63.63636363636363, 0.0, 4.545454545454546, 0.0, 0, -1, [How to: clear the JPanel before repainting? (Swing / AWT / SWT forum at JavaRanch)	http://www.coderanch.com/t/345317/GUI/java/clear-JPanel-repainting, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCsQFjAA&url=http://www.coderanch.com/t/345317/GUI/java/clear-JPanel-repainting&ei=09AwUuvMA4W69QTG-YHgCw&usg=AFQjCNEOe9zGJegcb5JkSK75ZkwrjjuVhA&bvm=bv.52109249,d.eWU	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCsQFjAA&url=http%3A%2F%2Fwww.coderanch.com%2Ft%2F345317%2FGUI%2Fjava%2Fclear-JPanel-repainting&ei=09AwUuvMA4W69QTG-YHgCw&usg=AFQjCNEOe9zGJegcb5JkSK75ZkwrjjuVhA&bvm=bv.52109249,d.eWU, java swing clear graphic - Google Search	https://www.google.com/search?q=java+swing+clear+graphic&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a&channel=fflb]
+09-11-2013 16:22:31, 0.0, 0.0, 52.94117647058824, 0.0, 17.647058823529413, 0.0, 0, -1, null
+09-11-2013 16:23:15, 0.0, 0.0, 55.55555555555556, 0.0, 5.555555555555555, 0.0, 0, -1, null
+09-11-2013 16:23:52, 0.0, 0.0, 52.94117647058824, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:24:14, 0.0, 0.0, 40.54054054054054, 0.0, 5.405405405405405, 0.0, 0, -1, null
+09-11-2013 16:24:35, 0.0, 0.0, 40.476190476190474, 0.0, 4.761904761904762, 0.0, 0, -1, null
+09-11-2013 16:25:11, 0.0, 0.0, 65.85365853658537, 0.0, 9.75609756097561, 0.0, 0, -1, [KeyEvent (Java Platform SE 6)	http://docs.oracle.com/javase/6/docs/api/java/awt/event/KeyEvent.html, http://download.oracle.com/javase/6/docs/api/java/awt/event/KeyEvent.html	http://download.oracle.com/javase/6/docs/api/java/awt/event/KeyEvent.html, how can I detect arrow keys in java? - Stack Overflow	http://stackoverflow.com/questions/4522090/how-can-i-detect-arrow-keys-in-java, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCsQFjAA&url=http://stackoverflow.com/questions/4522090/how-can-i-detect-arrow-keys-in-java&ei=5tEwUubeMYTu8QSH44CQCQ&usg=AFQjCNGuCPn6imRW0wnefkUVNO8isMcaNg&bvm=bv.52109249,d.eWU	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCsQFjAA&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F4522090%2Fhow-can-i-detect-arrow-keys-in-java&ei=5tEwUubeMYTu8QSH44CQCQ&usg=AFQjCNGuCPn6imRW0wnefkUVNO8isMcaNg&bvm=bv.52109249,d.eWU, java swing get arrow keys - Google Search	https://www.google.com/search?q=java+swing+get+arrow+keys&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a&channel=fflb]
+09-11-2013 16:27:50, 0.0, 0.0, 22.22222222222222, 2.7777777777777777, 27.77777777777778, 0.0, 0, -1, [events - How to check if the key pressed was an arrow key in Java KeyListener? - Stack Overflow	http://stackoverflow.com/questions/616924/how-to-check-if-the-key-pressed-was-an-arrow-key-in-java-keylistener, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCsQFjAA&url=http://stackoverflow.com/questions/616924/how-to-check-if-the-key-pressed-was-an-arrow-key-in-java-keylistener&ei=j9IwUo3tKYOa9gTakYGYDg&usg=AFQjCNF_WsYGITeqJYyUSFsts_yV4EjfFA&bvm=bv.52109249,d.eWU	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCsQFjAA&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F616924%2Fhow-to-check-if-the-key-pressed-was-an-arrow-key-in-java-keylistener&ei=j9IwUo3tKYOa9gTakYGYDg&usg=AFQjCNF_WsYGITeqJYyUSFsts_yV4EjfFA&bvm=bv.52109249,d.eWU, java key typed event arrow - Google Search	https://www.google.com/search?q=java+key+typed+event+arrow&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a&channel=fflb, How to Use Key Bindings (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Other Swing Features)	http://docs.oracle.com/javase/tutorial/uiswing/misc/keybinding.html#api, How to Use Key Bindings (The Java™ Tutorials > Creating a GUI With JFC/Swing > Using Other Swing Features)	http://docs.oracle.com/javase/tutorial/uiswing/misc/keybinding.html, swing - Java keylistener use arrow keys to move car - Stack Overflow	http://stackoverflow.com/questions/15117287/java-keylistener-use-arrow-keys-to-move-car, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=4&ved=0CD0QFjAD&url=http://stackoverflow.com/questions/15117287/java-keylistener-use-arrow-keys-to-move-car&ei=VNIwUpniJY7m9gTHloCYAw&usg=AFQjCNEbRI3JDzslhfTpJFtkMFiOrz0pBg&bvm=bv.52109249,d.eWU	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=4&ved=0CD0QFjAD&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F15117287%2Fjava-keylistener-use-arrow-keys-to-move-car&ei=VNIwUpniJY7m9gTHloCYAw&usg=AFQjCNEbRI3JDzslhfTpJFtkMFiOrz0pBg&bvm=bv.52109249,d.eWU, swing - Java : Use keystroke with Arrow Key - Stack Overflow	http://stackoverflow.com/questions/11171021/java-use-keystroke-with-arrow-key, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&ved=0CDcQFjAC&url=http://stackoverflow.com/questions/11171021/java-use-keystroke-with-arrow-key&ei=VNIwUpniJY7m9gTHloCYAw&usg=AFQjCNHo23TOf1W5iK3psUkUPYV5l55Jyg&bvm=bv.52109249,d.eWU&cad=rja	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=3&ved=0CDcQFjAC&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F11171021%2Fjava-use-keystroke-with-arrow-key&ei=VNIwUpniJY7m9gTHloCYAw&usg=AFQjCNHo23TOf1W5iK3psUkUPYV5l55Jyg&bvm=bv.52109249,d.eWU&cad=rja, arrow keys java swing - Google Search	https://www.google.com/search?q=arrow+keys+java+swing&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a&channel=fflb]
+09-11-2013 16:29:50, 0.0, 0.0, 38.88888888888889, 0.0, 16.666666666666664, 0.0, 0, -1, null
+09-11-2013 16:30:01, 0.0, 0.0, 52.5, 0.0, 5.0, 0.0, 0, -1, null
+09-11-2013 16:30:16, 0.0, 0.0, 53.65853658536586, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:30:52, 0.0, 0.0, 60.86956521739131, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:31:20, 0.0, 0.0, 66.66666666666666, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:32:14, 0.0, 0.0, 75.0, 0.0, 4.545454545454546, 0.0, 0, -1, null
+09-11-2013 16:32:30, 0.0, 0.0, 58.536585365853654, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:32:44, 0.0, 0.0, 52.5, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:33:20, 0.0, 0.0, 51.21951219512195, 4.878048780487805, 4.878048780487805, 0.0, 0, -1, null
+09-11-2013 16:34:04, 0.0, 0.0, 50.0, 2.7777777777777777, 11.11111111111111, 0.0, 0, -1, null
+09-11-2013 16:34:54, 0.0, 0.0, 54.054054054054056, 0.0, 13.513513513513514, 0.0, 0, -1, null
+09-11-2013 16:35:47, 0.0, 0.0, 17.142857142857142, 0.0, 8.571428571428571, 0.0, 0, -1, null
+09-11-2013 16:36:57, 0.0, 0.0, 37.83783783783784, 0.0, 16.216216216216218, 0.0, 0, -1, [Detecting and acting on keyboard direction keys in Java - Stack Overflow	http://stackoverflow.com/questions/572001/detecting-and-acting-on-keyboard-direction-keys-in-java, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&ved=0CDEQFjAB&url=http://stackoverflow.com/questions/572001/detecting-and-acting-on-keyboard-direction-keys-in-java&ei=ktQwUrDjOJSI9gSGj4Ao&usg=AFQjCNG2PCNAC7O3a1cTvlHqG3LfGnwqdw&bvm=bv.52109249,d.eWU&cad=rja	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=2&ved=0CDEQFjAB&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F572001%2Fdetecting-and-acting-on-keyboard-direction-keys-in-java&ei=ktQwUrDjOJSI9gSGj4Ao&usg=AFQjCNG2PCNAC7O3a1cTvlHqG3LfGnwqdw&bvm=bv.52109249,d.eWU&cad=rja, swing - Java KeyListener Not Registering Arrow Keys - Stack Overflow	http://stackoverflow.com/questions/8961938/java-keylistener-not-registering-arrow-keys, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCsQFjAA&url=http://stackoverflow.com/questions/8961938/java-keylistener-not-registering-arrow-keys&ei=ktQwUrDjOJSI9gSGj4Ao&usg=AFQjCNF0GuuP8-DlSWOpt3EITnLqsAHjYw&bvm=bv.52109249,d.eWU&cad=rja	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCsQFjAA&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F8961938%2Fjava-keylistener-not-registering-arrow-keys&ei=ktQwUrDjOJSI9gSGj4Ao&usg=AFQjCNF0GuuP8-DlSWOpt3EITnLqsAHjYw&bvm=bv.52109249,d.eWU&cad=rja, java swing catch arrow keys - Google Search	https://www.google.com/search?q=java+swing+catch+arrow+keys&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a&channel=fflb]
+09-11-2013 16:39:01, 0.0, 0.0, 54.054054054054056, 0.0, 16.216216216216218, 0.0, 0, -1, null
+09-11-2013 16:39:17, 0.0, 0.0, 58.139534883720934, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:39:43, 0.0, 0.0, 65.85365853658537, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:39:53, 0.0, 0.0, 80.85106382978722, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:40:03, 0.0, 0.0, 73.33333333333333, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:40:12, 0.0, 0.0, 75.0, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:40:16, 0.0, 0.0, 40.42553191489361, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:40:23, 0.0, 0.0, 35.41666666666667, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:41:07, 0.0, 0.0, 58.97435897435898, 0.0, 5.128205128205128, 0.0, 0, -1, null
+09-11-2013 16:42:43, 0.0, 0.0, 16.666666666666664, 2.7777777777777777, 5.555555555555555, 0.0, 0, -1, null
+09-11-2013 16:43:21, 0.0, 0.0, 56.81818181818182, 0.0, 0.0, 0.0, 0, -1, [swing - Rectangle border Java - Stack Overflow	http://stackoverflow.com/questions/7824416/rectangle-border-java, http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCsQFjAA&url=http://stackoverflow.com/questions/7824416/rectangle-border-java&ei=StYwUsvPK4T49gSrioCQDg&usg=AFQjCNGMPuNLnjVYLSumMEGfirS_A8L1hw&bvm=bv.52109249,d.eWU	http://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=1&ved=0CCsQFjAA&url=http%3A%2F%2Fstackoverflow.com%2Fquestions%2F7824416%2Frectangle-border-java&ei=StYwUsvPK4T49gSrioCQDg&usg=AFQjCNGMPuNLnjVYLSumMEGfirS_A8L1hw&bvm=bv.52109249,d.eWU, swing rectangle border - Google Search	https://www.google.com/search?q=swing+rectangle+border&ie=utf-8&oe=utf-8&aq=t&rls=org.mozilla:en-US:official&client=firefox-a&channel=fflb]
+09-11-2013 16:45:15, 0.0, 0.0, 29.629629629629626, 11.11111111111111, 7.4074074074074066, 0.0, 0, -1, null
+09-11-2013 16:45:35, 0.0, 0.0, 59.09090909090909, 0.0, 4.545454545454546, 0.0, 0, -1, null
+09-11-2013 16:46:02, 0.0, 0.0, 50.0, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:46:28, 0.0, 0.0, 48.78048780487805, 0.0, 4.878048780487805, 0.0, 0, -1, null
+09-11-2013 16:46:48, 0.0, 0.0, 55.26315789473685, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:47:17, 0.0, 0.0, 52.5, 0.0, 15.0, 0.0, 0, -1, null
+09-11-2013 16:48:26, 0.0, 0.0, 78.57142857142857, 0.0, 14.285714285714285, 0.0, 0, -1, null
+09-11-2013 16:48:59, 0.0, 0.0, 45.94594594594595, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:49:19, 0.0, 0.0, 60.86956521739131, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:49:54, 0.0, 0.0, 40.625, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:50:33, 0.0, 0.0, 41.02564102564102, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:51:14, 0.0, 0.0, 63.63636363636363, 0.0, 6.8181818181818175, 0.0, 0, -1, null
+09-11-2013 16:52:16, 0.0, 0.0, 36.11111111111111, 0.0, 8.333333333333332, 0.0, 0, -1, null
+09-11-2013 16:52:34, 0.0, 0.0, 45.23809523809524, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:53:20, 0.0, 0.0, 48.64864864864865, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:53:32, 0.0, 0.0, 28.26086956521739, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:53:33, 0.0, 0.0, 4.0, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:53:59, 0.0, 0.0, 51.42857142857142, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:54:20, 0.0, 0.0, 50.0, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:54:37, 0.0, 0.0, 37.2093023255814, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:54:54, 0.0, 0.0, 55.55555555555556, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:55:49, 0.0, 0.0, 42.5, 0.0, 5.0, 0.0, 0, -1, null
+09-11-2013 16:56:16, 0.0, 0.0, 50.0, 0.0, 4.761904761904762, 0.0, 0, -1, null
+09-11-2013 16:56:45, 0.0, 0.0, 40.0, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:57:05, 0.0, 0.0, 56.52173913043478, 0.0, 0.0, 0.0, 0, -1, null
+09-11-2013 16:58:26, 0.0, 0.0, 57.14285714285714, 0.0, 11.428571428571429, 0.0, 0, -1, null

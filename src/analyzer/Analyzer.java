@@ -42,4 +42,12 @@ public interface Analyzer {
 
 	void notifyNewParticipant(String anId);
 
+	void notifyNewBrowseLine(String aLine);
+
+	void notifyStartTimeStamp(long aStartTimeStamp);
+
+//	boolean isNewRatioFiles();
+//
+//	void setNewRatioFiles(boolean newRatioFiles);
+
 }
