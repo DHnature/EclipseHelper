@@ -1,12 +1,15 @@
 package analyzer.extension;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import util.misc.Common;
 import difficultyPrediction.DifficultyPredictionEventListener;
+import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.extension.APrintingDifficultyPredictionListener;
 import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeatures;
@@ -51,6 +54,16 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	}
 	@Override
 	public void finishedBrowserLines() {
+		if (!DifficultyPredictionSettings.isNewRatioFiles() && DifficultyPredictionSettings.isRatioFileExists())
+			return;
+		String aFileName = DifficultyPredictionSettings.getRatiosFileName();
+		StringBuffer timeLineText = participantTimeLine.toText();
+		try {
+			Common.writeText(aFileName, timeLineText.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	@Override

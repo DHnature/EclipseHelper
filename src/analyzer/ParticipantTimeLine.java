@@ -46,5 +46,7 @@ public interface ParticipantTimeLine {
 	public abstract void setWebLinks(List<List<WebLink>> webLinks);
 	public int getIndexBefore(long aTimeStamp) ;
 
+	StringBuffer toText();
+
 
 }

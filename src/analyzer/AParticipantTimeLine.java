@@ -3,6 +3,8 @@ package analyzer;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.joda.time.DateTime;
+
 public class AParticipantTimeLine implements ParticipantTimeLine {
 	private List<Double> insertionList = new ArrayList<Double>();
 	private List<Double> deletionList = new ArrayList<Double>();
@@ -12,7 +14,7 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 	private List<Double> removeList = new ArrayList<Double>();
 	private List<Long> timeStampList = new ArrayList<Long>();
 	protected List<Integer> predictionList = new ArrayList<Integer>();
-	protected List<Integer> predictionCorrection = new ArrayList<Integer>();
+	protected List<Integer> predictionCorrections = new ArrayList<Integer>();
 	protected List<List<WebLink>> webLinks = new ArrayList();
 	public AParticipantTimeLine(List<Double> insertionList,
 			List<Double> deletionList, List<Double> debugList,
@@ -29,7 +31,7 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 		this.removeList = removeList;
 		this.timeStampList = timeStampList;
 		this.predictionList = predictionList;
-		this.predictionCorrection = predictionCorrection;
+		this.predictionCorrections = predictionCorrection;
 		this.webLinks = webLinks;
 	}
 	public AParticipantTimeLine() {
@@ -153,14 +155,14 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 	 */
 	@Override
 	public List<Integer> getPredictionCorrections() {
-		return predictionCorrection;
+		return predictionCorrections;
 	}
 	/* (non-Javadoc)
 	 * @see analyzer.ParticipantTimeLine#setPredictionCorrection(java.util.List)
 	 */
 	@Override
 	public void setPredictionCorrections(List<Integer> predictionCorrection) {
-		this.predictionCorrection = predictionCorrection;
+		this.predictionCorrections = predictionCorrection;
 	}
 	/* (non-Javadoc)
 	 * @see analyzer.ParticipantTimeLine#getWebLinks()
@@ -186,6 +188,27 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 			}
 		}
 		return timeStampList.size() -1; 
+	}
+	@Override
+	public StringBuffer toText() {
+		StringBuffer aStringBuffer = new StringBuffer(4096);
+		for (int index = 0; index < timeStampList.size(); index++) {
+			long absoluteTime = timeStampList.get(index);
+			DateTime dateTime = new DateTime(absoluteTime);
+			String timeStampString = dateTime.toString("MM-dd-yyyy H:mm:ss");
+			aStringBuffer.append(timeStampString  + ", ");
+			aStringBuffer.append(insertionList.get(index) + ", ");
+			aStringBuffer.append(deletionList.get(index) + ", ");
+			aStringBuffer.append(debugList.get(index) + ", ");
+			aStringBuffer.append(navigationList.get(index) + ", ");
+			aStringBuffer.append(focusList.get(index) + ", ");
+			aStringBuffer.append(removeList.get(index) + ", ");
+			aStringBuffer.append(predictionList.get(index) + ", ");
+			aStringBuffer.append(predictionCorrections.get(index) + ", ");
+			aStringBuffer.append(webLinks.get(index) + "\n"); 			
+		}
+		return aStringBuffer;
+		
 	}
 	
 	

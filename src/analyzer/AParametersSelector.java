@@ -73,13 +73,13 @@ public class AParametersSelector  {
 	}
 	@Row(1)
 	@Column(2)
-	public boolean isNewRatioFiles() {
+	public boolean isNewOutputFiles() {
 		
 		
 		return DifficultyPredictionSettings.isNewRatioFiles();
 	}
 	
-	public void setNewRatioFiles(boolean newRatioFiles) {
+	public void setNewOutputFiles(boolean newRatioFiles) {
 //		if (analyzer != null)
 //			 analyzer.setNewRatioFiles(newRatioFiles);
 		DifficultyPredictionSettings.setNewRatioFiles(newRatioFiles);

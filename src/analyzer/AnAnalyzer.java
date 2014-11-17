@@ -239,6 +239,7 @@ public class AnAnalyzer implements Analyzer  {
 			
 //			listOfListOFcommands.add(commands);
 		}
+		notifyFinishedBrowserLines();
 
 	
 	}
@@ -459,70 +460,64 @@ public class AnAnalyzer implements Analyzer  {
 //		this.segmentLength = newVal;
 //	}
 	
-	
+	// let us do this in the analyzerprocessor
 	public static void maybeRecordFeatures(RatioFeatures details) {
 		if (!DifficultyPredictionSettings.isReplayMode()) 
 			return;
 		if (!DifficultyPredictionSettings.isNewRatioFiles() && DifficultyPredictionSettings.isRatioFileExists())
 			return;
-		String aFileName = DifficultyPredictionSettings.getRatiosFileName();
-
-//		System.out.println("Insertion ratio:" + details.getInsertionRatio());
-//		System.out.println("Deletion ratio:" + details.getDeletionRatio());
-//		System.out.println("Debug ratio:" + details.getDebugRatio());
-//		System.out.println("Navigation ratio:" + details.getNavigationRatio());
-//		System.out.println("Focus ratio:" + details.getFocusRatio());
-//		System.out.println("Remove ratio:" + details.getRemoveRatio());
-//		System.out.println("features have been computed");
+		return;
 		
-		long absoluteTime = startTimeStamp + details.getSavedTimeStamp();
-		
-//		java.util.Date time=new java.util.Date((long)details.getSavedTimeStamp());
-		java.util.Date time=new Date(absoluteTime);
-
-		Calendar mydate = Calendar.getInstance();
-//		mydate.setTimeInMillis(details.getSavedTimeStamp());
-		mydate.setTimeInMillis(absoluteTime);
-		
-		//mydate.get(Calendar.HOUR)
-		//mydate.get(Calendar.MINUTE)
-		//mydate.get(Calendar.SECOND)
-//		DateTime timestamp = new DateTime(details.getSavedTimeStamp());
-		DateTime timestamp = new DateTime(absoluteTime);
-
-		//timestamp.get(timestamp)
-		
-//		System.out.println(timestamp.toString("MM-dd-yyyy H:mm:ss"));
-		try
-		{
-//		    String filename= "/users/jasoncarter/filename.csv";
-//		    String filename = dataFolder + "ratios.csv";
-		    FileWriter fw = new FileWriter(aFileName,true); //the true will append the new data
-		   
-		    fw.write(""+ details.getInsertionRatio());
-		    fw.write(",");
-		    fw.write("" + details.getDeletionRatio());
-		    fw.write(",");
-		    fw.write("" + details.getDebugRatio());
-		    fw.write(",");
-		    fw.write("" + details.getNavigationRatio());
-		    fw.write(",");
-		    fw.write("" + details.getFocusRatio());
-		    fw.write(",");
-			fw.write("" + details.getRemoveRatio());
-			fw.write(",");
-			String timeStampString = time.toString();
-			timeStampString = timestamp.toString("MM-dd-yyyy H:mm:ss");
-//			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
-//			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
-			fw.write("" + timeStampString);
-			fw.write("\n");
-		    fw.close();
-		}
-		catch(IOException ioe)
-		{
-		    System.err.println("IOException: " + ioe.getMessage());
-		}
+//		String aFileName = DifficultyPredictionSettings.getRatiosFileName();
+//
+//
+//		long absoluteTime = startTimeStamp + details.getSavedTimeStamp();
+//		
+//		java.util.Date time=new Date(absoluteTime);
+//
+//		Calendar mydate = Calendar.getInstance();
+////		mydate.setTimeInMillis(details.getSavedTimeStamp());
+//		mydate.setTimeInMillis(absoluteTime);
+//		
+//		//mydate.get(Calendar.HOUR)
+//		//mydate.get(Calendar.MINUTE)
+//		//mydate.get(Calendar.SECOND)
+////		DateTime timestamp = new DateTime(details.getSavedTimeStamp());
+//		DateTime timestamp = new DateTime(absoluteTime);
+//
+//		//timestamp.get(timestamp)
+//		
+////		System.out.println(timestamp.toString("MM-dd-yyyy H:mm:ss"));
+//		try
+//		{
+////		    String filename= "/users/jasoncarter/filename.csv";
+////		    String filename = dataFolder + "ratios.csv";
+//		    FileWriter fw = new FileWriter(aFileName,true); //the true will append the new data
+//		   
+//		    fw.write(""+ details.getInsertionRatio());
+//		    fw.write(",");
+//		    fw.write("" + details.getDeletionRatio());
+//		    fw.write(",");
+//		    fw.write("" + details.getDebugRatio());
+//		    fw.write(",");
+//		    fw.write("" + details.getNavigationRatio());
+//		    fw.write(",");
+//		    fw.write("" + details.getFocusRatio());
+//		    fw.write(",");
+//			fw.write("" + details.getRemoveRatio());
+//			fw.write(",");
+//			String timeStampString = time.toString();
+//			timeStampString = timestamp.toString("MM-dd-yyyy H:mm:ss");
+////			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
+////			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
+//			fw.write("" + timeStampString);
+//			fw.write("\n");
+//		    fw.close();
+//		}
+//		catch(IOException ioe)
+//		{
+//		    System.err.println("IOException: " + ioe.getMessage());
+//		}
 		
 		
 
@@ -576,7 +571,7 @@ public class AnAnalyzer implements Analyzer  {
 		}
 	}
 	
-	public void notifyFinishedBrowser(String aLine) {
+	public void notifyFinishedBrowserLines() {
 		for (AnalyzerListener aListener:listeners) {
 			aListener.finishedBrowserLines();
 			
