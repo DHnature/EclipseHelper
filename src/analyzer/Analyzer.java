@@ -40,7 +40,7 @@ public interface Analyzer {
 
 	void removeAnalyzerListener(AnalyzerListener aListener);
 
-	void notifyNewParticipant(String anId);
+	void notifyNewParticipant(String anId, String aFolder);
 
 	void notifyNewBrowseLine(String aLine);
 

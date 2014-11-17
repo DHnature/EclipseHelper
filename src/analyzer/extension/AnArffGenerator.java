@@ -2,6 +2,7 @@ package analyzer.extension;
 
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -132,8 +133,8 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 	}
 
 	@Override
-	public void newParticipant(String anId) {
-		System.out.println("***new participant: "+anId);
+	public void newParticipant(String anId, String aFolder) {
+		System.out.println("***new participant: "+ aFolder);
 		analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);		
 		
 		path=AnAnalyzer.PARTICIPANT_OUTPUT_DIRECTORY+"/"+anId+"/"+anId+".arff";
@@ -225,7 +226,7 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 			try {
 			
 				
-				writer=Files.newBufferedWriter(Paths.get(path), StandardOpenOption.WRITE,StandardOpenOption.TRUNCATE_EXISTING);
+				writer=Files.newBufferedWriter(Paths.get(path), Charset.defaultCharset(), StandardOpenOption.WRITE,StandardOpenOption.TRUNCATE_EXISTING);
 				
 			} catch (IOException e) {
 				// TODO Auto-generated catch block

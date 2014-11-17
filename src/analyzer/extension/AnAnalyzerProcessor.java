@@ -40,7 +40,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	ParticipantTimeLine participantTimeLine;
 	
 	@Override
-	public void newParticipant(String anId) {
+	public void newParticipant(String anId, String aFolder) {
 		System.out.println("Extension**New Participant:" + anId);
 		participantTimeLine = new AParticipantTimeLine();
 		participantToTimeLine.put(anId, participantTimeLine );

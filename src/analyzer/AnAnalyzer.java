@@ -186,6 +186,7 @@ public class AnAnalyzer implements Analyzer  {
 		List<String> participantIds = parameters.getParticipants().getChoices();
 		List<List<ICommand>> commandsList;
 		if (participantId.equals(ALL_PARTICIPANTS)) {
+			notifyNewParticipant(ALL_PARTICIPANTS, null);
 			for (String aParticipantId:participantIds) {
 				if (aParticipantId.equals(ALL_PARTICIPANTS))
 					continue;
@@ -326,7 +327,7 @@ public class AnAnalyzer implements Analyzer  {
 //		Mediator mediator = difficultyPredictionRunnable.getMediator();
 		EventAggregator eventAggregator = mediator.getEventAggregator();
 		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer("" + DifficultyPredictionSettings.getSegmentLength()));
-		notifyNewParticipant(aParticipantId);
+		notifyNewParticipant(aParticipantId, aParticipantFolder);
 
 		startTimeStamp = 0;
 		for (int index = 0; index < nestedCommandsList.size(); index++) {
@@ -547,9 +548,9 @@ public class AnAnalyzer implements Analyzer  {
 		listeners.remove(aListener);
 	}
 	@Override
-	public void notifyNewParticipant(String anId) {
+	public void notifyNewParticipant(String anId, String aFolder) {
 		for (AnalyzerListener aListener:listeners) {
-			aListener.newParticipant(anId);
+			aListener.newParticipant(anId, aFolder);
 		}
 	}
 	@Override
