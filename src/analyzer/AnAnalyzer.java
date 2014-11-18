@@ -199,6 +199,8 @@ public class AnAnalyzer implements Analyzer  {
 //				commandsList = convertXMLLogToObjects(aParticipanttFolder);
 //				 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments,aParticipanttFolder);
 			}
+			
+			notifyFinishParticipant(ALL_PARTICIPANTS, null);
 		} else {
 			String aParticipanttFolder = participants.get(participantId);
 			processParticipant(participantId);
@@ -382,6 +384,7 @@ public class AnAnalyzer implements Analyzer  {
 		}
 		processBrowserHistoryOfFolder(participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/" + BROWSER_FOLDER);
 
+		notifyFinishParticipant(aParticipantId, aParticipantFolder);
 //		for (ICommand aCommand: commandsList) {
 //			
 //		}
@@ -552,6 +555,12 @@ public class AnAnalyzer implements Analyzer  {
 	public void notifyNewParticipant(String anId, String aFolder) {
 		for (AnalyzerListener aListener:listeners) {
 			aListener.newParticipant(anId, aFolder);
+		}
+	}
+	@Override
+	public void notifyFinishParticipant(String anId, String aFolder) {
+		for (AnalyzerListener aListener:listeners) {
+			aListener.finishParticipant(anId, aFolder);
 		}
 	}
 	@Override

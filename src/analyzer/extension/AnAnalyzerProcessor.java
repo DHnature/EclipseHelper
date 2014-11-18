@@ -200,4 +200,10 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		
 	}
 
+	@Override
+	public void finishParticipant(String anId, String aFolder) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

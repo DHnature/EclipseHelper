@@ -416,4 +416,11 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 	}
 
 
+	@Override
+	public void finishParticipant(String anId, String aFolder) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 }

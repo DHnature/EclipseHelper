@@ -109,7 +109,7 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 		this.focusList = focusList;
 	}
 	/* (non-Javadoc)
-	 * @see analyzer.ParticipantTimeLine#getRemoveList()
+	 * @see anatlyzer.ParticipantTimeLine#getRemoveList()
 	 */
 	@Override
 	public List<Double> getRemoveList() {

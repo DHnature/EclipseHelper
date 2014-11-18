@@ -46,6 +46,8 @@ public interface Analyzer {
 
 	void notifyStartTimeStamp(long aStartTimeStamp);
 
+	void notifyFinishParticipant(String anId, String aFolder);
+
 //	boolean isNewRatioFiles();
 //
 //	void setNewRatioFiles(boolean newRatioFiles);
