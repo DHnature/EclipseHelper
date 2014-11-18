@@ -114,18 +114,23 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 	public void finishParticipant(String aId, String aFolder) {
 		System.out.println("***EXTENSION Participant "+aId+"Completed");
 
-		//write the ratios out to arfffile
-		writeToArff(all);
+		
 
 		//set all to false. Only if it is current generating all files
 		//and the stop signal aka aId of All and aFolder of null is recieved.
 		if(all && aId.equals("All") && aFolder==null) {
+			//write the ratios out to arfffile only at the end or else there will be duplicates
+			writeToArff(all);
+			
 			this.all=false;
 			//stop the writer
 			arffWriter.stop();
 
 			//if not all then just stop the writer.
 		} else if(!all) {
+			//write the ratios out to arfffile
+			writeToArff(all);
+			
 			arffWriter.stop();
 
 		}
@@ -220,7 +225,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 	}
 
 	private void outputRatios(ParticipantTimeLine p) {
-		for(int i=0;i<p.getDebugList().size()-1;i++) {
+		for(int i=0;i<p.getDebugList().size();i++) {
 			//get the correct numerical representation of predicition
 			long prediction=p.getPredictionCorrections().get(i)<0? p.getPredictions().get(i):p.getPredictionCorrections().get(i);
 
