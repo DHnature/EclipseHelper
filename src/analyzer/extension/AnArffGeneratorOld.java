@@ -9,16 +9,13 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.Date;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.Queue;
 import java.util.Stack;
 
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
-import analyzer.AParticipantTimeLine;
 import analyzer.AnAnalyzer;
 import analyzer.Analyzer;
-import analyzer.ParticipantTimeLine;
 import difficultyPrediction.extension.APrintingDifficultyPredictionListener;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -33,24 +30,20 @@ import edu.cmu.scs.fluorite.commands.PredictionCommand;
  * @author wangk1
  *
  */
-public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerator{
+public class AnArffGeneratorOld extends APrintingDifficultyPredictionListener implements ArffGenerator{
 	public static final String DEFAULT_ARFF_PATH="data/userStudy";
 
 	//name of relation to be printed as @relation tag
 	public static final String RELATION="programmer-weka.filters.supervised.instance.SMOTE-C0-K5-P100.0-S1-weka.filters.supervised.instance.SMOTE-C0-K5-P100.0-S1-weka.filters.supervised.instance.SMOTE-C0-K5-P100.0-S1-weka.filters.supervised.instance.SMOTE-C0-K5-P100.0-S1";
 
 	//Insert More features here
-	public static final String[] FEATURES={
-		"insertPercentage","numeric",
-		"deletePercentage","numeric",
+	public static final String[] FEATURES={"searchPercentage","numeric",
 		"debugPercentage","numeric",
-		"searchPercentage","numeric",
 		"focusPercentage","numeric",
+		"editPercentage","numeric",
 		"removePercentage","numeric",
-		"webLinkTimes","numeric",
 		"stuck","{YES,NO}"
 	};
-	
 
 	//path to save the arff file to. Include the .arff extension
 	private String path;
@@ -70,71 +63,22 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 	private Analyzer analyzer;
 
 	//set the path of the arff file
-	public AnArffGenerator(Analyzer analyzer) {
+	public AnArffGeneratorOld(Analyzer analyzer) {
 		this.analyzer=analyzer;
 		this.isStuck=false;
 		this.ratios=new LinkedList<RatioFeatures>();
-
-		arffWriter=new AnArffGenerator.ArffWriter();
+		
+		arffWriter=new AnArffGeneratorOld.ArffWriter();
 
 	}
 
 
 	/**METHODS SECTION*/
-	@Override
-	public void newParticipant(String anId, String aFolder) {
-		System.out.println("Extension**New Participant:" + anId);
-		participantTimeLine = new AParticipantTimeLine();
-		participantToTimeLine.put(anId, participantTimeLine );
-
-		//set the right path for writing
-		//case I for all
-		if(!all) {
-			if(anId.equals("All") && aFolder==null ) {
-				//set path
-				path=AnAnalyzer.PARTICIPANT_OUTPUT_DIRECTORY+"/all.arff";
-				this.all=true;
-
-				//else it is individual filess
-			} else {
-				path=AnAnalyzer.PARTICIPANT_OUTPUT_DIRECTORY+"/"+aFolder+"/"+aFolder+".arff";
-
-			}
-
-			//prep the arfffile and generate headers. Start the writer
-			prep();
-		}
-
-		if(aFolder!= null)
-			analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);			
-	}
-
-	/***/
-	@Override
-	public void finishParticipant(String aId, String aFolder) {
-		System.out.println("***EXTENSION Participant "+aId+"Completed");
-
-		//write the ratios out to arfffile
-		writeToArff(all);
-
-		//set all to false. Only if it is current generating all files
-		//and the stop signal aka aId of All and aFolder of null is recieved.
-		if(all && aId.equals("All") && aFolder==null) {
-			this.all=false;
-			//stop the writer
-			arffWriter.stop();
-
-			//if not all then just stop the writer.
-		} else if(!all) {
-			arffWriter.stop();
-
-		}
-	}
 
 	/**Prep arff file method, called by newParticipant Method*/
 	private void prep() {
 		//create a new bufferedwriter, with a different path
-
+		
 
 		//if no file name exist generate one that does not override other files
 		if(path==null) {
@@ -164,11 +108,12 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 			generateArffHeader();
 			//stop is important. Flushes header since the newUser is going to create a new writer
 			//this forces the bytes out or the header is not going to be written
+			arffWriter.stop();
 		} else {
 			arffWriter.start(path,false);
 			//now write headers out to file
 			generateArffHeader();
-
+			
 		}
 
 	}
@@ -200,44 +145,99 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 
 	}
 
-	private void writeToArff(boolean all) {
-		if(all) {
-			//for each participant
-			for(Map.Entry<String, ParticipantTimeLine> e:super.participantToTimeLine.entrySet()) {
-				//for each participant's data points
+	@Override
+	public void newParticipant(String anId, String aFolder) {
+		System.out.println("***new participant: "+ aFolder);
+		
+		//set path
+		if(aFolder==null && anId.equals("All") && !all) {
+			this.all=true;
+			path=AnAnalyzer.PARTICIPANT_OUTPUT_DIRECTORY+"/all.arff";
+			
+			prep();
+			
+		} else if(!all){
+			path=AnAnalyzer.PARTICIPANT_OUTPUT_DIRECTORY+"/"+aFolder+"/"+aFolder+".arff";
+			
+			prep();
+			
+		} else {
+			arffWriter.restart();
+			
+		}
+		
+		//start the output output writer
+		if(!this.all) {
+			analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);		
+			
+		} else {
+			
+			if(analyzer.getDifficultyEventProcessor()!=null) {
+				analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);		
+				
+			}
+			
+			
+		}
+	}
 
-				ParticipantTimeLine p=e.getValue();
-				outputRatios(p);
+	@Override
+	public void recordCommand(ICommand newCommand) {
+		if(newCommand.getCommandType().equals("PredictionCommand")) {
+			PredictionCommand prediction=(PredictionCommand) newCommand;
 
+			if(prediction.getPredictionType()==PredictionCommand.PredictionType.HavingDifficulty) {
+				this.isStuck=true;	
+
+
+			} else {
+				this.isStuck=false;
 
 			}
 
-			//one person
-		} else {
-			outputRatios(super.participantTimeLine);
+			while(!ratios.isEmpty()) {
+				RatioFeatures r=ratios.remove();
+
+				//now output it all
+				arffWriter.writeData(isStuck? "YES":"NO", 
+						r.getNavigationRatio(), 
+						r.getDebugRatio(),
+						r.getFocusRatio(),
+						r.getEditRatio(),
+						r.getRemoveRatio()	
+						);
+			}
 
 		}
+
+		//System.out.println("Extension**New User/Prediction Command:" + newCommand);	
+
+
+	}
+	@Override
+	public void start() {
+		System.out.println("Extension**Difficulty Prediction Started");	
+
+
+	}
+	@Override
+	public void stop() {
+		System.out.println("Extension**Difficulty Prediction Stopped");	
+		//stop file stream here
+		arffWriter.stop();
+	}
+	@Override
+	public void newRatios(RatioFeatures newVal) {
+		ratios.add(newVal);
+
+		System.out.println("Extension**New Ratios:" + newVal.getNavigationRatio()+newVal.getDebugRatio()+
+				newVal.getFocusRatio()+
+				newVal.getEditRatio()+
+				newVal.getRemoveRatio());		
 	}
 
-	private void outputRatios(ParticipantTimeLine p) {
-		for(int i=0;i<p.getDebugList().size()-1;i++) {
-			//get the correct numerical representation of predicition
-			long prediction=p.getPredictionCorrections().get(i)<0? p.getPredictions().get(i):p.getPredictionCorrections().get(i);
 
-			arffWriter.writeData(
-					prediction==0? "NO":"YES", 
-							p.getInsertionList().get(i),
-							p.getDeletionList().get(i),
-							p.getDebugList().get(i),
-							p.getNavigationList().get(i),
-							p.getFocusList().get(i),
-							p.getRemoveList().get(i),
-							p.getWebLinks()==null?0:p.getWebLinks().get(i)==null?0:p.getWebLinks().get(i).size()
-					);
-			
-			
-		}
-	}
+
 
 
 	/**Inner static class that encapsulate a buffered stream<br>*/
@@ -265,11 +265,11 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 			try {
 				//truncate first
 				writer=Files.newBufferedWriter(Paths.get(path), Charset.defaultCharset(), StandardOpenOption.WRITE,StandardOpenOption.TRUNCATE_EXISTING);
-
+				
 				//if append, start in append mode
 				if(append) {
 					writer.close();
-
+					
 					writer=Files.newBufferedWriter(Paths.get(path), Charset.defaultCharset(), StandardOpenOption.APPEND);
 				}
 
@@ -279,7 +279,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 			}
 
 		}
-
+		
 		/**Start the same writer with the same path**/
 		public void restart() {
 			try {
@@ -288,7 +288,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 		}
 
 		/**Set another file to write to. If append, write to end of the filef*/
@@ -381,16 +381,42 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 	}
 
 
+
+	@Override
+	public void newBrowseLine(String aLine) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	public void newBrowseEntries(Date aDate, String aSearchString, String aURL) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+	@Override
+	public void finishedBrowserLines() {
+		// TODO Auto-generated method stub
+
+	}
+
 	public static void main(String[] args) {
 		Analyzer analyzer = new AnAnalyzer();
-		AnAnalyzerProcessor.analyzer=analyzer;
-		ArffGenerator arffGenerator = new AnArffGenerator(analyzer);
+		ArffGenerator arffGenerator = new AnArffGeneratorOld(analyzer);
 		analyzer.addAnalyzerListener(arffGenerator);
 		OEFrame frame = ObjectEditor.edit(analyzer);
 		frame.setSize(550, 200);
 
 	}
 
+
+	@Override
+	public void finishParticipant(String anId, String aFolder) {
+		// TODO Auto-generated method stub
+		
+	}
 
 
 }

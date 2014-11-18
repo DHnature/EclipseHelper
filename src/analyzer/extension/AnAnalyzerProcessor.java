@@ -44,7 +44,9 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		System.out.println("Extension**New Participant:" + anId);
 		participantTimeLine = new AParticipantTimeLine();
 		participantToTimeLine.put(anId, participantTimeLine );
-		analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);			
+		
+		if(aFolder!= null)
+			analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);			
 	}
 	
 	@Override
