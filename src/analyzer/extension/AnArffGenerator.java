@@ -58,6 +58,8 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 	//Is the user currently stuck
 	private boolean isStuck;
 
+	private boolean all;
+
 	private Analyzer analyzer;
 
 	//set the path of the arff file
@@ -66,6 +68,8 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 		this.isStuck=false;
 		this.ratios=new LinkedList<RatioFeatures>();
 		
+		arffWriter=new AnArffGenerator.ArffWriter();
+
 	}
 
 
@@ -74,7 +78,7 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 	/**Prep arff file method, called by newParticipant Method*/
 	private void prep() {
 		//create a new bufferedwriter, with a different path
-		arffWriter=new AnArffGenerator.ArffWriter();
+		
 
 		//if no file name exist generate one that does not override other files
 		if(path==null) {
@@ -94,14 +98,23 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 			}
 
 		} else {
-			
-			
+
+
 		}
 
-		arffWriter.start(path);
-
-		//now write headers out to file
-		generateArffHeader();
+		if(this.all) {
+			arffWriter.start(path, true);
+			//now write headers out to file
+			generateArffHeader();
+			//stop is important. Flushes header since the newUser is going to create a new writer
+			//this forces the bytes out or the header is not going to be written
+			arffWriter.stop();
+		} else {
+			arffWriter.start(path,false);
+			//now write headers out to file
+			generateArffHeader();
+			
+		}
 
 	}
 
@@ -127,7 +140,7 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 			arffWriter.writeAttribute(FEATURES[i], FEATURES[i+1]);
 
 		}
-		
+
 		arffWriter.writeNewLine();
 
 	}
@@ -135,30 +148,56 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 	@Override
 	public void newParticipant(String anId, String aFolder) {
 		System.out.println("***new participant: "+ aFolder);
-		analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);		
 		
-		path=AnAnalyzer.PARTICIPANT_OUTPUT_DIRECTORY+"/"+anId+"/"+anId+".arff";
-		prep();
-
+		//set path
+		if(aFolder==null && anId.equals("All") && !all) {
+			this.all=true;
+			path=AnAnalyzer.PARTICIPANT_OUTPUT_DIRECTORY+"/all.arff";
+			
+			prep();
+			
+		} else if(!all){
+			path=AnAnalyzer.PARTICIPANT_OUTPUT_DIRECTORY+"/"+aFolder+"/"+aFolder+".arff";
+			
+			prep();
+			
+		} else {
+			arffWriter.restart();
+			
+		}
+		
+		//start the output output writer
+		if(!this.all) {
+			analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);		
+			
+		} else {
+			
+			if(analyzer.getDifficultyEventProcessor()!=null) {
+				analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);		
+				
+			}
+			
+			
+		}
 	}
 
 	@Override
 	public void recordCommand(ICommand newCommand) {
 		if(newCommand.getCommandType().equals("PredictionCommand")) {
 			PredictionCommand prediction=(PredictionCommand) newCommand;
-			
+
 			if(prediction.getPredictionType()==PredictionCommand.PredictionType.HavingDifficulty) {
 				this.isStuck=true;	
-				
-				
+
+
 			} else {
 				this.isStuck=false;
-				
+
 			}
-			
+
 			while(!ratios.isEmpty()) {
 				RatioFeatures r=ratios.remove();
-				
+
 				//now output it all
 				arffWriter.writeData(isStuck? "YES":"NO", 
 						r.getNavigationRatio(), 
@@ -166,18 +205,20 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 						r.getFocusRatio(),
 						r.getEditRatio(),
 						r.getRemoveRatio()	
-				);
+						);
 			}
-				
+
 		}
 
 		//System.out.println("Extension**New User/Prediction Command:" + newCommand);	
 
-		
+
 	}
 	@Override
 	public void start() {
-		System.out.println("Extension**Difficulty Prediction Started");		
+		System.out.println("Extension**Difficulty Prediction Started");	
+
+
 	}
 	@Override
 	public void stop() {
@@ -211,6 +252,7 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 		private BufferedWriter writer;
 		//turns to true when output to the data section started
 		boolean datastarted;
+		private String path;
 
 		public ArffWriter() {
 			this.datastarted=false;
@@ -220,24 +262,42 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 		/**Must be called before any form of writing<br>
 		 * Can be called repeatidly to set to a new path
 		 * */
-		public void start(String path) {
+		public void start(String path, boolean append) {
 			this.datastarted=false;
-			
+			this.path=path;
+
 			try {
-			
-				
+				//truncate first
 				writer=Files.newBufferedWriter(Paths.get(path), Charset.defaultCharset(), StandardOpenOption.WRITE,StandardOpenOption.TRUNCATE_EXISTING);
 				
+				//if append, start in append mode
+				if(append) {
+					writer.close();
+					
+					writer=Files.newBufferedWriter(Paths.get(path), Charset.defaultCharset(), StandardOpenOption.APPEND);
+				}
+
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
 		}
+		
+		/**Start the same writer with the same path**/
+		public void restart() {
+			try {
+				writer=Files.newBufferedWriter(Paths.get(path), Charset.defaultCharset(), StandardOpenOption.APPEND);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 
-		/**Set another file to write to*/
-		public void resetPath(String path) {
-			start(path);
+		/**Set another file to write to. If append, write to end of the filef*/
+		public void resetPath(String path,boolean append) {
+			start(path,append);
 
 		}
 
@@ -268,7 +328,7 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 
 			return this;
 		}
-		
+
 		/**Writers the ratios in data along with the prediction*/
 		public ArffWriter writeData(String prediction, double ... data) {
 			if(!this.datastarted) {
@@ -277,7 +337,7 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 				writeNewLine();
 
 			}
-			
+
 			//write each ratio out
 			for(double d:data) {
 				writeToArffFile(d+",");
@@ -329,30 +389,30 @@ public class AnArffGenerator extends APrintingDifficultyPredictionListener imple
 	@Override
 	public void newBrowseLine(String aLine) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void newBrowseEntries(Date aDate, String aSearchString, String aURL) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 
 	@Override
 	public void finishedBrowserLines() {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	public static void main(String[] args) {
 		Analyzer analyzer = new AnAnalyzer();
 		ArffGenerator arffGenerator = new AnArffGenerator(analyzer);
 		analyzer.addAnalyzerListener(arffGenerator);
 		OEFrame frame = ObjectEditor.edit(analyzer);
 		frame.setSize(550, 200);
-		
+
 	}
 
 

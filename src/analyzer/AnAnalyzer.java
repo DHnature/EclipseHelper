@@ -188,8 +188,9 @@ public class AnAnalyzer implements Analyzer  {
 		if (participantId.equals(ALL_PARTICIPANTS)) {
 			notifyNewParticipant(ALL_PARTICIPANTS, null);
 			for (String aParticipantId:participantIds) {
-				if (aParticipantId.equals(ALL_PARTICIPANTS))
+				if (aParticipantId.equals(ALL_PARTICIPANTS)) {
 					continue;
+				}
 				// integrated analyzer
 				processParticipant(aParticipantId);
 
