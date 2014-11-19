@@ -19,6 +19,8 @@ public class Driver {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		RatioFileReader reader = new ARatioFileReader();
+		reader.readFile("data/ratios.csv");
+
 		PlayAndRewindCounter counter = new APlayAndRewindCounter(reader);
 		ALineGraph lineGraph = new ALineGraph(counter, reader);
 		AStatusBar statusBar = new AStatusBar(counter, reader);
