@@ -19,7 +19,6 @@ public class Driver {
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
 		RatioFileReader reader = new ARatioFileReader();
-		reader.readFile("data/ratios1.csv");
 
 		PlayAndRewindCounter counter = new APlayAndRewindCounter(reader);
 		ALineGraph lineGraph = new ALineGraph(counter, reader);
@@ -77,6 +76,8 @@ public class Driver {
 		ObjectEditor.editInMainContainer(counter, counterPanel);
 		ObjectEditor.editInMainContainer(reader, readerPanel);
 		ObjectEditor.editInMainContainer(checkboxes, checkboxPanel);
+		reader.readFile("data/ratios1.csv");
+
 		// finalize
 		frame.pack();
 		frame.setVisible(true);
