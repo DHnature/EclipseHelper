@@ -194,6 +194,8 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 
 	}
 	public static void main (String[] args) {
+		DifficultyPredictionSettings.setReplayMode(true);
+
 		analyzer = new AnAnalyzer();
 		analyzerProcessor = new AnAnalyzerProcessor();
 		analyzer.addAnalyzerListener(analyzerProcessor);

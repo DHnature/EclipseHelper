@@ -66,7 +66,7 @@ public class AnAnalyzer implements Analyzer  {
 	List<List<ICommand>> nestedCommandsList;
 
 	FileSetterModel participantsFolder, ouputFolder, experimentalData;
-	AParametersSelector parameters;
+	AnAnalyzerParametersSelector parameters;
 	LogReader reader;
 //	protected Thread difficultyPredictionThread;	
 //	protected DifficultyPredictionRunnable difficultyPredictionRunnable;
@@ -84,7 +84,7 @@ public class AnAnalyzer implements Analyzer  {
 		reader = new LogReader();
 		participantsFolder = new AFileSetterModel(JFileChooser.DIRECTORIES_ONLY);
 		participantsFolder.setText(PARTICIPANT_DIRECTORY);
-		parameters = new AParametersSelector(this);
+		parameters = new AnAnalyzerParametersSelector(this);
 		parameters.getParticipants().addChoice(ALL_PARTICIPANTS);
 		parameters.getParticipants().setValue(ALL_PARTICIPANTS);
 
@@ -444,7 +444,7 @@ public class AnAnalyzer implements Analyzer  {
 	 */
 	@Override
 	@Row(1)
-	public AParametersSelector getParameters() {
+	public AnAnalyzerParametersSelector getParameters() {
 		return parameters;
 	}
 //	@Visible(false)
@@ -590,16 +590,19 @@ public class AnAnalyzer implements Analyzer  {
 	}
 	
 	static Analyzer instance;
-	public static void getInstance() {
+	public static Analyzer getInstance() {
 		if (instance == null) {
 			instance = new AnAnalyzer();
 		}
+		return instance;
 	}
 	public static void main (String[] args) {
 		
 		
-		
-		OEFrame frame = ObjectEditor.edit(new AnAnalyzer());
+//		Analyzer analyzer = new AnAnalyzer();
+		DifficultyPredictionSettings.setReplayMode(true);
+
+		OEFrame frame = ObjectEditor.edit(AnAnalyzer.getInstance());
 		frame.setSize(550, 200);
 		
 	}

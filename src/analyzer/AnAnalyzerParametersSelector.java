@@ -2,6 +2,7 @@ package analyzer;
 
 import java.util.List;
 
+import difficultyPrediction.APredictionParameters;
 import difficultyPrediction.DifficultyPredictionSettings;
 import bus.uigen.ObjectEditor;
 import util.annotations.Column;
@@ -13,29 +14,29 @@ import util.misc.Common;
 import util.models.ADynamicEnum;
 import util.models.DynamicEnum;
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
-public class AParametersSelector  {
+public class AnAnalyzerParametersSelector extends APredictionParameters  {
 	DynamicEnum<String> participants;
 	Analyzer analyzer;
 	
-	public AParametersSelector(List<String> aParticipants) {
+	public AnAnalyzerParametersSelector(List<String> aParticipants) {
 		participants = new ADynamicEnum(aParticipants);
 	}
-	public AParametersSelector(String[] aParticipants) {
+	public AnAnalyzerParametersSelector(String[] aParticipants) {
 		participants = new ADynamicEnum(Common.arrayToArrayList(aParticipants));
 	}
-	public AParametersSelector(Analyzer anAnalyzer) {
+	public AnAnalyzerParametersSelector(Analyzer anAnalyzer) {
 		participants = new ADynamicEnum();
 		analyzer = anAnalyzer;
 	}
-	int segmentLength = 50;
+//	int segmentLength = 50;
 	@Row(0)
 	@Column(0)
 	public int getSegmentLength() {
-		return segmentLength;
+		return super.getSegmentLength();
 	}
-	public void setSegmentLength(int newVal) {
-		this.segmentLength = newVal;
-	}
+//	public void setSegmentLength(int newVal) {
+//		this.segmentLength = newVal;
+//	}
 	@Row(0)
 	@Column(1)
 //	@Explanation("The set of modules that can be graded. Usually you will work on a single module.")
@@ -103,7 +104,7 @@ public class AParametersSelector  {
 //
 //		List<String> modules = Common.arrayToArrayList(new String[] {"Comp110", "Comp401"});
 //		List<String> problems = Common.arrayToArrayList(new String[] {"1", "2"});
-		AParametersSelector selector = new AParametersSelector(participants);
+		AnAnalyzerParametersSelector selector = new AnAnalyzerParametersSelector(participants);
 		ObjectEditor.edit(selector);
 		
 
