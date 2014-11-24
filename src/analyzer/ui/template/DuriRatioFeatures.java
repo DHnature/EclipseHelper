@@ -2,7 +2,9 @@ package analyzer.ui.template;
 
 import java.util.List;
 
-public interface RatioFeatures {
+import difficultyPrediction.featureExtraction.RatioFeatures;
+
+public interface DuriRatioFeatures extends RatioFeatures {
 	public void setEditRatio(double editRatio);
 
 	public double getDebugRatio();

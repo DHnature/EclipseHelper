@@ -14,6 +14,8 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 
+import difficultyPrediction.featureExtraction.ARatioFeatures;
+import difficultyPrediction.featureExtraction.RatioFeatures;
 import util.annotations.Column;
 import util.annotations.ComponentWidth;
 import util.annotations.Row;
@@ -22,7 +24,7 @@ public class ARatioFileReader implements RatioFileReader {
 
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(
 			this);
-	private RatioFeatures ratioFeatures = new ARatioFeatures();
+	private DuriRatioFeatures ratioFeatures = new ADuriRatioFeatures();
 	private String path = "";
 	private JFileChooser fileChooser;
 

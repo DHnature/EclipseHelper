@@ -6,6 +6,8 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+import difficultyPrediction.featureExtraction.RatioFeaturesListener;
+
 public interface LineGraph extends MouseListener, PropertyChangeListener,
 		RatioFeaturesListener {
 	public void paint(Graphics g);
@@ -18,5 +20,9 @@ public interface LineGraph extends MouseListener, PropertyChangeListener,
 			List<Double> newDeletionList, List<Double> newDebugList,
 			List<Double> newNavigationList, List<Double> newFocusList,
 			List<Double> newRemoveList, List<Long> newTimeStampList);
+
+	RatioFileReader getRatioFileReader();
+
+	void setRatioFileReader(RatioFileReader ratioFileReader);
 
 }

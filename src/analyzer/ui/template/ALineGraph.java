@@ -17,6 +17,8 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import difficultyPrediction.featureExtraction.RatioFeatures;
+
 public class ALineGraph extends JPanel implements LineGraph {
 
 	private static final long serialVersionUID = -259260652449816321L;
@@ -408,6 +410,9 @@ public class ALineGraph extends JPanel implements LineGraph {
 
 	@Override
 	public void newRatios(RatioFeatures ratioFeatures) {
+		if (ratioFeatures.getEditRatio() != 0 && ratioFeatures.getInsertionRatio() == 0) // kludge as the plug in does not provide insertion ratio
+			insertionList.add(ratioFeatures.getEditRatio());
+		else
 		insertionList.add(ratioFeatures.getInsertionRatio());
 		deletionList.add(ratioFeatures.getDeletionRatio());
 		debugList.add(ratioFeatures.getDebugRatio());
@@ -415,6 +420,7 @@ public class ALineGraph extends JPanel implements LineGraph {
 		focusList.add(ratioFeatures.getFocusRatio());
 		removeList.add(ratioFeatures.getRemoveRatio());
 		timeStampList.add(ratioFeatures.getSavedTimeStamp());
+		repaint();
 	}
 
 	public void setData(List<Double> newInsertionList,
@@ -461,6 +467,14 @@ public class ALineGraph extends JPanel implements LineGraph {
 
 	public ArrayList<Color> getColors() {
 		return colors;
+	}
+	@Override
+	public RatioFileReader getRatioFileReader() {
+		return ratioFileReader;
+	}
+    @Override
+	public void setRatioFileReader(RatioFileReader ratioFileReader) {
+		this.ratioFileReader = ratioFileReader;
 	}
 
 }

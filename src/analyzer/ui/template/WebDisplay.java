@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 public interface WebDisplay extends MouseListener, PropertyChangeListener,
-		RatioFeaturesListener {
+		DuriRatioFeaturesListener {
 	public void setData(List<List<WebLink>> newWebsiteList);
 
 	public void paint(Graphics g);

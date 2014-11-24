@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 public interface DifficultyTypeDisplay extends MouseListener,
-		PropertyChangeListener, RatioFeaturesListener {
+		PropertyChangeListener, DuriRatioFeaturesListener {
 	public void setData(List<String> newDifficultyTypeList);
 
 	public void paint(Graphics g);

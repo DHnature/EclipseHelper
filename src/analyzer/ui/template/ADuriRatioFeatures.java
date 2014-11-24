@@ -2,7 +2,9 @@ package analyzer.ui.template;
 
 import java.util.List;
 
-public class ARatioFeatures implements RatioFeatures {
+import difficultyPrediction.featureExtraction.ARatioFeatures;
+
+public class ADuriRatioFeatures extends ARatioFeatures implements DuriRatioFeatures {
 	private double editRatio;
 	private double debugRatio;
 	private double navigationRatio;
@@ -23,7 +25,7 @@ public class ARatioFeatures implements RatioFeatures {
 	private List<WebLink> webLinkList;
 	private String difficultyType;
 
-	public ARatioFeatures() {
+	public ADuriRatioFeatures() {
 
 	}
 

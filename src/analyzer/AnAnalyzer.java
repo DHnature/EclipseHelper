@@ -42,6 +42,7 @@ import util.annotations.Column;
 import util.annotations.Explanation;
 import util.annotations.Row;
 import util.annotations.Visible;
+import analyzer.ui.template.LineGraphComposer;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import bus.uigen.models.AFileSetterModel;
@@ -467,8 +468,10 @@ public class AnAnalyzer implements Analyzer  {
 	
 	// let us do this in the analyzerprocessor
 	public static void maybeRecordFeatures(RatioFeatures details) {
-		if (!DifficultyPredictionSettings.isReplayMode()) 
+		if (!DifficultyPredictionSettings.isReplayMode())  {
+			LineGraphComposer.getLineGraph().newRatios(details);
 			return;
+		}
 		if (!DifficultyPredictionSettings.isNewRatioFiles() && DifficultyPredictionSettings.isRatioFileExists())
 			return;
 		return;

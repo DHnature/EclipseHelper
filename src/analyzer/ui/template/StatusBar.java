@@ -6,7 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.util.List;
 
 public interface StatusBar extends MouseListener, PropertyChangeListener,
-		RatioFeaturesListener {
+		DuriRatioFeaturesListener {
 
 	public void setData(List<Integer> newPredictedList,
 			List<Integer> newActualList);
