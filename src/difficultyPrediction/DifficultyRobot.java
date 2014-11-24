@@ -17,7 +17,9 @@ import java.util.Calendar;
 
 
 
+
 import analyzer.AnAnalyzer;
+import analyzer.ui.template.LineGraphComposer;
 import trace.difficultyPrediction.NewPredictionEvent;
 import trace.difficultyPrediction.NewExtractedStatusInformation;
 import trace.difficultyPrediction.NewPrediction;
@@ -143,6 +145,7 @@ public class DifficultyRobot implements Mediator {
          statusPrediction.userId = this.id;
          statusPrediction.userName = this.id;
          statusPrediction.statusKind = StatusKind.PREDICTION_MADE;
+       
        
          saveToLog(details);
          
