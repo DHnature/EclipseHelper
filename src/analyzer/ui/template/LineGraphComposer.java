@@ -19,7 +19,19 @@ public class LineGraphComposer {
 	// TODO: Combine two keys
 	// TODO: Scalable graph
 	static LineGraph lineGraph;
+	static StatusBar statusBar;
 	
+	public static StatusBar getStatusBar() {
+		if (statusBar == null) {
+			composeUI();
+		}
+		return statusBar;
+	}
+
+//	public static void setStatusBar(StatusBar statusBar) {
+//		LineGraphComposer.statusBar = statusBar;
+//	}
+
 	public static LineGraph  composeUI() {
 		JFrame frame = new JFrame();
 		RatioFileReader reader = new ARatioFileReader();
@@ -27,11 +39,12 @@ public class LineGraphComposer {
 		PlayAndRewindCounter counter = new APlayAndRewindCounter(reader);
 		ALineGraph aLineGraph = new ALineGraph(counter, reader);
 		lineGraph = aLineGraph;
-		AStatusBar statusBar = new AStatusBar(counter, reader);
+		AStatusBar aStatusBar = new AStatusBar(counter, reader);
+		statusBar = aStatusBar;
 		AWebDisplay webDisplay = new AWebDisplay(counter, reader);
 		ADifficultyTypeDisplay difficultyTypeDisplay = new ADifficultyTypeDisplay(
 				counter, reader);
-		Legend checkboxes = new ALegend(frame, difficultyTypeDisplay, statusBar,
+		Legend checkboxes = new ALegend(frame, difficultyTypeDisplay, aStatusBar,
 				webDisplay, aLineGraph);
 		frame.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -64,7 +77,7 @@ public class LineGraphComposer {
 		c.weighty = .25;
 		c.gridx = 0;
 		c.gridy = 4;
-		frame.add(statusBar, c);
+		frame.add(aStatusBar, c);
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1.0; // request any extra horizontal space
 		c.weighty = .1;

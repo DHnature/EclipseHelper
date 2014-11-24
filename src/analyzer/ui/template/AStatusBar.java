@@ -157,4 +157,28 @@ public class AStatusBar extends JPanel implements StatusBar {
 		actualList = newActualList;
 		repaint();
 	}
+
+	@Override
+	public void newStatus(String aStatus) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void newAggregatedStatus(String aStatus) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void newStatus(int aStatus) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void newAggregatedStatus(int aStatus) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -422,17 +422,33 @@ public class ALineGraph extends JPanel implements LineGraph {
 		timeStampList.add(ratioFeatures.getSavedTimeStamp());
 		repaint();
 	}
-	@Override
-	public void newStatus(String aStatus) {
-		// TODO Auto-generated method stub
-		
-	}
+	int lastStatusIndex;
+	int lastAggregateStatusIndex;
+	int lastAgrregateStatus;
+	int lastStatus;
+//	@Override
+//	public void newStatus(String aStatus) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//
+//	@Override
+//	public void newAggregatedStatus(String aStatus) {
+//		// TODO Auto-generated method stub
+//		
+//	}
+//	@Override
+//	public void newStatus(int aStatus) {
+//		lastStatus = aStatus;
+//		predict
+//		
+//	}
 
-	@Override
-	public void newAggregatedStatus(String aStatus) {
-		// TODO Auto-generated method stub
-		
-	}
+//	@Override
+//	public void newAggregatedStatus(int aStatus) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	public void setData(List<Double> newInsertionList,
 			List<Double> newDeletionList, List<Double> newDebugList,
@@ -488,17 +504,7 @@ public class ALineGraph extends JPanel implements LineGraph {
 		this.ratioFileReader = ratioFileReader;
 	}
 
-	@Override
-	public void newStatus(int aStatus) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void newAggregatedStatus(int aStatus) {
-		// TODO Auto-generated method stub
-		
-	}
+	
 
 	
 

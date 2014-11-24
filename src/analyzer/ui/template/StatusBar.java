@@ -5,8 +5,10 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+import difficultyPrediction.statusManager.StatusListener;
+
 public interface StatusBar extends MouseListener, PropertyChangeListener,
-		DuriRatioFeaturesListener {
+		DuriRatioFeaturesListener, StatusListener {
 
 	public void setData(List<Integer> newPredictedList,
 			List<Integer> newActualList);
