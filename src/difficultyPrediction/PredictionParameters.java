@@ -7,5 +7,7 @@ public interface PredictionParameters {
 	
 	public int getSegmentLength() ;
 	public void setSegmentLength(int newVal);
+	public int getStartupLag() ;
+	public void setStartupLag(int startupLag) ;
 
 }

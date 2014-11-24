@@ -115,7 +115,8 @@ public class HelpViewPart extends ViewPart {
 	
 	public static void displayStatusInformation(String status)
 	{
-		if (!lblStatusValue.isDisposed())
+		// help view may not be displayed
+		if (lblStatusValue != null && !lblStatusValue.isDisposed())
 		{
 			if (lblStatusValue != null)
 				lblStatusValue.setText(status);

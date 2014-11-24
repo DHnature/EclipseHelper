@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.PlatformUI;
 
+import bus.uigen.ObjectEditor;
 import analyzer.ui.template.LineGraphComposer;
 import difficultyPrediction.eventAggregation.ADisjointDiscreteChunks;
 import difficultyPrediction.eventAggregation.EventAggregationStrategy;
@@ -36,6 +37,7 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 	
 	void startUIs() {
 		LineGraphComposer.composeUI();
+		ObjectEditor.edit(APredictionParameters.getInstance());
 	}
 
 	public void run() {

@@ -1,5 +1,6 @@
 package analyzer;
 
+import difficultyPrediction.APredictionParameters;
 import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.eventAggregation.EventAggregationStrategy;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
@@ -21,6 +22,15 @@ public class DiscreteChunksAnalyzer implements EventAggregationStrategy {
 		m_numberOfEvents = Integer.parseInt(numberOfEvents);
 		ignoreEvents = false;
 	}
+	
+//	int numberOfEvents() {
+//		return APredictionParameters.getInstance().getSegmentLength();
+////		return m_numberOfEvents;
+//	}
+//	int numberOfEventsToIgnore() {
+//		return APredictionParameters.getInstance().getSegmentLength();
+//
+//	}
 
 	@Override
 	public void performAggregation(ICommand event,
@@ -36,6 +46,8 @@ public class DiscreteChunksAnalyzer implements EventAggregationStrategy {
 			}
 		} else {
 			if (actions.size() % m_numberOfEvents == 0) {
+//			if (actions.size() % numberOfEvents() == 0) {
+
 //				NewEventSegment.newCase(this);
 				
 				eventAggregator.onEventsHandOff(actions);
