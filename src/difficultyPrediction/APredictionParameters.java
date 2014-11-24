@@ -7,6 +7,8 @@ public class APredictionParameters implements PredictionParameters{
 	static PredictionParameters instance;
 	int segmentLength = 25;
 	int startupLag = 50;
+	int statusesAggregated = 5;
+	
 	@Row(1)
 	@Column(0)
 	public int getSegmentLength() {
@@ -22,6 +24,14 @@ public class APredictionParameters implements PredictionParameters{
 	}
 	public void setStartupLag(int startupLag) {
 		this.startupLag = startupLag;
+	}
+	@Row(2)
+	@Column(0)
+	public int getStatusesAggregated() {
+		return statusesAggregated;
+	}
+	public void setStatusesAggregated(int statusesAggregated) {
+		this.statusesAggregated = statusesAggregated;
 	}
 	public static PredictionParameters getInstance() {
 		if (instance == null) {

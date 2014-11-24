@@ -1,5 +1,6 @@
 package difficultyPrediction.statusManager;
 
+import difficultyPrediction.APredictionParameters;
 import difficultyPrediction.metrics.APredictionHolder;
 
 public class StatusAggregationDiscreteChunks implements StatusManagerStrategy{
@@ -13,6 +14,9 @@ public class StatusAggregationDiscreteChunks implements StatusManagerStrategy{
 	
 	public StatusAggregationDiscreteChunks(StatusManager manager) {
 		this.manager = manager;
+	}
+	int numberOfPredictionsForDominantStatus() {
+		return APredictionParameters.getInstance().getStatusesAggregated();
 	}
 	//TODO debug here and figure out why the tool never predicts stuck, even though im doing actions that indicate that I am stuck
 	//TODO add the interdeterminate ("TIE") and check to make sure that this working correctly
