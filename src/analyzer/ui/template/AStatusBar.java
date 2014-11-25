@@ -158,6 +158,10 @@ public class AStatusBar extends JPanel implements StatusBar {
 		repaint();
 	}
 
+//	int lastStatusIndex;
+	int lastAggregateStatusIndex;
+	int lastAgrregateStatus = -1;
+	int lastStatus;
 	@Override
 	public void newStatus(String aStatus) {
 		// TODO Auto-generated method stub
@@ -169,16 +173,21 @@ public class AStatusBar extends JPanel implements StatusBar {
 		// TODO Auto-generated method stub
 		
 	}
-
 	@Override
 	public void newStatus(int aStatus) {
-		// TODO Auto-generated method stub
+		lastStatus = aStatus;
+		predictedList.add(aStatus); // will restore it when the next aggregated status is received 
+		repaint();
+//		predict
 		
 	}
 
 	@Override
 	public void newAggregatedStatus(int aStatus) {
-		// TODO Auto-generated method stub
+		for (int index = lastAggregateStatusIndex; index < predictedList.size() - 1; index++) {
+			predictedList.set(index, lastAggregateStatusIndex);
+		}
+		predictedList.set(predictedList.size() - 1, aStatus);
 		
 	}
 }

@@ -52,6 +52,7 @@ public class ALineGraph extends JPanel implements LineGraph {
 	private int removeKeyEnd;
 	private PlayAndRewindCounter counter;
 	private RatioFileReader ratioFileReader;
+	
 
 	public ALineGraph(PlayAndRewindCounter aCounter,
 			RatioFileReader aRatioFileReader) {
@@ -422,10 +423,10 @@ public class ALineGraph extends JPanel implements LineGraph {
 		timeStampList.add(ratioFeatures.getSavedTimeStamp());
 		repaint();
 	}
-	int lastStatusIndex;
-	int lastAggregateStatusIndex;
-	int lastAgrregateStatus;
-	int lastStatus;
+//	int lastStatusIndex;
+//	int lastAggregateStatusIndex;
+//	int lastAgrregateStatus;
+//	int lastStatus;
 //	@Override
 //	public void newStatus(String aStatus) {
 //		// TODO Auto-generated method stub
@@ -503,6 +504,10 @@ public class ALineGraph extends JPanel implements LineGraph {
 	public void setRatioFileReader(RatioFileReader ratioFileReader) {
 		this.ratioFileReader = ratioFileReader;
 	}
+    @Override
+    public int numSegments() {
+    	return insertionList.size();
+    }
 
 	
 

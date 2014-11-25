@@ -26,4 +26,6 @@ public interface LineGraph extends MouseListener, PropertyChangeListener,
 
 	void setRatioFileReader(RatioFileReader ratioFileReader);
 
+	int numSegments();
+
 }
