@@ -9,6 +9,8 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.PlatformUI;
 
+import bus.uigen.ObjectEditor;
+import analyzer.ui.template.LineGraphComposer;
 import dayton.ServerConnection;
 import difficultyPrediction.eventAggregation.ADisjointDiscreteChunks;
 import difficultyPrediction.eventAggregation.EventAggregationStrategy;
@@ -34,8 +36,14 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 	public ADifficultyPredictionRunnable() {
 		mediator = new DifficultyRobot("");
 	}
+	void startUIs() {
+ 		LineGraphComposer.composeUI();
+		ObjectEditor.edit(APredictionParameters.getInstance());
+ 	}
+ 	
 
 	public void run() {
+		startUIs();
 		while (true) {
 			try {
 				newCommand = pendingCommands.take();
