@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.ChatManagerListener;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
@@ -23,6 +24,7 @@ import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
 import buddylist.views.SWTChatViewController;
 
@@ -153,7 +155,9 @@ public class Account implements RosterListener, MessageListener,
 	}
 
 	public void offline() {
-		connection.disconnect();
+		try {
+			connection.disconnect();
+		} catch (Exception ex) {}
 		online = false;
 	}
 
@@ -184,17 +188,19 @@ public class Account implements RosterListener, MessageListener,
 		SASLAuthentication.registerSASLMechanism("DIGEST-MD5",
 				MySASLDigestMD5Mechanism.class);
 
-		config.setSASLAuthenticationEnabled(true);
+		//config.setSASLAuthenticationEnabled(true);
 		config.setRosterLoadedAtLogin(true);
 		
-		connection = new XMPPConnection(config);
+		connection = new XMPPTCPConnection(config);
 		try {
 			connection.connect(); /* Connect to the XMPP server  */
 			connection.login(username, password);
 			connection.addConnectionListener(this);
-		} catch (XMPPException xe) {
+		} catch (Exception xe) {
+			try {
 			connection.disconnect();
-			throw xe;
+			} catch (Exception ex) {}
+			//throw xe;
 		}
 		thisUser = connection.getUser();
 		Thread.sleep(5000);
@@ -219,7 +225,7 @@ public class Account implements RosterListener, MessageListener,
 
 		}
 		System.out.println("init complete.");
-		connection.getChatManager().addChatListener(this);
+		ChatManager.getInstanceFor(connection).addChatListener(this);
 		online = true;
 		connected = true;
 	}
@@ -230,10 +236,12 @@ public class Account implements RosterListener, MessageListener,
 
 	public void sendChat(Buddy_1 b, String s) throws XMPPException {
 		if (b.getChat() == null) {
-			b.setChat(connection.getChatManager().createChat(b.getUserName(),
+			b.setChat(ChatManager.getInstanceFor(connection).createChat(b.getUserName(),
 					this));
 		}
-		b.getChat().sendMessage(s);
+		try {
+			b.getChat().sendMessage(s);
+		} catch (Exception ex) {}
 	}
 
 	@Override
@@ -275,6 +283,18 @@ public class Account implements RosterListener, MessageListener,
 		SWTChatViewController.getInstance().disableChat(this,
 				"Reconnection failed. " + e.getMessage());
 
+	}
+
+	@Override
+	public void authenticated(XMPPConnection arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void connected(XMPPConnection arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
