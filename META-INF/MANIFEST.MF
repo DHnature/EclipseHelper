@@ -18,16 +18,16 @@ Require-Bundle: org.eclipse.ui,
  org.junit,
  org.eclipse.ui.browser;bundle-version="3.4.100",
  org.eclipse.core.variables;bundle-version="3.2.700",
- de.fu_berlin.inf.dpp.core;bundle-version="1.0.0",
- de.fu_berlin.inf.dpp;bundle-version="14.11.28"
+ de.fu_berlin.inf.dpp.core;bundle-version="1.0.0";resolution:=optional,
+ de.fu_berlin.inf.dpp;bundle-version="14.11.28";resolution:=optional
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Bundle-ClassPath: edu.cmu.scs.fluorite.jar,
  lib/weka.jar,
  lib/mysql-connector-java-5.1.25-bin.jar,
- lib/smack.jar,
- lib/smackx-debug.jar,
- lib/smackx.jar,
+ lib/smack-core-4.0.5.jar,
+ lib/smack-tcp-4.0.5.jar,
+ lib/xpp3-1.1.4c.jar,
  lib/joda-time-2.2.jar,
  lib/oeall22.jar,
  lib/jackson-core-asl-1.9.13.jar,

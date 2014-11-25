@@ -9,10 +9,10 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.PlatformUI;
 
-import bus.uigen.ObjectEditor;
-import analyzer.ui.template.LineGraphComposer;
+import dayton.ServerConnection;
 import difficultyPrediction.eventAggregation.ADisjointDiscreteChunks;
 import difficultyPrediction.eventAggregation.EventAggregationStrategy;
+import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;
 import edu.cmu.scs.fluorite.model.EventRecorder;
@@ -34,18 +34,15 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 	public ADifficultyPredictionRunnable() {
 		mediator = new DifficultyRobot("");
 	}
-	
-	void startUIs() {
-		LineGraphComposer.composeUI();
-		ObjectEditor.edit(APredictionParameters.getInstance());
-	}
 
 	public void run() {
-		startUIs();
 		while (true) {
 			try {
 				newCommand = pendingCommands.take();
-//				System.out.println("Taken command:" + newCommand);
+				//System.out.println("Taken command:" + newCommand);
+				if(newCommand instanceof DifficulyStatusCommand) {
+					ServerConnection.getServerConnection().updateStatus(((DifficulyStatusCommand) newCommand).getStatus().toString());
+				}
 				if (newCommand instanceof AnEndOfQueueCommand) {// stop event 
 					ADifficultyPredictionPluginEventProcessor.getInstance().notifyStop();
 					break;
@@ -66,6 +63,7 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 						// need to display prediction, but this should be done
 						// on
 						// the UI thread
+						ServerConnection.getServerConnection().updateStatus(((PredictionCommand) newCommand).getName());
 						PlatformUI.getWorkbench().getDisplay()
 								.asyncExec(new Runnable() {
 									@Override

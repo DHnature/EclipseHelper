@@ -75,6 +75,13 @@
             name="Buddy List"
             restorable="true">
       </view>
+      <view
+            category="edu.cmu.scs.fluorite.category"
+            class="dayton.ContactsView"
+            id="EclipseHelper.ContactsView"
+            name="Contacts"
+            restorable="true">
+      </view>
    </extension>
    <extension
          point="org.eclipse.ui.menus">

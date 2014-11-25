@@ -18,12 +18,14 @@ public class MySASLDigestMD5Mechanism extends SASLMechanism {
 		super(saslAuthentication);
 	}
 
-	protected void authenticate() throws IOException, XMPPException {
+	protected void authenticate() {
 		String mechanisms[] = { getName() };
 		java.util.Map props = new HashMap();
-		sc = Sasl.createSaslClient(mechanisms, null, "xmpp", hostname, props,
-				this);
-		super.authenticate();
+		try {
+			sc = Sasl.createSaslClient(mechanisms, null, "xmpp", hostname, props,
+					this);
+			super.authenticate();
+		} catch (Exception ex) {}
 	}
 
 	public void authenticate(String username, String host, String password)
@@ -34,7 +36,9 @@ public class MySASLDigestMD5Mechanism extends SASLMechanism {
 		String mechanisms[] = { getName() };
 		java.util.Map props = new HashMap();
 		sc = Sasl.createSaslClient(mechanisms, null, "xmpp", host, props, this);
-		super.authenticate();
+		try {
+			super.authenticate();
+		} catch (Exception ex) {}
 	}
 
 	public void authenticate(String username, String host, CallbackHandler cbh)
@@ -42,7 +46,9 @@ public class MySASLDigestMD5Mechanism extends SASLMechanism {
 		String mechanisms[] = { getName() };
 		java.util.Map props = new HashMap();
 		sc = Sasl.createSaslClient(mechanisms, null, "xmpp", host, props, cbh);
-		super.authenticate();
+		try {
+			super.authenticate();
+		} catch (Exception ex) {}
 	}
 
 	protected String getName() {
@@ -76,6 +82,8 @@ public class MySASLDigestMD5Mechanism extends SASLMechanism {
 		// stanza.append(authenticationText);
 		// stanza.append("</response>");
 		// getSASLAuthentication().send(stanza.toString());
-		getSASLAuthentication().send(responseStanza);
-	}
+		try {
+			getSASLAuthentication().send(responseStanza);
+		} catch (Exception ex) {}
+	}	
 }

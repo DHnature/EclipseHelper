@@ -11,6 +11,7 @@
 /*     */ import java.util.Iterator;
 /*     */ import java.util.List;
 /*     */ import java.util.Map;
+
 /*     */ import org.eclipse.jface.preference.IPreferenceStore;
 /*     */ import org.eclipse.swt.custom.StyleRange;
 /*     */ import org.eclipse.swt.graphics.Font;
@@ -32,6 +33,7 @@
 ///*     */ import org.jivesoftware.smack.packet.Presence.Type;
 /*     */ import org.jivesoftware.smack.proxy.ProxyInfo;
 /*     */ import org.jivesoftware.smack.proxy.ProxyInfo.ProxyType;
+import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 /*     */ import org.jivesoftware.smack.util.StringUtils;
 /*     */ 
 /*     */ public class Util
@@ -46,8 +48,11 @@
 /*     */ 
 /*     */   public static void closeConnection()
 /*     */   {
-/*  58 */     if (connection != null)
+/*  58 */     if (connection != null) {
+			try {
 /*  59 */       connection.disconnect();
+			} catch (Exception ex) {}
+			}
 /*     */   }
 /*     */ 
 /*     */   public static boolean isConnected()
@@ -77,11 +82,11 @@
 /*  94 */       config.setSocketFactory(proxyInfo.getSocketFactory());
 /*     */     }
 /*     */ 
-/*  97 */     connection = new XMPPConnection(config);
+/*  97 */     connection = new XMPPTCPConnection(config);
 /*     */     try
 /*     */     {
 /* 100 */       connection.connect();
-/*     */     } catch (XMPPException e) {
+/*     */     } catch (Exception e) {
 /* 102 */       logException("connect(): " + e.getMessage());
 /* 103 */       return Constants.CONNECTION_FAILED;
 /*     */     }
@@ -105,7 +110,7 @@
 /* 131 */       setStatus(0, "");
 /* 132 */       initializeBuddies();
 /* 133 */      // GTalkChatView.addToHistory(userName, "logged in");
-/*     */     } catch (XMPPException e) {
+/*     */     } catch (Exception e) {
 /* 135 */       logException("login(): " + e.getMessage());
 /* 136 */       return Constants.LOGIN_FAILED;
 /*     */     }
@@ -130,7 +135,9 @@
 /*     */     }
 /*     */ 
 /* 163 */     if ((connection != null) && (isConnected()))
+	try {
 /* 164 */       connection.sendPacket(presence);
+	} catch (Exception ex) {}
 /*     */   }
 /*     */ 
 /*     */   public static Collection<RosterEntry> getBuddyList()
@@ -150,14 +157,17 @@
 /*     */   {
 /* 195 */     Presence offlinePres = new Presence(Presence.Type.unavailable, "", 1, Presence.Mode.away);
 /*     */ 
-/* 197 */     if (isConnected())
+/* 197 */     if (isConnected()) {
+	try {
 /* 198 */       connection.disconnect(offlinePres);
+	} catch (Exception ex) {}
+}
 /*     */   }
 /*     */ 
 /*     */   public static ChatManager getChatManager()
 /*     */   {
 /* 205 */     XMPPConnection connection = getConnection();
-/* 206 */     return connection.getChatManager();
+			return ChatManager.getInstanceFor(connection);
 /*     */   }
 /*     */ 
 /*     */   public static int getStatus(String user)
@@ -166,7 +176,9 @@
 /* 217 */       return -1;
 /* 218 */     if (connection != null) {
 /* 219 */       Roster roster = connection.getRoster();
+try {
 /* 220 */       roster.reload();
+} catch (Exception ex) {}
 /*     */ 
 /* 222 */       Presence presence = roster.getPresence(user);
 /*     */ 
@@ -218,7 +230,7 @@
 /*     */     });
 /*     */     try {
 /* 283 */       chat.sendMessage(message);
-/*     */     } catch (XMPPException e) {
+/*     */     } catch (Exception e) {
 /* 285 */       logException("sendMessage(): " + e.getMessage());
 /*     */     }
 /*     */   }
