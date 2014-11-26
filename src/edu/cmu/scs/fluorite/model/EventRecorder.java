@@ -159,6 +159,7 @@ public class EventRecorder {
 //	private static DifficultyRobot statusPredictor = null;
 
 	private static TrayItem trayItem;
+	static boolean asyncFireEvent = true;
 //	private static ToolTip balloonTip;
 	
 //	protected Thread difficultyPredictionThread;	
@@ -178,6 +179,8 @@ public class EventRecorder {
 
 
 
+
+	
 
 	private final static Logger LOGGER = Logger.getLogger(EventRecorder.class
 			.getName());
@@ -855,6 +858,9 @@ public class EventRecorder {
 		}
 		MacroCommandsLogEnd.newCase(commands, this);
 		RecordedCommandsCleared.newCase(commands, this);
+		
+		if (!isAsyncFireEvent()) return;
+		// perhaps this is screwing performance
 
 		// WHY do we need all of the stuff below
 
@@ -877,6 +883,7 @@ public class EventRecorder {
 			mDocChangeTimerTask = new TimerTask() {
 				public void run() {
 					mDocChangeCombinable = false;
+					System.out.println("COMBINABLE: FALSE");
 
 					try {
 
@@ -900,6 +907,7 @@ public class EventRecorder {
 			getTimer().schedule(mDocChangeTimerTask,
 					(long) getCombineTimeThreshold());
 			mDocChangeCombinable = true;
+			System.out.println(" EVENT Recorder Combinable ");
 		} else {
 			if (mNormalTimerTask != null) {
 				mNormalTimerTask.cancel();
@@ -1020,5 +1028,12 @@ public class EventRecorder {
 	public static String persistMacro(Events macro) {
 		Document doc = createDocument(macro);
 		return outputXML(doc);
+	}
+	public static boolean isAsyncFireEvent() {
+		return asyncFireEvent;
+	}
+
+	public static void setAsyncFireEvent(boolean asyncFireEvent) {
+		EventRecorder.asyncFireEvent = asyncFireEvent;
 	}
 }
