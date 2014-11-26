@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.PlatformUI;
 
+import config.PredictorConfigurer;
 import bus.uigen.ObjectEditor;
 import analyzer.ui.graphics.LineGraphComposer;
 import dayton.ServerConnection;
@@ -61,14 +62,17 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 
 				}
 				ADifficultyPredictionPluginEventProcessor.getInstance().notifyRecordCommand(newCommand);
-				if (!newCommand.getCommandType().equals("PredictionCommand"))
+				if (!newCommand.getCommandType().equals("PredictionCommand") && 
+						!newCommand.getCommandType().equals("DifficultyStatusCommand")						
+					&& !(newCommand instanceof PredictionCommand) && 
+					!(newCommand instanceof DifficulyStatusCommand )) {
 					mediator.processEvent(newCommand);
-				else {
+				} else {
 					if (DifficultyPredictionSettings.isReplayMode()) {
 						System.out.println("Prediction: "
 								+ ((PredictionCommand) newCommand)
 										.getPredictionType());
-					} else {
+					} else  if (newCommand instanceof PredictionCommand){
 						// need to display prediction, but this should be done
 						// on
 						// the UI thread
@@ -81,14 +85,14 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 										changeStatusInHelpView(predictionCommand);
 									}
 								});
-						PlatformUI.getWorkbench().getDisplay()
-								.asyncExec(new Runnable() {
-									@Override
-									public void run() {
-										PredictionCommand predictionCommand = (PredictionCommand) newCommand;
-										changeStatusInHelpView(predictionCommand);
-									}
-								});
+//						PlatformUI.getWorkbench().getDisplay()
+//								.asyncExec(new Runnable() {
+//									@Override
+//									public void run() {
+//										PredictionCommand predictionCommand = (PredictionCommand) newCommand;
+//										changeStatusInHelpView(predictionCommand);
+//									}
+//								});
 
 					}
 				}

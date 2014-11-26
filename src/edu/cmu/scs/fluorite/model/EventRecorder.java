@@ -844,17 +844,26 @@ public class EventRecorder {
 //				break;
 //			}
 		// end of thread code
-		ADifficultyPredictionPluginEventProcessor.getInstance().newCommand(newCommand);
+		
+		
+		
+		
+		
+		// moving up
+//		ADifficultyPredictionPluginEventProcessor.getInstance().newCommand(newCommand);
 		MacroCommandsLogBegin.newCase(commands, this);
 		// Log to the file.
 		while (commands.size() > 1
 				&& commands.getFirst() == mCommands.getFirst()) {
 			final ICommand firstCmd = commands.getFirst();
 			LOGGER.log(Level.FINE, null, firstCmd);
+			System.out.println ("LOGGING COMMAND:" + firstCmd + " THIS is what should be sent to prediction, not individual commands");
 
 			// Remove the first item from the list
 			commands.removeFirst();
 			mCommands.removeFirst();
+			ADifficultyPredictionPluginEventProcessor.getInstance().newCommand(firstCmd);
+
 		}
 		MacroCommandsLogEnd.newCase(commands, this);
 		RecordedCommandsCleared.newCase(commands, this);
@@ -882,6 +891,7 @@ public class EventRecorder {
 
 			mDocChangeTimerTask = new TimerTask() {
 				public void run() {
+//					System.out.println("NEW THREAD! THIS MAY BE THE ISSUE WITH PERFOMANCE");
 					mDocChangeCombinable = false;
 					System.out.println("COMBINABLE: FALSE");
 

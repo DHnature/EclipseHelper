@@ -1,5 +1,6 @@
-package difficultyPrediction;
+package config;
 
+import difficultyPrediction.APredictionParameters;
 import edu.cmu.scs.fluorite.model.EventRecorder;
 import analyzer.ui.graphics.LineGraphComposer;
 import bus.uigen.ObjectEditor;
@@ -7,7 +8,7 @@ import bus.uigen.ObjectEditor;
 public class PredictorConfigurer {
 	// add listeners here also
 	public static void configure() {
-		EventRecorder.setAsyncFireEvent(false);
+//		EventRecorder.setAsyncFireEvent(false);
  		LineGraphComposer.composeUI();
 		ObjectEditor.edit(APredictionParameters.getInstance());
  	}
