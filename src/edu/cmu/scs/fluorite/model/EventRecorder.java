@@ -304,8 +304,11 @@ public class EventRecorder {
 		if (docChange == mLastFiredDocumentChange) {
 			return;
 		}
+		
 
 		for (Object listenerObj : mDocumentChangeListeners.getListeners()) {
+			System.out.println ("ASYNC EXEC ProCESSED");
+
 			((DocumentChangeListener) listenerObj)
 					.documentChangeFinalized(docChange);
 		}
@@ -853,6 +856,7 @@ public class EventRecorder {
 		MacroCommandsLogEnd.newCase(commands, this);
 		RecordedCommandsCleared.newCase(commands, this);
 
+		// WHY do we need all of the stuff below
 
 		StyledText styledText = Utilities.getStyledText(Utilities
 				.getActiveEditor());
