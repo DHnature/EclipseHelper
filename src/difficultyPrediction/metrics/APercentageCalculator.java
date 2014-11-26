@@ -14,6 +14,7 @@ public class APercentageCalculator {
 	public final static int EDIT_EVENT_INDEX = 2;
 	public final static int FOCUS_EVENT_INDEX = 3;
 	public final static int REMOVE_EVENT_INDEX = 4;
+	static APercentageCalculator instance;
 
 	public boolean isDebugEvent(ICommand event) {
 		boolean isDebugEvent = false;
@@ -297,6 +298,34 @@ public class APercentageCalculator {
 		eventData.add(numberOfRemoveEvents);
 
 		return eventData;
+	}
+	public  String getFeatureName(ICommand myEvent) {
+		
+			if (isEditEvent(myEvent)) {
+				return "Edit";
+				
+			} else if (isDebugEvent(myEvent)) {
+				return "Debug";
+
+			} else if (isNavigationEvent(myEvent)) {
+				return "Navigation";
+
+			} else if (isFocusEvent(myEvent)) {
+				return "Focus";
+
+			} else if (isAddRemoveEvent(myEvent)) {
+				return "RemoveClass";
+			} else {
+				return "Unclassified";
+			}
+
+		
+
+	}
+	public static APercentageCalculator getInstance() {
+		if (instance == null)
+			instance = new APercentageCalculator();
+		return instance;
 	}
 
 }
