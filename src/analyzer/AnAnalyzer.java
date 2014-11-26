@@ -42,7 +42,7 @@ import util.annotations.Column;
 import util.annotations.Explanation;
 import util.annotations.Row;
 import util.annotations.Visible;
-import analyzer.ui.template.LineGraphComposer;
+import analyzer.ui.graphics.LineGraphComposer;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import bus.uigen.models.AFileSetterModel;

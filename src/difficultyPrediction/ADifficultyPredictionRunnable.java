@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.PlatformUI;
 
 import bus.uigen.ObjectEditor;
-import analyzer.ui.template.LineGraphComposer;
+import analyzer.ui.graphics.LineGraphComposer;
 import dayton.ServerConnection;
 import difficultyPrediction.eventAggregation.ADisjointDiscreteChunks;
 import difficultyPrediction.eventAggregation.EventAggregationStrategy;

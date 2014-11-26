@@ -1,4 +1,4 @@
-package analyzer.ui.template;
+package analyzer.ui.graphics;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -6,28 +6,46 @@ import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import difficultyPrediction.featureExtraction.ARatioFeatures;
+import difficultyPrediction.featureExtraction.RatioFeatures;
+import util.misc.ThreadSupport;
 import bus.uigen.ObjectEditor;
 import bus.uigen.uiFrame;
 
-public class Driver {
+public class LineGraphComposer {
 
 	// TODO: Fix issue with preconditions and buttons
 	// TODO: Error checking on files with incorrect format
 	// TODO: Combine two keys
 	// TODO: Scalable graph
+	static LineGraph lineGraph;
+	static StatusBar statusBar;
+	
+	public static StatusBar getStatusBar() {
+		if (statusBar == null) {
+			composeUI();
+		}
+		return statusBar;
+	}
 
-	public static void main(String[] args) {
+//	public static void setStatusBar(StatusBar statusBar) {
+//		LineGraphComposer.statusBar = statusBar;
+//	}
+
+	public static LineGraph  composeUI() {
 		JFrame frame = new JFrame();
 		RatioFileReader reader = new ARatioFileReader();
 
 		PlayAndRewindCounter counter = new APlayAndRewindCounter(reader);
-		ALineGraph lineGraph = new ALineGraph(counter, reader);
-		AStatusBar statusBar = new AStatusBar(counter, reader);
+		ALineGraph aLineGraph = new ALineGraph(counter, reader);
+		lineGraph = aLineGraph;
+		AStatusBar aStatusBar = new AStatusBar(counter, reader);
+		statusBar = aStatusBar;
 		AWebDisplay webDisplay = new AWebDisplay(counter, reader);
 		ADifficultyTypeDisplay difficultyTypeDisplay = new ADifficultyTypeDisplay(
 				counter, reader);
-		ALegend checkboxes = new ALegend(frame, difficultyTypeDisplay, statusBar,
-				webDisplay, lineGraph);
+		Legend checkboxes = new ALegend(frame, difficultyTypeDisplay, aStatusBar,
+				webDisplay, aLineGraph);
 		frame.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		JPanel counterPanel = new JPanel();
@@ -59,7 +77,7 @@ public class Driver {
 		c.weighty = .25;
 		c.gridx = 0;
 		c.gridy = 4;
-		frame.add(statusBar, c);
+		frame.add(aStatusBar, c);
 		c.fill = GridBagConstraints.BOTH;
 		c.weightx = 1.0; // request any extra horizontal space
 		c.weighty = .1;
@@ -71,17 +89,43 @@ public class Driver {
 		c.weightx = 1.0; // request any extra horizontal space
 		c.gridx = 0;
 		c.gridy = 6;
-		frame.add(lineGraph, c);
+		frame.add(aLineGraph, c);
 		uiFrame editor = ObjectEditor.createOEFrame(frame);
 		ObjectEditor.editInMainContainer(counter, counterPanel);
 		ObjectEditor.editInMainContainer(reader, readerPanel);
 		ObjectEditor.editInMainContainer(checkboxes, checkboxPanel);
-		reader.readFile("data/ratios1.csv");
+//		reader.readFile("data/ratios1.csv");
 
 		// finalize
 		frame.pack();
 		frame.setVisible(true);
 		frame.setSize(840, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		return aLineGraph;
+		
+	}
+	
+	public static LineGraph getLineGraph() {
+		if (lineGraph == null) {
+			lineGraph = composeUI();
+		}
+		return lineGraph;
+	}
+
+	public static void main(String[] args) {
+		LineGraph aLineGraph = composeUI();
+		RatioFileReader aReader = aLineGraph.getRatioFileReader();
+		RatioFeatures ratioFeatures = new ARatioFeatures();
+		ratioFeatures.setDebugRatio(20.0);
+		ratioFeatures.setInsertionRatio(50.0);
+		ratioFeatures.setSavedTimeStamp(System.currentTimeMillis());
+		aLineGraph.newRatios(ratioFeatures);
+		ThreadSupport.sleep (1000);
+		ratioFeatures.setDebugRatio(50.0);
+		ratioFeatures.setInsertionRatio(20.0);
+		ratioFeatures.setSavedTimeStamp(System.currentTimeMillis());
+		aLineGraph.newRatios(ratioFeatures);
+
+//		aReader.readFile("data/ratios1.csv");
 	}
 }

@@ -1,4 +1,4 @@
-package analyzer.ui.template;
+package analyzer.ui.graphics;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

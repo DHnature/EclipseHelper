@@ -18,8 +18,9 @@ import java.util.Calendar;
 
 
 
+
 import analyzer.AnAnalyzer;
-import analyzer.ui.template.LineGraphComposer;
+import analyzer.ui.graphics.LineGraphComposer;
 import trace.difficultyPrediction.NewPredictionEvent;
 import trace.difficultyPrediction.NewExtractedStatusInformation;
 import trace.difficultyPrediction.NewPrediction;

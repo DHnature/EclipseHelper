@@ -1,4 +1,4 @@
-package analyzer.ui.template;
+package analyzer.ui.graphics;
 
 import java.awt.Color;
 import java.awt.Graphics;

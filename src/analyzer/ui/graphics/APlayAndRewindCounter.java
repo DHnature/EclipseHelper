@@ -1,4 +1,4 @@
-package analyzer.ui.template;
+package analyzer.ui.graphics;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
