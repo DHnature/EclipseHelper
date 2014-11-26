@@ -7,11 +7,11 @@ import edu.cmu.scs.fluorite.commands.ICommand;
 public class APrintingDifficultyPredictionListener implements DifficultyPredictionEventListener{
 
 	@Override
-	public void recordCommand(ICommand newCommand) {
+	public void newCommand(ICommand newCommand) {
 		System.out.println("Extension**New User/Prediction Command:" + newCommand);		
 	}
 	@Override
-	public void start() {
+	public void commandProcessingStarted() {
 		System.out.println("Extension**Difficulty Prediction Started");		
 	}
 	public void startTimeStamp(long aStartTimeStamp) {
@@ -19,7 +19,7 @@ public class APrintingDifficultyPredictionListener implements DifficultyPredicti
 
 	}
 	@Override
-	public void stop() {
+	public void commandProcessingStopped() {
 		System.out.println("Extension**Difficulty Prediction Stopped");			
 	}
 	@Override

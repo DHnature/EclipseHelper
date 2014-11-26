@@ -125,7 +125,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#recordCommand(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public void recordCommand(final ICommand newCommand) {
+	public void newCommand(final ICommand newCommand) {
 		switch (predictorThreadOption) {
 		case NO_PROCESSING:
 			break;
@@ -243,7 +243,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#start()
 	 */
 	@Override
-	public void start() {
+	public void commandProcessingStarted() {
 		FactoriesSelector.configureFactories();
 		maybeCreateDifficultyPredictionThread();
 		pendingPredictionCommands.add(new AStartOfQueueCommand());
@@ -255,7 +255,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#stop()
 	 */
 	@Override
-	public void stop() {
+	public void commandProcessingStopped() {
 		pendingPredictionCommands.add(new AnEndOfQueueCommand());
 
 	}
@@ -286,18 +286,18 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStart()
 	 */
 	@Override
-	public void notifyStart() {
+	public void notifyStartCommand() {
 		for (DifficultyPredictionEventListener aListener:listeners) {
-			aListener.start();
+			aListener.commandProcessingStarted();
 		}
 	}
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStop()
 	 */
 	@Override
-	public void notifyStop() {
+	public void notifyStopCommand() {
 		for (DifficultyPredictionEventListener aListener:listeners) {
-			aListener.stop();
+			aListener.commandProcessingStopped();
 		}
 	}
 	/* (non-Javadoc)
@@ -306,7 +306,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	@Override
 	public void notifyRecordCommand(ICommand aCommand) {
 		for (DifficultyPredictionEventListener aListener:listeners) {
-			aListener.recordCommand(aCommand);
+			aListener.newCommand(aCommand);
 		}
 	}
 	/* (non-Javadoc)

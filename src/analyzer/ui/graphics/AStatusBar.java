@@ -13,6 +13,9 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import difficultyPrediction.DifficultyPredictionSettings;
+import difficultyPrediction.DifficultyRobot;
+
 public class AStatusBar extends JPanel implements StatusBar {
 
 	private static final long serialVersionUID = 948158739933959785L;
@@ -29,6 +32,9 @@ public class AStatusBar extends JPanel implements StatusBar {
 			RatioFileReader aRatioFileReader) {
 		setBackground(Color.LIGHT_GRAY);
 		addMouseListener(this);
+		if (!DifficultyPredictionSettings.isReplayMode()) {
+			DifficultyRobot.getInstance().addStatusListener(this);
+		}
 		counter = aCounter;
 		counter.addPropertyChangeListener(this);
 		ratioFileReader = aRatioFileReader;

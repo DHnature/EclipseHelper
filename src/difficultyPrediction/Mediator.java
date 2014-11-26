@@ -6,8 +6,10 @@ import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
+import difficultyPrediction.featureExtraction.RatioFeaturesListener;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
 import difficultyPrediction.predictionManagement.PredictionManager;
+import difficultyPrediction.statusManager.StatusListener;
 import difficultyPrediction.statusManager.StatusManager;
 import difficultyPrediction.statusManager.StatusManagerDetails;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -48,4 +50,14 @@ public interface Mediator {
 
 
 	public void setStatusInformation(StatusInformation statusInformation) ;
+	public void addRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) ;
+	
+	public void removeRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) ;
+	
+	public void addStatusListener(StatusListener aListener) ;
+	public void removeStatusListener(StatusListener aListener) ;
+		
+	public void  notifyNewRatios(RatioFeatures aRatios) ;
+	
+	public void  notifyNewStatus(String aStatus) ;
 }

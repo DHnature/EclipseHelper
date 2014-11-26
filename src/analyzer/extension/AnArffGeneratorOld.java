@@ -182,7 +182,7 @@ public class AnArffGeneratorOld extends APrintingDifficultyPredictionListener im
 	}
 
 	@Override
-	public void recordCommand(ICommand newCommand) {
+	public void newCommand(ICommand newCommand) {
 		if(newCommand.getCommandType().equals("PredictionCommand")) {
 			PredictionCommand prediction=(PredictionCommand) newCommand;
 
@@ -215,13 +215,13 @@ public class AnArffGeneratorOld extends APrintingDifficultyPredictionListener im
 
 	}
 	@Override
-	public void start() {
+	public void commandProcessingStarted() {
 		System.out.println("Extension**Difficulty Prediction Started");	
 
 
 	}
 	@Override
-	public void stop() {
+	public void commandProcessingStopped() {
 		System.out.println("Extension**Difficulty Prediction Stopped");	
 		//stop file stream here
 		arffWriter.stop();

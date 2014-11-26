@@ -265,16 +265,28 @@ public class APercentageCalculator {
 		for (int i = 0; i < userActions.size(); i++) {
 			ICommand myEvent = userActions.get(i);
 
-			if (isEditEvent(myEvent))
+			if (isEditEvent(myEvent)) {
 				numberOfEditEvents++;
-			else if (isDebugEvent(myEvent))
+				System.out.println ("Edit command:" + myEvent);
+			} else if (isDebugEvent(myEvent)) {
 				numberOfDebugEvents++;
-			else if (isNavigationEvent(myEvent))
+				System.out.println ("Debug command:" + myEvent);
+
+			} else if (isNavigationEvent(myEvent)) {
 				numberOfSearchEvents++;
-			else if (isFocusEvent(myEvent))
+				System.out.println ("navigation command:" + myEvent);
+
+			} else if (isFocusEvent(myEvent)) {
 				numberOfFocusEvents++;
-			else if (isAddRemoveEvent(myEvent))
+				System.out.println ("Focus command:" + myEvent);
+
+			} else if (isAddRemoveEvent(myEvent)) {
 				numberOfRemoveEvents++;
+				System.out.println ("remove command:" + myEvent);
+			} else {
+				System.out.println("Unclassified command: " + myEvent);
+			}
+
 		}
 
 		ArrayList<Integer> eventData = new ArrayList<Integer>();

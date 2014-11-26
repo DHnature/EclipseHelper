@@ -33,8 +33,8 @@ public class StatusAggregationDiscreteChunks implements StatusManagerStrategy{
 	//TODO debug here and figure out why the tool never predicts stuck, even though im doing actions that indicate that I am stuck
 	//TODO add the interdeterminate ("TIE") and check to make sure that this working correctly
 	public void aggregateStatuses(String status) {
-		LineGraphComposer.getStatusBar().newStatus(status);
-		LineGraphComposer.getStatusBar().newStatus(statusStringToInt(status));
+//		LineGraphComposer.getStatusBar().newStatus(status);
+//		LineGraphComposer.getStatusBar().newStatus(statusStringToInt(status));
 		holdPredictions.predictions.add(status);
 		if(status.toUpperCase().equals(STUCK)) {
 			holdPredictions.numberOfYes++;
@@ -56,8 +56,8 @@ public class StatusAggregationDiscreteChunks implements StatusManagerStrategy{
 				aggregateStatusPredicted = PROGRESS;
 				manager.onStatusHandOff(PROGRESS);
 			}
-			LineGraphComposer.getStatusBar().newAggregatedStatus(aggregateStatusPredicted);
-			LineGraphComposer.getStatusBar().newAggregatedStatus(statusStringToInt(aggregateStatusPredicted));
+//			LineGraphComposer.getStatusBar().newAggregatedStatus(aggregateStatusPredicted);
+//			LineGraphComposer.getStatusBar().newAggregatedStatus(statusStringToInt(aggregateStatusPredicted));
 			holdPredictions.numberOfNo = 0;
 			holdPredictions.numberOfYes = 0;
 			holdPredictions.predictions.clear();

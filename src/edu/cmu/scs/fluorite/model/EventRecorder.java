@@ -447,7 +447,7 @@ public class EventRecorder {
 		mCurrentlyExecutingCommand = false;
 		mRecordCommands = true;
 		mStartTimestamp = Calendar.getInstance().getTime().getTime();
-		ADifficultyPredictionPluginEventProcessor.getInstance().start();
+		ADifficultyPredictionPluginEventProcessor.getInstance().commandProcessingStarted();
 //		maybeCreateDifficultyPredictionThread();
 
 		// have to create the tray icon on the UI thread
@@ -592,7 +592,7 @@ public class EventRecorder {
 		// purge timer events.
 		getTimer().cancel();
 		getTimer().purge();
-		ADifficultyPredictionPluginEventProcessor.getInstance().stop();
+		ADifficultyPredictionPluginEventProcessor.getInstance().commandProcessingStopped();
 //		pendingPredictionCommands.add(new AnEndOfQueueCommand());
 	}
 
@@ -838,7 +838,7 @@ public class EventRecorder {
 //				break;
 //			}
 		// end of thread code
-		ADifficultyPredictionPluginEventProcessor.getInstance().recordCommand(newCommand);
+		ADifficultyPredictionPluginEventProcessor.getInstance().newCommand(newCommand);
 		MacroCommandsLogBegin.newCase(commands, this);
 		// Log to the file.
 		while (commands.size() > 1

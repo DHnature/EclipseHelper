@@ -43,9 +43,9 @@ public interface DifficultyPredictionPluginEventProcessor extends PluginEventLis
 	public abstract void addRemovePredictionEventListener(
 			DifficultyPredictionEventListener aListener);
 
-	public abstract void notifyStart();
+	public abstract void notifyStartCommand();
 
-	public abstract void notifyStop();
+	public abstract void notifyStopCommand();
 
 	public abstract void notifyRecordCommand(ICommand aCommand);
 

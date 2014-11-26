@@ -316,7 +316,7 @@ public class AnAnalyzer implements Analyzer  {
 		DifficultyPredictionSettings.setRatiosFileName(aFullRatiosFileName);
 		difficultyEventProcessor = new ADifficultyPredictionPluginEventProcessor();
 		ADifficultyPredictionPluginEventProcessor.setInstance(difficultyEventProcessor);
-		difficultyEventProcessor.start();
+		difficultyEventProcessor.commandProcessingStarted();
 		Mediator mediator = difficultyEventProcessor.getDifficultyPredictionRunnable().getMediator();
 
 //		difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
@@ -344,7 +344,7 @@ public class AnAnalyzer implements Analyzer  {
 							&& (aCommand.getTimestamp2() > 0)) {
 					// this is the starttimestamp
 					startTimeStamp = commands.get(i).getTimestamp2();
-					difficultyEventProcessor.recordCommand(aCommand);
+					difficultyEventProcessor.newCommand(aCommand);
 
 					notifyStartTimeStamp(startTimeStamp);
 					
@@ -354,7 +354,7 @@ public class AnAnalyzer implements Analyzer  {
 //						pendingPredictionCommands.put(commands.get(i));
 //						System.out.println("Put command:" + commands.get(i) );
 //						difficultyEventProcessor.recordCommand(commands.get(i));
-						difficultyEventProcessor.recordCommand(aCommand);
+						difficultyEventProcessor.newCommand(aCommand);
 
 //					} catch (InterruptedException e) {
 					} catch (Exception e) {
@@ -372,7 +372,7 @@ public class AnAnalyzer implements Analyzer  {
 			}
 		}
 
-		difficultyEventProcessor.stop();
+		difficultyEventProcessor.commandProcessingStopped();
 
 
 //		pendingPredictionCommands.add(new AnEndOfQueueCommand());
@@ -468,10 +468,10 @@ public class AnAnalyzer implements Analyzer  {
 	
 	// let us do this in the analyzerprocessor
 	public static void maybeRecordFeatures(RatioFeatures details) {
-		if (!DifficultyPredictionSettings.isReplayMode())  {
-			LineGraphComposer.getLineGraph().newRatios(details);
-			return;
-		}
+//		if (!DifficultyPredictionSettings.isReplayMode())  {
+//			LineGraphComposer.getLineGraph().newRatios(details);
+//			return;
+//		}
 		if (!DifficultyPredictionSettings.isNewRatioFiles() && DifficultyPredictionSettings.isRatioFileExists())
 			return;
 		return;

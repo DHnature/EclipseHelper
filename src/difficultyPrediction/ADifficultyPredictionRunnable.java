@@ -37,14 +37,14 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 //		mediator = new DifficultyRobot("");
 		mediator = DifficultyRobot.getInstance();
 	}
-	void startUIs() {
- 		LineGraphComposer.composeUI();
-		ObjectEditor.edit(APredictionParameters.getInstance());
- 	}
+//	void startExternalComponents() {
+// 		LineGraphComposer.composeUI();
+//		ObjectEditor.edit(APredictionParameters.getInstance());
+// 	}
  	
 
 	public void run() {
-		startUIs();
+		ExternalComponentsStarter.startExternalComponents(); // comment this out if do not want the OE UI
 		while (true) {
 			try {
 				newCommand = pendingCommands.take();
@@ -53,10 +53,10 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 					ServerConnection.getServerConnection().updateStatus(((DifficulyStatusCommand) newCommand).getStatus().toString());
 				}
 				if (newCommand instanceof AnEndOfQueueCommand) {// stop event 
-					ADifficultyPredictionPluginEventProcessor.getInstance().notifyStop();
+					ADifficultyPredictionPluginEventProcessor.getInstance().notifyStopCommand();
 					break;
 				} else if (newCommand instanceof AStartOfQueueCommand) {
-					ADifficultyPredictionPluginEventProcessor.getInstance().notifyStart();
+					ADifficultyPredictionPluginEventProcessor.getInstance().notifyStartCommand();
 					continue;
 
 				}

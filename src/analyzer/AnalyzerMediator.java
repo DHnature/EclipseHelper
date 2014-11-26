@@ -17,8 +17,10 @@ import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEvents
 import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
+import difficultyPrediction.featureExtraction.RatioFeaturesListener;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
 import difficultyPrediction.predictionManagement.PredictionManager;
+import difficultyPrediction.statusManager.StatusListener;
 import difficultyPrediction.statusManager.StatusManager;
 import difficultyPrediction.statusManager.StatusManagerDetails;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -189,6 +191,44 @@ public class AnalyzerMediator implements Mediator {
 
 	@Override
 	public void setStatusInformation(StatusInformation statusInformation) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addRatioFeaturesListener(
+			RatioFeaturesListener aRatioFeaturesListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeRatioFeaturesListener(
+			RatioFeaturesListener aRatioFeaturesListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addStatusListener(StatusListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeStatusListener(StatusListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyNewRatios(RatioFeatures aRatios) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyNewStatus(String aStatus) {
 		// TODO Auto-generated method stub
 		
 	}

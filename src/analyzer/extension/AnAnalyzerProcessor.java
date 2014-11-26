@@ -126,7 +126,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		}
 	}
 	@Override
-	public void recordCommand(ICommand newCommand) {
+	public void newCommand(ICommand newCommand) {
 		maybeInitializeTimeStamp(newCommand);
 		maybeProcessPrediction(newCommand);
 		maybeProcessCorrection(newCommand);
@@ -137,11 +137,11 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	
 	}
 	@Override
-	public void start() {
+	public void commandProcessingStarted() {
 		System.out.println("Extension**Difficulty Prediction Started");		
 	}
 	@Override
-	public void stop() {
+	public void commandProcessingStopped() {
 		System.out.println("Extension**Difficulty Prediction Stopped");		
 		insertEntriesForPreviousTimeStamp();
 	}

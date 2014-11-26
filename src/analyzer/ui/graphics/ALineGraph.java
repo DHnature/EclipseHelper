@@ -17,6 +17,8 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import difficultyPrediction.DifficultyPredictionSettings;
+import difficultyPrediction.DifficultyRobot;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 
 public class ALineGraph extends JPanel implements LineGraph {
@@ -58,6 +60,9 @@ public class ALineGraph extends JPanel implements LineGraph {
 			RatioFileReader aRatioFileReader) {
 		setBackground(Color.LIGHT_GRAY);
 		addMouseListener(this);
+		if (!DifficultyPredictionSettings.isReplayMode()) {
+			DifficultyRobot.getInstance().addRatioFeaturesListener(this);
+		}
 		counter = aCounter;
 		counter.addPropertyChangeListener(this);
 		ratioFileReader = aRatioFileReader;

@@ -2,6 +2,7 @@ package difficultyPrediction;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 //import main.Server;
@@ -18,6 +19,8 @@ import java.util.Calendar;
 
 
 
+
+import java.util.List;
 
 import analyzer.AnAnalyzer;
 import analyzer.ui.graphics.LineGraphComposer;
@@ -37,11 +40,13 @@ import difficultyPrediction.featureExtraction.ARatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
+import difficultyPrediction.featureExtraction.RatioFeaturesListener;
 import difficultyPrediction.predictionManagement.DecisionTreeModel;
 import difficultyPrediction.predictionManagement.APredictionManager;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
 import difficultyPrediction.predictionManagement.PredictionManager;
 import difficultyPrediction.statusManager.StatusAggregationDiscreteChunks;
+import difficultyPrediction.statusManager.StatusListener;
 import difficultyPrediction.statusManager.StatusManager;
 import difficultyPrediction.statusManager.StatusManagerDetails;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -49,9 +54,11 @@ import edu.cmu.scs.fluorite.commands.PredictionCommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
 import edu.cmu.scs.fluorite.model.EventRecorder;
 
-public class DifficultyRobot implements Mediator {
+public class DifficultyRobot implements Mediator {	
 	//Server server;
 	static Mediator  instance;
+	List<StatusListener> statusListeners = new ArrayList();
+	List<RatioFeaturesListener> ratioFeaturesListeners = new ArrayList<>();
 	String id = "";
 	EventAggregator eventAggregator;
 	RatioBasedFeatureExtractor featureExtractor;
@@ -113,7 +120,9 @@ public class DifficultyRobot implements Mediator {
 		statusInformation.setRemoveRatio(details.getRemoveRatio());
 		statusInformation.setFocusRatio(details.getFocusRatio());
 		NewExtractedStatusInformation.newCase(statusInformation, this);
+		notifyNewRatios(details);
 		ADifficultyPredictionPluginEventProcessor.getInstance().notifyNewRatios(details);
+		notifyNewRatios(details);
 		AnAnalyzer.maybeRecordFeatures(details);
 
 		this.predictionManager.getPredictionStrategy().predictSituation(details.getEditRatio(), details.getDebugRatio(), details.getNavigationRatio(), details.getFocusRatio(), details.getRemoveRatio());
@@ -133,6 +142,7 @@ public class DifficultyRobot implements Mediator {
 		statusInformation.setStatusKind(StatusKind.PREDICTION_MADE);
 		statusInformation.setUserId(this.id);
 		statusInformation.setUserName(this.id);
+		notifyNewStatus(details.predictionValue);
 		this.statusManager.strategy.aggregateStatuses(details.predictionValue);
 	}
 
@@ -147,6 +157,7 @@ public class DifficultyRobot implements Mediator {
          statusPrediction.userId = this.id;
          statusPrediction.userName = this.id;
          statusPrediction.statusKind = StatusKind.PREDICTION_MADE;
+         notifyNewAggregateStatus(details.predictionValue);
        
        
          saveToLog(details);
@@ -241,6 +252,55 @@ public class DifficultyRobot implements Mediator {
 	public void setStatusInformation(StatusInformation statusInformation) {
 		this.statusInformation = statusInformation;
 	}
+	
+	public void addRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) {
+		ratioFeaturesListeners.add(aRatioFeaturesListener);
+	}
+	
+	public void removeRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) {
+		ratioFeaturesListeners.remove(aRatioFeaturesListener);
+	}
+	
+	public void addStatusListener(StatusListener aListener) {
+		statusListeners.add(aListener);
+	}	
+	public void removeStatusListener(StatusListener aListener) {
+		statusListeners.remove(aListener);
+	}
+		
+	public void  notifyNewRatios(RatioFeatures aRatios) {
+		for (RatioFeaturesListener aListener:ratioFeaturesListeners) {
+			aListener.newRatios(aRatios);
+		}
+	}
+	
+	public void  notifyNewStatus(String aStatus) {
+		for (StatusListener aListener:statusListeners) {
+			aListener.newStatus(aStatus);
+			aListener.newStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
+		}
+	}
+	
+	
+//	public void  notifyNewIntStatus(int aStatus) {
+//		for (StatusListener aListener:statusListeners) {
+//			aListener.newStatus(aStatus);
+//		}
+//	}
+	
+	public void  notifyNewAggregateStatus(int aStatus) {
+		for (StatusListener aListener:statusListeners) {
+			aListener.newAggregatedStatus(aStatus);
+		}
+	}
+	
+	public void  notifyNewAggregateStatus(String aStatus) {
+		for (StatusListener aListener:statusListeners) {
+			aListener.newAggregatedStatus(aStatus);
+			aListener.newAggregatedStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
+		}
+	}
+	
 	
 	public static Mediator getInstance() {
 		if (instance == null)
