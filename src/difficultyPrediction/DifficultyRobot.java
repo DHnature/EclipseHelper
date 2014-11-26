@@ -50,6 +50,7 @@ import edu.cmu.scs.fluorite.model.EventRecorder;
 
 public class DifficultyRobot implements Mediator {
 	//Server server;
+	static Mediator  instance;
 	String id = "";
 	EventAggregator eventAggregator;
 	RatioBasedFeatureExtractor featureExtractor;
@@ -238,6 +239,12 @@ public class DifficultyRobot implements Mediator {
 
 	public void setStatusInformation(StatusInformation statusInformation) {
 		this.statusInformation = statusInformation;
+	}
+	
+	public static Mediator getInstance() {
+		if (instance == null)
+			instance = new DifficultyRobot(""); // not sure what the id is actually used for
+		return instance;
 	}
 	
 }

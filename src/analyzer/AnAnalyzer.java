@@ -593,6 +593,7 @@ public class AnAnalyzer implements Analyzer  {
 	}
 	
 	static Analyzer instance;
+	@Visible(false)
 	public static Analyzer getInstance() {
 		if (instance == null) {
 			instance = new AnAnalyzer();

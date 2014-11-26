@@ -25,7 +25,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	protected BlockingQueue<ICommand> pendingPredictionCommands;
 	private static ToolTip balloonTip;
 //	private static TrayItem trayItem;
-	private  DifficultyRobot statusPredictor = null; // was static in eventrecorder
+	private  Mediator statusPredictor = null; // was static in eventrecorder
 	private static DifficultyPredictionPluginEventProcessor instance = null;
 	List<DifficultyPredictionEventListener> listeners = new ArrayList();
 
@@ -42,7 +42,8 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	PredictorThreadOption predictorThreadOption = PredictorThreadOption.SINGLE_THREAD;
 	
 	public ADifficultyPredictionPluginEventProcessor() {
-		statusPredictor = new DifficultyRobot(""); // should this  be in start?
+//		statusPredictor = new DifficultyRobot(""); // should this  be in start?
+		statusPredictor = DifficultyRobot.getInstance();
 		if (!DifficultyPredictionSettings.isReplayMode()) 
 			ADifficultyPredictionRegistry.getInstance().registerDifficultyPredictionListeners(this);
 

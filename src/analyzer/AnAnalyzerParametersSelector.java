@@ -28,18 +28,39 @@ public class AnAnalyzerParametersSelector extends APredictionParameters  {
 		participants = new ADynamicEnum();
 		analyzer = anAnalyzer;
 	}
-//	int segmentLength = 50;
-	@Row(0)
-	@Column(0)
+	@Row(1)
+//	@Column(0)
 	public int getSegmentLength() {
 		return super.getSegmentLength();
+//		return 0;
 	}
+	
+	@Row(0)
+//	@Column(0)
+	public int getStartupLag() {
+		return super.getStartupLag();
+//		return 0;
+	}
+//	
+	@Row(2)
+//	@Column(0)
+	public int getStatusesAggregated() {
+		return super.getStatusesAggregated();
+//		return 0;
+	}
+//	int segmentLength = 50;
+//	@Row(0)
+//	@Column(0)
+//	public int getSegmentLength() {
+//		return super.getSegmentLength();
+//	}
 //	public void setSegmentLength(int newVal) {
 //		this.segmentLength = newVal;
 //	}
-	@Row(0)
-	@Column(1)
-//	@Explanation("The set of modules that can be graded. Usually you will work on a single module.")
+	
+//	@Row(0)
+//	@Column(1)
+	@Row(3)
 	public DynamicEnum<String> getParticipants() {
 		return participants;
 	}
@@ -47,8 +68,9 @@ public class AnAnalyzerParametersSelector extends APredictionParameters  {
 	public void setParticipants(DynamicEnum<String> aNewVal) {
 		participants = aNewVal;
 	}
-	@Row(1)
+//	@Row(1)
 	@Column(0)
+	@Row(4)
 	@Explanation("Load the names of the participants in the selected folder")
 	public void loadDirectory() {
 		if (analyzer != null)
@@ -64,7 +86,8 @@ public class AnAnalyzerParametersSelector extends APredictionParameters  {
 		return analyzer.preLoadDirectory();
 		else return false;
 	}
-	@Row(1)
+//	@Row(1)
+	@Row(4)
 	@Column(1)
 	@Explanation("Loads the logs of a specific participant or all based on the participant selection")
     public void loadLogs() {
@@ -72,7 +95,8 @@ public class AnAnalyzerParametersSelector extends APredictionParameters  {
 			analyzer.loadLogs();
 		
 	}
-	@Row(1)
+//	@Row(1)
+	@Row(4)
 	@Column(2)
 	public boolean isNewOutputFiles() {
 		

@@ -34,7 +34,8 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 
 	
 	public ADifficultyPredictionRunnable() {
-		mediator = new DifficultyRobot("");
+//		mediator = new DifficultyRobot("");
+		mediator = DifficultyRobot.getInstance();
 	}
 	void startUIs() {
  		LineGraphComposer.composeUI();
