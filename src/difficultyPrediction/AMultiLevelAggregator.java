@@ -12,15 +12,19 @@ public class AMultiLevelAggregator implements RatioFeaturesListener, StatusListe
 	List<ICommand> commands = new ArrayList();
 	List<RatioFeatures> features = new ArrayList();
 	List<String> predictions = new ArrayList();
+	String aggregatedStatus = "";
 	
 	public AMultiLevelAggregator() {
 //		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
 		DifficultyRobot.getInstance().addStatusListener(this);
-		ADifficultyPredictionPluginEventProcessor.getInstance().addDifficultyPredictionEventListener(this);	}
+		DifficultyRobot.getInstance().addPluginEventEventListener(this);
+		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
+
+	}
 
 	@Override
 	public void newCommand(ICommand newCommand) {
-		// TODO Auto-generated method stub
+		commands.add(newCommand);
 		
 	}
 
@@ -38,13 +42,14 @@ public class AMultiLevelAggregator implements RatioFeaturesListener, StatusListe
 
 	@Override
 	public void newStatus(String aStatus) {
-		// TODO Auto-generated method stub
+		predictions.add(aStatus);
 		
 	}
 
 	@Override
 	public void newAggregatedStatus(String aStatus) {
-		// TODO Auto-generated method stub
+		aggregatedStatus = aStatus;
+		predictions.clear();
 		
 	}
 
@@ -62,7 +67,7 @@ public class AMultiLevelAggregator implements RatioFeaturesListener, StatusListe
 
 	@Override
 	public void newRatios(RatioFeatures newVal) {
-		// TODO Auto-generated method stub
+		features.add(newVal);
 		
 	}
 	

@@ -9,6 +9,7 @@ import org.joda.time.DateTime;
 import org.joda.time.format.ISODateTimeFormat;
 
 import difficultyPrediction.Mediator;
+import difficultyPrediction.PluginEventListener;
 import difficultyPrediction.StatusInformation;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
@@ -229,6 +230,36 @@ public class AnalyzerMediator implements Mediator {
 
 	@Override
 	public void notifyNewStatus(String aStatus) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addPluginEventEventListener(PluginEventListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removePluginEventListener(PluginEventListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyStartCommand() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyStopCommand() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyNewCommand(ICommand aCommand) {
 		// TODO Auto-generated method stub
 		
 	}

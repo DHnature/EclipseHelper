@@ -60,4 +60,15 @@ public interface Mediator {
 	public void  notifyNewRatios(RatioFeatures aRatios) ;
 	
 	public void  notifyNewStatus(String aStatus) ;
+	public abstract void addPluginEventEventListener(
+			PluginEventListener aListener);
+
+	public abstract void removePluginEventListener(
+			PluginEventListener aListener);
+
+	public abstract void notifyStartCommand();
+
+	public abstract void notifyStopCommand();
+
+	public abstract void notifyNewCommand(ICommand aCommand);
 }

@@ -27,7 +27,9 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 //	private static TrayItem trayItem;
 	private  Mediator statusPredictor = null; // was static in eventrecorder
 	private static DifficultyPredictionPluginEventProcessor instance = null;
-	List<DifficultyPredictionEventListener> listeners = new ArrayList();
+//	List<DifficultyPredictionEventListener> listeners = new ArrayList();
+//	List<PluginEventListener> listeners = new ArrayList();
+
 
 
 //	enum PredictorThreadOption {
@@ -130,6 +132,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 		case NO_PROCESSING:
 			break;
 		case THREAD_PER_ACTION:
+			System.out.println(" THREAD PER ACTION!");
 	Runnable myTask = new Runnable() {
 		@Override
 		public void run() {
@@ -167,6 +170,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	myThread.start();
 	break;
 		case USE_CURRENT_THREAD: 
+			System.out.println("USING CURRENT THREAD!");
 			//  copy and paste code in above arm
 			if (!newCommand.getCommandType().equals("PredictionCommand"))
 				statusPredictor.processEvent(newCommand);
@@ -271,52 +275,52 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#addDifficultyPredictionEventListener(difficultyPrediction.DifficultyPredictionEventListener)
 	 */
-	@Override
-	public void addDifficultyPredictionEventListener(DifficultyPredictionEventListener aListener){
-		listeners.add(aListener);
-	}
-	/* (non-Javadoc)
-	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#addRemovePredictionEventListener(difficultyPrediction.DifficultyPredictionEventListener)
-	 */
-	@Override
-	public void addRemovePredictionEventListener(DifficultyPredictionEventListener aListener){
-		listeners.remove(aListener);
-	}
-	/* (non-Javadoc)
-	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStart()
-	 */
-	@Override
-	public void notifyStartCommand() {
-		for (DifficultyPredictionEventListener aListener:listeners) {
-			aListener.commandProcessingStarted();
-		}
-	}
-	/* (non-Javadoc)
-	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStop()
-	 */
-	@Override
-	public void notifyStopCommand() {
-		for (DifficultyPredictionEventListener aListener:listeners) {
-			aListener.commandProcessingStopped();
-		}
-	}
-	/* (non-Javadoc)
-	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyRecordCommand(edu.cmu.scs.fluorite.commands.ICommand)
-	 */
-	@Override
-	public void notifyRecordCommand(ICommand aCommand) {
-		for (DifficultyPredictionEventListener aListener:listeners) {
-			aListener.newCommand(aCommand);
-		}
-	}
+//	@Override
+//	public void addPluginEventEventListener(PluginEventListener aListener){
+//		listeners.add(aListener);
+//	}
+//	/* (non-Javadoc)
+//	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#addRemovePredictionEventListener(difficultyPrediction.DifficultyPredictionEventListener)
+//	 */
+//	@Override
+//	public void removePluginEventListener(PluginEventListener aListener){
+//		listeners.remove(aListener);
+//	}
+//	/* (non-Javadoc)
+//	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStart()
+//	 */
+//	@Override
+//	public void notifyStartCommand() {
+//		for (PluginEventListener aListener:listeners) {
+//			aListener.commandProcessingStarted();
+//		}
+//	}
+//	/* (non-Javadoc)
+//	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStop()
+//	 */
+//	@Override
+//	public void notifyStopCommand() {
+//		for (PluginEventListener aListener:listeners) {
+//			aListener.commandProcessingStopped();
+//		}
+//	}
+//	/* (non-Javadoc)
+//	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyRecordCommand(edu.cmu.scs.fluorite.commands.ICommand)
+//	 */
+//	@Override
+//	public void notifyRecordCommand(ICommand aCommand) {
+//		for (PluginEventListener aListener:listeners) {
+//			aListener.newCommand(aCommand);
+//		}
+//	}
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyNewRatios(difficultyPrediction.featureExtraction.RatioFeatures)
 	 */
-	@Override
-	public void notifyNewRatios(RatioFeatures aFeatures) {
-		for (DifficultyPredictionEventListener aListener:listeners) {
-			aListener.newRatios(aFeatures);
-		}
-	}
+//	@Override
+//	public void notifyNewRatios(RatioFeatures aFeatures) {
+//		for (DifficultyPredictionEventListener aListener:listeners) {
+//			aListener.newRatios(aFeatures);
+//		}
+//	}
 
 }

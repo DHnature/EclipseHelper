@@ -19,6 +19,7 @@ import analyzer.AParticipantTimeLine;
 import analyzer.AnAnalyzer;
 import analyzer.Analyzer;
 import analyzer.ParticipantTimeLine;
+import difficultyPrediction.DifficultyRobot;
 import difficultyPrediction.extension.APrintingDifficultyPredictionListener;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -105,8 +106,10 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 			prep();
 		}
 
-		if(aFolder!= null)
-			analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);			
+		if(aFolder!= null) {
+			DifficultyRobot.getInstance().addPluginEventEventListener(this);
+			DifficultyRobot.getInstance().addRatioFeaturesListener(this);
+		}
 	}
 
 	/***/

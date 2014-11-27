@@ -753,103 +753,13 @@ public class EventRecorder {
 			
 		}
 
-//		Runnable insertIntoLog = new Runnable() {
-//
-//			@Override
-//			public void run() {
-//				if (DatabaseUtils.isConnected())
-//					DatabaseConnection.insertLog(newCommand);
-//			}
-//
-//		};
-//		Thread logThread = new Thread(insertIntoLog);
-//		logThread.start();
 
-		// TODO here is where I can process the events probably should do this
-		// in a thread
-		// this should be done in a producer consumer thread rather than a new thread
-//		if (predictorThreadOption == PredictorThreadOption.THREAD_PER_ACTION) {
-		// start of processing code
-//			switch (predictorThreadOption) {
-//			case NO_PROCESSING:
-//				break;
-//			case THREAD_PER_ACTION:
-//		Runnable myTask = new Runnable() {
-//			@Override
-//			public void run() {
-//				// do not predict status commands, this can cause a circular
-//				// reference
-//				PluginThreadCreated.newCase(Thread.currentThread().getName(), "", this);
-//				System.out.println("New thread:" + Thread.currentThread().getName());
-//
-//				if (!newCommand.getCommandType().equals("PredictionCommand"))
-//					statusPredictor.processEvent(newCommand);
-//				else {
-//					// need to display prediction, but this should be done on
-//					// the UI thread
-//					PlatformUI.getWorkbench().getDisplay()
-//							.asyncExec(new Runnable() {
-//								@Override
-//								public void run() {
-//									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
-//									changeStatusInHelpView(predictionCommand);
-//								}
-//							});
-//					PlatformUI.getWorkbench().getDisplay()
-//							.asyncExec(new Runnable() {
-//								@Override
-//								public void run() {
-//									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
-//									changeStatusInHelpView(predictionCommand);
-//								}
-//							});
-//
-//				}
-//			}
-//		};
-//		Thread myThread = new Thread(myTask);
-//		myThread.start();
-//		break;
-//			case USE_CURRENT_THREAD: 
-//				//  copy and paste code in above arm
-//				if (!newCommand.getCommandType().equals("PredictionCommand"))
-//					statusPredictor.processEvent(newCommand);
-//				else {
-//					// need to display prediction, but this should be done on
-//					// the UI thread
-//					PlatformUI.getWorkbench().getDisplay()
-//							.asyncExec(new Runnable() {
-//								@Override
-//								public void run() {
-//									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
-//									changeStatusInHelpView(predictionCommand);
-//								}
-//							});
-//					PlatformUI.getWorkbench().getDisplay()
-//							.asyncExec(new Runnable() {
-//								@Override
-//								public void run() {
-//									PredictionCommand predictionCommand = (PredictionCommand) newCommand;
-//									changeStatusInHelpView(predictionCommand);
-//								}
-//							});
-//
-//				}
-//				break;
-//			case SINGLE_THREAD:
-//				maybeCreateDifficultyPredictionThread(); // got a null pointer once, just to be safe
-//				// to be implemented
-////				System.out.println ("Single Thread option not implemented");
-//				pendingPredictionCommands.add(newCommand); // do not block
-//				break;
-//			}
-		// end of thread code
 		
 		
 		
 		
 		
-		// moving up
+		// moving to where the command i logged so that one can get the combined event
 //		ADifficultyPredictionPluginEventProcessor.getInstance().newCommand(newCommand);
 		MacroCommandsLogBegin.newCase(commands, this);
 		// Log to the file.

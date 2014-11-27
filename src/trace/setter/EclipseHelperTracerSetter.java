@@ -3,7 +3,7 @@ package trace.setter;
 import trace.difficultyPrediction.NewEventSegmentAggregation;
 import trace.difficultyPrediction.NewExtractedStatusInformation;
 import trace.difficultyPrediction.NewPrediction;
-import trace.difficultyPrediction.NewPredictionEvent;
+import trace.difficultyPrediction.NewCommand;
 import trace.difficultyPrediction.PredictionValueToStatus;
 import trace.difficultyPrediction.StatusAggregationStarted;
 import trace.logger.LogFileCreated;
@@ -68,7 +68,7 @@ public class EclipseHelperTracerSetter {
 		Tracer.setKeywordPrintStatus(NewEventSegmentAggregation.class, true);
 		Tracer.setKeywordPrintStatus(NewExtractedStatusInformation.class, true);
 		Tracer.setKeywordPrintStatus(NewPrediction.class, true);
-		Tracer.setKeywordPrintStatus(NewPredictionEvent.class, true);
+		Tracer.setKeywordPrintStatus(NewCommand.class, true);
 		Tracer.setKeywordPrintStatus(PredictionValueToStatus.class, true);
 		Tracer.setKeywordPrintStatus(StatusAggregationStarted.class, true);
 		Tracer.setKeywordPrintStatus(LogFileCreated.class, true);

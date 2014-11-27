@@ -49,19 +49,23 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 		while (true) {
 			try {
 				newCommand = pendingCommands.take();
+				if (pendingCommands.size() > NUM_PENDING_COMMANDS) {
+					System.out.println("LARGe NUMBER OF BUFFERED COMMANDS");
+					
+				}
 				//System.out.println("Taken command:" + newCommand);
 				if(newCommand instanceof DifficulyStatusCommand) {
 					ServerConnection.getServerConnection().updateStatus(((DifficulyStatusCommand) newCommand).getStatus().toString());
 				}
 				if (newCommand instanceof AnEndOfQueueCommand) {// stop event 
-					ADifficultyPredictionPluginEventProcessor.getInstance().notifyStopCommand();
+					DifficultyRobot.getInstance().notifyStopCommand();
 					break;
 				} else if (newCommand instanceof AStartOfQueueCommand) {
-					ADifficultyPredictionPluginEventProcessor.getInstance().notifyStartCommand();
+					DifficultyRobot.getInstance().notifyStartCommand();
 					continue;
 
 				}
-				ADifficultyPredictionPluginEventProcessor.getInstance().notifyRecordCommand(newCommand);
+				DifficultyRobot.getInstance().notifyNewCommand(newCommand);
 				if (!newCommand.getCommandType().equals("PredictionCommand") && 
 						!newCommand.getCommandType().equals("DifficultyStatusCommand")						
 					&& !(newCommand instanceof PredictionCommand) && 

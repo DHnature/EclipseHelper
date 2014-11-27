@@ -24,7 +24,7 @@ import java.util.List;
 
 import analyzer.AnAnalyzer;
 import analyzer.ui.graphics.LineGraphComposer;
-import trace.difficultyPrediction.NewPredictionEvent;
+import trace.difficultyPrediction.NewCommand;
 import trace.difficultyPrediction.NewExtractedStatusInformation;
 import trace.difficultyPrediction.NewPrediction;
 import trace.difficultyPrediction.PredictionValueToStatus;
@@ -65,6 +65,9 @@ public class DifficultyRobot implements Mediator {
 	PredictionManager predictionManager;
 	StatusManager statusManager;
 	private StatusInformation statusInformation;
+	List<PluginEventListener> listeners = new ArrayList();
+	
+
 	
 	public DifficultyRobot(String id) {
 		this.id = id;
@@ -87,9 +90,11 @@ public class DifficultyRobot implements Mediator {
 	
 	
 	//Aggregate events using aggregator class
+	// this should fire plugin events
 	@Override
 	public void processEvent(ICommand e) {
-		NewPredictionEvent.newCase(this);
+		NewCommand.newCase(this);
+		notifyNewCommand(e);
 //		Tracer.info(this, "difficultyRobot.processEvent");
 
 //			eventAggregator.eventAggregationStrategy.performAggregation(e, eventAggregator);
@@ -121,7 +126,7 @@ public class DifficultyRobot implements Mediator {
 		statusInformation.setFocusRatio(details.getFocusRatio());
 		NewExtractedStatusInformation.newCase(statusInformation, this);
 		notifyNewRatios(details);
-		ADifficultyPredictionPluginEventProcessor.getInstance().notifyNewRatios(details);
+//		ADifficultyPredictionPluginEventProcessor.getInstance().notifyNewRatios(details);
 		notifyNewRatios(details);
 		AnAnalyzer.maybeRecordFeatures(details);
 
@@ -298,6 +303,45 @@ public class DifficultyRobot implements Mediator {
 		for (StatusListener aListener:statusListeners) {
 			aListener.newAggregatedStatus(aStatus);
 			aListener.newAggregatedStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
+		}
+	}
+	
+	@Override
+	public void addPluginEventEventListener(PluginEventListener aListener){
+		listeners.add(aListener);
+	}
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#addRemovePredictionEventListener(difficultyPrediction.DifficultyPredictionEventListener)
+	 */
+	@Override
+	public void removePluginEventListener(PluginEventListener aListener){
+		listeners.remove(aListener);
+	}
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStart()
+	 */
+	@Override
+	public void notifyStartCommand() {
+		for (PluginEventListener aListener:listeners) {
+			aListener.commandProcessingStarted();
+		}
+	}
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStop()
+	 */
+	@Override
+	public void notifyStopCommand() {
+		for (PluginEventListener aListener:listeners) {
+			aListener.commandProcessingStopped();
+		}
+	}
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyRecordCommand(edu.cmu.scs.fluorite.commands.ICommand)
+	 */
+	@Override
+	public void notifyNewCommand(ICommand aCommand) {
+		for (PluginEventListener aListener:listeners) {
+			aListener.newCommand(aCommand);
 		}
 	}
 	

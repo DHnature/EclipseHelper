@@ -16,6 +16,7 @@ import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import analyzer.AnAnalyzer;
 import analyzer.Analyzer;
+import difficultyPrediction.DifficultyRobot;
 import difficultyPrediction.extension.APrintingDifficultyPredictionListener;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -168,12 +169,16 @@ public class AnArffGeneratorOld extends APrintingDifficultyPredictionListener im
 		
 		//start the output output writer
 		if(!this.all) {
-			analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);		
+			DifficultyRobot.getInstance().addPluginEventEventListener(this);	
+			DifficultyRobot.getInstance().addRatioFeaturesListener(this);
+
 			
 		} else {
 			
 			if(analyzer.getDifficultyEventProcessor()!=null) {
-				analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);		
+				DifficultyRobot.getInstance().addPluginEventEventListener(this);
+				DifficultyRobot.getInstance().addRatioFeaturesListener(this);
+
 				
 			}
 			

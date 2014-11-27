@@ -10,6 +10,7 @@ import java.util.Map;
 import util.misc.Common;
 import difficultyPrediction.DifficultyPredictionEventListener;
 import difficultyPrediction.DifficultyPredictionSettings;
+import difficultyPrediction.DifficultyRobot;
 import difficultyPrediction.extension.APrintingDifficultyPredictionListener;
 import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeatures;
@@ -45,8 +46,11 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		participantTimeLine = new AParticipantTimeLine();
 		participantToTimeLine.put(anId, participantTimeLine );
 		
-		if(aFolder!= null)
-			analyzer.getDifficultyEventProcessor().addDifficultyPredictionEventListener(this);			
+		if(aFolder!= null) {
+			DifficultyRobot.getInstance().addPluginEventEventListener(this);	
+			DifficultyRobot.getInstance().addRatioFeaturesListener(this);
+		}
+		
 	}
 	
 	@Override
