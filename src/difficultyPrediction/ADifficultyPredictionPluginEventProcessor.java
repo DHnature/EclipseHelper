@@ -123,6 +123,8 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 			}
 	}
 	
+	
+	
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#recordCommand(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
@@ -208,8 +210,8 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#changeStatusInHelpView(edu.cmu.scs.fluorite.commands.PredictionCommand)
 	 */
-	@Override
-	public void changeStatusInHelpView(PredictionCommand predictionCommand) {
+	String lastStatus = "";
+	public static String getStatus(PredictionCommand predictionCommand) {
 		String status = "";
 		switch (predictionCommand.getPredictionType()) {
 		case MakingProgress:
@@ -222,9 +224,35 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 			status = StatusConsts.INDETERMINATE;
 			break;
 		}
+		return status;
+	}
+	@Override
+	public void changeStatusInHelpView(PredictionCommand predictionCommand) {
+//		String status = "";
+//		switch (predictionCommand.getPredictionType()) {
+//		case MakingProgress:
+//			status = StatusConsts.MAKING_PROGRESS_STATUS;
+//			break;
+//		case HavingDifficulty:
+//			status = StatusConsts.SLOW_PROGRESS_STATUS;
+//			break;
+//		case Indeterminate:
+//			status = StatusConsts.INDETERMINATE;
+//			break;
+//		}
+//		if (status.equals(lastStatus)) return;
+//		showStatusInBallonTip(status);
+//		HelpViewPart.displayStatusInformation(status);
+//		lastStatus = status;
+		changeStatusInHelpView(getStatus(predictionCommand));
 
+	}
+	public void changeStatusInHelpView(String status) {
+		if (status.equals(lastStatus)) return;
 		showStatusInBallonTip(status);
 		HelpViewPart.displayStatusInformation(status);
+		lastStatus = status;
+
 	}
 	private void showStatusInBallonTip(String status) {
 		if (balloonTip == null) {

@@ -113,6 +113,17 @@ public class HelpViewPart extends ViewPart {
 		});
 	}
 	
+	public static String getStatusInformation()
+	{
+		// help view may not be displayed
+		if (lblStatusValue != null && !lblStatusValue.isDisposed())
+		{
+			if (lblStatusValue != null)
+				return lblStatusValue.getText();
+		}
+		return "";
+	}
+	
 	public static void displayStatusInformation(String status)
 	{
 		// help view may not be displayed

@@ -43,7 +43,6 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 //		ObjectEditor.edit(APredictionParameters.getInstance());
 // 	}
  	
-
 	public void run() {
 		PredictorConfigurer.configure(); // comment this out if do not want the OE UI
 		while (true) {
@@ -71,22 +70,27 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 					&& !(newCommand instanceof PredictionCommand) && 
 					!(newCommand instanceof DifficulyStatusCommand )) {
 					mediator.processEvent(newCommand);
-				} else {
+				} else if (newCommand instanceof PredictionCommand){
+					String lastStatus = HelpViewPart.getStatusInformation();
+					final String currentStatus = getStatus((PredictionCommand) newCommand);
+					if (!currentStatus.equals(lastStatus)) {
 					if (DifficultyPredictionSettings.isReplayMode()) {
 						System.out.println("Prediction: "
 								+ ((PredictionCommand) newCommand)
 										.getPredictionType());
-					} else  if (newCommand instanceof PredictionCommand){
+					} else  {
 						// need to display prediction, but this should be done
 						// on
 						// the UI thread
+						
 						ServerConnection.getServerConnection().updateStatus(((PredictionCommand) newCommand).getName());
 						PlatformUI.getWorkbench().getDisplay()
 								.asyncExec(new Runnable() {
 									@Override
 									public void run() {
 										PredictionCommand predictionCommand = (PredictionCommand) newCommand;
-										changeStatusInHelpView(predictionCommand);
+//										changeStatusInHelpView(predictionCommand);
+										changeStatusInHelpView(currentStatus);
 									}
 								});
 //						PlatformUI.getWorkbench().getDisplay()
@@ -99,6 +103,7 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 //								});
 
 					}
+				}
 				}
 
 			} catch (InterruptedException e) {
@@ -134,7 +139,8 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 //		}
 //		
 //	}
-	public void changeStatusInHelpView(PredictionCommand predictionCommand) {
+	String lastStatus = "";
+	public static String getStatus(PredictionCommand predictionCommand) {
 		String status = "";
 		switch (predictionCommand.getPredictionType()) {
 		case MakingProgress:
@@ -147,9 +153,35 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 			status = StatusConsts.INDETERMINATE;
 			break;
 		}
+		return status;
+	}
 
+	public void changeStatusInHelpView(PredictionCommand predictionCommand) {
+//		String status = "";
+//		switch (predictionCommand.getPredictionType()) {
+//		case MakingProgress:
+//			status = StatusConsts.MAKING_PROGRESS_STATUS;
+//			break;
+//		case HavingDifficulty:
+//			status = StatusConsts.SLOW_PROGRESS_STATUS;
+//			break;
+//		case Indeterminate:
+//			status = StatusConsts.INDETERMINATE;
+//			break;
+//		}
+//		if (status.equals(lastStatus)) return;
+//		showStatusInBallonTip(status);
+//		HelpViewPart.displayStatusInformation(status);
+//		lastStatus = status;
+		changeStatusInHelpView(getStatus(predictionCommand));
+
+	}
+	public void changeStatusInHelpView(String status) {
+		if (status.equals(lastStatus)) return;
 		showStatusInBallonTip(status);
 		HelpViewPart.displayStatusInformation(status);
+		lastStatus = status;
+
 	}
 
 	private void showStatusInBallonTip(String status) {
