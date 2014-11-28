@@ -97,14 +97,14 @@ public class EventLoggerStartup implements IStartup {
 			@Override
 			public void partActivated(IWorkbenchPart part) {
 				PartActivated.newCase(part, this);
-				System.out.println("part activated");
+//				System.out.println("part activated");
 				// TODO Auto-generated method stub
 				
 			}
 
 			@Override
 			public void partBroughtToTop(IWorkbenchPart part) {
-				System.out.println("part on top");
+//				System.out.println("part on top");
 				// TODO Auto-generated method stub
 				
 			}

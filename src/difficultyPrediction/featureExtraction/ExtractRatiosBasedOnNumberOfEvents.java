@@ -3,7 +3,7 @@ package difficultyPrediction.featureExtraction;
 import java.util.List;
 
 import difficultyPrediction.metrics.APercentageCalculator;
-
+import difficultyPrediction.metrics.RatioCalculator;
 import edu.cmu.scs.fluorite.commands.ICommand;
 public class ExtractRatiosBasedOnNumberOfEvents implements
 		FeatureExtractionStrategy {
@@ -12,7 +12,7 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
 		
 	}
 	
-	private APercentageCalculator metrics = new APercentageCalculator();
+	private RatioCalculator metrics = new APercentageCalculator();
 	
 	 private static final int NAVIGATION_PERCENTAGE = 0;
      private static final int DEBUG_PERCENTAGE = 1;

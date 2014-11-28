@@ -32,15 +32,15 @@ public class ADisjointDiscreteChunks implements EventAggregationStrategy {
 		
 
 		actions.addEvents(event);
-		System.out.println("Actions:" + actions);
+//		System.out.println("Actions:" + actions);
 
 		// Ignore the first few events a user sends then begin tracking, to
 		// avoid
 		// dealing with startup lag
 		if (ignoreEvents) {
-			System.out
-					.println("(discrete chunks.performAggregation) Ignored events left = "
-							+ (numberOfEventsToIgnore() - actions.size()));
+//			System.out
+//					.println("(discrete chunks.performAggregation) Ignored events left = "
+//							+ (numberOfEventsToIgnore() - actions.size()));
 			if (actions.size() >= numberOfEventsToIgnore()) {
 				actions.clear();
 				ignoreEvents = false;

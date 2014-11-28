@@ -1,5 +1,7 @@
 package difficultyPrediction;
 
+import bus.uigen.OEFrame;
+import bus.uigen.ObjectEditor;
 import util.annotations.Column;
 import util.annotations.Row;
 
@@ -38,6 +40,10 @@ public class APredictionParameters implements PredictionParameters{
 			instance = new APredictionParameters();
 		}
 		return instance;
+	}
+	public static void createUI() {
+		OEFrame predictionFrame = ObjectEditor.edit(getInstance());
+		predictionFrame.setSize(300, 200);
 	}
 
 }

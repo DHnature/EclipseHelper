@@ -310,7 +310,7 @@ public class EventRecorder {
 		
 
 		for (Object listenerObj : mDocumentChangeListeners.getListeners()) {
-			System.out.println ("ASYNC EXEC ProCESSED");
+//			System.out.println ("ASYNC EXEC ProCESSED");
 
 			((DocumentChangeListener) listenerObj)
 					.documentChangeFinalized(docChange);
@@ -445,8 +445,8 @@ public class EventRecorder {
 	public void start() {
 //		FactoriesSelector.configureFactories();
 		MacroRecordingStarted.newCase(this);
-		EventLoggerConsole.getConsole().writeln("***Started macro recording",
-				EventLoggerConsole.Type_RecordingCommand);
+//		EventLoggerConsole.getConsole().writeln("***Started macro recording",
+//				EventLoggerConsole.Type_RecordingCommand);
 		mCommands = new LinkedList<ICommand>();
 		mNormalCommands = new LinkedList<ICommand>();
 		mDocumentChangeCommands = new LinkedList<ICommand>();
@@ -674,7 +674,7 @@ public class EventRecorder {
 			FindCommand findCommand = new FindCommand(selectionText);
 			findCommand.setSearchForward(mIncrementalFindForward);
 			recordCommand(findCommand);
-			System.out.println("Incremental find string: " + selectionText);
+//			System.out.println("Incremental find string: " + selectionText);
 		}
 	}
 
@@ -715,10 +715,10 @@ public class EventRecorder {
 		long timestamp = Calendar.getInstance().getTime().getTime();
 		timestamp -= mStartTimestamp;
 		NewMacroCommand.newCase(newCommand.getName(), timestamp, this);
-		EventLoggerConsole.getConsole().writeln(
-				"*Command added to macro: " + newCommand.getName()
-						+ "\ttimestamp: " + timestamp,
-				EventLoggerConsole.Type_RecordingCommand);
+//		EventLoggerConsole.getConsole().writeln(
+//				"*Command added to macro: " + newCommand.getName()
+//						+ "\ttimestamp: " + timestamp,
+//				EventLoggerConsole.Type_RecordingCommand);
 		newCommand.setTimestamp(timestamp);
 		newCommand.setTimestamp2(timestamp);
 
@@ -767,7 +767,7 @@ public class EventRecorder {
 				&& commands.getFirst() == mCommands.getFirst()) {
 			final ICommand firstCmd = commands.getFirst();
 			LOGGER.log(Level.FINE, null, firstCmd);
-			System.out.println ("LOGGING COMMAND:" + firstCmd + " THIS is what should be sent to prediction, not individual commands");
+//			System.out.println ("LOGGING COMMAND:" + firstCmd + " THIS is what should be sent to prediction, not individual commands");
 
 			// Remove the first item from the list
 			commands.removeFirst();
@@ -803,7 +803,7 @@ public class EventRecorder {
 				public void run() {
 //					System.out.println("NEW THREAD! THIS MAY BE THE ISSUE WITH PERFOMANCE");
 					mDocChangeCombinable = false;
-					System.out.println("COMBINABLE: FALSE");
+//					System.out.println("COMBINABLE: FALSE");
 
 					try {
 
@@ -827,7 +827,7 @@ public class EventRecorder {
 			getTimer().schedule(mDocChangeTimerTask,
 					(long) getCombineTimeThreshold());
 			mDocChangeCombinable = true;
-			System.out.println(" EVENT Recorder Combinable ");
+//			System.out.println(" EVENT Recorder Combinable ");
 		} else {
 			if (mNormalTimerTask != null) {
 				mNormalTimerTask.cancel();

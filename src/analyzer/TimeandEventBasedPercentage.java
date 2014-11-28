@@ -6,6 +6,7 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 import difficultyPrediction.metrics.APercentageCalculator;
+import difficultyPrediction.metrics.RatioCalculator;
 import edu.cmu.scs.fluorite.commands.CompliationCommand;
 import edu.cmu.scs.fluorite.commands.EclipseCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -16,7 +17,7 @@ public class TimeandEventBasedPercentage {
 	public final static int DELETION_EVENT_INDEX = 6;
 	public final static int EXCEPTION_EVENT_INDEX = 7;
 	// this class computes percentages
-	private APercentageCalculator percentage;
+	private RatioCalculator percentage;
 	private long savedTimeStamp;
 	public TimeandEventBasedPercentage() {
 		percentage = new APercentageCalculator();

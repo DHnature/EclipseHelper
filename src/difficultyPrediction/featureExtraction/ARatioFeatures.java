@@ -1,5 +1,7 @@
 package difficultyPrediction.featureExtraction;
 
+import java.util.Date;
+
 public class ARatioFeatures implements RatioFeatures {
 	 double editRatio;
 	 double debugRatio;
@@ -110,5 +112,17 @@ public class ARatioFeatures implements RatioFeatures {
 	public void setSavedTimeStamp(long savedTimeStamp) {
 		this.savedTimeStamp = savedTimeStamp;
 	}
+	Date date = new Date();
+	// add other ratios later
+	public String toString () {
+		date.setTime(getSavedTimeStamp());
+		return date
+				+ "Edit (" + getEditRatio() + ") "
+				+ "Debug (" + getDebugRatio() + ") " 
+				+ "Navigation (" + getNavigationRatio() + ") "
+				+ "Focus (" + getFocusRatio() + ") ";
+		
+	}
+	
 	
 }

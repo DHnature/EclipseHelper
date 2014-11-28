@@ -8,14 +8,18 @@ import edu.cmu.scs.fluorite.commands.EclipseCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 
-public class APercentageCalculator {
+public class APercentageCalculator implements RatioCalculator {
 	public final static int DEBUG_EVENT_INDEX = 0;
 	public final static int SEARCH_EVENT_INDEX = 1;
 	public final static int EDIT_EVENT_INDEX = 2;
 	public final static int FOCUS_EVENT_INDEX = 3;
 	public final static int REMOVE_EVENT_INDEX = 4;
-	static APercentageCalculator instance;
+	static RatioCalculator instance;
 
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.metrics.FeatureCalculator#isDebugEvent(edu.cmu.scs.fluorite.commands.ICommand)
+	 */
+	@Override
 	public boolean isDebugEvent(ICommand event) {
 		boolean isDebugEvent = false;
 		if ((event.getCommandType().equals("BreakPointCommand"))
@@ -45,6 +49,10 @@ public class APercentageCalculator {
 		return isDebugEvent;
 	}
 
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.metrics.FeatureCalculator#isEditEvent(edu.cmu.scs.fluorite.commands.ICommand)
+	 */
+	@Override
 	public boolean isEditEvent(ICommand event) {
 		boolean isEditEvent = false;
 		if ((event.getCommandType().equals("CopyCommand"))
@@ -83,6 +91,10 @@ public class APercentageCalculator {
 		return isEditEvent;
 	}
 
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.metrics.FeatureCalculator#isNavigationEvent(edu.cmu.scs.fluorite.commands.ICommand)
+	 */
+	@Override
 	public boolean isNavigationEvent(ICommand event) {
 		boolean isNavigationEvent = false;
 		if (event.getCommandType().equals("EclipseCommand")) {
@@ -127,6 +139,10 @@ public class APercentageCalculator {
 		return isNavigationEvent;
 	}
 
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.metrics.FeatureCalculator#isFocusEvent(edu.cmu.scs.fluorite.commands.ICommand)
+	 */
+	@Override
 	public boolean isFocusEvent(ICommand event) {
 		boolean isFocusEvent = false;
 
@@ -144,6 +160,10 @@ public class APercentageCalculator {
 		return isFocusEvent;
 	}
 
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.metrics.FeatureCalculator#isAddRemoveEvent(edu.cmu.scs.fluorite.commands.ICommand)
+	 */
+	@Override
 	public boolean isAddRemoveEvent(ICommand event) {
 		boolean isAddRemoveEvent = false;
 		// only had code for visual studio events here
@@ -237,6 +257,10 @@ public class APercentageCalculator {
 		return removePercentage;
 	}
 
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.metrics.FeatureCalculator#computeMetrics(java.util.List)
+	 */
+	@Override
 	public ArrayList<Double> computeMetrics(List<ICommand> userActions) {
 		ArrayList<Integer> metrics = getPercentageData(userActions);
 		double debugPercentage = computeDebugPercentage(metrics);
@@ -256,6 +280,10 @@ public class APercentageCalculator {
 		return percentages;
 	}
 
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.metrics.FeatureCalculator#getPercentageData(java.util.List)
+	 */
+	@Override
 	public  ArrayList<Integer> getPercentageData(List<ICommand> userActions) {
 		int numberOfDebugEvents = 0;
 		int numberOfSearchEvents = 0;
@@ -299,6 +327,10 @@ public class APercentageCalculator {
 
 		return eventData;
 	}
+	/* (non-Javadoc)
+	 * @see difficultyPrediction.metrics.FeatureCalculator#getFeatureName(edu.cmu.scs.fluorite.commands.ICommand)
+	 */
+	@Override
 	public  String getFeatureName(ICommand myEvent) {
 		
 			if (isEditEvent(myEvent)) {
@@ -322,7 +354,7 @@ public class APercentageCalculator {
 		
 
 	}
-	public static APercentageCalculator getInstance() {
+	public static RatioCalculator getInstance() {
 		if (instance == null)
 			instance = new APercentageCalculator();
 		return instance;
