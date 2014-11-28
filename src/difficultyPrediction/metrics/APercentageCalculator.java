@@ -3,7 +3,7 @@ package difficultyPrediction.metrics;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.cmu.scs.fluorite.commands.CompliationCommand;
+import edu.cmu.scs.fluorite.commands.CompilationCommand;
 import edu.cmu.scs.fluorite.commands.EclipseCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
@@ -30,7 +30,7 @@ public class APercentageCalculator implements RatioCalculator {
 		
 		if(event.getCommandType().equals("CompilationCommand"))
 		{
-			CompliationCommand command = (CompliationCommand)event;
+			CompilationCommand command = (CompilationCommand)event;
 			//if the compilation is an error
 			if(! command.getIsWarning())
 			{

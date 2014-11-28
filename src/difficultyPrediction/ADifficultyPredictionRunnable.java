@@ -72,7 +72,9 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 					&& !(newCommand instanceof PredictionCommand) && 
 					!(newCommand instanceof DifficulyStatusCommand )) {
 					mediator.processEvent(newCommand);
-				} else if (newCommand instanceof PredictionCommand){
+				} else if (!(newCommand instanceof PredictionCommand)){
+					System.out.println("Strange Command " + newCommand);
+				} else {
 					String lastStatus = HelpViewPart.getStatusInformation();
 					final String currentStatus = getStatus((PredictionCommand) newCommand);
 					if (!currentStatus.equals(lastStatus)) {

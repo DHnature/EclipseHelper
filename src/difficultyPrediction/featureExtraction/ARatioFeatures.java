@@ -2,6 +2,8 @@ package difficultyPrediction.featureExtraction;
 
 import java.util.Date;
 
+import edu.cmu.scs.fluorite.model.EventRecorder;
+
 public class ARatioFeatures implements RatioFeatures {
 	 double editRatio;
 	 double debugRatio;
@@ -115,7 +117,7 @@ public class ARatioFeatures implements RatioFeatures {
 	Date date = new Date();
 	// add other ratios later
 	public String toString () {
-		date.setTime(getSavedTimeStamp());
+		date.setTime(getSavedTimeStamp() + EventRecorder.getInstance().getStartTimestamp());
 		return date
 				+ "Edit (" + getEditRatio() + ") "
 				+ "Debug (" + getDebugRatio() + ") " 

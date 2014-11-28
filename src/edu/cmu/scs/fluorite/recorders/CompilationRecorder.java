@@ -2,7 +2,7 @@ package edu.cmu.scs.fluorite.recorders;
 
 import org.eclipse.ui.IEditorPart;
 
-import edu.cmu.scs.fluorite.commands.CompliationCommand;
+import edu.cmu.scs.fluorite.commands.CompilationCommand;
 
 public class CompilationRecorder extends BaseRecorder  {
 
@@ -16,7 +16,7 @@ private static CompilationRecorder instance = null;
 		return instance;
 	}
 	
-	public void record(CompliationCommand command)
+	public void record(CompilationCommand command)
 	{
 		getRecorder().recordCommand(command);
 	}

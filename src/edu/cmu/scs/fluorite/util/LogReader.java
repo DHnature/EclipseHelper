@@ -23,7 +23,7 @@ import org.xml.sax.SAXException;
 
 import edu.cmu.scs.fluorite.commands.AbstractCommand;
 import edu.cmu.scs.fluorite.commands.AnnotateCommand;
-import edu.cmu.scs.fluorite.commands.CompliationCommand;
+import edu.cmu.scs.fluorite.commands.CompilationCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.model.EventRecorder;
@@ -247,7 +247,7 @@ public class LogReader {
 
 				if (fullyQualifiedName
 						.equals("edu.cmu.scs.fluorite.commands.CompilationCommand")) {
-					CompliationCommand compliationCommand = new CompliationCommand();
+					CompilationCommand compliationCommand = new CompilationCommand();
 					compliationCommand.createFrom(element);
 					return compliationCommand;
 				} 

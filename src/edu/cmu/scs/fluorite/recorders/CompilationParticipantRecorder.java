@@ -6,13 +6,16 @@ import org.eclipse.jdt.core.compiler.CompilationParticipant;
 import org.eclipse.jdt.core.compiler.IProblem;
 import org.eclipse.jdt.core.compiler.ReconcileContext;
 
-import edu.cmu.scs.fluorite.commands.CompliationCommand;
+import edu.cmu.scs.fluorite.commands.CompilationCommand;
 
 
 public class CompilationParticipantRecorder extends CompilationParticipant {
 
 	private final int AST_LEVEL_THREE = 3;
 	private final int AST_LEVEL_FOUR = 4;
+	public static final int MAX_COMPILE_ERRORS = 15; // do not overwhelm the system for large workspaces
+	public static final int MAX_COMPILE_WARNINGS = 10; // do not overwhelm the system for large workspaces
+
 	private static CompilationRecorder compilationRecorder = CompilationRecorder.getInstance();
 	
 	@Override
@@ -55,27 +58,41 @@ public class CompilationParticipantRecorder extends CompilationParticipant {
 		{
 			if(problems.length > 0)
 			{
-				for(int i = 0; i < problems.length; i++)
+				int numWarnings = 0;
+				int numErrors = 0;
+				for(int i = 0; i < problems.length && (numWarnings < MAX_COMPILE_WARNINGS || numErrors < MAX_COMPILE_ERRORS) ; i++)
 				{
-					CompliationCommand command = createCommand(problems[i]);
+					IProblem problem = problems[i];
+					if (problem.isWarning()) {
+						numWarnings++;
+						if (numWarnings > MAX_COMPILE_WARNINGS) {
+							continue;
+						}
+					} else if (problem.isError()) {
+						numErrors++;
+						if (numErrors > MAX_COMPILE_ERRORS) {
+							continue;
+						}
+					}
+					CompilationCommand command = createCommand(problems[i]);
 					compilationRecorder.record(command);
 				}
 			}
 		}
 	}
 	
-	private CompliationCommand createCommand (IProblem problem)
+	private CompilationCommand createCommand (IProblem problem)
 	{
-		CompliationCommand command = null;
+		CompilationCommand command = null;
 		String fileName = new String(problem.getOriginatingFileName());
 		if(problem.isError())
 		{
-			command = new CompliationCommand(false, problem.getMessage(),String.valueOf(problem.getID()), String.valueOf(problem.getSourceLineNumber()),
+			command = new CompilationCommand(false, problem.getMessage(),String.valueOf(problem.getID()), String.valueOf(problem.getSourceLineNumber()),
 					String.valueOf(problem.getSourceStart()), String.valueOf(problem.getSourceEnd()), fileName);
 		}
 		else if(problem.isWarning())
 		{
-			command = new CompliationCommand(true, problem.getMessage(),String.valueOf(problem.getID()), String.valueOf(problem.getSourceLineNumber()),
+			command = new CompilationCommand(true, problem.getMessage(),String.valueOf(problem.getID()), String.valueOf(problem.getSourceLineNumber()),
 					String.valueOf(problem.getSourceStart()), String.valueOf(problem.getSourceEnd()), fileName);
 		}
 
