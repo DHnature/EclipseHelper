@@ -400,7 +400,7 @@ public class ChatView extends ViewPart {
 
 					};
 					Thread logThread = new Thread(getChatMessages);
-					logThread.commandProcessingStarted();
+					logThread.start();
 				} else {
 					DatabaseUtils.setIsConnected(false);
 				}
