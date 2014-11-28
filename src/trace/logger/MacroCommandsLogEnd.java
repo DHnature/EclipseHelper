@@ -21,7 +21,8 @@ public class MacroCommandsLogEnd extends TraceableInfo{
 	
     public static String toString(LinkedList<ICommand> aCommands) {
     	return("(" + 
-    				aCommands.toString() + 
+//    				aCommands.toString() + 
+    			"commands" +
     				")");
     }
     public static MacroCommandsLogEnd newCase (String aMessage, LinkedList<ICommand> aCommands,  Object aFinder) {

@@ -21,7 +21,8 @@ public class RecordedCommandsCleared extends TraceableInfo{
 	
     public static String toString(LinkedList<ICommand> aCommands) {
     	return("(" + 
-    				aCommands.toString() + 
+//    				aCommands.toString() + 
+    			"commands" + // do not read the list as it may mutate
     				")");
     }
     public static RecordedCommandsCleared newCase (String aMessage, LinkedList<ICommand> aCommands,  Object aFinder) {
