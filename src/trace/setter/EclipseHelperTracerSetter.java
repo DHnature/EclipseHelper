@@ -1,6 +1,7 @@
 package trace.setter;
 
 import trace.difficultyPrediction.AggregatePredictionChanged;
+import trace.difficultyPrediction.CommandIgnoredBecauseQueueFull;
 import trace.difficultyPrediction.NewEventSegmentAggregation;
 import trace.difficultyPrediction.NewExtractedStatusInformation;
 import trace.difficultyPrediction.NewPrediction;
@@ -83,6 +84,8 @@ public class EclipseHelperTracerSetter {
 //		Tracer.setKeywordPrintStatus(PartOpened.class, true);
 		Tracer.setKeywordPrintStatus(PredictionChanged.class, true);
 		Tracer.setKeywordPrintStatus(AggregatePredictionChanged.class, true);
+		Tracer.setKeywordPrintStatus(CommandIgnoredBecauseQueueFull.class, true);
+
 
 
 

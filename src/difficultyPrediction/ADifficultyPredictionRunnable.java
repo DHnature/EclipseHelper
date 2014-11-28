@@ -9,6 +9,7 @@ import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.PlatformUI;
 
+import trace.difficultyPrediction.CommandIgnoredBecauseQueueFull;
 import config.PredictorConfigurer;
 import bus.uigen.ObjectEditor;
 import analyzer.ui.graphics.LineGraphComposer;
@@ -24,9 +25,10 @@ import edu.cmu.scs.fluorite.viewpart.HelpViewPart;
 
 public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnable{
 	public static final int NUM_PENDING_SEGMENTS = 4;
-	public static final int NUM_PENDING_COMMANDS = NUM_PENDING_SEGMENTS*ADisjointDiscreteChunks.DEFAULT_IGNORE_NUM;
-//	BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue(NUM_PENDING_COMMANDS);
-	BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue();
+	public static final int NUM_PENDING_COMMANDS = 4096;
+//			NUM_PENDING_SEGMENTS*ADisjointDiscreteChunks.DEFAULT_IGNORE_NUM;
+	BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue(NUM_PENDING_COMMANDS);
+//	BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue();
 
 	protected Mediator mediator = null;
 	ICommand newCommand;
@@ -200,14 +202,29 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 		}
 
 	}
-	public BlockingQueue<ICommand> getPendingCommands() {
-		return pendingCommands;
-	}
+//	public BlockingQueue<ICommand> getPendingCommands() {
+//		return pendingCommands;
+//	}
 	public Mediator getMediator() {
 		return mediator;
 	}
 	public ToolTip getBallonTip() {
 		return ballonTip;
+	}
+	boolean full;
+	@Override
+	public void add(ICommand newCommand) {
+		try {
+			pendingCommands.add(newCommand);
+			full = false;
+		} catch (IllegalStateException e) {
+			if (!full) {
+			CommandIgnoredBecauseQueueFull.newCase(this);
+			full = true;
+			}
+			
+		}
+		
 	}
 
 

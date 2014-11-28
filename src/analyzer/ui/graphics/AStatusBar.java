@@ -78,7 +78,8 @@ public class AStatusBar extends JPanel implements StatusBar {
 				int y = Y_BORDER_GAP + (getHeight() / 2 - Y_BORDER_GAP * 2);
 				int width = (getWidth() - X_BORDER_GAP * 2) / 9;
 				int height = getHeight() / 2 - Y_BORDER_GAP * 2 - SPACE_BETWEEN;
-				if (actualList.get(i) == -1) {
+				// this should be checked against 0 I think
+				if (actualList.get(i) == 0) {
 					// green
 					g2.setColor(new Color(79, 191, 10));
 				} else if (actualList.get(i) == 1) {
@@ -183,6 +184,7 @@ public class AStatusBar extends JPanel implements StatusBar {
 	public void newStatus(int aStatus) {
 		lastStatus = aStatus;
 		predictedList.add(aStatus); // will restore it when the next aggregated status is received 
+		actualList.add(-1);
 		repaint();
 //		predict
 		

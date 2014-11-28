@@ -23,10 +23,10 @@ public interface DifficultyPredictionPluginEventProcessor extends PluginEventLis
 	public abstract void setDifficultyPredictionRunnable(
 			DifficultyPredictionRunnable difficultyPredictionRunnable);
 
-	public abstract BlockingQueue<ICommand> getPendingPredictionCommands();
-
-	public abstract void setPendingPredictionCommands(
-			BlockingQueue<ICommand> pendingPredictionCommands);
+//	public abstract BlockingQueue<ICommand> getPendingPredictionCommands();
+//
+//	public abstract void setPendingPredictionCommands(
+//			BlockingQueue<ICommand> pendingPredictionCommands);
 
 //	public abstract void recordCommand(ICommand newCommand);
 

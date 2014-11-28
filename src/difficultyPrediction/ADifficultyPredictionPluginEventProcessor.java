@@ -22,7 +22,7 @@ import edu.cmu.scs.fluorite.viewpart.HelpViewPart;
 public class ADifficultyPredictionPluginEventProcessor implements DifficultyPredictionPluginEventProcessor {
 	protected Thread difficultyPredictionThread;	
 	protected DifficultyPredictionRunnable difficultyPredictionRunnable;
-	protected BlockingQueue<ICommand> pendingPredictionCommands;
+//	protected BlockingQueue<ICommand> pendingPredictionCommands;
 	private static ToolTip balloonTip;
 //	private static TrayItem trayItem;
 	private  Mediator statusPredictor = null; // was static in eventrecorder
@@ -96,23 +96,23 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#getPendingPredictionCommands()
 	 */
-	@Override
-	public BlockingQueue<ICommand> getPendingPredictionCommands() {
-		return pendingPredictionCommands;
-	}
+//	@Override
+//	public BlockingQueue<ICommand> getPendingPredictionCommands() {
+//		return pendingPredictionCommands;
+//	}
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#setPendingPredictionCommands(java.util.concurrent.BlockingQueue)
 	 */
-	@Override
-	public void setPendingPredictionCommands(
-			BlockingQueue<ICommand> pendingPredictionCommands) {
-		this.pendingPredictionCommands = pendingPredictionCommands;
-	}
+//	@Override
+//	public void setPendingPredictionCommands(
+//			BlockingQueue<ICommand> pendingPredictionCommands) {
+//		this.pendingPredictionCommands = pendingPredictionCommands;
+//	}
 	protected void maybeCreateDifficultyPredictionThread() {
-		if (predictorThreadOption == PredictorThreadOption.SINGLE_THREAD && pendingPredictionCommands == null) {
+		if (predictorThreadOption == PredictorThreadOption.SINGLE_THREAD && difficultyPredictionRunnable == null) {
 			// create the difficulty prediction thread
 			difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
-			pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
+//			pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
 			difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
 			difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
 			difficultyPredictionThread.setPriority(Math.min(
@@ -202,7 +202,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 			maybeCreateDifficultyPredictionThread(); // got a null pointer once, just to be safe
 			// to be implemented
 //			System.out.println ("Single Thread option not implemented");
-			pendingPredictionCommands.add(newCommand); // do not block
+			difficultyPredictionRunnable.add(newCommand); // do not block
 			break;
 		}
 //		notifyRecordCommand(newCommand);
@@ -278,7 +278,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	public void commandProcessingStarted() {
 		FactoriesSelector.configureFactories();
 		maybeCreateDifficultyPredictionThread();
-		pendingPredictionCommands.add(new AStartOfQueueCommand());
+		difficultyPredictionRunnable.add(new AStartOfQueueCommand());
 
 
 
@@ -288,7 +288,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	 */
 	@Override
 	public void commandProcessingStopped() {
-		pendingPredictionCommands.add(new AnEndOfQueueCommand());
+		difficultyPredictionRunnable.add(new AnEndOfQueueCommand());
 
 	}
 	public static DifficultyPredictionPluginEventProcessor getInstance() {
