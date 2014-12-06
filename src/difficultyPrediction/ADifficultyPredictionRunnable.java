@@ -34,11 +34,15 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 	ICommand newCommand;
 	protected ToolTip ballonTip;
 //	protected TrayItem trayItem;
+	static DifficultyPredictionRunnable instance;
 
 	
+	
+
 	public ADifficultyPredictionRunnable() {
 //		mediator = new DifficultyRobot("");
 		mediator = DifficultyRobot.getInstance();
+		instance = this;
 	}
 //	void startExternalComponents() {
 // 		LineGraphComposer.composeUI();
@@ -187,8 +191,8 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 		lastStatus = status;
 
 	}
-
-	private void showStatusInBallonTip(String status) {
+	@Override
+	public void showStatusInBallonTip(String status) {
 		if (ballonTip == null) {
 			ballonTip = new ToolTip(PlatformUI.getWorkbench()
 					.getActiveWorkbenchWindow().getShell(), SWT.BALLOON
@@ -202,6 +206,19 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 			EventRecorder.getTrayItem().setToolTip(ballonTip);
 			ballonTip.setVisible(true);
 		}
+
+	}
+	@Override
+	public void asyncShowStatusInBallonTip(String status) {
+		final String currentStatus = status;
+		PlatformUI.getWorkbench().getDisplay()
+		.asyncExec(new Runnable() {
+			@Override
+			public void run() {
+//				changeStatusInHelpView(predictionCommand);
+				showStatusInBallonTip(currentStatus);
+			}
+		});
 
 	}
 //	public BlockingQueue<ICommand> getPendingCommands() {
@@ -228,6 +245,12 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 		}
 		
 	}
+	public static DifficultyPredictionRunnable getInstance() {
+		if (instance == null)
+			new ADifficultyPredictionRunnable();
+		return instance;
+	}
 
+	
 
 }

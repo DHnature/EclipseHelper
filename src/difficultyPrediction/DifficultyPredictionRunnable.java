@@ -14,4 +14,6 @@ public interface DifficultyPredictionRunnable extends Runnable {
 	public Mediator getMediator() ;
 	public ToolTip getBallonTip();
 	public void add(ICommand newCommand);
+	void showStatusInBallonTip(String status);
+	void asyncShowStatusInBallonTip(String status);
 }
