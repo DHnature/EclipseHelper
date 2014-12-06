@@ -12,14 +12,14 @@ import edu.cmu.scs.fluorite.commands.PredictionCommand;
 
 public class ABalloonCreator {
 	String status = "";
-	@Row(1)
+	@Row(2)
 	@ComponentWidth(325)
 	public String getStatus() {
 		return status;
 	}
 
 	public void setStatus(String newVal) {
-		ADifficultyPredictionRunnable.getInstance().showStatusInBallonTip(newVal);		
+		ADifficultyPredictionRunnable.getInstance().asyncShowStatusInBallonTip(newVal);		
 		
 	}
 	
@@ -32,16 +32,21 @@ public class ABalloonCreator {
 	@Row(0)
 	@Column(1)
 	public void remoteDifficulty() {
-		setStatus("Alice is facing difficulty");
+		setStatus("Remote difficulty detected");
 	}
-	@Row(0)
-	@Column(2)
+	@Row(1)
+	@Column(0)
 	public void difficultyCommunicated() {
 		setStatus("Difficulty communicated to collaborators");
 	}
+	@Row(1)
+	@Column(1)
+	public void difficultyResolved() {
+		setStatus("In main method, it is String[] args and not String args");
+	}
 	public static void createUI() {
 		OEFrame frame = ObjectEditor.edit(new ABalloonCreator());
-		frame.setSize(400, 120);
+		frame.setSize(400, 150);
 
 	}
 	public static void main (String[] args) {

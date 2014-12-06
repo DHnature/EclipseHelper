@@ -201,7 +201,8 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 		}
 
 		if (!ballonTip.isDisposed()) {
-			ballonTip.setMessage("Status: " + status);
+//			ballonTip.setMessage("Status: " + status);
+			ballonTip.setMessage(status);
 			ballonTip.setText("Status Change Notification");
 			EventRecorder.getTrayItem().setToolTip(ballonTip);
 			ballonTip.setVisible(true);
