@@ -27,12 +27,15 @@ public class ABalloonCreator {
 	@Row(0)
 	@Column(0)
 	public void localDifficulty() {
-		setStatus("Facing Difficulty");
+//		setStatus("Facing Difficulty");
+		setStatus("You are facing difficulty");
+
 	}
 	@Row(0)
 	@Column(1)
 	public void remoteDifficulty() {
-		setStatus("Remote difficulty detected");
+//		setStatus("Remote difficulty detected");
+		setStatus("Alice is facing dfficulty");
 	}
 	@Row(1)
 	@Column(0)
