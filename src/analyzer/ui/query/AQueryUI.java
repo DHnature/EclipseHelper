@@ -8,11 +8,14 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.TimeZone;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -167,7 +170,8 @@ public class AQueryUI extends JPanel implements KeyListener, ActionListener{
 					List<String> dominant=(List<String>)r.get(k)[1];
 					
 					for(int i=0;i<timestamp.size();i++) {
-						output.append("Time: "+timestamp.get(i)+": "+dominant.get(i)+"\n");
+						output.append(new Date(timestamp.get(i))+": "+dominant.get(i)+"\n");
+						
 						
 						
 					}
@@ -218,12 +222,12 @@ public class AQueryUI extends JPanel implements KeyListener, ActionListener{
 
 
 		t.setNavigationList(new ArrayList<>(Arrays.asList(new Double[] {
-				15d, 15d, 0d, 0d, 20d, 20d
+				15d, 80d, 0d, 0d, 20d, 20d
 
 		})));
 		
 		t.setPredictions(new ArrayList<>(Arrays.asList(new Integer[] {
-				0, 0, 1, 1, 0, 0
+				1, 1, 0, 1, 0, 0
 
 		})));
 
@@ -233,12 +237,65 @@ public class AQueryUI extends JPanel implements KeyListener, ActionListener{
 		})));
 		
 		t.setTimeStampList(new ArrayList<>(Arrays.asList(new Long[] {
-				0l,32l,45l,65l,78l,90l
+				1418064103000l,1418064173000l,1418064271000l,1418064328000l,1418064431000l,1418064478000l
 				
 		})));
 
 		Map<String, ParticipantTimeLine> data=new HashMap<>();
 		data.put("1", t);
+		
+		t=new AParticipantTimeLine();
+
+		t.setDebugList(new ArrayList<>(Arrays.asList(new Double[] {
+				105d,20d,60d,90d,70d, 20d
+
+		})));
+
+		t.setInsertionList(new ArrayList<>(Arrays.asList(new Double[] {
+				30d, 20d, 20d,8d, 10d, 30d
+
+		})));
+
+
+		t.setDeletionList(new ArrayList<>(Arrays.asList(new Double[] {
+				20d, 10d, 20d, 0d, 20d, 10d
+
+		})));
+
+
+		t.setFocusList(new ArrayList<>(Arrays.asList(new Double[] {
+				20d, 21d, 5d, 0d, 80d, 50d
+
+		})));
+
+		t.setRemoveList(
+				new ArrayList<>(Arrays.asList(new Double[] {
+						5d, 75d, 5d, 0d, 10d, 40d
+
+				}))	);
+
+
+		t.setNavigationList(new ArrayList<>(Arrays.asList(new Double[] {
+				15d, 80d, 0d, 0d, 40d, 80d
+
+		})));
+		
+		t.setPredictions(new ArrayList<>(Arrays.asList(new Integer[] {
+				0, 1, 0, 1, 1, 1
+
+		})));
+
+		t.setPredictionCorrections(new ArrayList<>(Arrays.asList(new Integer[] {
+				-1, 1, -1, 0, -1, 1
+
+		})));
+		
+		t.setTimeStampList(new ArrayList<>(Arrays.asList(new Long[] {
+				1418222729000l,1418222789000l,1418222840000l,1418222942500l,1418223054800l,1418223067800l
+				
+		})));
+		
+		
 		data.put("2", t);
 		
 		
@@ -250,7 +307,7 @@ public class AQueryUI extends JPanel implements KeyListener, ActionListener{
 		frame.add(new AQueryUI(data));
 		frame.pack();
 		frame.setVisible(true);
-	
+		
 	}
 
 }

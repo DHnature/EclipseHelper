@@ -45,16 +45,16 @@ public class ASelector implements Selector{
 				if(result instanceof List) {
 					@SuppressWarnings({ "unchecked", "rawtypes" })
 					List l=(List) result;
-					
+
 					//integer
 					if(l.get(0) instanceof Double) {
 						pass=compare((List<Double>) l,comp,criteria);
-						
-					//integer	
+
+						//integer	
 					} else {
-						
+
 						pass=compare((List<Integer>) l,comp,(int) criteria);
-						
+
 					}
 
 				}
@@ -104,8 +104,8 @@ public class ASelector implements Selector{
 		List<Integer> result=new ArrayList<>();
 
 		for(int i=0; i<l.size();i++) {
-			
-			
+
+
 			//true if the comparator's criteria is fufilled
 			if(comp.compareTo(l.get(i), criteria)) {
 				result.add(i);
@@ -319,56 +319,60 @@ public class ASelector implements Selector{
 
 		return significantLocation;
 	}
-	
+
 	public Object[] getDominance(ParticipantTimeLine timeline) {
 		List<Long> timestamps=new ArrayList<Long>();
 		List<String> dominantFeature=new ArrayList<>();
-		
+
 		List<SelectAttr> attr=new ArrayList<>();
 		attr.add(SelectAttr.DEBUG);
 		attr.add(SelectAttr.FOCUS);
 		attr.add(SelectAttr.EDIT);
 		attr.add(SelectAttr.NAVIGATION);
 		attr.add(SelectAttr.REMOVE);
-		
-		
+
+
 		for(int i=0;i<timeline.getFocusList().size();i++) {
+
 			
-			timestamps.add(timeline.getTimeStampList().get(i));
+
+			if(timeline.getPredictions().get(i)==1) {
+				dominantFeature.add(getDominantAttribute(
+						attr,
+						timeline.getDebugList().get(i),
+						timeline.getFocusList().get(i),
+						timeline.getDeletionList().get(i)+
+						timeline.getInsertionList().get(i),
+						timeline.getNavigationList().get(i),
+						timeline.getRemoveList().get(i)
+
+						).toString());
 			
-			dominantFeature.add(getDominantAttribute(
-					attr,
-					timeline.getDebugList().get(i),
-					timeline.getFocusList().get(i),
-					timeline.getDeletionList().get(i)+
-					timeline.getInsertionList().get(i),
-					timeline.getNavigationList().get(i),
-					timeline.getRemoveList().get(i)
-					
-					).toString());
+				timestamps.add(timeline.getTimeStampList().get(i));
+			}
 			
 		}
-		
-		
+
+
 		return new Object[] {timestamps,dominantFeature};
 	}
-	
+
 	private SelectAttr getDominantAttribute(List<SelectAttr> attr, double...values) {
 		double value=0;
 		SelectAttr dominantAttr=null;
-		
-		
+
+
 		for(int i=0;i<attr.size();i++) {
 			if(values[i]>value) {
 				value=values[i];
 				dominantAttr=attr.get(i);
-				
+
 			}
-			
+
 		}
-		
+
 		return dominantAttr;
-		
+
 	}
 
 	/**See if the value is dominant among the array of other ratios, aka it is the greatest of them all*/
@@ -394,7 +398,7 @@ public class ASelector implements Selector{
 	}
 
 
-	
+
 }
 
 
