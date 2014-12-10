@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import analyzer.ParticipantTimeLine;
-import analyzer.AParticipantTimeLine;
 
 import com.sun.org.apache.bcel.internal.generic.Select;
 
@@ -319,6 +318,57 @@ public class ASelector implements Selector{
 
 
 		return significantLocation;
+	}
+	
+	public Object[] getDominance(ParticipantTimeLine timeline) {
+		List<Long> timestamps=new ArrayList<Long>();
+		List<String> dominantFeature=new ArrayList<>();
+		
+		List<SelectAttr> attr=new ArrayList<>();
+		attr.add(SelectAttr.DEBUG);
+		attr.add(SelectAttr.FOCUS);
+		attr.add(SelectAttr.EDIT);
+		attr.add(SelectAttr.NAVIGATION);
+		attr.add(SelectAttr.REMOVE);
+		
+		
+		for(int i=0;i<timeline.getFocusList().size();i++) {
+			
+			timestamps.add(timeline.getTimeStampList().get(i));
+			
+			dominantFeature.add(getDominantAttribute(
+					attr,
+					timeline.getDebugList().get(i),
+					timeline.getFocusList().get(i),
+					timeline.getDeletionList().get(i)+
+					timeline.getInsertionList().get(i),
+					timeline.getNavigationList().get(i),
+					timeline.getRemoveList().get(i)
+					
+					).toString());
+			
+		}
+		
+		
+		return new Object[] {timestamps,dominantFeature};
+	}
+	
+	private SelectAttr getDominantAttribute(List<SelectAttr> attr, double...values) {
+		double value=0;
+		SelectAttr dominantAttr=null;
+		
+		
+		for(int i=0;i<attr.size();i++) {
+			if(values[i]>value) {
+				value=values[i];
+				dominantAttr=attr.get(i);
+				
+			}
+			
+		}
+		
+		return dominantAttr;
+		
 	}
 
 	/**See if the value is dominant among the array of other ratios, aka it is the greatest of them all*/

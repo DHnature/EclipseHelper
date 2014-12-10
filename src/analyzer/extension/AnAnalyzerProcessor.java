@@ -7,6 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JFrame;
+
 import util.misc.Common;
 import difficultyPrediction.DifficultyPredictionEventListener;
 import difficultyPrediction.DifficultyPredictionSettings;
@@ -26,6 +28,7 @@ import analyzer.Analyzer;
 import analyzer.AnalyzerListener;
 import analyzer.ParticipantTimeLine;
 import analyzer.WebLink;
+import analyzer.ui.query.AQueryUI;
 
 public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener implements AnalyzerProcessor{
 	static Analyzer analyzer;
@@ -205,6 +208,15 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		analyzer.addAnalyzerListener(analyzerProcessor);
 		OEFrame frame = ObjectEditor.edit(analyzer);
 		frame.setSize(550, 200);
+		
+		JFrame qframe=new JFrame("Query V1.0");
+		qframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		qframe.setResizable(false);
+		qframe.setLocationRelativeTo(null);
+
+		qframe.add(new AQueryUI(((AnAnalyzerProcessor) analyzerProcessor).participantToTimeLine));
+		qframe.pack();
+		qframe.setVisible(true);
 		
 	}
 

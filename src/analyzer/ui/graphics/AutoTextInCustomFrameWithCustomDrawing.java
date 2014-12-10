@@ -1,6 +1,12 @@
 package analyzer.ui.graphics;
 
+import java.awt.GridLayout;
+
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import bus.uigen.ObjectEditor;
+import bus.uigen.uiFrame;
 
 public class AutoTextInCustomFrameWithCustomDrawing {
 
@@ -14,20 +20,20 @@ public class AutoTextInCustomFrameWithCustomDrawing {
 		f.setSize(200, 300);
 
 
-		// SquaringCounterWithButtons counter = new
-		// SquaringCounterWithButtons();
-		// BarChartDrawingPanel circleDrawingPanel = new
-		// BarChartDrawingPanel(counter);
-		// JFrame frame= new JFrame();
-		// frame.setLayout(new GridLayout(2, 0));
-		// JPanel textPanel = new JPanel();
-		// frame.add(textPanel);
-		// frame.add(circleDrawingPanel);
-		// uiFrame editor = ObjectEditor.createOEFrame(frame);
-		// ObjectEditor.editInMainContainer(counter, textPanel);
-		//
-		// frame.setSize(300, 400);
-		// frame.setVisible(true);
+		 SquaringCounterWithButtons counter = new
+		 SquaringCounterWithButtons();
+		 BarChartDrawingPanel circleDrawingPanel = new
+		 BarChartDrawingPanel(counter);
+		 JFrame frame= new JFrame();
+		 frame.setLayout(new GridLayout(2, 0));
+		 JPanel textPanel = new JPanel();
+		 frame.add(textPanel);
+		 frame.add(circleDrawingPanel);
+		 uiFrame editor = ObjectEditor.createOEFrame(frame);
+		 ObjectEditor.editInMainContainer(counter, textPanel);
+		
+		 frame.setSize(300, 400);
+		 frame.setVisible(true);
 
 	}
 
