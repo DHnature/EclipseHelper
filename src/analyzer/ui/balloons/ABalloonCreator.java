@@ -47,6 +47,11 @@ public class ABalloonCreator {
 	public void difficultyResolved() {
 		setStatus("In main method, it is String[] args and not String args");
 	}
+	@Row(1)
+	@Column(2)
+	public void difficulty2Resolved() {
+		setStatus("Use '+' instead of ',' to concatenate two strings with System");
+	}
 	public static void createUI() {
 		OEFrame frame = ObjectEditor.edit(new ABalloonCreator());
 		frame.setSize(400, 150);
