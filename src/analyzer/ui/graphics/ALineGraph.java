@@ -60,9 +60,9 @@ public class ALineGraph extends JPanel implements LineGraph {
 			RatioFileReader aRatioFileReader) {
 		setBackground(Color.LIGHT_GRAY);
 		addMouseListener(this);
-		if (!DifficultyPredictionSettings.isReplayMode()) {
+//		if (!DifficultyPredictionSettings.isReplayMode()) {
 			DifficultyRobot.getInstance().addRatioFeaturesListener(this);
-		}
+//		}
 		counter = aCounter;
 		counter.addPropertyChangeListener(this);
 		ratioFileReader = aRatioFileReader;

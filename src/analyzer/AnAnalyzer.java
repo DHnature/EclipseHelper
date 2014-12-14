@@ -167,6 +167,15 @@ public class AnAnalyzer implements Analyzer  {
 	@Override
 	@Visible(false)
     public void loadLogs() {
+		final Runnable aRunnable = 
+				new Runnable() {
+					public void run() {
+						syncLoadLogs();
+					}};
+		Thread aThread = (new Thread(aRunnable));
+		aThread.start();
+	}
+	public void syncLoadLogs() {
 		FactoriesSelector.configureFactories();
 		String participantId = parameters.getParticipants().getValue();
 		String numberOfSegments = "" + parameters.getSegmentLength();
@@ -194,6 +203,8 @@ public class AnAnalyzer implements Analyzer  {
 				}
 				// integrated analyzer
 				processParticipant(aParticipantId);
+//				waitForParticipantLogsToBeProcessed();
+				
 
 // jason's code
 //				String aParticipanttFolder = participants.get(aParticipantId);
@@ -268,7 +279,16 @@ public class AnAnalyzer implements Analyzer  {
 		}
 		
 	}
-	
+	void waitForParticipantLogsToBeProcessed() {
+		try {
+//			difficultyPredictionThread.join();
+			difficultyEventProcessor.getDifficultyPredictionThread().join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	/* (non-Javadoc)
 	 * @see analyzer.Analyzer#processParticipant(java.lang.String)
 	 */
@@ -373,16 +393,17 @@ public class AnAnalyzer implements Analyzer  {
 		}
 
 		difficultyEventProcessor.commandProcessingStopped();
+		waitForParticipantLogsToBeProcessed();
 
 
 //		pendingPredictionCommands.add(new AnEndOfQueueCommand());
-		try {
-//			difficultyPredictionThread.join();
-			difficultyEventProcessor.getDifficultyPredictionThread().join();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		try {
+////			difficultyPredictionThread.join();
+//			difficultyEventProcessor.getDifficultyPredictionThread().join();
+//		} catch (InterruptedException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 		processBrowserHistoryOfFolder(participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/" + BROWSER_FOLDER);
 
 		notifyFinishParticipant(aParticipantId, aParticipantFolder);
@@ -607,7 +628,7 @@ public class AnAnalyzer implements Analyzer  {
 		DifficultyPredictionSettings.setReplayMode(true);
 
 		OEFrame frame = ObjectEditor.edit(AnAnalyzer.getInstance());
-		frame.setSize(550, 200);
+		frame.setSize(550, 450);
 		
 	}
 

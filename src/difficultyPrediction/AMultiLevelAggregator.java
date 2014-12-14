@@ -129,13 +129,13 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	}
 	@Row(1)
 	@PreferredWidgetClass(JTextArea.class)
-	@ComponentHeight(50)
+	@ComponentHeight(100)
 	public String getPredictions() {
 		return predictionsBuffer.toString();
 	}
 	@Row(2)
 	@PreferredWidgetClass(JTextArea.class)
-	@ComponentHeight(50)
+	@ComponentHeight(100)
 
 	public String getRatios() {
 		return commandsBuffer.toString();

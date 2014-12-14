@@ -25,7 +25,7 @@ import edu.cmu.scs.fluorite.viewpart.HelpViewPart;
 
 public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnable{
 	public static final int NUM_PENDING_SEGMENTS = 4;
-	public static final int NUM_PENDING_COMMANDS = 4096;
+	public static final int NUM_PENDING_COMMANDS = 40096;
 //			NUM_PENDING_SEGMENTS*ADisjointDiscreteChunks.DEFAULT_IGNORE_NUM;
 	BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue(NUM_PENDING_COMMANDS);
 //	BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue();
@@ -54,12 +54,15 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 		while (true) {
 			try {
 				newCommand = pendingCommands.take();
-				if (pendingCommands.size() > NUM_PENDING_COMMANDS) {
-					System.out.println("LARGe NUMBER OF BUFFERED COMMANDS");
-					
-				}
+				System.out.println ("Pending commands size" + pendingCommands.size());
+//				if (pendingCommands.size() > NUM_PENDING_COMMANDS) {
+//					System.err.printf("Number of commands > " + NUM_PENDING_COMMANDS  + "ending dfficulyty prediction");
+//					System.out.println("LARGe NUMBER OF BUFFERED COMMANDS");
+//					break;
+//					
+//				}
 				//System.out.println("Taken command:" + newCommand);
-				if(newCommand instanceof DifficulyStatusCommand) {
+				if(newCommand instanceof DifficulyStatusCommand && !DifficultyPredictionSettings.isReplayMode()) { // should handle this config
 					ServerConnection.getServerConnection().updateStatus(((DifficulyStatusCommand) newCommand).getStatus().toString());
 				}
 				if (newCommand instanceof AnEndOfQueueCommand) {// stop event 
@@ -77,7 +80,7 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 					!(newCommand instanceof DifficulyStatusCommand )) {
 					mediator.processEvent(newCommand);
 				} else if (!(newCommand instanceof PredictionCommand)){
-					System.out.println("Strange Command " + newCommand);
+					System.out.println("Ignoreing difficulty status Command " + newCommand);
 				} else {
 					String lastStatus = HelpViewPart.getStatusInformation();
 					final String currentStatus = getStatus((PredictionCommand) newCommand);
@@ -90,7 +93,8 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 						// need to display prediction, but this should be done
 						// on
 						// the UI thread
-						
+						// need to so this in listener
+						if (!DifficultyPredictionSettings.isReplayMode())
 						ServerConnection.getServerConnection().updateStatus(((PredictionCommand) newCommand).getName());
 						PlatformUI.getWorkbench().getDisplay()
 								.asyncExec(new Runnable() {
@@ -235,6 +239,13 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 	@Override
 	public void add(ICommand newCommand) {
 		try {
+			if (!(newCommand instanceof AnEndOfQueueCommand) && pendingCommands.size() > NUM_PENDING_COMMANDS -2) {
+				System.err.printf("Number of commands > " + NUM_PENDING_COMMANDS  + "ending dfficulyty prediction");
+				System.out.println("LARGe NUMBER OF BUFFERED COMMANDS");
+				return;
+//				break;
+				
+			}
 			pendingCommands.add(newCommand);
 			full = false;
 		} catch (IllegalStateException e) {

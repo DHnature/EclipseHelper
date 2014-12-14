@@ -207,7 +207,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		analyzerProcessor = new AnAnalyzerProcessor();
 		analyzer.addAnalyzerListener(analyzerProcessor);
 		OEFrame frame = ObjectEditor.edit(analyzer);
-		frame.setSize(550, 200);
+		frame.setSize(550, 275);
 		
 		JFrame qframe=new JFrame("Query V1.0");
 		qframe.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
