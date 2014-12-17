@@ -3,7 +3,7 @@ package analyzer.query;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum WhereOperations implements QueryOperations{
+public enum WhereOperations implements QueryOperation{
 	LESSTHAN("<",2),
 	LESSTHANEQUAL("<=",2),
 	GREATERTHAN(">",2),
@@ -11,13 +11,15 @@ public enum WhereOperations implements QueryOperations{
 	EQUAL("==",2),
 	NOTEQUAL("!=",2),
 	
-	/**For dominant and significant*/
-	IGNORE("except",1),
-	DOMINANT("dominant",1),
-	SIGNIFICANT("significant",1),
+	/**Can ignore many*/
+	IGNORE_ATTRIBUTE("except",Integer.MAX_VALUE),
 	
-	AND("and",0),
-	OR("or",0)
+	AND("and",2),
+	OR("or",2),
+	
+	MAX("max",1),
+	MIN("min",1)
+	
 	
 	;
 	public static final Map<String, WhereOperations> opmap=new HashMap<>();
@@ -59,5 +61,6 @@ public enum WhereOperations implements QueryOperations{
 		return opmap.get(operation.toLowerCase());
 		
 	}
+
 	
 }

@@ -8,12 +8,12 @@ import java.util.List;
 public class AQueryParser implements QueryParser{
 	//Index i in translatedInstruction will have a corresponding location at i in parameters
 	//the String[] in location i in parameters are the inputs for the instruction
-	List<QueryOperations> translatedInstructions;
+	List<QueryOperation> translatedInstructions;
 	List<String[]> parameters;
 	
 	public AQueryParser() {
 		parameters=new ArrayList<String[]>();
-		translatedInstructions=new ArrayList<QueryOperations>();
+		translatedInstructions=new ArrayList<QueryOperation>();
 		
 	}
 
@@ -42,16 +42,9 @@ public class AQueryParser implements QueryParser{
 	 * 
 	 * */
 	private List<String> parse(String query) {
-		List<String> instructions=new ArrayList<>();
-		//Split by space first
-		String[] splitBySpace=query.split(" ");
+		//split the instruction by space
+		List<String> instructions=new ArrayList<>(Arrays.asList(query.split(" ")));
 		
-		//Next, check for comma
-		for(int i=0;i<splitBySpace.length;i++) {
-			String[] splitByComma=splitBySpace[i].split(",");
-			instructions.addAll(Arrays.asList(splitByComma));
-			
-		}
 		//Remove all unnecessary elements
 		instructions.removeAll(Collections.singleton(""));
 		
@@ -61,7 +54,8 @@ public class AQueryParser implements QueryParser{
 	
 	/**Translate instruction string array to a list of instructions usable by the executor*/
 	private void translate(List<String> instructions) {
-	
+		//start building the tree
+		
 		
 		for(int i=0;i<instructions.size();i++) {
 			QueryKeyWords op=null;
@@ -90,23 +84,23 @@ public class AQueryParser implements QueryParser{
 	
 	//parse the select
 	private int parseSelect(List<String> instructions, int index) {
-		//add select to list of instructions
-		this.translatedInstructions.add(QueryOperation.SELECT);
-		this.parameters.add(new String[0]);
 		
-		this.translatedInstructions.add(QueryOperation.ATTRIBUTE);	
 		
-		List<String> attributes=new ArrayList<>();
 		while(index<instructions.size() && 
-				//Not a where operator or a query keyword
-				(isOperand(instructions.get(index)))
-				) {
+				//Is not a keyword like FROM, SELECT,WHERE
+				isOperationKeyWord(instructions.get(index))) {
 			
-			attributes.add(instructions.get(index));
+			//split by comma, checks whether 
+			List<String> split=Arrays.asList(instructions.get(index).split(","));
+			
+			//generate the tree
+			for(String s:split) {
+				
+				
+			}
+			
 			index++;
 		}
-		
-		this.parameters.add(attributes.toArray(new String[attributes.size()]));
 		
 		return --index;
 	}
@@ -166,9 +160,8 @@ public class AQueryParser implements QueryParser{
 		return --index;
 	}
 	
-	private boolean isOperand(String inst) {
-		return WhereOperations.getOperationFromString(inst)==null
-				&& QueryKeyWords.getOperationByStringName(inst)==null;
+	private boolean isOperationKeyWord(String inst) {
+		return QueryKeyWords.getOperationByStringName(inst) != null;
 		
 	}
 	
@@ -182,7 +175,7 @@ public class AQueryParser implements QueryParser{
 	}
 
 	@Override
-	public List<QueryOperations> fetchParsedInstructions() {
+	public List<QueryOperation> fetchParsedInstructions() {
 		return this.translatedInstructions;
 
 	}

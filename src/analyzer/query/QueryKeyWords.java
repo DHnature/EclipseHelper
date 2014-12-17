@@ -4,13 +4,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 //NOT CURRENTLY USED
-public enum QueryKeyWords implements QueryOperations{
+public enum QueryKeyWords implements QueryOperation{
 	
 	SELECT("select"),
 	FROM("from"),
 	WHERE("where"),
-	//pipe is only used during execution denote we are piping selection from query 1 as the data to be used for the outer query
-	PIPE(""),
+	IGNORE("ignore"),
+	LIMIT("limit"),
+	OFFSET("offset")
 	;
 	
 	public static final Map<String, QueryKeyWords> opmap=new HashMap<>();

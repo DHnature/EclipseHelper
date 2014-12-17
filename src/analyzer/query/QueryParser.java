@@ -6,7 +6,7 @@ public interface QueryParser {
 
 	public void parseQuery(String query);
 	
-	public List<QueryOperations> fetchParsedInstructions();
+	public List<QueryOperation> fetchParsedInstructions();
 	
 	public List<String[]> fetchParametersList();
 }

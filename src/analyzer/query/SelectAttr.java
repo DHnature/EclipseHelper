@@ -9,17 +9,18 @@ import java.util.Map;
  * */
 public enum SelectAttr {
 
-	EDIT("edit",null,null),//INSERTION+DELETION
-	DEBUG("debug","getDebugList","setDebugList"),
-	NAVIGATION("navigation","getNavigationList","setNavigationList"),
-	REMOVE("remove","getRemoveList","setRemoveList"),
-	FOCUS("focus","getFocusList","setFocusList"),
+	EDIT("edit",null),//INSERTION+DELETION
+	DEBUG("debug","DebugList"),
+	NAVIGATION("navigation","NavigationList"),
+	REMOVE("remove","RemoveList"),
+	FOCUS("focus","FocusList"),
 	
-	INSERTION("insertion","getInsertionList","setInsertionList"),
-	DELETION("deletion","getDeletionList","setDeletionList"),
+	INSERTION("insertion","InsertionList"),
+	DELETION("deletion","DeletionList"),
 	
-	PREDICTION("prediction","getPredictions","setPredictions"),
-	CORRECTION("correction","getPredictionCorrections","setPredictionCorrections")
+	PREDICTION("prediction","Predictions"),
+	CORRECTION("correction","PredictionCorrections"),
+	TIMESTAMP("timestamp","TimeStampList")
 	
 	;
 	
@@ -32,12 +33,11 @@ public enum SelectAttr {
 	}
 	
 	
-	private String name,getterName,setterName;
+	private String name,methodName;
 	
-	SelectAttr(String name,String getterName, String setterName) {
+	SelectAttr(String name,String methodName) {
 		this.name=name;
-		this.getterName=getterName;
-		this.setterName=setterName;
+		this.methodName=methodName;
 		
 	}
 	
@@ -55,12 +55,12 @@ public enum SelectAttr {
 	}
 	
 	public String getGetterName() {
-		return this.getterName;
+		return "get"+this.methodName;
 		
 	}
 	
 	public String getSetterName(){
-		return this.setterName;
+		return "set"+this.methodName;
 		
 	}
 	

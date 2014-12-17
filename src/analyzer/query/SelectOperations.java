@@ -3,12 +3,11 @@ package analyzer.query;
 import java.util.HashMap;
 import java.util.Map;
 
-public enum SelectOperations implements QueryOperations{
+public enum SelectOperations implements QueryOperation{
 
 	DOMINANT("dominant"),
-	IGNOREPARTICIPANT("ignore participant"),
-
-
+	SIGNIFICANT("significant"),
+	
 	;
 	public static final Map<String, SelectOperations> opmap=new HashMap<>();
 
