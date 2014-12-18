@@ -7,6 +7,7 @@ public enum SelectOperations implements QueryOperation{
 
 	DOMINANT("dominant"),
 	SIGNIFICANT("significant"),
+	ATTRIBUTE("attribute")
 	
 	;
 	public static final Map<String, SelectOperations> opmap=new HashMap<>();

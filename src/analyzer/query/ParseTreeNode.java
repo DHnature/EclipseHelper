@@ -1,7 +1,11 @@
 package analyzer.query;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public interface ParseTreeNode {
 	
@@ -9,139 +13,133 @@ public interface ParseTreeNode {
 	
 	public ParseTreeNode getChild(int index);
 	
-	public ParseTreeNode[] getChildren();
+	public List<ParseTreeNode> getChildren();
 	
 	public QueryOperation getOperation();
 }
 
 abstract class AbstractTreeNode implements ParseTreeNode{
-	List<ParseTreeNode> children;
+	private List<ParseTreeNode> children;
+	private QueryOperation op;
 	
 	
-	public AbstractTreeNode() {
+	public AbstractTreeNode(QueryOperation op) {
 		children=new ArrayList<>();
 	}
 	
 	@Override
-	public void addChildren(ParseTreeNode node) {
+	public final void addChildren(ParseTreeNode node) {
 		children.add(node);
 		
 	}
 
 	@Override
-	public ParseTreeNode getChild(int index) {
+	public final ParseTreeNode getChild(int index) {
 		return children.get(index);
 		
 	}
 
 	@Override
-	public ParseTreeNode[] getChildren() {
-		return children.toArray(new ParseTreeNode[children.size()]);
+	public final List<ParseTreeNode> getChildren() {
+		return new ArrayList<ParseTreeNode> (this.children);
 
 	}
 	
-	abstract public QueryOperation getOperation();
+	public final QueryOperation getOperation() {
+		return this.op;
+		
+	}
 	
 }
 
-//Same as the node for select
+//The root of the tree, also doubles as the node for the SELECT keyword
 class TreeRoot extends AbstractTreeNode{
+	private Set<String> ignoredParticipants;
 	
-	public TreeRoot(String[] ignoreParticipants) {
-		super();
+	public TreeRoot() {
+		super(QueryKeyWords.SELECT);
+		this.ignoredParticipants=new HashSet<String>();
 		
 		
 	}
-
-	@Override
-	public QueryOperation getOperation() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public void addIgnoredParticipants(String...participants) {
+		this.ignoredParticipants.addAll(Arrays.asList(participants));
+		
+	}
+	
+	public List<String> getIgnoredParticipants() {
+		return new ArrayList<String>(ignoredParticipants);
+		
 	}
 
+	
+}
+
+class KeyWordNode extends AbstractTreeNode{
+	public KeyWordNode(QueryOperation op) {
+		super(op);
+		
+	}
 	
 }
 
-class FromNode extends AbstractTreeNode{
-
-	@Override
-	public void addChildren(ParseTreeNode node) {
+class ExtraKeyWordNode extends KeyWordNode{
+	private int value;
+	
+	public ExtraKeyWordNode(QueryOperation op, int value) {
+		super(op);
+		this.value=value;
 		
-		
-	}
-
-	@Override
-	public QueryOperation getOperation() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
+	public int getExtraValue() {
+		return value;
+		
+	}
 	
 }
+
+
 
 class WhereNode extends AbstractTreeNode{
-
-	@Override
-	public void addChildren(ParseTreeNode node) {
-		// TODO Auto-generated method stub
+	
+	public WhereNode(QueryOperation op) {
+		super(op);
 		
-	}
-
-	@Override
-	public QueryOperation getOperation() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	
 }
 
-class ExtraNode extends AbstractTreeNode{
-
-	@Override
-	public void addChildren(ParseTreeNode node) {
-		// TODO Auto-generated method stub
+class StatementNode extends WhereNode{
+	public StatementNode(QueryOperation op) {
+		super(op);
 		
 	}
-
-	@Override
-	public QueryOperation getOperation() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
-	
-}
-
-class SelectKeyWordNode extends AbstractTreeNode{
-
-	@Override
-	public void addChildren(ParseTreeNode node) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public QueryOperation getOperation() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	
 }
 
 class AttributeNode extends AbstractTreeNode{
-
-	@Override
-	public void addChildren(ParseTreeNode node) {
-		// TODO Auto-generated method stub
+	
+	private Set<SelectAttr> attributes;
+	
+	public AttributeNode(SelectAttr...attr) {
+		super(SelectOperations.ATTRIBUTE);
+		attributes=new HashSet<SelectAttr>(Arrays.asList(attr));
 		
 	}
-
-	@Override
-	public QueryOperation getOperation() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public void addAttributes(SelectAttr... attr) {
+		attributes.addAll(Arrays.asList(attr));
+		
+	}
+	
+	public List<SelectAttr> getAttributes() {
+		return new ArrayList<SelectAttr>(attributes);
+		
 	}
 	
 	
