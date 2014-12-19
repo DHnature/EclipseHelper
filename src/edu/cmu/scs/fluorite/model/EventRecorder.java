@@ -889,6 +889,10 @@ public class EventRecorder {
 	public long getStartTimestamp() {
 		return mStartTimestamp;
 	}
+	// in replay mode
+	public void setStartTimeStamp(long newVal) {
+		mStartTimestamp = newVal;
+	}
 
 	public static String getUniqueMacroNameByTimestamp(long timestamp,
 			boolean autosave) {

@@ -19,6 +19,7 @@ import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;
+import edu.cmu.scs.fluorite.model.EventRecorder;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import analyzer.AParticipantTimeLine;
@@ -185,12 +186,16 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	}
 	public void startTimeStamp(long aStartTimeStamp) {
 		System.out.println("start time stamp:" + aStartTimeStamp);	
+		 EventRecorder.getInstance().setStartTimeStamp(aStartTimeStamp);
+
 //		currentTime = aStartTimeStamp;
 //		RatioFeatures aRatioFetaures = new ARatioFeatures();
 //		newRatios(aRatioFetaures);
 
 	}
+	// this seems to be called in addition to the previous pne
 	 void newStartTimeStamp(long aStartTimeStamp) {
+		 EventRecorder.getInstance().setStartTimeStamp(aStartTimeStamp);
 //		System.out.println("Extension**Difficulty Prediction Started");	
 		startTime = aStartTimeStamp;
 		System.out.println("New time stamp: " + startTime );
