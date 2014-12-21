@@ -57,6 +57,11 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		
 	}
 	
+	public void emptyTimeLine() {
+		this.participantToTimeLine=new HashMap<>();
+		
+	}
+	
 	@Override
 	public void newBrowseLine(String aLine) {
 		System.out.println("Browse line:" + aLine);

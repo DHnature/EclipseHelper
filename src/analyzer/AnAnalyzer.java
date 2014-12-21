@@ -5,48 +5,35 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Locale;
+import java.util.Set;
 import java.util.Vector;
-import java.util.concurrent.BlockingQueue;
 
 import javax.swing.JFileChooser;
 
-import org.joda.time.DateTime;
-
-import config.FactoriesSelector;
-import difficultyPrediction.ADifficultyPredictionPluginEventProcessor;
-import difficultyPrediction.ADifficultyPredictionRunnable;
-import difficultyPrediction.AnEndOfQueueCommand;
-import difficultyPrediction.DifficultyPredictionEventListener;
-import difficultyPrediction.DifficultyPredictionPluginEventProcessor;
-import difficultyPrediction.DifficultyPredictionRunnable;
-import difficultyPrediction.DifficultyPredictionSettings;
-import difficultyPrediction.Mediator;
-import difficultyPrediction.eventAggregation.AnEventAggregator;
-import difficultyPrediction.eventAggregation.EventAggregator;
-import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
-import difficultyPrediction.featureExtraction.RatioFeatures;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.util.LogReader;
-import trace.plugin.PluginThreadCreated;
-import util.annotations.Column;
-import util.annotations.Explanation;
 import util.annotations.Row;
 import util.annotations.Visible;
-import analyzer.ui.graphics.LineGraphComposer;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import bus.uigen.models.AFileSetterModel;
 import bus.uigen.models.FileSetterModel;
+import config.FactoriesSelector;
+import difficultyPrediction.ADifficultyPredictionPluginEventProcessor;
+import difficultyPrediction.DifficultyPredictionPluginEventProcessor;
+import difficultyPrediction.DifficultyPredictionSettings;
+import difficultyPrediction.Mediator;
+import difficultyPrediction.eventAggregation.EventAggregator;
+import difficultyPrediction.featureExtraction.RatioFeatures;
+import edu.cmu.scs.fluorite.commands.ICommand;
+import edu.cmu.scs.fluorite.util.LogReader;
 
 public class AnAnalyzer implements Analyzer  {
 	public static final String PARTICIPANT_DIRECTORY = "data/";
@@ -62,6 +49,7 @@ public class AnAnalyzer implements Analyzer  {
 	public static final String PARTICIPANT_INFORMATION_FILE = "Participant_Info.csv";
 	public static final int SEGMENT_LENGTH = 50;
 	public static final String ALL_PARTICIPANTS = "All";
+	public static final String IGNORE_KEYWORD="IGNORE";
 	static Hashtable<String, String> participants = new Hashtable<String, String>();
 	static long startTimeStamp;
 	List<List<ICommand>> nestedCommandsList;
@@ -191,37 +179,72 @@ public class AnAnalyzer implements Analyzer  {
 		//may d for discrete and s for sliding window
 
 //		scanIn.close();
-
+ 
+		//Now get all the participants in a list
+		List<String> participantList=new ArrayList<String>(Arrays.asList(participantId.split(" ")));
+		participantList.removeAll(Collections.singleton(""));
+		
 		System.out.println("Processing logs for: " + participantId);
 		List<String> participantIds = parameters.getParticipants().getChoices();
 		List<List<ICommand>> commandsList;
-		if (participantId.equals(ALL_PARTICIPANTS)) {
+		
+		if (participantList.get(0).equals(ALL_PARTICIPANTS)) {
+			boolean ignoreOn = false;
+			//Build the ignore list
+			if(participantList.size()>1 && participantList.get(1).equalsIgnoreCase(IGNORE_KEYWORD)) {
+				ignoreOn=true;
+				
+			}
+			
+			
 			notifyNewParticipant(ALL_PARTICIPANTS, null);
 			for (String aParticipantId:participantIds) {
-				if (aParticipantId.equals(ALL_PARTICIPANTS)) {
+				if (aParticipantId.equals(ALL_PARTICIPANTS) ||
+						(ignoreOn && participantList.contains(aParticipantId))) {
+					
 					continue;
 				}
-				// integrated analyzer
+		
 				processParticipant(aParticipantId);
-//				waitForParticipantLogsToBeProcessed();
 				
-
-// jason's code
-//				String aParticipanttFolder = participants.get(aParticipantId);
-//				commandsList = convertXMLLogToObjects(aParticipanttFolder);
-//				 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments,aParticipanttFolder);
 			}
 			
 			notifyFinishParticipant(ALL_PARTICIPANTS, null);
+			
 		} else {
 			String aParticipanttFolder = participants.get(participantId);
 			processParticipant(participantId);
-// jason's code, separator mediator
-//			commandsList =  convertXMLLogToObjects(aParticipanttFolder);
-//			DifficultyPredictionSettings.setRatiosFileName(aParticipanttFolder + "ratios.csv");
-//			processParticipant(participantId);
-//			 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments, aParticipanttFolder);
+
 		}
+		//old stuff, in case we need to revert 12/20/2014
+		
+//		if (participantId.equals(ALL_PARTICIPANTS)) {
+//			notifyNewParticipant(ALL_PARTICIPANTS, null);
+//			for (String aParticipantId:participantIds) {
+//				if (aParticipantId.equals(ALL_PARTICIPANTS)) {
+//					continue;
+//				}
+//				// integrated analyzer
+//				processParticipant(aParticipantId);
+////				waitForParticipantLogsToBeProcessed();
+//				
+//
+//// jason's code
+////				String aParticipanttFolder = participants.get(aParticipantId);
+////				commandsList = convertXMLLogToObjects(aParticipanttFolder);
+////				 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments,aParticipanttFolder);
+//			}
+//			
+//			notifyFinishParticipant(ALL_PARTICIPANTS, null);
+//		} else {
+//			String aParticipanttFolder = participants.get(participantId);
+//			processParticipant(participantId);
+//// jason's code, separator mediator
+////			commandsList =  convertXMLLogToObjects(aParticipanttFolder);
+////			DifficultyPredictionSettings.setRatiosFileName(aParticipanttFolder + "ratios.csv");
+////			processParticipant(participantId);
+////			 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments, aParticipanttFolder);
+//		}
 
 		logsLoaded = true;
 	}

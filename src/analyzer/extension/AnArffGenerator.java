@@ -64,8 +64,8 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 
 	//set to keep
 	//Is the user currently stuck
-	private boolean isStuck;
-
+	private boolean started;
+	
 	private boolean all;
 
 	private Analyzer analyzer;
@@ -73,7 +73,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 	//set the path of the arff file
 	public AnArffGenerator(Analyzer analyzer) {
 		this.analyzer=analyzer;
-		this.isStuck=false;
+		this.started=false;
 		this.ratios=new LinkedList<RatioFeatures>();
 
 		arffWriter=new AnArffGenerator.ArffWriter();
@@ -88,6 +88,14 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 	@Override
 	public void newParticipant(String anId, String aFolder) {
 		System.out.println("Extension**New Participant:" + anId);
+		//if haven't started before empty the participantTimeline
+		if(!this.started) {
+			super.emptyTimeLine();
+			this.started=true;
+			
+		}
+		
+		
 		participantTimeLine = new AParticipantTimeLine();
 		participantToTimeLine.put(anId, participantTimeLine );
 
@@ -122,20 +130,24 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 		//and the stop signal aka aId of All and aFolder of null is recieved.
 		if(all && aId.equals("All") && aFolder==null) {
 			//write the ratios out to arfffile only at the end or else there will be duplicates
-			writeToArff(all);
+			writeToArff(all,aId);
 			
 			this.all=false;
 			//stop the writer
 			arffWriter.stop();
 
+			this.started=false;
 			//if not all then just stop the writer.
 		} else if(!all) {
 			//write the ratios out to arfffile
-			writeToArff(all);
+			writeToArff(all,aId);
 			 
 			arffWriter.stop();
 
+			this.started=false;
 		}
+		
+		
 	}
 
 	/**Prep arff file method, called by newParticipant Method*/
@@ -207,13 +219,15 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 
 	}
 
-	private void writeToArff(boolean all) {
+	private void writeToArff(boolean all, String aId) {
 		if(all) {
 			//for each participant
 			for(Map.Entry<String, ParticipantTimeLine> e:super.participantToTimeLine.entrySet()) {
 				//for each participant's data points
 
 				ParticipantTimeLine p=e.getValue();
+				this.arffWriter.writeToArffFile("%Participant"+e.getKey());
+				this.arffWriter.writeNewLine();
 				outputRatios(p);
 
 
