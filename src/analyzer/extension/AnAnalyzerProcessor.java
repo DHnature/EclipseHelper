@@ -172,7 +172,6 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	@Override
 	public void newRatios(RatioFeatures newVal) {
 		insertEntriesForPreviousTimeStamp();
-		
 		currentTime = startTime + newVal.getSavedTimeStamp();
 		participantTimeLine.getTimeStampList().add(currentTime);
 		participantTimeLine.getDebugList().add(newVal.getDebugRatio());
@@ -182,7 +181,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		participantTimeLine.getNavigationList().add(newVal.getNavigationRatio());
 		participantTimeLine.getRemoveList().add(newVal.getRemoveRatio());
 		participantTimeLine.getWebLinks().add(null);
-		System.out.println("Extension**New Ratios:" + newVal + " at time:" + (new Date(currentTime)).toString());		
+		System.err.println("Extension**New Ratios:" + newVal + " at time:" + (new Date(currentTime)).toString());		
 	}
 	public void startTimeStamp(long aStartTimeStamp) {
 		System.out.println("start time stamp:" + aStartTimeStamp);	
@@ -198,8 +197,8 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		 EventRecorder.getInstance().setStartTimeStamp(aStartTimeStamp);
 //		System.out.println("Extension**Difficulty Prediction Started");	
 		startTime = aStartTimeStamp;
-		System.out.println("New time stamp: " + startTime );
-		System.out.println ("New date:" + new Date(startTime));
+		//System.out.println("New time stamp: " + startTime );
+		//System.out.println ("New date:" + new Date(startTime));
 
 		RatioFeatures aRatioFetaures = new ARatioFeatures();
 		newRatios(aRatioFetaures);

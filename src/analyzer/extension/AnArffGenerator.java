@@ -28,7 +28,7 @@ import edu.cmu.scs.fluorite.commands.PredictionCommand;
 /**Class that generates Arff Files from the input ratios via difficulty listener event callbacks and
  * new predictions.
  * <p>
- * Instructions:
+ * Instructions:<br>
  * 1. To ins
  * 
  * @author wangk1
@@ -78,6 +78,9 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 
 		arffWriter=new AnArffGenerator.ArffWriter();
 
+		//register the event listeners
+		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
+		DifficultyRobot.getInstance().addPluginEventEventListener(this);
 	}
 
 
@@ -106,10 +109,6 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 			prep();
 		}
 
-		if(aFolder!= null) {
-			DifficultyRobot.getInstance().addPluginEventEventListener(this);
-			DifficultyRobot.getInstance().addRatioFeaturesListener(this);
-		}
 	}
 
 	/***/
