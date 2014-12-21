@@ -133,7 +133,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 		} else if(!all) {
 			//write the ratios out to arfffile
 			writeToArff(all);
-			
+			 
 			arffWriter.stop();
 
 		}
@@ -183,7 +183,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 
 	/**Find the right name for the file if no name is specified by {@link #setArffFilePath(String)}*/
 	private String findRightFileName() {
-		int i=2010;
+		int i=0;
 
 		//find the right file to write out to
 		while(Files.exists(Paths.get(DEFAULT_ARFF_PATH+i+".arff")) && !Files.notExists(Paths.get(DEFAULT_ARFF_PATH+i+".arff"))){
@@ -222,7 +222,8 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 
 			//one person
 		} else {
-			outputRatios(super.participantTimeLine);
+			ParticipantTimeLine l=super.participantTimeLine;
+			outputRatios(l);
 
 		}
 	}

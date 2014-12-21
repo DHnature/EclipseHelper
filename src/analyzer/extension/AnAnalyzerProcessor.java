@@ -51,7 +51,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		participantToTimeLine.put(anId, participantTimeLine );
 		
 		if(aFolder!= null) {
-			DifficultyRobot.getInstance().addPluginEventEventListener(this);	
+			DifficultyRobot.getInstance().addPluginEventEventListener(this);
 			DifficultyRobot.getInstance().addRatioFeaturesListener(this);
 		}
 		
@@ -78,9 +78,9 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	}
 	@Override
 	public void newBrowseEntries(Date aDate, String aSearchString, String aURL) {
-		System.out.println("Browse Date:" + aDate);
-		System.out.println("Search string:" + aSearchString);
-		System.out.println("Search string:" + aURL);
+//		System.out.println("Browse Date:" + aDate);
+//		System.out.println("Search string:" + aSearchString);
+//		System.out.println("Search string:" + aURL);
 		lastWebLink = new AWebLink(aSearchString, aURL);
 		long aTimeStamp = aDate.getTime();
 		int anIndex = participantTimeLine.getIndexBefore(aTimeStamp);
@@ -228,6 +228,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	@Override
 	public void finishParticipant(String anId, String aFolder) {
 		// TODO Auto-generated method stub
+		
 		
 	}
 

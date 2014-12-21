@@ -7,6 +7,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import weka.filters.unsupervised.attribute.AddNoise;
+
 public class AQueryParser implements QueryParser{
 	//Index i in translatedInstruction will have a corresponding location at i in parameters
 	//the String[] in location i in parameters are the inputs for the instruction
@@ -31,8 +33,9 @@ public class AQueryParser implements QueryParser{
 		//create the root node
 		TreeRoot root=new TreeRoot();
 		
+		InstIter insIterator=new AnInsIter(instructions);
 		//translate into instruction usable by executor
-		translate(instructions,root);
+		translate(insIterator,root);
 		
 		//cache the newly created tree
 		
@@ -60,29 +63,29 @@ public class AQueryParser implements QueryParser{
 	}
 	
 	/**Translate instruction string array to a list of instructions usable by the executor*/
-	private void translate(List<String> instructions,ParseTreeNode root) {
+	private void translate(InstIter instructions,ParseTreeNode root) {
 		//start building the tree
 		
-		
-		for(int i=0;i<instructions.size();i++) {
-			QueryKeyWords op=null;
+		QueryKeyWords op=null;
+		while(!instructions.atEnd()) {
 			
-			//cycle through the instruction until we reach the next keyword.
-			if((op=QueryKeyWords.getOperationByStringName(instructions.get(i))) == null) {
+			
+			//cycle through the instruction until we reach the next keyword. Note that .next returns curr value and then moves to next index
+			if((op=QueryKeyWords.getOperationByStringName(instructions.next())) == null) {
 				continue;
 				
 			}
 			
-			//The instruction is an operation, increment to next instruction
+			
 			switch(op) {
 			case SELECT:
-				i=parseSelect(instructions, ++i,root);
+				parseSelect(instructions, root);
 				break;
 			case FROM:
 				//i=parseFrom(instructions, i++);
 				break;
 			case WHERE:
-				i=parseWhere(instructions, ++i,root);
+				parseWhere(instructions, root);
 				break;
 			default:
 			}
@@ -92,15 +95,14 @@ public class AQueryParser implements QueryParser{
 	}
 	
 	//parse the select portions of the string query
-	private int parseSelect(List<String> instructions, int index, ParseTreeNode parent) {
+	private void parseSelect(InstIter instructions, ParseTreeNode parent) {
 		Set<SelectAttr> attributes=new HashSet<SelectAttr>();
 		
-		while(index<instructions.size() && 
-				//Is not a keyword like FROM, SELECT,WHERE
-				isOperationKeyWord(instructions.get(index))) {
+		while( !instructions.atEnd() &&//Is not a keyword like FROM, SELECT,WHERE
+				isNotOperationKeyWord(instructions.current())) {
 			
 			//split by comma, checks whether 
-			List<String> split=Arrays.asList(instructions.get(index).split(","));
+			List<String> split=Arrays.asList(instructions.current().split(","));
 			split.removeAll(Collections.singleton(""));
 			
 			
@@ -126,13 +128,13 @@ public class AQueryParser implements QueryParser{
 				
 			}
 			
-			index++;
+			//finally increment instruction
+			instructions.next();
 		}
 		
 		//If there are attributes add them to the node
 		parent.addChildren(new AttributeNode(attributes.toArray(new SelectAttr[attributes.size()])));
 		
-		return --index;
 	}
 	
 	//Not implemented
@@ -142,63 +144,75 @@ public class AQueryParser implements QueryParser{
 	}
 	
 	//Parse the where statement portion. Note index is 1 after the where
-	private int parseWhere(List<String> instructions, int index,ParseTreeNode parent) {
+	private void parseWhere(InstIter instructions,ParseTreeNode parent) {
 		
 		//everything here is going to be tacked on to the where node
 		KeyWordNode whereNode=new KeyWordNode(QueryKeyWords.WHERE);
 		
-		WhereOperations op;
-		for(;index<instructions.size() &&
-				//not a query keyword
-				(QueryKeyWords.getOperationByStringName(instructions.get(index)) == null);index++) {
+		//keep going through the instructions until something ends the loop, such as reaching another query keyword
+		while(!instructions.atEnd()) {
 			
-			//somekind of WhereOperation keyword
-			if((op=WhereOperations.getOperationFromString(instructions.get(index))) != null) {
-				
-				String[] operands=null;
-				
-				//2 operands, only for AND and OR, do we record the left and right 2	
-				if(op.numOperand()==2){
-					
-					
-					operands=new String[2];
-					operands[0]=instructions.get(index-1);
-					operands[1]=instructions.get(++index);
-					
-				//Infinity, add special infinity node
-				} else if(op.numOperand()==Integer.MAX_VALUE){
-					index++;
-//					for(;isOperand(instructions.get(index));index++) {
-//						//TODO: FINISH IMPLEMENTATION
-//						
-//					}
-					
-				}
-				
-				this.parameters.add(operands);
+			//use iterator to seek out location of next where operation
+			WhereOperations op=getNextWhereOperation(instructions);
 			
+			//if null, we must return
+			if(op==null) return;
 			
-			} else {
-				
-				
-			}
+			//now add the new node to the tree
+			addNewWhereNode(whereNode, op, instructions);
+			
+			//next
+			instructions.next();
 			
 		}
 		
 		//finally add the where node to the parent
 		parent.addChildren(whereNode);
+	
 		
-		return --index;
 	}
 	
-//	private ParseTreeNode createNode(List<String>instructions, int index, WhereOperations op) {
-//		
-//		
-//		
-//		
-//	}
+	private WhereOperations getNextWhereOperation(InstIter instructions) {
+		
+		WhereOperations op;
+		while(!instructions.atEnd() &&
+				//not a query keyword
+				isNotOperationKeyWord(instructions.current())) {
+			
+			//somekind of WhereOperation keyword, immediately return the new instruction
+			if((op=WhereOperations.getOperationFromString(instructions.current())) != null) {
+				return op;
+				
+			
+			//maybe in the form of operation(parameters). It may look like operation(paran...) or operation(
+			} else {
+				List<String> split=Arrays.asList(instructions.current().split("("));
+				split.removeAll(Collections.singleton(""));
+				
+				//found next instruction
+				if((op=WhereOperations.getOperationFromString(split.get(0))) != null) {
+					return op;
+					
+				}
+			}
+			
+			instructions.next();
+		}
+		
+		//None found we are at the end or it is a keyword, roll back one so this instruction is not wasted when
+		//next() is called
+		instructions.prev();
+		
+		return null;
+		
+	}
+
+	private void addNewWhereNode(ParseTreeNode parent, WhereOperations op, InstIter instructions) {
+		
+		
+	}
 	
-	private boolean isOperationKeyWord(String inst) {
+	private boolean isNotOperationKeyWord(String inst) {
 		return QueryKeyWords.getOperationByStringName(inst) != null;
 		
 	}
