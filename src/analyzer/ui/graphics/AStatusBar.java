@@ -189,6 +189,12 @@ public class AStatusBar extends JPanel implements StatusBar {
 //		predict
 		
 	}
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		System.err.println("Reset not implemented");
+		
+	}
 
 	@Override
 	public void newAggregatedStatus(int aStatus) {

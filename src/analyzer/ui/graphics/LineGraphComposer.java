@@ -20,6 +20,7 @@ public class LineGraphComposer {
 	// TODO: Scalable graph
 	static LineGraph lineGraph;
 	static StatusBar statusBar;
+	static PlayAndRewindCounter counter;
 	
 	public static StatusBar getStatusBar() {
 		if (statusBar == null) {
@@ -36,7 +37,9 @@ public class LineGraphComposer {
 		JFrame frame = new JFrame();
 		RatioFileReader reader = new ARatioFileReader();
 
-		PlayAndRewindCounter counter = new APlayAndRewindCounter(reader);
+//		PlayAndRewindCounter counter = new APlayAndRewindCounter(reader);
+		counter = new APlayAndRewindCounter(reader);
+
 		ALineGraph aLineGraph = new ALineGraph(counter, reader);
 		lineGraph = aLineGraph;
 		AStatusBar aStatusBar = new AStatusBar(counter, reader);

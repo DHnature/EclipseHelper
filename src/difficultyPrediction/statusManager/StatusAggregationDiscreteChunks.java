@@ -20,7 +20,7 @@ public class StatusAggregationDiscreteChunks implements StatusManagerStrategy{
 		this.manager = manager;
 	}
 	int numberOfPredictionsForDominantStatus() {
-		return APredictionParameters.getInstance().getStatusesAggregated();
+		return APredictionParameters.getInstance().getStatusAggregated();
 	}
 	public static int statusStringToInt(String aStatus) {
 		if (aStatus.equals(STUCK))

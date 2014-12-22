@@ -6,11 +6,12 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeListener;
 import java.util.List;
 
+import analyzer.Resettable;
 import difficultyPrediction.featureExtraction.RatioFeaturesListener;
 import difficultyPrediction.statusManager.StatusListener;
 
 public interface LineGraph extends MouseListener, PropertyChangeListener,
-		RatioFeaturesListener {
+		RatioFeaturesListener, Resettable {
 	public void paint(Graphics g);
 
 	public void drawDataPoints(Graphics g2, Color color, List<Double> ratios);

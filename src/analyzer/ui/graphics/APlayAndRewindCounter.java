@@ -178,5 +178,11 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	public void setSize(int size) {
 		displaySize = size;
 	}
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		System.err.println("Reset not implemented");
+		
+	}
 
 }

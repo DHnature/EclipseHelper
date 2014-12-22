@@ -5,21 +5,21 @@ import java.util.Date;
 import edu.cmu.scs.fluorite.model.EventRecorder;
 
 public class ARatioFeatures implements RatioFeatures {
-	 double editRatio;
-	 double debugRatio;
-	 double navigationRatio;
-	 double focusRatio;
-	 double removeRatio;
-	 double exceptionsPerRun;
-	 double insertionRatio;
-	 double deletionRatio;
-	 double insertionTimeRatio;
-	 double deletionTimeRatio;
-	 double debugTimeRatio;
-	 double navigationTimeRatio;
-	 double focusTimeRatio;
-	 double removeTimeRatio;
-	 long savedTimeStamp;
+	protected double editRatio;
+	protected double debugRatio;
+	protected double navigationRatio;
+	protected  double focusRatio;
+	protected double removeRatio;
+	protected double exceptionsPerRun;
+	protected double insertionRatio;
+	protected double deletionRatio;
+	protected double insertionTimeRatio;
+	protected double deletionTimeRatio;
+	protected double debugTimeRatio;
+	protected  double navigationTimeRatio;
+	protected double focusTimeRatio;
+	protected double removeTimeRatio;
+	protected long savedTimeStamp;
 	 
 	 public ARatioFeatures() {
 		 

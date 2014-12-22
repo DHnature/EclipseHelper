@@ -9,7 +9,7 @@ public interface PredictionParameters {
 	public void setSegmentLength(int newVal);
 	public int getStartupLag() ;
 	public void setStartupLag(int startupLag) ;
-	public int getStatusesAggregated() ;
-	public void setStatusesAggregated(int statusesAggregated) ;
+	public int getStatusAggregated() ;
+	public void setStatusAggregated(int statusesAggregated) ;
 
 }

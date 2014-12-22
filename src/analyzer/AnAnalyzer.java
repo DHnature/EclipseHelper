@@ -166,7 +166,7 @@ public class AnAnalyzer implements Analyzer  {
 	public void syncLoadLogs() {
 		FactoriesSelector.configureFactories();
 		String participantId = parameters.getParticipants().getValue();
-		String numberOfSegments = "" + parameters.getSegmentLength();
+		String numberOfSegments = "" + parameters.getPredictionParameters().getSegmentLength();
 
 		
 		if(participantId.equalsIgnoreCase(""))
@@ -489,7 +489,7 @@ public class AnAnalyzer implements Analyzer  {
 	 */
 	@Override
 	@Row(1)
-	public AnAnalyzerParametersSelector getParameters() {
+	public AnAnalyzerParametersSelector getAnalyzerParameters() {
 		return parameters;
 	}
 //	@Visible(false)

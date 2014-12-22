@@ -514,6 +514,13 @@ public class ALineGraph extends JPanel implements LineGraph {
     	return insertionList.size();
     }
 
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		System.err.println("Reset not implemented");
+		
+	}
+
 	
 
 	

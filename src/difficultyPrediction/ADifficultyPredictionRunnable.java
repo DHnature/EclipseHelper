@@ -50,7 +50,7 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 // 	}
  	
 	public void run() {
-		//PredictorConfigurer.configure(); // comment this out if do not want the OE UI
+		PredictorConfigurer.configure(); // comment this out if do not want the OE UI
 		while (true) {
 			try {
 				newCommand = pendingCommands.take();

@@ -3,6 +3,7 @@ package difficultyPrediction;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import util.annotations.Column;
+import util.annotations.ComponentWidth;
 import util.annotations.Row;
 
 public class APredictionParameters implements PredictionParameters{
@@ -11,8 +12,10 @@ public class APredictionParameters implements PredictionParameters{
 	int startupLag = 50;
 	int statusesAggregated = 5;
 	
-	@Row(1)
-	@Column(0)
+//	@Row(1)
+	@Row(0)
+	@Column(1)
+	@ComponentWidth(30)
 	public int getSegmentLength() {
 		return segmentLength;
 	}
@@ -21,18 +24,20 @@ public class APredictionParameters implements PredictionParameters{
 	}
 	@Row(0)
 	@Column(0)
+	@ComponentWidth(30)
 	public int getStartupLag() {
 		return startupLag;
 	}
 	public void setStartupLag(int startupLag) {
 		this.startupLag = startupLag;
 	}
-	@Row(2)
-	@Column(0)
-	public int getStatusesAggregated() {
+	@Row(0)
+	@Column(2)
+	@ComponentWidth(30)
+	public int getStatusAggregated() {
 		return statusesAggregated;
 	}
-	public void setStatusesAggregated(int statusesAggregated) {
+	public void setStatusAggregated(int statusesAggregated) {
 		this.statusesAggregated = statusesAggregated;
 	}
 	public static PredictionParameters getInstance() {
@@ -43,7 +48,7 @@ public class APredictionParameters implements PredictionParameters{
 	}
 	public static void createUI() {
 		OEFrame predictionFrame = ObjectEditor.edit(getInstance());
-		predictionFrame.setSize(300, 200);
+		predictionFrame.setSize(400, 100);
 	}
 
 }
