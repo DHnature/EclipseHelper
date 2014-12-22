@@ -2,6 +2,7 @@ package analyzer;
 
 import java.util.List;
 
+import config.PredictorConfigurer;
 import difficultyPrediction.APredictionParameters;
 import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.PredictionParameters;
@@ -84,6 +85,7 @@ public class AnAnalyzerParametersSelector /*extends APredictionParameters*/  {
 //	@Row(0)
 //	@Column(1)
 	@Row(1)
+	@Column(0)
 	public DynamicEnum<String> getParticipants() {
 		return participants;
 	}
@@ -132,13 +134,16 @@ public class AnAnalyzerParametersSelector /*extends APredictionParameters*/  {
 //			 analyzer.setNewRatioFiles(newRatioFiles);
 		DifficultyPredictionSettings.setNewRatioFiles(newRatioFiles);
 	}
-	@Row(2)
-	@Column(3)
+	@Row(1)
+	@Column(1)
 	public boolean isVisualizePrediction() {
 		return visualizePrediction;
 	}
-	public void setVisualizePrediction(boolean visualizePrediction) {
-		this.visualizePrediction = visualizePrediction;
+	public void setVisualizePrediction(boolean newVal) {
+//		if (newVal) {
+//			PredictorConfigurer.visualizePrediction();
+//		}
+		this.visualizePrediction = newVal;
 	}
 //	public static AnAnalyzerParametersSelector getInstance() {
 //		if (instance == null) {

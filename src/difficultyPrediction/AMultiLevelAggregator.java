@@ -23,6 +23,8 @@ import difficultyPrediction.statusManager.StatusListener;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 public class AMultiLevelAggregator implements MultiLevelAggregator{
+	static OEFrame oeFrame;
+
 	List<ICommand> commands = new ArrayList();
 	List<RatioFeatures> features = new ArrayList();
 	List<String> predictions = new ArrayList();
@@ -151,6 +153,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	
 	@Visible(false)
 	public static MultiLevelAggregator getInstance() {
+		
 		if (instance == null) {
 			instance = new AMultiLevelAggregator();
 			
@@ -159,7 +162,11 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	}
 	
 	public static void createUI() {
-		OEFrame oeFrame = ObjectEditor.edit(getInstance());
+		if (oeFrame != null) {
+			getInstance().reset();
+			return;
+		}
+		 oeFrame = ObjectEditor.edit(getInstance());
 		oeFrame.setSize(700, 500);
 	}
 
@@ -171,6 +178,12 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
 		propertyChangeSupport.addPropertyChangeListener(listener);
+		
+	}
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		System.err.println("Reset not implemented");
 		
 	}
 	

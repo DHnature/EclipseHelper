@@ -11,6 +11,7 @@ public class APredictionParameters implements PredictionParameters{
 	int segmentLength = 25;
 	int startupLag = 50;
 	int statusesAggregated = 5;
+	static OEFrame predictionFrame;
 	
 //	@Row(1)
 	@Row(0)
@@ -46,9 +47,23 @@ public class APredictionParameters implements PredictionParameters{
 		}
 		return instance;
 	}
+	
 	public static void createUI() {
-		OEFrame predictionFrame = ObjectEditor.edit(getInstance());
+//		OEFrame predictionFrame = ObjectEditor.edit(getInstance())
+		if (predictionFrame != null) {
+			instance.reset();
+			return;
+			
+		}
+		predictionFrame = ObjectEditor.edit(getInstance());
+
 		predictionFrame.setSize(400, 100);
+	}
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		System.err.println("Reset not implemented");
+		
 	}
 
 }

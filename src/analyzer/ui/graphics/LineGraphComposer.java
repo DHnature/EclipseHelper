@@ -21,6 +21,7 @@ public class LineGraphComposer {
 	static LineGraph lineGraph;
 	static StatusBar statusBar;
 	static PlayAndRewindCounter counter;
+	static JFrame frame;
 	
 	public static StatusBar getStatusBar() {
 		if (statusBar == null) {
@@ -32,9 +33,20 @@ public class LineGraphComposer {
 //	public static void setStatusBar(StatusBar statusBar) {
 //		LineGraphComposer.statusBar = statusBar;
 //	}
-
+	static void resetModels() {
+		counter.reset();
+		lineGraph.reset();
+		statusBar.reset();
+		counter.reset();
+	}
 	public static LineGraph  composeUI() {
-		JFrame frame = new JFrame();
+		if (frame != null) {
+			resetModels();
+			return lineGraph;
+		}
+//		JFrame frame = new JFrame();
+		 frame = new JFrame();
+
 		RatioFileReader reader = new ARatioFileReader();
 
 //		PlayAndRewindCounter counter = new APlayAndRewindCounter(reader);

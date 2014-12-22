@@ -26,6 +26,7 @@ import bus.uigen.ObjectEditor;
 import bus.uigen.models.AFileSetterModel;
 import bus.uigen.models.FileSetterModel;
 import config.FactoriesSelector;
+import config.PredictorConfigurer;
 import difficultyPrediction.ADifficultyPredictionPluginEventProcessor;
 import difficultyPrediction.DifficultyPredictionPluginEventProcessor;
 import difficultyPrediction.DifficultyPredictionSettings;
@@ -317,6 +318,9 @@ public class AnAnalyzer implements Analyzer  {
 	 */
 	@Override
 	public void processParticipant(String aParticipantId) {
+		if (parameters.isVisualizePrediction()) {
+			PredictorConfigurer.visualizePrediction();
+		}
 		String aParticipantFolder = participants.get(aParticipantId);
 //		notifyNewParticipant(aParticipantId);
 		String aFullParticipantOutputFolderName =participantsFolder.getText() + OUTPUT_DATA + aParticipantFolder + "/";

@@ -5,12 +5,15 @@ import org.eclipse.ui.PlatformUI;
 import util.annotations.Column;
 import util.annotations.ComponentWidth;
 import util.annotations.Row;
+import analyzer.Resettable;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import difficultyPrediction.ADifficultyPredictionRunnable;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;
 
-public class ABalloonCreator {
+public class ABalloonCreator implements Resettable{
+	static ABalloonCreator instance;
+	static OEFrame frame;
 	String status = "";
 	@Row(2)
 	@ComponentWidth(325)
@@ -53,14 +56,28 @@ public class ABalloonCreator {
 		setStatus("Use '+' instead of ',' to concatenate two strings with System");
 	}
 	public static void createUI() {
-		OEFrame frame = ObjectEditor.edit(new ABalloonCreator());
+		if (frame != null) {
+			instance.reset();
+			return;
+		}
+//		OEFrame frame = ObjectEditor.edit(new ABalloonCreator());
+		instance = new ABalloonCreator();
+	    frame = ObjectEditor.edit(instance);
+
 		frame.setSize(400, 150);
 
+	}
+	@Override
+	public void reset() {
+		// TODO Auto-generated method stub
+		System.err.println("Reset not implemented");
+		
 	}
 	public static void main (String[] args) {
 		createUI();
 		
 	}
+	
 	
 
 	
