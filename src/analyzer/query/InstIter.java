@@ -20,7 +20,7 @@ public interface InstIter extends Iterator<String>{
 	
 	public int getCurrIndex();
 	
-	public void insertAfterIndex(int index, List<String> newInst);
+	public void insertAfterIndex(int index, String... newInst);
 	
 	public void setIndex(int index);
 	

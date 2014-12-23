@@ -66,8 +66,8 @@ public class AnInsIter implements InstIter{
 	}
 
 	@Override
-	public void insertAfterIndex(int index, List<String> newInst) {
-		this.instructions.addAll(index+1, newInst);
+	public void insertAfterIndex(int index, String... newInst) {
+		this.instructions.addAll(index+1, Arrays.asList(newInst));
 		
 	}
 

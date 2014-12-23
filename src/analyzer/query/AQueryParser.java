@@ -149,17 +149,31 @@ public class AQueryParser implements QueryParser{
 		//everything here is going to be tacked on to the where node
 		KeyWordNode whereNode=new KeyWordNode(QueryKeyWords.WHERE);
 		
-		//keep going through the instructions until something ends the loop, such as reaching another query keyword
+		List<WhereOperations> ins=new ArrayList<>();
+		List<Integer> locations=new ArrayList<>();
+		//Find all the where Operations
 		while(!instructions.atEnd()) {
+			//TODO: Translate everything to WhereOperations first and then find the appropriate instructions
 			
-			//use iterator to seek out location of next where operation
-			WhereOperations op=getNextWhereOperation(instructions);
+			
+			WhereOperations op,before=null;
+			//use iterator to seek out location of next where operation. More specifically AND and ORS
+			while(!((op=getNextWhereOperation(instructions)) == WhereOperations.AND 
+					|| op == WhereOperations.OR
+					|| op == null)) {
+				
+				
+				before=op;
+			
+			}
 			
 			//if null, we must return
 			if(op==null) return;
 			
+			WhereOperations next=getNextWhereOperation(instructions);
+			
 			//now add the new node to the tree
-			addNewWhereNode(whereNode, op, instructions);
+			addNewWhereAndOrNode(whereNode, op, before, next, instructions);
 			
 			//next
 			instructions.next();
@@ -197,6 +211,9 @@ public class AQueryParser implements QueryParser{
 				
 				//found next instruction
 				if((op=WhereOperations.getOperationFromString(split.get(0))) != null) {
+					//insert ( back into the instructions
+					instructions.insertAfterIndex(instructions.getCurrIndex(), "(");
+					
 					return op;
 					
 				}
@@ -219,7 +236,9 @@ public class AQueryParser implements QueryParser{
 	 * @param op
 	 * @param instructions
 	 */
-	private void addNewWhereNode(ParseTreeNode parent, WhereOperations op, InstIter instructions) {
+
+	private void addNewWhereAndOrNode(ParseTreeNode parent, WhereOperations op, WhereOperations before,
+			WhereOperations next, InstIter instructions) {
 		
 		ParseTreeNode n=null;
 		switch(op.numOperand()) {
