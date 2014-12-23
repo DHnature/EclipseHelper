@@ -172,6 +172,12 @@ public class AQueryParser implements QueryParser{
 		
 	}
 	
+	/**Seek out the location of the next Where Operation. Returns if reached end of instructions or hit a QueryKeyWord.
+	 * (AKA. "FROM", "SELECT", etc.)
+	 * 
+	 * @param instructions
+	 * @return A WhereOperations enum
+	 */
 	private WhereOperations getNextWhereOperation(InstIter instructions) {
 		
 		WhereOperations op;
@@ -207,9 +213,103 @@ public class AQueryParser implements QueryParser{
 		
 	}
 
+	/**Parse the instruction for the WhereOperation's operands
+	 * 
+	 * @param parent
+	 * @param op
+	 * @param instructions
+	 */
 	private void addNewWhereNode(ParseTreeNode parent, WhereOperations op, InstIter instructions) {
 		
+		ParseTreeNode n=null;
+		switch(op.numOperand()) {
 		
+		case 1:
+			n=handle1OperandWhere(parent,op,instructions);
+			break;
+		case 2:
+			n=handle2OperandWhere(parent,op,instructions);
+			break;
+		case Integer.MAX_VALUE:
+			
+			break;
+		default:
+		}
+		
+		if(n!=null) {
+			//attach to tree
+			
+			
+		}
+		
+	}
+	
+	/**Handle Where Operations that only takes in 1 operation. Such as MAX(Attribute).
+	 * <p>
+	 * Note that the instruction iterator is at the location of said operation.
+	 * <p> Current WhereNodes with 1 Operand:<br>
+	 * 1. Max <br>
+	 * 2. Min <br>
+	 * 
+	 * @param parent
+	 * @param op
+	 * @param instructions
+	 */
+	private ParseTreeNode handle1OperandWhere(ParseTreeNode parent, WhereOperations op, InstIter instructions) {
+		
+		StatementNode node=null;
+		switch(op) {
+		//max and
+		case MAX:
+		case MIN:
+		//the one following should be the operand, however it can also be (. So must concat next two together
+			instructions.next();
+			String operand=instructions.next();
+			
+			if(operand.equals("(")) {
+				operand=instructions.current();
+				
+			}
+			
+			SelectAttr a=SelectAttr.getAttributeFromString(operand);
+			
+			//maybe because the operand is split and it still has a ( or )
+			if(a==null) {
+				List<String> s=new ArrayList<>(Arrays.asList(operand.split("[(]|[)]")));
+				
+				s.removeAll(Collections.singleton(""));
+				
+				a=SelectAttr.getAttributeFromString(s.get(0));
+			
+				if(a==null) break;
+			}
+			
+			//create the new node
+			node=new StatementNode(op,a);
+			
+		break;
+		default:
+		}
+		
+		return node;
+	}
+	
+	private ParseTreeNode handle2OperandWhere(ParseTreeNode parent, WhereOperations op, InstIter instructions) {
+		StatementNode node=null;
+		
+		switch(op) {
+		
+		case AND:
+		case OR:
+			
+			break;
+			//regular case, just find the 2 attributes to the left and right
+		default:
+			
+		
+		}
+	
+		return node;
 	}
 	
 	private boolean isNotOperationKeyWord(String inst) {
@@ -223,10 +323,12 @@ public class AQueryParser implements QueryParser{
 	public static void main(String[] args) {
 		//new AQueryParser().parseQuery("SELECT attribute ,attribute2 two FROM SOMETHING WHERE a > b OR a == b DOMINANT attriubte");
 		
-		String test="max( attribute)";
+		String test="(attribute)";
 		
-		System.out.println(Arrays.asList((test.split(" ")[1]).split("[(]")));
+		List<String> a=Arrays.asList(test);
+		a.removeAll(Collections.singleton("(attribute)"));
 		
+		System.out.println(a);
 		
 	}
 

@@ -113,12 +113,23 @@ class WhereNode extends AbstractTreeNode{
 }
 
 class StatementNode extends WhereNode{
-	public StatementNode(QueryOperation op) {
+	private Set<SelectAttr> operands;
+	
+	public StatementNode(QueryOperation op,SelectAttr ... operands) {
 		super(op);
+		this.operands=new HashSet<SelectAttr>(Arrays.asList(operands));
 		
 	}
 	
+	public void addOperands(SelectAttr... op) {
+		this.operands.addAll(Arrays.asList(op));
+		
+	}
 	
+	public List<SelectAttr> getAttributes() {
+		return new ArrayList<SelectAttr>(operands);
+		
+	}
 	
 }
 
