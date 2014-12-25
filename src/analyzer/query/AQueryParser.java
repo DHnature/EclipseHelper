@@ -42,14 +42,15 @@ public class AQueryParser implements QueryParser{
 		//cache the newly created tree
 
 		insIterator.setIndex(7);
-		getNextWhereOperation(insIterator); 
 
+		System.out.println(getNextWhereOperation(insIterator));
+		insIterator.next();
 		System.out.println(getNextWhereOperation(insIterator));
 		System.out.println(instructions);
 
 	}
 
-	/**Parse into blocks of instruction. Split the whole string by space and commas
+	/**Parse into blocks of instruction in the instructions iterator. Split the whole string by space and commas
 	 * 
 	 * 
 	 * */
@@ -384,7 +385,7 @@ public class AQueryParser implements QueryParser{
 
 		AQueryParser parser=new AQueryParser();
 
-		parser.parseQuery("SELECT attribute, attribute2 FROM SOMETHING WHERE <(advs)");
+		parser.parseQuery("SELECT attribute, attribute2 FROM SOMETHING WHERE <(advs) AND MAX");
 
 	}
 
