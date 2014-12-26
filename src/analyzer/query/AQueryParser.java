@@ -168,11 +168,11 @@ public class AQueryParser implements QueryParser{
 		//everything here is going to be tacked on to the where node
 		KeyWordNode whereNode=new KeyWordNode(QueryKeyWords.WHERE);
 
-		List<WhereOperations> ins=new ArrayList<>();
+		List<QueryOperation> ins=new ArrayList<>();
 		List<Integer> locations=new ArrayList<>();
 
 		//Find all the where Operations in the instructions
-		WhereOperations op=null;
+		QueryOperation op=null;
 		
 		while((op=getNextWhereOperation(instructions))!=null) {
 
@@ -185,7 +185,7 @@ public class AQueryParser implements QueryParser{
 		}
 		
 		//Now find the and's or or's and start constructing the WHERE parse tree. Attach to WhereNode
-		buildWhereTree(whereNode,instructions,ins,locations,0);
+		buildWhereTree(whereNode,instructions,ins,locations,0,ins.size());
 
 		//finally add the where node to the parent
 		parent.addChildren(whereNode);
@@ -199,15 +199,17 @@ public class AQueryParser implements QueryParser{
 	 * @param instructions
 	 * @return A WhereOperations enum
 	 */
-	private WhereOperations getNextWhereOperation(InstIter instructions) {
+	private QueryOperation getNextWhereOperation(InstIter instructions) {
 
-		WhereOperations op;
+		QueryOperation op;
 		while(!instructions.atEnd() &&
 				//not a query keyword
 				isNotOperationKeyWord(instructions.current())) {
 
 			//somekind of WhereOperation keyword, immediately return the new instruction
-			if((op=WhereOperations.getOperationFromString(instructions.current())) != null) {
+			if((op=WhereOperations.getOperationFromString(instructions.current())) != null ||
+					//or if it is a syntax word like ( ) or ,
+					(op=QuerySyntax.getOperationByStringName(instructions.current())) != null) {
 				return op; 
 
 			} 
@@ -219,76 +221,85 @@ public class AQueryParser implements QueryParser{
 
 	}
 
-	/**Get the location of the closing parenthesis. Starts from the current index of the instructions list
-	 * 
-	 * @param instructions
-	 * @return
-	 */
-	private int getLocationOfClosingParenthesis(InstIter instructions) {
-		//caches the current index
-		int current=instructions.getCurrIndex();
-
-		int location=Integer.MIN_VALUE;
-
-		//Number of ( encountered while going to the ). Must be zero when the closing parenthesis is found
-		int openParCount=0;
-		while(!instructions.atEnd()) {
-			String curr=instructions.next();
-
-			if(curr.equals(")")) {
-				openParCount--;
-
-				if(openParCount==0) {
-					location=instructions.getCurrIndex()-1;
-					break;
-
-				}
-
-			} else if(curr.equals("(")) {
-				openParCount++;
-
-			}
-
-		}
-
-		//return the iterator to its normal position
-		instructions.setIndex(current);
-
-		return location;
-	}
-
 	/**Build the ParseTree's WHERE nodes with the instructions
 	 * 
 	 * @param parent
 	 * @param instructions
 	 * @param whereOps
 	 * @param locations
-	 * @param where in the whereOps list to start
-	 * @param where in the whereOps array to end
+	 * @param start where in the whereOps list to start
+	 * @param end where in the whereOps list to start
 	 */
-	private ParseTreeNode buildWhereTree(ParseTreeNode parent,InstIter instructions
-			,List<WhereOperations> whereOps,List<Integer> locations,int level) {
+	private void buildWhereTree(ParseTreeNode parent,InstIter instructions
+			,List<QueryOperation> whereOps,List<Integer> locations, int start, int end) {
 		
 		//TODO: Make the ( and ) and , syntax characters and in whereOps array
 		
+		//The First node should be deeper down in the tree if the first is a (
+		int oldStart=Integer.MIN_VALUE;
+		if(whereOps.get(start) == QuerySyntax.OPENPAREN) {
+			oldStart=start;
+			//new start is where the closing parenthesis is. This will be the first child of the parent.
+			//The ParseTree starting with the oldstart will be attached to this one instead.
+			start=getLocationOfClosingParenthesis(whereOps, locations, start);
+			
+		}
+		
 		ParseTreeNode prev=null;
-		for(int i=start;i<end;i++) {
+		for(int i=start;i<whereOps.size();i++) {
 			//we are only concerned about AND or OR
 			if(whereOps.get(i)==WhereOperations.AND || whereOps.get(i)==WhereOperations.OR) {
 				instructions.setIndex(locations.get(i));
 				
+				//TODO: LINK POSSIBLE AND and ORs
 				
+				if(parent.getChildren().size()>0) {
+					instructions.setIndex(locations.get(i-1));
+					
+					//p.addChildren(createNewStatementNode((WhereOperations) whereOps.get(i-1), instructions));
+				
+				//first node, means that there is a statement to the left
+				//} else if(parent.getChildren().get(index)){
+					
+					
+				} else {
+					ParseTreeNode p=new WhereNode(whereOps.get(i));
+					parent.addChildren(p);
+					
+				}
+				
+				if(whereOps.get(i)==QuerySyntax.OPENPAREN) {
+					
+					
+				}
 			
 			//may also be ignoring
 			} else if(whereOps.get(i)==WhereOperations.IGNORE_ATTRIBUTE) {
 				instructions.setIndex(locations.get(i));
 				
 				
-			}
-			
+			} 
 			
 		}
 
+	}
+	
+	/**Get the location of the closing parenthesis in whereOps array
+	 * 
+	 * @param instructions
+	 * @return
+	 */
+	private int getLocationOfClosingParenthesis(List<QueryOperation> whereOps,List<Integer> locations, int start) {
+		
+		for(int i=start;i<whereOps.size();i++) {
+			if(whereOps.get(i)==QuerySyntax.CLOSEPAREN) {
+				return i;
+				
+			}
+			
+		}
+
+		return Integer.MIN_VALUE;
 	}
 
 	/**Parse the instruction for the WhereOperation's operands
@@ -298,17 +309,16 @@ public class AQueryParser implements QueryParser{
 	 * @param instructions
 	 */
 
-	private void addNewWhereAndOrNode(ParseTreeNode parent, WhereOperations op, WhereOperations before,
-			WhereOperations next, InstIter instructions) {
+	private ParseTreeNode createNewStatementNode(WhereOperations op, InstIter instructions) {
 
 		ParseTreeNode n=null;
 		switch(op.numOperand()) {
 
 		case 1:
-			n=handle1OperandWhere(parent,op,instructions);
+			n=handle1OperandWhere(op,instructions);
 			break;
 		case 2:
-			n=handle2OperandWhere(parent,op,instructions);
+			n=handle2OperandWhere(op,instructions);
 			break;
 		case Integer.MAX_VALUE:
 
@@ -316,12 +326,7 @@ public class AQueryParser implements QueryParser{
 		default:
 		}
 
-		if(n!=null) {
-			//attach to tree
-
-
-		}
-
+		return n;
 	}
 
 	/**Handle Where Operations that only takes in 1 operation. Such as MAX(Attribute).
@@ -335,7 +340,7 @@ public class AQueryParser implements QueryParser{
 	 * @param op
 	 * @param instructions
 	 */
-	private ParseTreeNode handle1OperandWhere(ParseTreeNode parent, WhereOperations op, InstIter instructions) {
+	private ParseTreeNode handle1OperandWhere(WhereOperations op, InstIter instructions) {
 
 		StatementNode node=null;
 		switch(op) {
@@ -374,7 +379,7 @@ public class AQueryParser implements QueryParser{
 		return node;
 	}
 
-	private ParseTreeNode handle2OperandWhere(ParseTreeNode parent, WhereOperations op, InstIter instructions) {
+	private ParseTreeNode handle2OperandWhere(WhereOperations op, InstIter instructions) {
 		StatementNode node=null;
 
 		switch(op) {
