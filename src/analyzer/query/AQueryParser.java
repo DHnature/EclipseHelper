@@ -183,9 +183,9 @@ public class AQueryParser implements QueryParser{
 			locations.add(instructions.getCurrIndex());
 
 		}
-
+		
 		//Now find the and's or or's and start constructing the WHERE parse tree. Attach to WhereNode
-		buildWhereTree(whereNode,instructions,ins,locations);
+		buildWhereTree(whereNode,instructions,ins,locations,0);
 
 		//finally add the where node to the parent
 		parent.addChildren(whereNode);
@@ -263,11 +263,31 @@ public class AQueryParser implements QueryParser{
 	 * @param instructions
 	 * @param whereOps
 	 * @param locations
+	 * @param where in the whereOps list to start
+	 * @param where in the whereOps array to end
 	 */
-	private void buildWhereTree(ParseTreeNode parent,InstIter instructions
-			,List<WhereOperations> whereOps,List<Integer> locations) {
-
-
+	private ParseTreeNode buildWhereTree(ParseTreeNode parent,InstIter instructions
+			,List<WhereOperations> whereOps,List<Integer> locations,int level) {
+		
+		//TODO: Make the ( and ) and , syntax characters and in whereOps array
+		
+		ParseTreeNode prev=null;
+		for(int i=start;i<end;i++) {
+			//we are only concerned about AND or OR
+			if(whereOps.get(i)==WhereOperations.AND || whereOps.get(i)==WhereOperations.OR) {
+				instructions.setIndex(locations.get(i));
+				
+				
+			
+			//may also be ignoring
+			} else if(whereOps.get(i)==WhereOperations.IGNORE_ATTRIBUTE) {
+				instructions.setIndex(locations.get(i));
+				
+				
+			}
+			
+			
+		}
 
 	}
 
