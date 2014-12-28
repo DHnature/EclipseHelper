@@ -91,4 +91,11 @@ public class AnInsIter implements InstIter{
 		
 	}
 
+
+	@Override
+	public List<String> getStringRepOfInstruction() {
+		return this.instructions;
+	}
+	
+
 }

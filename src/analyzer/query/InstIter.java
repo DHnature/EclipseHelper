@@ -28,4 +28,5 @@ public interface InstIter extends Iterator<String>{
 	
 	public int size();
 	
+	public List<String> getStringRepOfInstruction();
 }

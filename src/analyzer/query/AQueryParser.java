@@ -7,6 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import jdk.nashorn.internal.objects.annotations.Where;
 import weka.filters.unsupervised.attribute.AddNoise;
 
 public class AQueryParser implements QueryParser{
@@ -103,7 +104,7 @@ public class AQueryParser implements QueryParser{
 
 			//Notice that the instructions point is one past the keyword. 
 			//No need for correction as reading a keyword will cause all the cases to exit early
-			
+
 			switch(op) {
 			case SELECT:
 				parseSelect(instructions, root);
@@ -148,7 +149,7 @@ public class AQueryParser implements QueryParser{
 
 			}
 
-			
+
 		}
 
 		//If there are attributes add them to the node
@@ -173,7 +174,7 @@ public class AQueryParser implements QueryParser{
 
 		//Find all the where Operations in the instructions
 		QueryOperation op=null;
-		
+
 		while((op=getNextWhereOperation(instructions))!=null) {
 
 			//get all the where operations
@@ -183,7 +184,7 @@ public class AQueryParser implements QueryParser{
 			locations.add(instructions.getCurrIndex());
 
 		}
-		
+
 		//Now find the and's or or's and start constructing the WHERE parse tree. Attach to WhereNode
 		buildWhereTree(whereNode,instructions,ins,locations,0,ins.size());
 
@@ -221,20 +222,26 @@ public class AQueryParser implements QueryParser{
 
 	}
 
-	/**Build the ParseTree's WHERE nodes with the instructions
+	/**Build the ParseTree's WHERE nodes with the instructions.<p>
+	 * 
+	 * How the parsing works:<p>
+	 * The parse tree, as mentioned before is a general tree of {@link ParseTreeNode}.<br>
+	 * The String Query will now be converted to parse tree form.<br>
+	 * Specifically for the WHERE part of the Query, the AND and the OR can be interpreted
+	 * as chaining the query together.<br>
+	 * Therefore, the main nodes we must find are the AND and the OR's in the String query.<br>
+	 * They are in the {@link WhereOperations} list, the parameter whereOps.
 	 * 
 	 * @param parent
 	 * @param instructions
 	 * @param whereOps
 	 * @param locations
 	 * @param start where in the whereOps list to start
-	 * @param end where in the whereOps list to start
+	 * @param end where in the whereOps list to end, exclusive
 	 */
 	private void buildWhereTree(ParseTreeNode parent,InstIter instructions
 			,List<QueryOperation> whereOps,List<Integer> locations, int start, int end) {
-		
-		//TODO: Make the ( and ) and , syntax characters and in whereOps array
-		
+
 		//The First node should be deeper down in the tree if the first is a (
 		int oldStart=Integer.MIN_VALUE;
 		if(whereOps.get(start) == QuerySyntax.OPENPAREN) {
@@ -242,64 +249,110 @@ public class AQueryParser implements QueryParser{
 			//new start is where the closing parenthesis is. This will be the first child of the parent.
 			//The ParseTree starting with the oldstart will be attached to this one instead.
 			start=getLocationOfClosingParenthesis(whereOps, locations, start);
-			
+
 		}
-		
-		ParseTreeNode prev=null;
-		for(int i=start;i<whereOps.size();i++) {
+
+		for(int i=start;i<end;i++) {
 			//we are only concerned about AND or OR
 			if(whereOps.get(i)==WhereOperations.AND || whereOps.get(i)==WhereOperations.OR) {
 				instructions.setIndex(locations.get(i));
-				
-				//TODO: LINK POSSIBLE AND and ORs
-				
-				if(parent.getChildren().size()>0) {
-					instructions.setIndex(locations.get(i-1));
-					
-					//p.addChildren(createNewStatementNode((WhereOperations) whereOps.get(i-1), instructions));
-				
-				//first node, means that there is a statement to the left
-				//} else if(parent.getChildren().get(index)){
-					
-					
-				} else {
-					ParseTreeNode p=new WhereNode(whereOps.get(i));
-					parent.addChildren(p);
-					
-				}
-				
-				if(whereOps.get(i)==QuerySyntax.OPENPAREN) {
-					
-					
-				}
-			
-			//may also be ignoring
+
+				//Add the AND or OR node to the parent node
+				createAndOrParseTreeNode(parent, whereOps, locations, instructions, i);
+
+				//may also be ignoring
 			} else if(whereOps.get(i)==WhereOperations.IGNORE_ATTRIBUTE) {
 				instructions.setIndex(locations.get(i));
 				
+				StatementNode s=new StatementNode(whereOps.get(i));
 				
+				int sindex=i+2;
+				int eindex=getLocationOfClosingParenthesis(whereOps, locations, sindex);
+				
+				//grab all the operands to the ignore attribute
+				s.addOperands((String[])
+						instructions.getStringRepOfInstruction().subList(
+								locations.get(sindex), locations.get(eindex)).toArray());
+
 			} 
-			
+
 		}
 
+		//
+		if(oldStart != Integer.MIN_VALUE) {
+			buildWhereTree(parent.getChild(0), instructions, whereOps, locations, oldStart+1, start);
+			
+		}
 	}
-	
+
 	/**Get the location of the closing parenthesis in whereOps array
 	 * 
 	 * @param instructions
 	 * @return
 	 */
 	private int getLocationOfClosingParenthesis(List<QueryOperation> whereOps,List<Integer> locations, int start) {
-		
+
 		for(int i=start;i<whereOps.size();i++) {
 			if(whereOps.get(i)==QuerySyntax.CLOSEPAREN) {
 				return i;
-				
+
 			}
-			
+
 		}
 
 		return Integer.MIN_VALUE;
+	}
+	
+	/**Create AND or a OR parse tree node located at CURRENT(an index) of whereOps instructions list with locations.
+	 * 
+	 * @param parent
+	 * @param whereOps
+	 * @param locations
+	 * @param instructions
+	 * @param current
+	 */
+	private void createAndOrParseTreeNode(ParseTreeNode parent,List<QueryOperation> whereOps,List<Integer> locations,
+			InstIter instructions,int current) {
+		
+		ParseTreeNode p=null;
+		if(parent.getChildren().size()>0) {
+			instructions.setIndex(locations.get(current-1));
+			//If the previous operation is not the same. Create a new children of the parent
+			if(whereOps.get(current) != 
+					parent.getChildren().get(parent.getChildren().size()-1).getOperation()) {
+				p=new WhereNode(whereOps.get(current));
+				parent.addChildren(p);
+				//If same, just get the previous operation again	
+			} else {
+				p=parent.getChildren().get(parent.getChildren().size()-1);
+
+			}
+
+			//first node, means that there is a statement to the left we haven't added
+		} else {
+			p=new WhereNode(whereOps.get(current));
+			parent.addChildren(p);
+			
+			//Add the previous instruciton
+			instructions.setIndex(locations.get(current-1));
+			p.addChildren(createNewStatementNode((WhereOperations)whereOps.get(current-1), instructions));
+
+		} 
+
+		//Now take care of the right statement of AND or OR
+		
+		if(whereOps.get(current+1)==QuerySyntax.OPENPAREN) {
+			//recursively build 
+			buildWhereTree(p, instructions, whereOps, locations, current+1, 
+					getLocationOfClosingParenthesis(whereOps, locations, current+1));
+		
+		//If the right side of AND or OR is not an open parenthesis. It is any of the other WhereOp enum operations
+		} else {
+			instructions.setIndex(locations.get(current+1));
+			p.addChildren(createNewStatementNode((WhereOperations)whereOps.get(current+1),instructions));
+
+		}
+
 	}
 
 	/**Parse the instruction for the WhereOperation's operands
@@ -321,8 +374,6 @@ public class AQueryParser implements QueryParser{
 			n=handle2OperandWhere(op,instructions);
 			break;
 		case Integer.MAX_VALUE:
-
-			break;
 		default:
 		}
 
@@ -370,7 +421,7 @@ public class AQueryParser implements QueryParser{
 			}
 
 			//create the new node
-			node=new StatementNode(op,a);
+			//node=new StatementNode(op,a);
 
 			break;
 		default:
