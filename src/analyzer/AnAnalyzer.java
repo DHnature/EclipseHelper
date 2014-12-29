@@ -463,7 +463,7 @@ public class AnAnalyzer implements Analyzer  {
 		List<String> participantFiles = MainConsoleUI.getFilesForFolder(folder);
 		System.out.println("Particpant " + aFolderName + " has "
 				+ participantFiles.size() + " file(s)");
-		System.out.println();
+		
 		for (int i = 0; i < participantFiles.size(); i++) {
 			String aFileName = fullName
 					+ participantFiles.get(i);

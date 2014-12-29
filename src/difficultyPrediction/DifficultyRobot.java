@@ -120,6 +120,7 @@ public class DifficultyRobot implements Mediator {
 		Tracer.info(this, "difficultyRobot.featureExtractor");
 		statusInformation = new AStatusInformation();
 		statusInformation.setEditRatio(details.getEditRatio());
+	
 		statusInformation.setDebugRatio(details.getDebugRatio());
 		statusInformation.setNavigationRatio(details.getNavigationRatio());
 		statusInformation.setRemoveRatio(details.getRemoveRatio());

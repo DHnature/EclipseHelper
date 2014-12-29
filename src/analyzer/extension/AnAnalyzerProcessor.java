@@ -64,7 +64,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	
 	@Override
 	public void newBrowseLine(String aLine) {
-		System.out.println("Browse line:" + aLine);
+		//System.out.println("Browse line:" + aLine);
 		
 	}
 	@Override
