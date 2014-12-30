@@ -6,6 +6,8 @@ import java.util.List;
 import org.joda.time.DateTime;
 
 public class AParticipantTimeLine implements ParticipantTimeLine {
+	private List<Double> editList=new ArrayList<>();
+	
 	private List<Double> insertionList = new ArrayList<Double>();
 	private List<Double> deletionList = new ArrayList<Double>();
 	private List<Double> debugList = new ArrayList<Double>();
@@ -16,13 +18,15 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 	protected List<Integer> predictionList = new ArrayList<Integer>();
 	protected List<Integer> predictionCorrections = new ArrayList<Integer>();
 	protected List<List<WebLink>> webLinks = new ArrayList();
-	public AParticipantTimeLine(List<Double> insertionList,
+	public AParticipantTimeLine(List<Double> editList,
+			List<Double> insertionList,
 			List<Double> deletionList, List<Double> debugList,
 			List<Double> navigationList, List<Double> focusList,
 			List<Double> removeList, List<Long> timeStampList,
 			List<Integer> predictionList, List<Integer> predictionCorrection,
 			List<List<WebLink>> webLinks) {
 		super();
+		this.editList=editList;
 		this.insertionList = insertionList;
 		this.deletionList = deletionList;
 		this.debugList = debugList;
@@ -35,7 +39,7 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 		this.webLinks = webLinks;
 	}
 	public AParticipantTimeLine() {
-		this(new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
+		this(new ArrayList(),new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
 		
 	}
 	/* (non-Javadoc)
@@ -179,6 +183,13 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 		this.webLinks = webLinks;
 	}
 	
+	public List<Double> getEditList() {
+		return editList;
+	}
+	public void setEditList(List<Double> editList) {
+		this.editList = editList;
+	}
+	
 	@Override
 	public int getIndexBefore(long aTimeStamp) {
 		for (int anIndex = 0; anIndex < timeStampList.size(); anIndex++ ) {
@@ -197,6 +208,7 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 			DateTime dateTime = new DateTime(absoluteTime);
 			String timeStampString = dateTime.toString("MM-dd-yyyy H:mm:ss");
 			aStringBuffer.append(timeStampString  + ", ");
+			aStringBuffer.append(editList.get(index)+", ");
 			aStringBuffer.append(insertionList.get(index) + ", ");
 			aStringBuffer.append(deletionList.get(index) + ", ");
 			aStringBuffer.append(debugList.get(index) + ", ");

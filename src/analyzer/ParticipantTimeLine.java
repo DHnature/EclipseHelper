@@ -3,6 +3,10 @@ package analyzer;
 import java.util.List;
 
 public interface ParticipantTimeLine {
+	
+	public List<Double> getEditList();
+	
+	public void setEditList(List<Double> editList);
 
 	public abstract List<Double> getInsertionList();
 

@@ -42,8 +42,9 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 
 	//Insert More features here
 	public static final String[] FEATURES={
-		"insertPercentage","numeric",
-		"deletePercentage","numeric",
+//		"insertPercentage","numeric",
+//		"deletePercentage","numeric",
+		"editPercentage","numeric",
 		"debugPercentage","numeric",
 		"searchPercentage","numeric",
 		"focusPercentage","numeric",
@@ -248,8 +249,9 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 
 			arffWriter.writeData(
 					prediction==0? "NO":"YES", 
-							p.getInsertionList().get(i),
-							p.getDeletionList().get(i),
+//							p.getInsertionList().get(i),
+//							p.getDeletionList().get(i),
+							p.getEditList().get(i),
 							p.getDebugList().get(i),
 							p.getNavigationList().get(i),
 							p.getFocusList().get(i),

@@ -176,8 +176,10 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	}
 	@Override
 	public void newRatios(RatioFeatures newVal) {
+		
 		insertEntriesForPreviousTimeStamp();
 		currentTime = startTime + newVal.getSavedTimeStamp();
+		participantTimeLine.getEditList().add(newVal.getEditRatio());
 		participantTimeLine.getTimeStampList().add(currentTime);
 		participantTimeLine.getDebugList().add(newVal.getDebugRatio());
 		participantTimeLine.getDeletionList().add(newVal.getDeletionRatio());
