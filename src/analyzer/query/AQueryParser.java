@@ -38,7 +38,7 @@ public class AQueryParser implements QueryParser{
 
 		InstIter insIterator=new AnInsIter(instructions);
 		//translate into instruction usable by executor
-		//translate(insIterator,root);
+		translate(insIterator,root);
 
 		//cache the newly created tree
 
@@ -130,15 +130,20 @@ public class AQueryParser implements QueryParser{
 				isNotOperationKeyWord(instructions.current())) {
 
 			//grab the current and advance the instruction by 1
-			SelectOperations op=SelectOperations.getOperationFromString(instructions.next());
+			SelectOperations op=SelectOperations.getOperationFromString(instructions.current());
+ 
+			if(op != null) {
+				switch(op) {
+				case DOMINANT:
+				case SIGNIFICANT:
+					parent.addChildren(new KeyWordNode(op));
 
-			switch(op) {
-			case DOMINANT:
-			case SIGNIFICANT:
-				parent.addChildren(new KeyWordNode(op));
+					break;
+				default:
 
-				break;
-			default:
+				}
+				
+			} else {
 				//defaults to attribute. Add to attributes set if not exists
 				SelectAttr a=SelectAttr.getAttributeFromString(instructions.current());
 
@@ -146,9 +151,10 @@ public class AQueryParser implements QueryParser{
 					attributes.add(a);
 
 				}
-
+				
 			}
-
+			
+			instructions.next();
 
 		}
 
@@ -263,12 +269,12 @@ public class AQueryParser implements QueryParser{
 				//may also be ignoring
 			} else if(whereOps.get(i)==WhereOperations.IGNORE_ATTRIBUTE) {
 				instructions.setIndex(locations.get(i));
-				
+
 				StatementNode s=new StatementNode(whereOps.get(i));
-				
+
 				int sindex=i+2;
 				int eindex=getLocationOfClosingParenthesis(whereOps, locations, sindex);
-				
+
 				//grab all the operands to the ignore attribute
 				s.addOperands((String[])
 						instructions.getStringRepOfInstruction().subList(
@@ -281,7 +287,7 @@ public class AQueryParser implements QueryParser{
 		//
 		if(oldStart != Integer.MIN_VALUE) {
 			buildWhereTree(parent.getChild(0), instructions, whereOps, locations, oldStart+1, start);
-			
+
 		}
 	}
 
@@ -302,7 +308,7 @@ public class AQueryParser implements QueryParser{
 
 		return Integer.MIN_VALUE;
 	}
-	
+
 	/**Create AND or a OR parse tree node located at CURRENT(an index) of whereOps instructions list with locations.
 	 * 
 	 * @param parent
@@ -313,7 +319,7 @@ public class AQueryParser implements QueryParser{
 	 */
 	private void createAndOrParseTreeNode(ParseTreeNode parent,List<QueryOperation> whereOps,List<Integer> locations,
 			InstIter instructions,int current) {
-		
+
 		ParseTreeNode p=null;
 		if(parent.getChildren().size()>0) {
 			instructions.setIndex(locations.get(current-1));
@@ -332,7 +338,7 @@ public class AQueryParser implements QueryParser{
 		} else {
 			p=new WhereNode(whereOps.get(current));
 			parent.addChildren(p);
-			
+
 			//Add the previous instruciton
 			instructions.setIndex(locations.get(current-1));
 			p.addChildren(createNewStatementNode((WhereOperations)whereOps.get(current-1), instructions));
@@ -340,13 +346,13 @@ public class AQueryParser implements QueryParser{
 		} 
 
 		//Now take care of the right statement of AND or OR
-		
+
 		if(whereOps.get(current+1)==QuerySyntax.OPENPAREN) {
 			//recursively build 
 			buildWhereTree(p, instructions, whereOps, locations, current+1, 
 					getLocationOfClosingParenthesis(whereOps, locations, current+1));
-		
-		//If the right side of AND or OR is not an open parenthesis. It is any of the other WhereOp enum operations
+
+			//If the right side of AND or OR is not an open parenthesis. It is any of the other WhereOp enum operations
 		} else {
 			instructions.setIndex(locations.get(current+1));
 			p.addChildren(createNewStatementNode((WhereOperations)whereOps.get(current+1),instructions));
@@ -398,30 +404,15 @@ public class AQueryParser implements QueryParser{
 		//max and
 		case MAX:
 		case MIN:
-			//the one following should be the operand, however it can also be (. So must concat next two together
-			instructions.next();
-			String operand=instructions.next();
 
-			if(operand.equals("(")) {
-				operand=instructions.current();
+			if(instructions.getCurrIndex()+2<instructions.size()) {
 
+				instructions.setIndex(instructions.getCurrIndex()+2);
+
+				//if an attribute
+				if(SelectAttr.getAttributeFromString(instructions.current()) != null)
+					node=new StatementNode(op, instructions.current());
 			}
-
-			SelectAttr a=SelectAttr.getAttributeFromString(operand);
-
-			//maybe because the operand is split and it still has a ( or )
-			if(a==null) {
-				List<String> s=new ArrayList<>(Arrays.asList(operand.split("[(]|[)]")));
-
-				s.removeAll(Collections.singleton(""));
-
-				a=SelectAttr.getAttributeFromString(s.get(0));
-
-				if(a==null) break;
-			}
-
-			//create the new node
-			//node=new StatementNode(op,a);
 
 			break;
 		default:
@@ -433,17 +424,19 @@ public class AQueryParser implements QueryParser{
 	private ParseTreeNode handle2OperandWhere(WhereOperations op, InstIter instructions) {
 		StatementNode node=null;
 
-		switch(op) {
+		if(instructions.hasPrev() && instructions.hasNext()) {
+			//operand 1 is to the left of the operation sign. Ex: 1 <= 2. 1 is left operand, op is <=
+			instructions.prev();
+			String op1=instructions.current();
 
-		case AND:
-		case OR:
+			//2 is then to the right of the operation sign
+			instructions.setIndex(instructions.getCurrIndex()+2);
+			String op2=instructions.current();
 
-			break;
-			//regular case, just find the 2 attributes to the left and right
-		default:
-
+			node=new StatementNode(op,op1, op2);
 
 		}
+
 
 		return node;
 	}
@@ -461,7 +454,7 @@ public class AQueryParser implements QueryParser{
 
 		AQueryParser parser=new AQueryParser();
 
-		parser.parseQuery("SELECT attribute, attribute2 FROM SOMETHING WHERE <(advs) AND MAX");
+		parser.parseQuery("SELECT debug, search WHERE attr1<2 AND MAX(SOMETHING)");
 
 	}
 
