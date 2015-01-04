@@ -46,7 +46,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 //		"deletePercentage","numeric",
 		"editPercentage","numeric",
 		"debugPercentage","numeric",
-		"searchPercentage","numeric",
+		"navigationPercentage","numeric",
 		"focusPercentage","numeric",
 		"removePercentage","numeric",
 		"webLinkTimes","numeric",
