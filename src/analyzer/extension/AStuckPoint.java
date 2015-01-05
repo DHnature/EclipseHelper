@@ -3,6 +3,10 @@ package analyzer.extension;
 import java.util.Date;
 
 public class AStuckPoint implements StuckPoint{
+	@Override
+	public String toString() {
+		return "AStuckPoint [date=" + date + ", type=" + type + "]";
+	}
 	private Date date;
 	private String type;
 	public Date getDate() {

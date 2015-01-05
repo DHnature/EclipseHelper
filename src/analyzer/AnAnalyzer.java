@@ -7,20 +7,29 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
 
 import util.annotations.Row;
 import util.annotations.Visible;
+import analyzer.extension.ACSVParser;
+import analyzer.extension.AStuckInterval;
+import analyzer.extension.AStuckPoint;
+import analyzer.extension.CSVParser;
+import analyzer.extension.StuckInterval;
+import analyzer.extension.StuckPoint;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import bus.uigen.models.AFileSetterModel;
@@ -42,8 +51,10 @@ public class AnAnalyzer implements Analyzer  {
 	public static final String OUTPUT_DATA = "OutputData/";
 	public static final String ECLIPSE_FOLDER = "Eclipse/";
 	public static final String BROWSER_FOLDER = "Browser/";
-
-
+	
+	public static final String STUCKPOINT_FILE="data/GroundTruth/Stuckpoints.csv";
+	public static final String STUCKINTERVAL_FILE="data/GroundTruth/Stuck Intervals.csv";
+	
 	public static final String PARTICIPANT_INFORMATION_DIRECTORY = "data/ExperimentalData/";
 	public static final String PARTICIPANT_OUTPUT_DIRECTORY = "data/OutputData/";
 
@@ -53,6 +64,8 @@ public class AnAnalyzer implements Analyzer  {
 	public static final String IGNORE_KEYWORD="IGNORE";
 	static Hashtable<String, String> participants = new Hashtable<String, String>();
 
+	private Map<String, StuckPoint> stuckPoint;
+	private Map<String, StuckInterval> stuckInterval;
 	
 	static long startTimeStamp;
 	List<List<ICommand>> nestedCommandsList;
@@ -80,7 +93,8 @@ public class AnAnalyzer implements Analyzer  {
 		parameters.getParticipants().addChoice(ALL_PARTICIPANTS);
 		parameters.getParticipants().setValue(ALL_PARTICIPANTS);
 
-		 
+		stuckPoint=new HashMap<>();
+		stuckInterval=new HashMap<>();
 		
 	}
 	/* (non-Javadoc)
@@ -166,11 +180,86 @@ public class AnAnalyzer implements Analyzer  {
 		Thread aThread = (new Thread(aRunnable));
 		aThread.start();
 	}
+	
+	/**Loads stuck point from the stuckpoint.csv file into the hashmap.
+	 * 
+	 */
+	public void loadStuckPoint() {
+		CSVParser parser=new ACSVParser();
+		parser.start(STUCKPOINT_FILE);
+		
+		parser.getNextLine();
+		String line;
+		while((line=parser.getNextLine()) != null) {
+			String[] split=line.split(",");
+			
+			if(split.length>0 && !split[0].trim().equals("")) {
+				StuckPoint p=new AStuckPoint();
+				try {
+					p.setDate(new SimpleDateFormat("hh:mm a").parse(split[1]));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				p.setType(split[2]);
+				
+				System.out.println(p);
+				
+				this.stuckPoint.put(split[0], p);
+				
+			}
+			
+		
+		}
+		
+		parser.stop();
+	}
+	
+	/**Loads stuck interval from the stuck interval csv into the hashmap
+	 * 
+	 * 
+	 */
+	public void loadStuckInterval() {
+		CSVParser parser=new ACSVParser();
+		parser.start(STUCKINTERVAL_FILE);
+		
+		parser.getNextLine();
+		String line;
+		while((line=parser.getNextLine()) != null) {
+			String[] split=line.split(",");
+			
+			if(split.length>0 && !split[0].trim().equals("")) {
+				StuckInterval p=new AStuckInterval();
+				
+				p.setParticipant(split[0]);
+				try {
+					p.setDate(new SimpleDateFormat("hh:mm:ss").parse(split[1]));
+					
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				p.setBarrierType(split[2]);
+				p.setSurmountability(split[3]);
+				
+		
+				this.stuckInterval.put(split[0], p);
+				
+			}
+			
+		}
+		
+		parser.stop();
+		
+		
+	}
+	
 	public void syncLoadLogs() {
 		FactoriesSelector.configureFactories();
 		String participantId = parameters.getParticipants().getValue();
 		String numberOfSegments = "" + parameters.getPredictionParameters().getSegmentLength();
 
+		//Load the stuck points and such
+		loadStuckInterval();
+		loadStuckPoint();
 		
 		if(participantId.equalsIgnoreCase(""))
 			participantId = ALL_PARTICIPANTS;
@@ -659,6 +748,7 @@ public class AnAnalyzer implements Analyzer  {
 		OEFrame frame = ObjectEditor.edit(AnAnalyzer.getInstance());
 		frame.setSize(550, 450);
 		
+	
 	}
 
 }

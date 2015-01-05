@@ -3,6 +3,12 @@ package analyzer.extension;
 import java.util.Date;
 
 public class AStuckInterval implements StuckInterval{
+	@Override
+	public String toString() {
+		return "AStuckInterval [participant=" + participant + ", date=" + date
+				+ ", barrierType=" + barrierType + ", surmountability="
+				+ surmountability + "]";
+	}
 	private String participant;
 	private Date date;
 	private String barrierType;
