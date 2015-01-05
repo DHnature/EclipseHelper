@@ -1,5 +1,8 @@
 package difficultyPrediction.featureExtraction;
 
+import analyzer.extension.StuckInterval;
+import analyzer.extension.StuckPoint;
+
 public interface RatioFeatures {
 	public void setEditRatio(double editRatio) ;
 	public double getDebugRatio() ;
@@ -31,5 +34,9 @@ public interface RatioFeatures {
 	public long getSavedTimeStamp();
 	public void setSavedTimeStamp(long savedTimeStamp) ;
 	public double getEditRatio();
+	public StuckPoint getStuckPoint();
+	public void setStuckPoint(StuckPoint stuckPoint);
+	public StuckInterval getStuckInterval();
+	public void setStuckInterval(StuckInterval stuckInterval);
 
 }

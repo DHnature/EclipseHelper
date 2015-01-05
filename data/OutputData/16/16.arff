@@ -2,7 +2,7 @@
 
 @Attribute editPercentage numeric
 @Attribute debugPercentage numeric
-@Attribute searchPercentage numeric
+@Attribute navigationPercentage numeric
 @Attribute focusPercentage numeric
 @Attribute removePercentage numeric
 @Attribute webLinkTimes numeric

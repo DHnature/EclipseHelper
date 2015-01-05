@@ -2,6 +2,8 @@ package difficultyPrediction.featureExtraction;
 
 import java.util.Date;
 
+import analyzer.extension.StuckInterval;
+import analyzer.extension.StuckPoint;
 import edu.cmu.scs.fluorite.model.EventRecorder;
 
 public class ARatioFeatures implements RatioFeatures {
@@ -20,8 +22,12 @@ public class ARatioFeatures implements RatioFeatures {
 	protected double focusTimeRatio;
 	protected double removeTimeRatio;
 	protected long savedTimeStamp;
+	
+	private StuckPoint stuckPoint;
+	private StuckInterval stuckInterval;
 	 
-	 public ARatioFeatures() {
+
+	public ARatioFeatures() {
 		 
 	 }
 	public double getEditRatio() {
@@ -114,6 +120,19 @@ public class ARatioFeatures implements RatioFeatures {
 	public void setSavedTimeStamp(long savedTimeStamp) {
 		this.savedTimeStamp = savedTimeStamp;
 	}
+	public StuckPoint getStuckPoint() {
+		return stuckPoint;
+	}
+	public void setStuckPoint(StuckPoint stuckPoint) {
+		this.stuckPoint = stuckPoint;
+	}
+	public StuckInterval getStuckInterval() {
+		return stuckInterval;
+	}
+	public void setStuckInterval(StuckInterval stuckInterval) {
+		this.stuckInterval = stuckInterval;
+	}
+	
 	Date date = new Date();
 	// add other ratios later
 	public String toString () {

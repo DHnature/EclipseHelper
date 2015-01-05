@@ -52,6 +52,8 @@ public class AnAnalyzer implements Analyzer  {
 	public static final String ALL_PARTICIPANTS = "All";
 	public static final String IGNORE_KEYWORD="IGNORE";
 	static Hashtable<String, String> participants = new Hashtable<String, String>();
+
+	
 	static long startTimeStamp;
 	List<List<ICommand>> nestedCommandsList;
 
@@ -358,7 +360,7 @@ public class AnAnalyzer implements Analyzer  {
 		}
 		
 		
-
+		
 		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
 		DifficultyPredictionSettings.setRatiosFileName(aFullRatiosFileName);
 		difficultyEventProcessor = new ADifficultyPredictionPluginEventProcessor();
