@@ -38,7 +38,7 @@ public class AWebDisplay extends JPanel implements WebDisplay {
 		for (int i = counter.getStart(); i < counter.getEnd() - 1; i++) {
 			if (i < websiteList.size() - 1 && i >= 0) {
 				if (websiteList.get(i) != null) {
-					int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (10 - 1) + X_BORDER_GAP);
+					int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1) + X_BORDER_GAP);
 					int y = Y_BORDER_GAP;
 					String webLabel = "W(" + websiteList.get(i).size() + ")";
 					g2.setColor(new Color(63, 0, 178));

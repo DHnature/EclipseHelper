@@ -51,7 +51,7 @@ public class AStatusBar extends JPanel implements StatusBar {
 
 		for (int i = counter.getStart(); i < counter.getEnd() - 1; i++) {
 			if (i < predictedList.size() - 1 && i >= 0) {
-				int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (10 - 1) + X_BORDER_GAP);
+				int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1) + X_BORDER_GAP);
 				int y = Y_BORDER_GAP;
 				int width = (getWidth() - X_BORDER_GAP * 2) / 9;
 				int height = getHeight() / 2 - Y_BORDER_GAP * 2 - SPACE_BETWEEN;
@@ -74,7 +74,7 @@ public class AStatusBar extends JPanel implements StatusBar {
 		xPos = 0;
 		for (int i = counter.getStart(); i < counter.getEnd() - 1; i++) {
 			if (i < actualList.size() - 1 && i >= 0) {
-				int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (10 - 1) + X_BORDER_GAP);
+				int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1) + X_BORDER_GAP);
 				int y = Y_BORDER_GAP + (getHeight() / 2 - Y_BORDER_GAP * 2);
 				int width = (getWidth() - X_BORDER_GAP * 2) / 9;
 				int height = getHeight() / 2 - Y_BORDER_GAP * 2 - SPACE_BETWEEN;
@@ -111,7 +111,7 @@ public class AStatusBar extends JPanel implements StatusBar {
 		g2.setStroke(GRAPH_STROKE);
 		g2.setColor(Color.black);
 		int x0 = (counter.getCurrentTime() - counter.getStart())
-				* (getWidth() - X_BORDER_GAP * 2) / (10 - 1) + X_BORDER_GAP;
+				* (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1) + X_BORDER_GAP;
 		int x1 = x0;
 		int y0 = Y_BORDER_GAP;
 		int y1 = Y_BORDER_GAP

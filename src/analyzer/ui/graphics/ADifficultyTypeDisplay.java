@@ -38,7 +38,7 @@ public class ADifficultyTypeDisplay extends JPanel implements
 		for (int i = counter.getStart(); i < counter.getEnd() - 1; i++) {
 			if (i < difficultyTypeList.size() - 1 && i >= 0) {
 				if (difficultyTypeList.get(i) != null) {
-					int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (10 - 1) + X_BORDER_GAP);
+					int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1) + X_BORDER_GAP);
 					int y = Y_BORDER_GAP;
 					g2.setColor(new Color(63, 0, 178));
 					g2.setFont(new Font("default", Font.BOLD, 14));

@@ -17,7 +17,6 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.DifficultyRobot;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 
@@ -54,15 +53,14 @@ public class ALineGraph extends JPanel implements LineGraph {
 	private int removeKeyEnd;
 	private PlayAndRewindCounter counter;
 	private RatioFileReader ratioFileReader;
-	
 
 	public ALineGraph(PlayAndRewindCounter aCounter,
 			RatioFileReader aRatioFileReader) {
 		setBackground(Color.LIGHT_GRAY);
 		addMouseListener(this);
-//		if (!DifficultyPredictionSettings.isReplayMode()) {
-			DifficultyRobot.getInstance().addRatioFeaturesListener(this);
-//		}
+		// if (!DifficultyPredictionSettings.isReplayMode()) {
+		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
+		// }
 		counter = aCounter;
 		counter.addPropertyChangeListener(this);
 		ratioFileReader = aRatioFileReader;
@@ -134,7 +132,8 @@ public class ALineGraph extends JPanel implements LineGraph {
 
 		// create labels for x axis
 		int index = 0;
-		for (int i = counter.getStart(); i < counter.getEnd(); i++) {
+		for (int i = counter.getStart(); i < counter.getEnd(); i = i
+				+ roundUp(counter.getSize(), 10) / 10)  {
 			if (i < insertionList.size() && i >= 0 && insertionList.size() > 0) {
 				int x0 = (((index) * (getWidth() - X_BORDER_GAP * 2))
 						/ X_HATCH_CNT + X_BORDER_GAP);
@@ -154,8 +153,8 @@ public class ALineGraph extends JPanel implements LineGraph {
 
 		// draw currentTime line
 		g2.setStroke(GRAPH_STROKE);
-		int x0 = (counter.getCurrentTime()-counter.getStart()) * (getWidth() - X_BORDER_GAP * 2)
-				/ (10 - 1) + X_BORDER_GAP;
+		int x0 = (counter.getCurrentTime() - counter.getStart())
+				* (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1) + X_BORDER_GAP;
 		int x1 = x0;
 		int y0 = Y_BORDER_GAP;
 		int y1 = getHeight() - Y_BORDER_GAP;
@@ -264,7 +263,7 @@ public class ALineGraph extends JPanel implements LineGraph {
 		int xPos = 0;
 		for (int i = counter.getStart(); i < counter.getEnd(); i++) {
 			if (i < ratios.size() && i >= 0) {
-				int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (10 - 1) + X_BORDER_GAP)
+				int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1) + X_BORDER_GAP)
 						- GRAPH_POINT_WIDTH / 2;
 				int y = (int) ((Y_MAX - ratios.get(i))
 						* (getHeight() - Y_BORDER_GAP * 2) / (Y_MAX - 1)
@@ -284,11 +283,11 @@ public class ALineGraph extends JPanel implements LineGraph {
 		int xPos = 0;
 		for (int i = counter.getStart(); i < counter.getEnd() - 1; i++) {
 			if (i < ratios.size() - 1 && i >= 0) {
-				int x1 = (xPos * (getWidth() - X_BORDER_GAP * 2) / (10 - 1) + X_BORDER_GAP);
+				int x1 = (xPos * (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1) + X_BORDER_GAP);
 				int y1 = (int) ((Y_MAX - ratios.get(i))
 						* (getHeight() - Y_BORDER_GAP * 2) / (Y_MAX - 1) + Y_BORDER_GAP);
 				int x2 = ((xPos + 1) * (getWidth() - X_BORDER_GAP * 2)
-						/ (10 - 1) + X_BORDER_GAP);
+						/ (counter.getSize() - 1) + X_BORDER_GAP);
 				int y2 = (int) ((Y_MAX - ratios.get(i + 1))
 						* (getHeight() - Y_BORDER_GAP * 2) / (Y_MAX - 1) + Y_BORDER_GAP);
 				g2.drawLine(x1, y1, x2, y2);
@@ -416,10 +415,14 @@ public class ALineGraph extends JPanel implements LineGraph {
 
 	@Override
 	public void newRatios(RatioFeatures ratioFeatures) {
-		if (ratioFeatures.getEditRatio() != 0 && ratioFeatures.getInsertionRatio() == 0) // kludge as the plug in does not provide insertion ratio
+		if (ratioFeatures.getEditRatio() != 0
+				&& ratioFeatures.getInsertionRatio() == 0) // kludge as the plug
+															// in does not
+															// provide insertion
+															// ratio
 			insertionList.add(ratioFeatures.getEditRatio());
 		else
-		insertionList.add(ratioFeatures.getInsertionRatio());
+			insertionList.add(ratioFeatures.getInsertionRatio());
 		deletionList.add(ratioFeatures.getDeletionRatio());
 		debugList.add(ratioFeatures.getDebugRatio());
 		navigationList.add(ratioFeatures.getNavigationRatio());
@@ -428,33 +431,34 @@ public class ALineGraph extends JPanel implements LineGraph {
 		timeStampList.add(ratioFeatures.getSavedTimeStamp());
 		repaint();
 	}
-//	int lastStatusIndex;
-//	int lastAggregateStatusIndex;
-//	int lastAgrregateStatus;
-//	int lastStatus;
-//	@Override
-//	public void newStatus(String aStatus) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//
-//	@Override
-//	public void newAggregatedStatus(String aStatus) {
-//		// TODO Auto-generated method stub
-//		
-//	}
-//	@Override
-//	public void newStatus(int aStatus) {
-//		lastStatus = aStatus;
-//		predict
-//		
-//	}
 
-//	@Override
-//	public void newAggregatedStatus(int aStatus) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+	// int lastStatusIndex;
+	// int lastAggregateStatusIndex;
+	// int lastAgrregateStatus;
+	// int lastStatus;
+	// @Override
+	// public void newStatus(String aStatus) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	//
+	// @Override
+	// public void newAggregatedStatus(String aStatus) {
+	// // TODO Auto-generated method stub
+	//
+	// }
+	// @Override
+	// public void newStatus(int aStatus) {
+	// lastStatus = aStatus;
+	// predict
+	//
+	// }
+
+	// @Override
+	// public void newAggregatedStatus(int aStatus) {
+	// // TODO Auto-generated method stub
+	//
+	// }
 
 	public void setData(List<Double> newInsertionList,
 			List<Double> newDeletionList, List<Double> newDebugList,
@@ -501,28 +505,31 @@ public class ALineGraph extends JPanel implements LineGraph {
 	public ArrayList<Color> getColors() {
 		return colors;
 	}
+
 	@Override
 	public RatioFileReader getRatioFileReader() {
 		return ratioFileReader;
 	}
-    @Override
+
+	@Override
 	public void setRatioFileReader(RatioFileReader ratioFileReader) {
 		this.ratioFileReader = ratioFileReader;
 	}
-    @Override
-    public int numSegments() {
-    	return insertionList.size();
-    }
+
+	@Override
+	public int numSegments() {
+		return insertionList.size();
+	}
 
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
 		System.err.println("Reset not implemented");
-		
+
 	}
-
 	
-
-	
+	private int roundUp(double val, double factor) {
+		return (int) (Math.ceil(val / factor) * factor);
+	}
 
 }
