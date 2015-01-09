@@ -2,6 +2,9 @@ package analyzer;
 
 import java.util.List;
 
+import analyzer.extension.StuckInterval;
+import analyzer.extension.StuckPoint;
+
 public interface ParticipantTimeLine {
 	
 	public List<Double> getEditList();
@@ -49,8 +52,14 @@ public interface ParticipantTimeLine {
 
 	public abstract void setWebLinks(List<List<WebLink>> webLinks);
 	public int getIndexBefore(long aTimeStamp) ;
+	
+	public List<StuckInterval> getStuckInterval();
+	public void setStuckInterval(List<StuckInterval> stuckInterval);
+	
+	public List<StuckPoint> getStuckPoint();
+	public void setStuckPoint(List<StuckPoint> stuckPoint);
 
 	StringBuffer toText();
 
-
+	
 }

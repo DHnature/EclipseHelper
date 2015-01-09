@@ -96,6 +96,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 			
 		}
 		
+		super.currentParticipant=anId;
 		
 		participantTimeLine = new AParticipantTimeLine();
 		participantToTimeLine.put(anId, participantTimeLine );

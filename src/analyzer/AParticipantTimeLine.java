@@ -5,6 +5,9 @@ import java.util.List;
 
 import org.joda.time.DateTime;
 
+import analyzer.extension.StuckInterval;
+import analyzer.extension.StuckPoint;
+
 public class AParticipantTimeLine implements ParticipantTimeLine {
 	private List<Double> editList=new ArrayList<>();
 	
@@ -18,6 +21,10 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 	protected List<Integer> predictionList = new ArrayList<Integer>();
 	protected List<Integer> predictionCorrections = new ArrayList<Integer>();
 	protected List<List<WebLink>> webLinks = new ArrayList();
+	
+	private List<StuckInterval> stuckInterval;
+	private List<StuckPoint> stuckPoint;
+	
 	public AParticipantTimeLine(List<Double> editList,
 			List<Double> insertionList,
 			List<Double> deletionList, List<Double> debugList,
@@ -37,6 +44,8 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 		this.predictionList = predictionList;
 		this.predictionCorrections = predictionCorrection;
 		this.webLinks = webLinks;
+		this.stuckInterval=new ArrayList<>();
+		this.stuckPoint=new ArrayList<>();
 	}
 	public AParticipantTimeLine() {
 		this(new ArrayList(),new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList(), new ArrayList());
@@ -200,6 +209,20 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 		}
 		return timeStampList.size() -1; 
 	}
+	
+	public List<StuckInterval> getStuckInterval() {
+		return stuckInterval;
+	}
+	public void setStuckInterval(List<StuckInterval> stuckInterval) {
+		this.stuckInterval = stuckInterval;
+	}
+	public List<StuckPoint> getStuckPoint() {
+		return stuckPoint;
+	}
+	public void setStuckPoint(List<StuckPoint> stuckPoint) {
+		this.stuckPoint = stuckPoint;
+	}
+	
 	@Override
 	public StringBuffer toText() {
 		StringBuffer aStringBuffer = new StringBuffer(4096);
@@ -217,11 +240,19 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 			aStringBuffer.append(removeList.get(index) + ", ");
 			aStringBuffer.append(predictionList.get(index) + ", ");
 			aStringBuffer.append(predictionCorrections.get(index) + ", ");
-			aStringBuffer.append(webLinks.get(index) + "\n"); 			
+			aStringBuffer.append((stuckInterval.get(index)==null? ", ":stuckInterval.get(index).toText())+", ");
+			aStringBuffer.append((stuckPoint.get(index)==null? "":stuckPoint.get(index).toText())+", ");
+			aStringBuffer.append(webLinks.get(index) + "\n"); 
+			
+	
+			
+			//test if null first
+			
 		}
 		return aStringBuffer;
 		
 	}
+
 	
 	
 

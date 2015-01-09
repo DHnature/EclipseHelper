@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +17,8 @@ import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
@@ -51,10 +52,10 @@ public class AnAnalyzer implements Analyzer  {
 	public static final String OUTPUT_DATA = "OutputData/";
 	public static final String ECLIPSE_FOLDER = "Eclipse/";
 	public static final String BROWSER_FOLDER = "Browser/";
-	
+
 	public static final String STUCKPOINT_FILE="data/GroundTruth/Stuckpoints.csv";
 	public static final String STUCKINTERVAL_FILE="data/GroundTruth/Stuck Intervals.csv";
-	
+
 	public static final String PARTICIPANT_INFORMATION_DIRECTORY = "data/ExperimentalData/";
 	public static final String PARTICIPANT_OUTPUT_DIRECTORY = "data/OutputData/";
 
@@ -64,24 +65,25 @@ public class AnAnalyzer implements Analyzer  {
 	public static final String IGNORE_KEYWORD="IGNORE";
 	static Hashtable<String, String> participants = new Hashtable<String, String>();
 
-	private Map<String, StuckPoint> stuckPoint;
-	private Map<String, StuckInterval> stuckInterval;
-	
+	static Map<String, Queue<StuckPoint>> stuckPoint=new HashMap<>();
+	static Map<String, Queue<StuckInterval>> stuckInterval=new HashMap<>();
+	static boolean stuckFileLoaded=false;
+
 	static long startTimeStamp;
 	List<List<ICommand>> nestedCommandsList;
 
 	FileSetterModel participantsFolder, ouputFolder, experimentalData;
 	AnAnalyzerParametersSelector parameters;
 	LogReader reader;
-//	protected Thread difficultyPredictionThread;	
-//	protected DifficultyPredictionRunnable difficultyPredictionRunnable;
-//	protected BlockingQueue<ICommand> pendingPredictionCommands;
+	//	protected Thread difficultyPredictionThread;	
+	//	protected DifficultyPredictionRunnable difficultyPredictionRunnable;
+	//	protected BlockingQueue<ICommand> pendingPredictionCommands;
 	DifficultyPredictionPluginEventProcessor difficultyEventProcessor;
 	List<AnalyzerListener> listeners = new ArrayList();
-	
-//	boolean newRatioFiles;
-	
-	
+
+	//	boolean newRatioFiles;
+
+
 	public AnAnalyzer() {
 		DifficultyPredictionSettings.setReplayMode(true);
 		DifficultyPredictionSettings.setSegmentLength(SEGMENT_LENGTH);
@@ -93,9 +95,6 @@ public class AnAnalyzer implements Analyzer  {
 		parameters.getParticipants().addChoice(ALL_PARTICIPANTS);
 		parameters.getParticipants().setValue(ALL_PARTICIPANTS);
 
-		stuckPoint=new HashMap<>();
-		stuckInterval=new HashMap<>();
-		
 	}
 	/* (non-Javadoc)
 	 * @see analyzer.Analyzer#getParticipantsFolder()
@@ -119,7 +118,7 @@ public class AnAnalyzer implements Analyzer  {
 	@Override
 	@Visible(false)
 	public void setParticipantsFolderName(String aName) {
-		 participantsFolder.setText(aName);
+		participantsFolder.setText(aName);
 	}
 	boolean directoryLoaded;
 	/* (non-Javadoc)
@@ -139,8 +138,8 @@ public class AnAnalyzer implements Analyzer  {
 		try {
 			br = new BufferedReader(new FileReader(
 					participantsFolder.getLabel().getText() + EXPERIMENTAL_DATA
-//					PARTICIPANT_INFORMATION_DIRECTORY
-							+ PARTICIPANT_INFORMATION_FILE));
+					//					PARTICIPANT_INFORMATION_DIRECTORY
+					+ PARTICIPANT_INFORMATION_FILE));
 			String word = null;
 			while ((word = br.readLine()) != null) {
 				String[] userInfo = word.split(",");
@@ -163,7 +162,7 @@ public class AnAnalyzer implements Analyzer  {
 	@Override
 	public boolean preLoadLogs() {
 		return directoryLoaded;
-//				&& !logsLoaded;
+		//				&& !logsLoaded;
 	}
 	boolean logsLoaded;
 	/* (non-Javadoc)
@@ -171,49 +170,71 @@ public class AnAnalyzer implements Analyzer  {
 	 */
 	@Override
 	@Visible(false)
-    public void loadLogs() {
+	public void loadLogs() {
 		final Runnable aRunnable = 
 				new Runnable() {
-					public void run() {
-						syncLoadLogs();
-					}};
-		Thread aThread = (new Thread(aRunnable));
-		aThread.start();
+			public void run() {
+				syncLoadLogs();
+			}};
+			Thread aThread = (new Thread(aRunnable));
+			aThread.start();
 	}
-	
+
 	/**Loads stuck point from the stuckpoint.csv file into the hashmap.
 	 * 
 	 */
 	public void loadStuckPoint() {
 		CSVParser parser=new ACSVParser();
 		parser.start(STUCKPOINT_FILE);
-		
+
 		parser.getNextLine();
 		String line;
 		while((line=parser.getNextLine()) != null) {
 			String[] split=line.split(",");
-			
+
 			if(split.length>0 && !split[0].trim().equals("")) {
 				StuckPoint p=new AStuckPoint();
+
+
+				String id=getId(split[0]);
+
 				try {
 					p.setDate(new SimpleDateFormat("hh:mm a").parse(split[1]));
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
 				p.setType(split[2]);
-				
-				System.out.println(p);
-				
-				this.stuckPoint.put(split[0], p);
-				
+
+
+				if(this.stuckPoint.get(id)==null){
+					this.stuckPoint.put(id, new PriorityQueue<StuckPoint>());
+
+				}
+
+				//get priority queue and add the new stuckpoint
+				this.stuckPoint.get(id).add((StuckPoint) p);
+
 			}
-			
-		
+
+
 		}
-		
+
 		parser.stop();
 	}
-	
+
+	private String getId(String participantName) {
+		for(String key:participants.keySet()) {
+			if(participants.get(key).equals(participantName)) {
+				return key;
+
+			}
+
+		}
+
+		return null;
+
+	}
+
 	/**Loads stuck interval from the stuck interval csv into the hashmap
 	 * 
 	 * 
@@ -221,126 +242,145 @@ public class AnAnalyzer implements Analyzer  {
 	public void loadStuckInterval() {
 		CSVParser parser=new ACSVParser();
 		parser.start(STUCKINTERVAL_FILE);
-		
+
 		parser.getNextLine();
 		String line;
 		while((line=parser.getNextLine()) != null) {
 			String[] split=line.split(",");
-			
+
 			if(split.length>0 && !split[0].trim().equals("")) {
 				StuckInterval p=new AStuckInterval();
-				
+
 				p.setParticipant(split[0]);
+				String id=getId(split[0]);;
+
 				try {
-					p.setDate(new SimpleDateFormat("hh:mm:ss").parse(split[1]));
-					
+					p.setDate(new SimpleDateFormat("HH:mm:ss").parse(split[1]));
+
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
 				p.setBarrierType(split[2]);
 				p.setSurmountability(split[3]);
-				
-		
-				this.stuckInterval.put(split[0], p);
-				
+
+
+				if(this.stuckInterval.get(id)==null){
+					this.stuckInterval.put(id, new PriorityQueue<StuckInterval>());
+
+				}
+
+				//get the priority queue and add the new stuck interval
+				this.stuckInterval.get(id).add((StuckInterval) p);
+
 			}
-			
+
 		}
-		
+
 		parser.stop();
-		
-		
+
+
 	}
-	
+
 	public void syncLoadLogs() {
 		FactoriesSelector.configureFactories();
 		String participantId = parameters.getParticipants().getValue();
 		String numberOfSegments = "" + parameters.getPredictionParameters().getSegmentLength();
 
-		//Load the stuck points and such
-		loadStuckInterval();
-		loadStuckPoint();
-		
+
+
+		//		Queue q=this.stuckPoint.get("19");
+		//		while(!q.isEmpty()) {
+		//			System.out.println(q.poll());
+		//			
+		//		}
+
 		if(participantId.equalsIgnoreCase(""))
 			participantId = ALL_PARTICIPANTS;
-		
+
 		if(numberOfSegments.equalsIgnoreCase(""))
 			numberOfSegments = "" + SEGMENT_LENGTH;
-		
+
 		//todo need to ask for discrete chunks or sliding window
 		//may d for discrete and s for sliding window
 
-//		scanIn.close();
- 
+		//		scanIn.close();
+
 		//Now get all the participants in a list
 		List<String> participantList=new ArrayList<String>(Arrays.asList(participantId.split(" ")));
 		participantList.removeAll(Collections.singleton(""));
-		
+
 		System.out.println("Processing logs for: " + participantId);
 		List<String> participantIds = parameters.getParticipants().getChoices();
 		List<List<ICommand>> commandsList;
-		
+
+		if(!stuckFileLoaded) {
+			//Load the stuck points and such
+			loadStuckInterval();
+			loadStuckPoint();
+			stuckFileLoaded=true;
+		}
+
 		if (participantList.get(0).equals(ALL_PARTICIPANTS)) {
 			boolean ignoreOn = false;
 			//Build the ignore list
 			if(participantList.size()>1 && participantList.get(1).equalsIgnoreCase(IGNORE_KEYWORD)) {
 				ignoreOn=true;
-				
+
 			}
-			
-			
+
+
 			notifyNewParticipant(ALL_PARTICIPANTS, null);
 			for (String aParticipantId:participantIds) {
 				if (aParticipantId.equals(ALL_PARTICIPANTS) ||
 						(ignoreOn && participantList.contains(aParticipantId))) {
-					
+
 					continue;
 				}
-		
+
 				processParticipant(aParticipantId);
-				
+
 			}
-			
+
 			notifyFinishParticipant(ALL_PARTICIPANTS, null);
-			
+
 		} else {
 			String aParticipanttFolder = participants.get(participantId);
 			processParticipant(participantId);
 
 		}
 		//old stuff, in case we need to revert 12/20/2014
-		
-//		if (participantId.equals(ALL_PARTICIPANTS)) {
-//			notifyNewParticipant(ALL_PARTICIPANTS, null);
-//			for (String aParticipantId:participantIds) {
-//				if (aParticipantId.equals(ALL_PARTICIPANTS)) {
-//					continue;
-//				}
-//				// integrated analyzer
-//				processParticipant(aParticipantId);
-////				waitForParticipantLogsToBeProcessed();
-//				
-//
-//// jason's code
-////				String aParticipanttFolder = participants.get(aParticipantId);
-////				commandsList = convertXMLLogToObjects(aParticipanttFolder);
-////				 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments,aParticipanttFolder);
-//			}
-//			
-//			notifyFinishParticipant(ALL_PARTICIPANTS, null);
-//		} else {
-//			String aParticipanttFolder = participants.get(participantId);
-//			processParticipant(participantId);
-//// jason's code, separator mediator
-////			commandsList =  convertXMLLogToObjects(aParticipanttFolder);
-////			DifficultyPredictionSettings.setRatiosFileName(aParticipanttFolder + "ratios.csv");
-////			processParticipant(participantId);
-////			 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments, aParticipanttFolder);
-//		}
+
+		//		if (participantId.equals(ALL_PARTICIPANTS)) {
+		//			notifyNewParticipant(ALL_PARTICIPANTS, null);
+		//			for (String aParticipantId:participantIds) {
+		//				if (aParticipantId.equals(ALL_PARTICIPANTS)) {
+		//					continue;
+		//				}
+		//				// integrated analyzer
+		//				processParticipant(aParticipantId);
+		////				waitForParticipantLogsToBeProcessed();
+		//				
+		//
+		//// jason's code
+		////				String aParticipanttFolder = participants.get(aParticipantId);
+		////				commandsList = convertXMLLogToObjects(aParticipanttFolder);
+		////				 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments,aParticipanttFolder);
+		//			}
+		//			
+		//			notifyFinishParticipant(ALL_PARTICIPANTS, null);
+		//		} else {
+		//			String aParticipanttFolder = participants.get(participantId);
+		//			processParticipant(participantId);
+		//// jason's code, separator mediator
+		////			commandsList =  convertXMLLogToObjects(aParticipanttFolder);
+		////			DifficultyPredictionSettings.setRatiosFileName(aParticipanttFolder + "ratios.csv");
+		////			processParticipant(participantId);
+		////			 MainConsoleUI.processCommands(participantsFolder.getText(), commandsList, numberOfSegments, aParticipanttFolder);
+		//		}
 
 		logsLoaded = true;
 	}
-	
+
 	public void processBrowserHistoryOfFolder (String aFolderName) {
 		String fullName =	aFolderName;
 		File folder = new File(fullName);
@@ -355,54 +395,54 @@ public class AnAnalyzer implements Analyzer  {
 		List<String> participantFiles = MainConsoleUI.getFilesForFolder(folder);
 		System.out.println("Particpant " + aFolderName + " has "
 				+ participantFiles.size() + " file(s)");
-//		System.out.println();
+		//		System.out.println();
 		for (int i = 0; i < participantFiles.size(); i++) {
 			String aFileName = fullName
 					+ participantFiles.get(i);
 			if (!aFileName.endsWith(".txt"))
 				continue;
-				
-//			List<ICommand> commands = reader.readAll(participantDirectory
-//					+ participantFiles.get(i));
+
+			//			List<ICommand> commands = reader.readAll(participantDirectory
+			//					+ participantFiles.get(i));
 			System.out.println("Reading " + aFileName);
 			processBrowserHistoryOfFile(aFileName);
-//			
-			
-//			listOfListOFcommands.add(commands);
+			//			
+
+			//			listOfListOFcommands.add(commands);
 		}
 		notifyFinishedBrowserLines();
 
-	
+
 	}
-	
+
 	public void processBrowserHistoryOfFile(String aFileName) {
 		try {
-		FileInputStream fis = new FileInputStream(aFileName);
-		 
-		//Construct BufferedReader from InputStreamReader
-		BufferedReader br = new BufferedReader(new InputStreamReader(fis));
-	 
-		String line = null;
-		while ((line = br.readLine()) != null) {
-//			System.out.println(line);
-			notifyNewBrowseLine(line);
-		}
-	 
-		br.close();
+			FileInputStream fis = new FileInputStream(aFileName);
+
+			//Construct BufferedReader from InputStreamReader
+			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+
+			String line = null;
+			while ((line = br.readLine()) != null) {
+				//			System.out.println(line);
+				notifyNewBrowseLine(line);
+			}
+
+			br.close();
 		} catch (Exception e) {
 			System.out.println("ProcessBrowserHstory" + e);
 		}
-		
+
 	}
 	void waitForParticipantLogsToBeProcessed() {
 		try {
-//			difficultyPredictionThread.join();
+			//			difficultyPredictionThread.join();
 			difficultyEventProcessor.getDifficultyPredictionThread().join();
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 	/* (non-Javadoc)
 	 * @see analyzer.Analyzer#processParticipant(java.lang.String)
@@ -413,7 +453,7 @@ public class AnAnalyzer implements Analyzer  {
 			PredictorConfigurer.visualizePrediction();
 		}
 		String aParticipantFolder = participants.get(aParticipantId);
-//		notifyNewParticipant(aParticipantId);
+		//		notifyNewParticipant(aParticipantId);
 		String aFullParticipantOutputFolderName =participantsFolder.getText() + OUTPUT_DATA + aParticipantFolder + "/";
 		String aFullParticipantDataFolderName =participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/" + ECLIPSE_FOLDER;
 		File anOutputFolder = new File(aFullParticipantOutputFolderName);
@@ -425,31 +465,31 @@ public class AnAnalyzer implements Analyzer  {
 			DifficultyPredictionSettings.setRatioFileExists(true);
 
 		} else {
-//		if (!aRatiosFile.exists())
-		try {
-			DifficultyPredictionSettings.setRatioFileExists(false);
-			aRatiosFile.createNewFile();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+			//		if (!aRatiosFile.exists())
+			try {
+				DifficultyPredictionSettings.setRatioFileExists(false);
+				aRatiosFile.createNewFile();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 		// erase file if it exists
 		if (aRatiosFile.exists() && DifficultyPredictionSettings.isNewRatioFiles())	
-		try {
-			FileOutputStream writer = new FileOutputStream(aRatiosFile);
-			writer.close();
+			try {
+				FileOutputStream writer = new FileOutputStream(aRatiosFile);
+				writer.close();
 
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		
-		
+			} catch (FileNotFoundException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+
+
 		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
 		DifficultyPredictionSettings.setRatiosFileName(aFullRatiosFileName);
 		difficultyEventProcessor = new ADifficultyPredictionPluginEventProcessor();
@@ -457,16 +497,16 @@ public class AnAnalyzer implements Analyzer  {
 		difficultyEventProcessor.commandProcessingStarted();
 		Mediator mediator = difficultyEventProcessor.getDifficultyPredictionRunnable().getMediator();
 
-//		difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
-//		pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
-//		difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
-//		difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
-//		difficultyPredictionThread.setPriority(Math.min(
-//				Thread.currentThread().getPriority(),
-//				DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
-//		difficultyPredictionThread.start();
-//		PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
-//		Mediator mediator = difficultyPredictionRunnable.getMediator();
+		//		difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
+		//		pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
+		//		difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
+		//		difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
+		//		difficultyPredictionThread.setPriority(Math.min(
+		//				Thread.currentThread().getPriority(),
+		//				DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
+		//		difficultyPredictionThread.start();
+		//		PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
+		//		Mediator mediator = difficultyPredictionRunnable.getMediator();
 		EventAggregator eventAggregator = mediator.getEventAggregator();
 		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer("" + DifficultyPredictionSettings.getSegmentLength()));
 		notifyNewParticipant(aParticipantId, aParticipantFolder);
@@ -476,35 +516,35 @@ public class AnAnalyzer implements Analyzer  {
 			List<ICommand> commands = nestedCommandsList.get(index);
 			for (int i = 0; i < commands.size(); i++) {
 				ICommand aCommand = commands.get(i);
-//				if ((commands.get(i).getTimestamp() == 0)
-//						&& (commands.get(i).getTimestamp2() > 0)) {
+				//				if ((commands.get(i).getTimestamp() == 0)
+				//						&& (commands.get(i).getTimestamp2() > 0)) {
 				if ((aCommand.getTimestamp() == 0)
-							&& (aCommand.getTimestamp2() > 0)) {
+						&& (aCommand.getTimestamp2() > 0)) {
 					// this is the starttimestamp
 					startTimeStamp = commands.get(i).getTimestamp2();
 					difficultyEventProcessor.newCommand(aCommand);
 
 					notifyStartTimeStamp(startTimeStamp);
-					
+
 				} else {
 					eventAggregator.setStartTimeStamp(startTimeStamp); // not sure this is ever useful
 					try {
-//						pendingPredictionCommands.put(commands.get(i));
-//						System.out.println("Put command:" + commands.get(i) );
-//						difficultyEventProcessor.recordCommand(commands.get(i));
+						//						pendingPredictionCommands.put(commands.get(i));
+						//						System.out.println("Put command:" + commands.get(i) );
+						//						difficultyEventProcessor.recordCommand(commands.get(i));
 						difficultyEventProcessor.newCommand(aCommand);
 
-//					} catch (InterruptedException e) {
+						//					} catch (InterruptedException e) {
 					} catch (Exception e) {
 
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					
-//					eventAggregator.getEventAggregationStrategy().performAggregation(commands.get(i), eventAggregator);
 
-					
-					
+					//					eventAggregator.getEventAggregationStrategy().performAggregation(commands.get(i), eventAggregator);
+
+
+
 				}
 
 			}
@@ -514,21 +554,21 @@ public class AnAnalyzer implements Analyzer  {
 		waitForParticipantLogsToBeProcessed();
 
 
-//		pendingPredictionCommands.add(new AnEndOfQueueCommand());
-//		try {
-////			difficultyPredictionThread.join();
-//			difficultyEventProcessor.getDifficultyPredictionThread().join();
-//		} catch (InterruptedException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		//		pendingPredictionCommands.add(new AnEndOfQueueCommand());
+		//		try {
+		////			difficultyPredictionThread.join();
+		//			difficultyEventProcessor.getDifficultyPredictionThread().join();
+		//		} catch (InterruptedException e) {
+		//			// TODO Auto-generated catch block
+		//			e.printStackTrace();
+		//		}
 		processBrowserHistoryOfFolder(participantsFolder.getText() + EXPERIMENTAL_DATA + aParticipantFolder + "/" + BROWSER_FOLDER);
 
 		notifyFinishParticipant(aParticipantId, aParticipantFolder);
-//		for (ICommand aCommand: commandsList) {
-//			
-//		}
-		
+		//		for (ICommand aCommand: commandsList) {
+		//			
+		//		}
+
 
 	}
 	/* (non-Javadoc)
@@ -537,10 +577,10 @@ public class AnAnalyzer implements Analyzer  {
 	@Override
 	public  List<List<ICommand>> convertXMLLogToObjects(
 			String aFolderName) {
-		
+
 		List<List<ICommand>> listOfListOFcommands = new Vector<List<ICommand>>();
-//		String fullName = participantsFolder.getText()
-//				+ aFolderName + "/";
+		//		String fullName = participantsFolder.getText()
+		//				+ aFolderName + "/";
 		String fullName =	aFolderName;
 		File folder = new File(fullName);
 		if (!folder.exists()) {
@@ -554,27 +594,27 @@ public class AnAnalyzer implements Analyzer  {
 		List<String> participantFiles = MainConsoleUI.getFilesForFolder(folder);
 		System.out.println("Particpant " + aFolderName + " has "
 				+ participantFiles.size() + " file(s)");
-		
+
 		for (int i = 0; i < participantFiles.size(); i++) {
 			String aFileName = fullName
 					+ participantFiles.get(i);
 			if (!aFileName.endsWith(".xml"))
 				continue;
-				
-//			List<ICommand> commands = reader.readAll(participantDirectory
-//					+ participantFiles.get(i));
+
+			//			List<ICommand> commands = reader.readAll(participantDirectory
+			//					+ participantFiles.get(i));
 			System.out.println("Reading " + aFileName);
-//			List<ICommand> commands;
+			//			List<ICommand> commands;
 			try {
-			List<ICommand> commands = reader.readAll(aFileName);
-			listOfListOFcommands.add(commands);
+				List<ICommand> commands = reader.readAll(aFileName);
+				listOfListOFcommands.add(commands);
 
 			} catch (Exception e) {
 				System.out.println("Could not read file" + aFileName + e);
-				
+
 			}
-			
-//			listOfListOFcommands.add(commands);
+
+			//			listOfListOFcommands.add(commands);
 		}
 
 		return listOfListOFcommands;
@@ -587,86 +627,86 @@ public class AnAnalyzer implements Analyzer  {
 	public AnAnalyzerParametersSelector getAnalyzerParameters() {
 		return parameters;
 	}
-//	@Visible(false)
-//	@Override
-//	public boolean isNewRatioFiles() {
-//		return DifficultyPredictionSettings.isNewRatioFiles();
-//	}
-//	@Override
-//	public void setNewRatioFiles(boolean newRatioFiles) {
-//		this.newRatioFiles = newRatioFiles;
-//	}
+	//	@Visible(false)
+	//	@Override
+	//	public boolean isNewRatioFiles() {
+	//		return DifficultyPredictionSettings.isNewRatioFiles();
+	//	}
+	//	@Override
+	//	public void setNewRatioFiles(boolean newRatioFiles) {
+	//		this.newRatioFiles = newRatioFiles;
+	//	}
 	//	int segmentLength = 50;
-//	@Row(1)
-//	public int getSegmentLength() {
-//		return segmentLength;
-//	}
-//	public void setSegmentLength(int newVal) {
-//		this.segmentLength = newVal;
-//	}
-	
+	//	@Row(1)
+	//	public int getSegmentLength() {
+	//		return segmentLength;
+	//	}
+	//	public void setSegmentLength(int newVal) {
+	//		this.segmentLength = newVal;
+	//	}
+
 	// let us do this in the analyzerprocessor
 	public static void maybeRecordFeatures(RatioFeatures details) {
-//		if (!DifficultyPredictionSettings.isReplayMode())  {
-//			LineGraphComposer.getLineGraph().newRatios(details);
-//			return;
-//		}
+		//		if (!DifficultyPredictionSettings.isReplayMode())  {
+		//			LineGraphComposer.getLineGraph().newRatios(details);
+		//			return;
+		//		}
 		if (!DifficultyPredictionSettings.isNewRatioFiles() && DifficultyPredictionSettings.isRatioFileExists())
 			return;
 		return;
-		
-//		String aFileName = DifficultyPredictionSettings.getRatiosFileName();
-//
-//
-//		long absoluteTime = startTimeStamp + details.getSavedTimeStamp();
-//		
-//		java.util.Date time=new Date(absoluteTime);
-//
-//		Calendar mydate = Calendar.getInstance();
-////		mydate.setTimeInMillis(details.getSavedTimeStamp());
-//		mydate.setTimeInMillis(absoluteTime);
-//		
-//		//mydate.get(Calendar.HOUR)
-//		//mydate.get(Calendar.MINUTE)
-//		//mydate.get(Calendar.SECOND)
-////		DateTime timestamp = new DateTime(details.getSavedTimeStamp());
-//		DateTime timestamp = new DateTime(absoluteTime);
-//
-//		//timestamp.get(timestamp)
-//		
-////		System.out.println(timestamp.toString("MM-dd-yyyy H:mm:ss"));
-//		try
-//		{
-////		    String filename= "/users/jasoncarter/filename.csv";
-////		    String filename = dataFolder + "ratios.csv";
-//		    FileWriter fw = new FileWriter(aFileName,true); //the true will append the new data
-//		   
-//		    fw.write(""+ details.getInsertionRatio());
-//		    fw.write(",");
-//		    fw.write("" + details.getDeletionRatio());
-//		    fw.write(",");
-//		    fw.write("" + details.getDebugRatio());
-//		    fw.write(",");
-//		    fw.write("" + details.getNavigationRatio());
-//		    fw.write(",");
-//		    fw.write("" + details.getFocusRatio());
-//		    fw.write(",");
-//			fw.write("" + details.getRemoveRatio());
-//			fw.write(",");
-//			String timeStampString = time.toString();
-//			timeStampString = timestamp.toString("MM-dd-yyyy H:mm:ss");
-////			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
-////			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
-//			fw.write("" + timeStampString);
-//			fw.write("\n");
-//		    fw.close();
-//		}
-//		catch(IOException ioe)
-//		{
-//		    System.err.println("IOException: " + ioe.getMessage());
-//		}
-		
-		
+
+		//		String aFileName = DifficultyPredictionSettings.getRatiosFileName();
+		//
+		//
+		//		long absoluteTime = startTimeStamp + details.getSavedTimeStamp();
+		//		
+		//		java.util.Date time=new Date(absoluteTime);
+		//
+		//		Calendar mydate = Calendar.getInstance();
+		////		mydate.setTimeInMillis(details.getSavedTimeStamp());
+		//		mydate.setTimeInMillis(absoluteTime);
+		//		
+		//		//mydate.get(Calendar.HOUR)
+		//		//mydate.get(Calendar.MINUTE)
+		//		//mydate.get(Calendar.SECOND)
+		////		DateTime timestamp = new DateTime(details.getSavedTimeStamp());
+		//		DateTime timestamp = new DateTime(absoluteTime);
+		//
+		//		//timestamp.get(timestamp)
+		//		
+		////		System.out.println(timestamp.toString("MM-dd-yyyy H:mm:ss"));
+		//		try
+		//		{
+		////		    String filename= "/users/jasoncarter/filename.csv";
+		////		    String filename = dataFolder + "ratios.csv";
+		//		    FileWriter fw = new FileWriter(aFileName,true); //the true will append the new data
+		//		   
+		//		    fw.write(""+ details.getInsertionRatio());
+		//		    fw.write(",");
+		//		    fw.write("" + details.getDeletionRatio());
+		//		    fw.write(",");
+		//		    fw.write("" + details.getDebugRatio());
+		//		    fw.write(",");
+		//		    fw.write("" + details.getNavigationRatio());
+		//		    fw.write(",");
+		//		    fw.write("" + details.getFocusRatio());
+		//		    fw.write(",");
+		//			fw.write("" + details.getRemoveRatio());
+		//			fw.write(",");
+		//			String timeStampString = time.toString();
+		//			timeStampString = timestamp.toString("MM-dd-yyyy H:mm:ss");
+		////			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
+		////			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
+		//			fw.write("" + timeStampString);
+		//			fw.write("\n");
+		//		    fw.close();
+		//		}
+		//		catch(IOException ioe)
+		//		{
+		//		    System.err.println("IOException: " + ioe.getMessage());
+		//		}
+
+
 
 	}
 	/* (non-Javadoc)
@@ -711,7 +751,7 @@ public class AnAnalyzer implements Analyzer  {
 			aListener.startTimeStamp(aStartTimeStamp);
 		}
 	}
-	
+
 	@Override
 	public void notifyNewBrowseLine(String aLine) {
 		for (AnalyzerListener aListener:listeners) {
@@ -723,14 +763,14 @@ public class AnAnalyzer implements Analyzer  {
 			aListener.newBrowseEntries(aDate, parts[1], parts[2]);
 		}
 	}
-	
+
 	public void notifyFinishedBrowserLines() {
 		for (AnalyzerListener aListener:listeners) {
 			aListener.finishedBrowserLines();
-			
+
 		}
 	}
-	
+
 	static Analyzer instance;
 	@Visible(false)
 	public static Analyzer getInstance() {
@@ -739,16 +779,27 @@ public class AnAnalyzer implements Analyzer  {
 		}
 		return instance;
 	}
+
+	public Map<String,Queue<StuckPoint>> getStuckPointMap() {
+		return this.stuckPoint;
+
+	}
+
+	public Map<String, Queue<StuckInterval>> getStuckIntervalMap(){
+		return this.stuckInterval;
+
+	}
+
+
 	public static void main (String[] args) {
-		
-		
-//		Analyzer analyzer = new AnAnalyzer();
+
+
+		//		Analyzer analyzer = new AnAnalyzer();
 		DifficultyPredictionSettings.setReplayMode(true);
 
 		OEFrame frame = ObjectEditor.edit(AnAnalyzer.getInstance());
 		frame.setSize(550, 450);
-		
-	
+
 	}
 
 }

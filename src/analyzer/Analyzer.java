@@ -1,9 +1,13 @@
 package analyzer;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 
 import util.annotations.Row;
 import util.annotations.Visible;
+import analyzer.extension.StuckInterval;
+import analyzer.extension.StuckPoint;
 import bus.uigen.models.FileSetterModel;
 import difficultyPrediction.DifficultyPredictionPluginEventProcessor;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -47,6 +51,10 @@ public interface Analyzer {
 	void notifyStartTimeStamp(long aStartTimeStamp);
 
 	void notifyFinishParticipant(String anId, String aFolder);
+	
+	Map<String,Queue<StuckPoint>> getStuckPointMap();
+	
+	Map<String, Queue<StuckInterval>> getStuckIntervalMap();
 
 //	boolean isNewRatioFiles();
 //

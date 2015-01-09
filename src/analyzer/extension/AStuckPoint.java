@@ -21,6 +21,16 @@ public class AStuckPoint implements StuckPoint{
 	public void setType(String type) {
 		this.type = type;
 	}
+	@Override
+	public int compareTo(StuckPoint o) {
+		return this.date.compareTo(o.getDate());
+		
+	}
+	@Override
+	public String toText() {
+		return this.type;
+
+	}
 	
 	
 	

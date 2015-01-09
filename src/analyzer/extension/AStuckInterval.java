@@ -37,4 +37,15 @@ public class AStuckInterval implements StuckInterval{
 	public void setSurmountability(String surmountability) {
 		this.surmountability = surmountability;
 	}
+	@Override
+	public int compareTo(StuckInterval o) {
+		return this.date.compareTo(o.getDate());
+		
+	}
+	@Override
+	public String toText() {
+		return this.barrierType
+				+", "+this.surmountability;
+		
+	}
 }
