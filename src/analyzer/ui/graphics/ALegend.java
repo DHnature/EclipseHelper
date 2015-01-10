@@ -120,21 +120,6 @@ public class ALegend implements Legend {
 		return webDisplayVisible;
 	}
 
-	public void setInsertion(boolean val) {
-		insertion = val;
-		List<List<Double>> lists = lineGraph.getLists();
-		ArrayList<Color> colors = lineGraph.getColors();
-		if (!insertion) {
-			lists.remove(lists.indexOf(lineGraph.getInsertionList()));
-			colors.remove(colors.indexOf(new Color(158, 0, 178)));
-			lineGraph.repaint();
-		} else {
-			lists.add(lineGraph.getInsertionList());
-			colors.add(new Color(158, 0, 178));
-			lineGraph.repaint();
-		}
-	}
-
 	@Row(1)
 	@Column(3)
 	@ComponentWidth(100)
@@ -161,6 +146,49 @@ public class ALegend implements Legend {
 		}
 	}
 
+	public void setEdit(boolean val) {
+		edit = val;
+		List<List<Double>> lists = lineGraph.getLists();
+		ArrayList<Color> colors = lineGraph.getColors();
+		if (!edit) {
+			lists.remove(lineGraph.getEditListIndex());
+			colors.remove(colors.indexOf(new Color(199, 21, 133)));
+			lineGraph.repaint();
+			updateIndicesAfterRemove(lineGraph.getEditListIndex());
+			lineGraph.setEditListIndex(-1);
+		} else {
+			lists.add(lineGraph.getEditList());
+			colors.add(new Color(199, 21, 133));
+			lineGraph.repaint();
+			lineGraph.setEditListIndex(lists.size() - 1);
+		}
+	}
+
+	@Row(0)
+	@Column(0)
+	@ComponentWidth(100)
+	public boolean getEdit() {
+		return edit;
+	}
+
+	public void setInsertion(boolean val) {
+		insertion = val;
+		List<List<Double>> lists = lineGraph.getLists();
+		ArrayList<Color> colors = lineGraph.getColors();
+		if (!insertion) {
+			lists.remove(lineGraph.getInsertionListIndex());
+			colors.remove(colors.indexOf(new Color(158, 0, 178)));
+			lineGraph.repaint();
+			updateIndicesAfterRemove(lineGraph.getInsertionListIndex());
+			lineGraph.setInsertionListIndex(-1);
+		} else {
+			lists.add(lineGraph.getInsertionList());
+			colors.add(new Color(158, 0, 178));
+			lineGraph.repaint();
+			lineGraph.setInsertionListIndex(lists.size() - 1);
+		}
+	}
+
 	@Row(0)
 	@Column(1)
 	@ComponentWidth(100)
@@ -168,40 +196,21 @@ public class ALegend implements Legend {
 		return insertion;
 	}
 
-	public void setEdit(boolean val) {
-		edit = val;
-		List<List<Double>> lists = lineGraph.getLists();
-		ArrayList<Color> colors = lineGraph.getColors();
-		if (!edit) {
-			lists.remove(lists.indexOf(lineGraph.getEditList()));
-			colors.remove(colors.indexOf(new Color(199, 21, 133)));
-			lineGraph.repaint();
-		} else {
-			lists.add(lineGraph.getEditList());
-			colors.add(new Color(199, 21, 133));
-			lineGraph.repaint();
-		}
-	}
-	
-	@Row(0)
-	@Column(0)
-	@ComponentWidth(100)
-	public boolean getEdit() {
-		return edit;
-	}
-	
 	public void setDeletion(boolean val) {
 		deletion = val;
 		List<List<Double>> lists = lineGraph.getLists();
 		ArrayList<Color> colors = lineGraph.getColors();
 		if (!deletion) {
-			lists.remove(lists.indexOf(lineGraph.getDeletionList()));
+			lists.remove(lineGraph.getDeletionListIndex());
 			colors.remove(colors.indexOf(new Color(79, 191, 10)));
 			lineGraph.repaint();
+			updateIndicesAfterRemove(lineGraph.getDeletionListIndex());
+			lineGraph.setDeletionListIndex(-1);
 		} else {
 			lists.add(lineGraph.getDeletionList());
 			colors.add(new Color(79, 191, 10));
 			lineGraph.repaint();
+			lineGraph.setDeletionListIndex(lists.size() - 1);
 		}
 	}
 
@@ -217,13 +226,16 @@ public class ALegend implements Legend {
 		List<List<Double>> lists = lineGraph.getLists();
 		ArrayList<Color> colors = lineGraph.getColors();
 		if (!debug) {
-			lists.remove(lists.indexOf(lineGraph.getDebugList()));
+			lists.remove(lineGraph.getDebugListIndex());
 			colors.remove(colors.indexOf(new Color(63, 0, 178)));
 			lineGraph.repaint();
+			updateIndicesAfterRemove(lineGraph.getDebugListIndex());
+			lineGraph.setDebugListIndex(-1);
 		} else {
 			lists.add(lineGraph.getDebugList());
 			colors.add(new Color(63, 0, 178));
 			lineGraph.repaint();
+			lineGraph.setDebugListIndex(lists.size() - 1);
 		}
 	}
 
@@ -239,13 +251,16 @@ public class ALegend implements Legend {
 		List<List<Double>> lists = lineGraph.getLists();
 		ArrayList<Color> colors = lineGraph.getColors();
 		if (!navigation) {
-			lists.remove(lists.indexOf(lineGraph.getNavigationList()));
+			lists.remove(lineGraph.getNavigationListIndex());
 			colors.remove(colors.indexOf(new Color(10, 190, 201)));
 			lineGraph.repaint();
+			updateIndicesAfterRemove(lineGraph.getNavigationListIndex());
+			lineGraph.setNavigationListIndex(-1);
 		} else {
 			lists.add(lineGraph.getNavigationList());
 			colors.add(new Color(10, 190, 201));
 			lineGraph.repaint();
+			lineGraph.setNavigationListIndex(lists.size() - 1);
 		}
 	}
 
@@ -261,13 +276,16 @@ public class ALegend implements Legend {
 		List<List<Double>> lists = lineGraph.getLists();
 		ArrayList<Color> colors = lineGraph.getColors();
 		if (!focus) {
-			lists.remove(lists.indexOf(lineGraph.getFocusList()));
+			lists.remove(lineGraph.getFocusListIndex());
 			colors.remove(colors.indexOf(new Color(201, 24, 10)));
 			lineGraph.repaint();
+			updateIndicesAfterRemove(lineGraph.getFocusListIndex());
+			lineGraph.setFocusListIndex(-1);
 		} else {
 			lists.add(lineGraph.getFocusList());
 			colors.add(new Color(201, 24, 10));
 			lineGraph.repaint();
+			lineGraph.setFocusListIndex(lists.size() - 1);
 		}
 	}
 
@@ -283,13 +301,16 @@ public class ALegend implements Legend {
 		List<List<Double>> lists = lineGraph.getLists();
 		ArrayList<Color> colors = lineGraph.getColors();
 		if (!remove) {
-			lists.remove(lists.indexOf(lineGraph.getRemoveList()));
+			lists.remove(lineGraph.getRemoveListIndex());
 			colors.remove(colors.indexOf(new Color(235, 172, 10)));
 			lineGraph.repaint();
+			updateIndicesAfterRemove(lineGraph.getRemoveListIndex());
+			lineGraph.setRemoveListIndex(-1);
 		} else {
 			lists.add(lineGraph.getRemoveList());
 			colors.add(new Color(235, 172, 10));
 			lineGraph.repaint();
+			lineGraph.setRemoveListIndex(lists.size() - 1);
 		}
 	}
 
@@ -300,4 +321,31 @@ public class ALegend implements Legend {
 		return remove;
 	}
 
+	private void updateIndicesAfterRemove(int indexOfListRemoved) {
+		if (lineGraph.getEditListIndex() > indexOfListRemoved) {
+			lineGraph.setEditListIndex(lineGraph.getEditListIndex() - 1);
+		}
+		if (lineGraph.getInsertionListIndex() > indexOfListRemoved) {
+			lineGraph
+					.setInsertionListIndex(lineGraph.getInsertionListIndex() - 1);
+		}
+		if (lineGraph.getDeletionListIndex() > indexOfListRemoved) {
+			lineGraph
+					.setDeletionListIndex(lineGraph.getDeletionListIndex() - 1);
+		}
+		if (lineGraph.getDebugListIndex() > indexOfListRemoved) {
+			lineGraph.setDebugListIndex(lineGraph.getDebugListIndex() - 1);
+		}
+		if (lineGraph.getNavigationListIndex() > indexOfListRemoved) {
+			lineGraph
+					.setNavigationListIndex(lineGraph.getNavigationListIndex() - 1);
+		}
+		if (lineGraph.getFocusListIndex() > indexOfListRemoved) {
+			lineGraph.setFocusListIndex(lineGraph.getFocusListIndex() - 1);
+		}
+		if (lineGraph.getRemoveListIndex() > indexOfListRemoved) {
+			lineGraph.setRemoveListIndex(lineGraph.getRemoveListIndex() - 1);
+		}
+
+	}
 }

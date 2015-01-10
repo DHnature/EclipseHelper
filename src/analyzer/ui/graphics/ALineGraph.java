@@ -39,6 +39,13 @@ public class ALineGraph extends JPanel implements LineGraph {
 	private List<Double> focusList = new ArrayList<Double>();
 	private List<Double> removeList = new ArrayList<Double>();
 	private List<Long> timeStampList = new ArrayList<Long>();
+	private int editListIndex = 0;
+	private int insertionListIndex = 1;
+	private int deletionListIndex = 2;
+	private int debugListIndex = 3;
+	private int navigationListIndex = 4;
+	private int focusListIndex = 5;
+	private int removeListIndex = 6;
 	private List<List<Double>> lists = new ArrayList<List<Double>>();
 	private int editKeyStart;
 	private int editKeyEnd;
@@ -524,6 +531,62 @@ public class ALineGraph extends JPanel implements LineGraph {
 
 	public List<Double> getFocusList() {
 		return focusList;
+	}
+	
+	public int getEditListIndex() {
+		return editListIndex;
+	}
+	
+	public void setEditListIndex(int newIndex) {
+		editListIndex = newIndex;
+	}
+
+	public int getInsertionListIndex() {
+		return insertionListIndex;
+	}
+	
+	public void setInsertionListIndex(int newIndex) {
+		insertionListIndex = newIndex;
+	}
+
+	public int getDeletionListIndex() {
+		return deletionListIndex;
+	}
+
+	public void setDeletionListIndex(int newIndex) {
+		deletionListIndex = newIndex;
+	}
+
+	public int getDebugListIndex() {
+		return debugListIndex;
+	}
+	
+	public void setDebugListIndex(int newIndex) {
+		debugListIndex = newIndex;
+	}
+
+	public int getNavigationListIndex() {
+		return navigationListIndex;
+	}
+	
+	public void setNavigationListIndex(int newIndex) {
+		navigationListIndex = newIndex;
+	}
+	
+	public int getFocusListIndex() {
+		return focusListIndex;
+	}
+	
+	public void setFocusListIndex(int newIndex) {
+		focusListIndex = newIndex;
+	}
+
+	public int getRemoveListIndex() {
+		return removeListIndex;
+	}
+	
+	public void setRemoveListIndex(int newIndex) {
+		removeListIndex = newIndex;
 	}
 
 	public ArrayList<Color> getColors() {
