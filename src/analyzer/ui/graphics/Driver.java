@@ -76,7 +76,7 @@ public class Driver {
 		ObjectEditor.editInMainContainer(counter, counterPanel);
 		ObjectEditor.editInMainContainer(reader, readerPanel);
 		ObjectEditor.editInMainContainer(checkboxes, checkboxPanel);
-		reader.readFile("data/ratios1.csv");
+//		reader.readFile("data/ratios1.csv");
 
 		// finalize
 		frame.pack();

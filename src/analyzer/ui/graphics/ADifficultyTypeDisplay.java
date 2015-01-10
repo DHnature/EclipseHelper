@@ -97,7 +97,8 @@ public class ADifficultyTypeDisplay extends JPanel implements
 		if (evt.getPropertyName().equalsIgnoreCase("newRatioFeatures")) {
 			newRatios((DuriRatioFeatures) evt.getNewValue());
 			repaint();
-		} else if (evt.getPropertyName().equalsIgnoreCase("start")) {
+		} else if (evt.getPropertyName().equalsIgnoreCase("start")
+				|| evt.getPropertyName().equalsIgnoreCase("size")) {
 			repaint();
 		}
 

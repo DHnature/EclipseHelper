@@ -51,9 +51,10 @@ public class AStatusBar extends JPanel implements StatusBar {
 
 		for (int i = counter.getStart(); i < counter.getEnd() - 1; i++) {
 			if (i < predictedList.size() - 1 && i >= 0) {
-				int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1) + X_BORDER_GAP);
+				int x = (xPos * (getWidth() - X_BORDER_GAP * 2)
+						/ (counter.getSize() - 1) + X_BORDER_GAP);
 				int y = Y_BORDER_GAP;
-				int width = (getWidth() - X_BORDER_GAP * 2) / 9;
+				int width = (getWidth() - X_BORDER_GAP * 2) /  counter.getSize() -1;
 				int height = getHeight() / 2 - Y_BORDER_GAP * 2 - SPACE_BETWEEN;
 				if (predictedList.get(i) == 0) {
 					// green
@@ -74,9 +75,10 @@ public class AStatusBar extends JPanel implements StatusBar {
 		xPos = 0;
 		for (int i = counter.getStart(); i < counter.getEnd() - 1; i++) {
 			if (i < actualList.size() - 1 && i >= 0) {
-				int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1) + X_BORDER_GAP);
+				int x = (xPos * (getWidth() - X_BORDER_GAP * 2)
+						/ (counter.getSize() - 1) + X_BORDER_GAP);
 				int y = Y_BORDER_GAP + (getHeight() / 2 - Y_BORDER_GAP * 2);
-				int width = (getWidth() - X_BORDER_GAP * 2) / 9;
+				int width = (getWidth() - X_BORDER_GAP * 2) /  counter.getSize() -1;
 				int height = getHeight() / 2 - Y_BORDER_GAP * 2 - SPACE_BETWEEN;
 				// this should be checked against 0 I think
 				if (actualList.get(i) == 0) {
@@ -111,7 +113,8 @@ public class AStatusBar extends JPanel implements StatusBar {
 		g2.setStroke(GRAPH_STROKE);
 		g2.setColor(Color.black);
 		int x0 = (counter.getCurrentTime() - counter.getStart())
-				* (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1) + X_BORDER_GAP;
+				* (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1)
+				+ X_BORDER_GAP;
 		int x1 = x0;
 		int y0 = Y_BORDER_GAP;
 		int y1 = Y_BORDER_GAP
@@ -126,7 +129,8 @@ public class AStatusBar extends JPanel implements StatusBar {
 		if (evt.getPropertyName().equalsIgnoreCase("newRatioFeatures")) {
 			newRatios((DuriRatioFeatures) evt.getNewValue());
 			repaint();
-		} else if (evt.getPropertyName().equalsIgnoreCase("start"))
+		} else if (evt.getPropertyName().equalsIgnoreCase("start")
+				|| evt.getPropertyName().equalsIgnoreCase("size"))
 			repaint();
 	}
 
@@ -165,35 +169,39 @@ public class AStatusBar extends JPanel implements StatusBar {
 		repaint();
 	}
 
-//	int lastStatusIndex;
+	// int lastStatusIndex;
 	int lastAggregateStatusIndex;
 	int lastAgrregateStatus = -1;
 	int lastStatus;
+
 	@Override
 	public void newStatus(String aStatus) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void newAggregatedStatus(String aStatus) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
 	@Override
 	public void newStatus(int aStatus) {
 		lastStatus = aStatus;
-		predictedList.add(aStatus); // will restore it when the next aggregated status is received 
+		predictedList.add(aStatus); // will restore it when the next aggregated
+									// status is received
 		actualList.add(-1);
 		repaint();
-//		predict
-		
+		// predict
+
 	}
+
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
 		System.err.println("Reset not implemented");
-		
+
 	}
 
 	@Override
@@ -202,6 +210,6 @@ public class AStatusBar extends JPanel implements StatusBar {
 			predictedList.set(index, lastAggregateStatusIndex);
 		}
 		predictedList.set(predictedList.size() - 1, aStatus);
-		
+
 	}
 }
