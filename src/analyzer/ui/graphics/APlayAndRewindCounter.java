@@ -146,15 +146,18 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 		propertyChangeSupport.firePropertyChange("start", oldStart, newValue);
 	}
 
+	@Row(0)
+	@Column(6)
+	@ComponentWidth(50)
 	public int getCurrentTime() {
 		return currentTime;
 	}
 
 	public void setCurrentTime(int newVal) {
-		// int oldTime = currentTime;
+		int oldTime = currentTime;
 		currentTime = newVal;
-		// propertyChangeSupport.firePropertyChange("currentTime", oldTime,
-		// newVal);
+		propertyChangeSupport
+				.firePropertyChange("currentTime", oldTime, newVal);
 	}
 
 	@Override
@@ -170,7 +173,7 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 	}
-	
+
 	@Row(0)
 	@Column(5)
 	@ComponentWidth(50)
@@ -183,11 +186,12 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 		displaySize = size;
 		propertyChangeSupport.firePropertyChange("size", oldSize, displaySize);
 	}
+
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
 		System.err.println("Reset not implemented");
-		
+
 	}
 
 }

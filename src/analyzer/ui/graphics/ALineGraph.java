@@ -427,7 +427,7 @@ public class ALineGraph extends JPanel implements LineGraph {
 		if (evt.getPropertyName().equalsIgnoreCase("newRatioFeatures")) {
 			newRatios((RatioFeatures) evt.getNewValue());
 			repaint();
-		} else if (evt.getPropertyName().equalsIgnoreCase("start") || evt.getPropertyName().equalsIgnoreCase("size"))
+		} else if (evt.getPropertyName().equalsIgnoreCase("start") || evt.getPropertyName().equalsIgnoreCase("size") || evt.getPropertyName().equalsIgnoreCase("currentTime"))
 			repaint();
 	}
 
