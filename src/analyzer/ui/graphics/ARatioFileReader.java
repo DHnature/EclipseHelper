@@ -93,7 +93,7 @@ public class ARatioFileReader implements RatioFileReader {
 		ratioFeatures.setRemoveRatio(Double.parseDouble(parts[7].trim()));
 		ratioFeatures.setPredictedStatus(Integer.parseInt(parts[8].trim()));
 		ratioFeatures.setActualStatus(Integer.parseInt(parts[9].trim()));
-		ratioFeatures.setDifficultyType(parts[10]);
+		ratioFeatures.setDifficultyType(parts[10].trim());
 		if (parts[11].equalsIgnoreCase(" null")) {
 			ratioFeatures.setWebLinkList(null);
 		} else {

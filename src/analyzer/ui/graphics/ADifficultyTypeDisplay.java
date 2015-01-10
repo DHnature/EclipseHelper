@@ -1,7 +1,6 @@
 package analyzer.ui.graphics;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
@@ -20,6 +19,7 @@ public class ADifficultyTypeDisplay extends JPanel implements
 	private RatioFileReader ratioFileReader;
 	private int X_BORDER_GAP = 60;
 	private int Y_BORDER_GAP = 10;
+	private static final int GRAPH_POINT_WIDTH = 8;
 
 	public ADifficultyTypeDisplay(PlayAndRewindCounter aCounter,
 			RatioFileReader aRatioFileReader) {
@@ -34,22 +34,32 @@ public class ADifficultyTypeDisplay extends JPanel implements
 	public void paint(Graphics g) {
 		super.paint(g); // clears the window
 		Graphics2D g2 = (Graphics2D) g;
+		g2.drawString("Type", 5, getHeight() / 2);
 		int xPos = 0;
 		for (int i = counter.getStart(); i < counter.getEnd() - 1; i++) {
 			if (i < difficultyTypeList.size() - 1 && i >= 0) {
 				if (difficultyTypeList.get(i) != null) {
-					int x = (xPos * (getWidth() - X_BORDER_GAP * 2) / (counter.getSize() - 1) + X_BORDER_GAP);
+					int x = (xPos * (getWidth() - X_BORDER_GAP * 2)
+							/ (counter.getSize() - 1) + X_BORDER_GAP);
 					int y = Y_BORDER_GAP;
-					g2.setColor(new Color(63, 0, 178));
-					g2.setFont(new Font("default", Font.BOLD, 14));
-					g2.drawString(difficultyTypeList.get(i), x, y);
+					if (difficultyTypeList.get(i).equalsIgnoreCase("design")) {
+						g2.setColor(new Color(201, 24, 10)); // red
+						g2.fillOval(x, y, GRAPH_POINT_WIDTH, GRAPH_POINT_WIDTH);
+					} else if (difficultyTypeList.get(i).equalsIgnoreCase(
+							"undesirable output")) {
+						g2.setColor(new Color(235, 172, 10)); // yellow
+						g2.fillOval(x, y, GRAPH_POINT_WIDTH, GRAPH_POINT_WIDTH);
+					} else if (difficultyTypeList.get(i)
+							.equalsIgnoreCase("API")) {
+						g2.setColor(new Color(10, 190, 201)); // teal
+						g2.fillOval(x, y, GRAPH_POINT_WIDTH, GRAPH_POINT_WIDTH);
+					}
+					xPos++;
 				}
-				xPos++;
 			} else {
 				break;
 			}
 		}
-
 	}
 
 	@Override
