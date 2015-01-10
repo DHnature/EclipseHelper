@@ -18,7 +18,7 @@ public interface LineGraph extends MouseListener, PropertyChangeListener,
 
 	public void connectTheDots(Graphics g2, Color color, List<Double> ratios);
 
-	public void setData(List<Double> newInsertionList,
+	public void setData(List<Double> newEditList, List<Double> newInsertionList,
 			List<Double> newDeletionList, List<Double> newDebugList,
 			List<Double> newNavigationList, List<Double> newFocusList,
 			List<Double> newRemoveList, List<Long> newTimeStampList);

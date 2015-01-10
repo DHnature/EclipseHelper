@@ -170,13 +170,18 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 	}
-
+	
+	@Row(0)
+	@Column(5)
+	@ComponentWidth(50)
 	public int getSize() {
 		return displaySize;
 	}
 
 	public void setSize(int size) {
+		int oldSize = displaySize;
 		displaySize = size;
+		propertyChangeSupport.firePropertyChange("size", oldSize, displaySize);
 	}
 	@Override
 	public void reset() {

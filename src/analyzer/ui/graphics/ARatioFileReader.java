@@ -84,16 +84,17 @@ public class ARatioFileReader implements RatioFileReader {
 		RatioFeatures oldRatioFeatures = new ARatioFeatures();
 		String[] parts = row.split(",");
 		SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy H:mm:ss");
-		ratioFeatures.setInsertionRatio(Double.parseDouble(parts[1]));
-		ratioFeatures.setDeletionRatio(Double.parseDouble(parts[2]));
-		ratioFeatures.setDebugRatio(Double.parseDouble(parts[3]));
-		ratioFeatures.setNavigationRatio(Double.parseDouble(parts[4]));
-		ratioFeatures.setFocusRatio(Double.parseDouble(parts[5]));
-		ratioFeatures.setRemoveRatio(Double.parseDouble(parts[6]));
-		ratioFeatures.setPredictedStatus(Integer.parseInt(parts[7]));
-		ratioFeatures.setActualStatus(Integer.parseInt(parts[8]));
-		ratioFeatures.setDifficultyType(parts[9]);
-		if (parts[10].equalsIgnoreCase(" null")) {
+		ratioFeatures.setEditRatio(Double.parseDouble(parts[1].trim()));
+		ratioFeatures.setInsertionRatio(Double.parseDouble(parts[2].trim()));
+		ratioFeatures.setDeletionRatio(Double.parseDouble(parts[3].trim()));
+		ratioFeatures.setDebugRatio(Double.parseDouble(parts[4].trim()));
+		ratioFeatures.setNavigationRatio(Double.parseDouble(parts[5].trim()));
+		ratioFeatures.setFocusRatio(Double.parseDouble(parts[6].trim()));
+		ratioFeatures.setRemoveRatio(Double.parseDouble(parts[7].trim()));
+		ratioFeatures.setPredictedStatus(Integer.parseInt(parts[8].trim()));
+		ratioFeatures.setActualStatus(Integer.parseInt(parts[9].trim()));
+		ratioFeatures.setDifficultyType(parts[10]);
+		if (parts[11].equalsIgnoreCase(" null")) {
 			ratioFeatures.setWebLinkList(null);
 		} else {
 			List<WebLink> list = new ArrayList<WebLink>();

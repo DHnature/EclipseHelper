@@ -21,6 +21,7 @@ public class ALegend implements Legend {
 	private boolean lineGraphVisible = true;
 	private boolean webDisplayVisible = true;
 	private boolean difficultyDisplayVisible = true;
+	private boolean edit = true;
 	private boolean remove = true;
 	private boolean insertion = true;
 	private boolean deletion = true;
@@ -161,12 +162,34 @@ public class ALegend implements Legend {
 	}
 
 	@Row(0)
-	@Column(0)
+	@Column(1)
 	@ComponentWidth(100)
 	public boolean getInsertion() {
 		return insertion;
 	}
 
+	public void setEdit(boolean val) {
+		edit = val;
+		List<List<Double>> lists = lineGraph.getLists();
+		ArrayList<Color> colors = lineGraph.getColors();
+		if (!edit) {
+			lists.remove(lists.indexOf(lineGraph.getEditList()));
+			colors.remove(colors.indexOf(new Color(199, 21, 133)));
+			lineGraph.repaint();
+		} else {
+			lists.add(lineGraph.getEditList());
+			colors.add(new Color(199, 21, 133));
+			lineGraph.repaint();
+		}
+	}
+	
+	@Row(0)
+	@Column(0)
+	@ComponentWidth(100)
+	public boolean getEdit() {
+		return edit;
+	}
+	
 	public void setDeletion(boolean val) {
 		deletion = val;
 		List<List<Double>> lists = lineGraph.getLists();
@@ -183,7 +206,7 @@ public class ALegend implements Legend {
 	}
 
 	@Row(0)
-	@Column(1)
+	@Column(2)
 	@ComponentWidth(100)
 	public boolean getDeletion() {
 		return deletion;
@@ -205,7 +228,7 @@ public class ALegend implements Legend {
 	}
 
 	@Row(0)
-	@Column(2)
+	@Column(3)
 	@ComponentWidth(100)
 	public boolean getDebug() {
 		return debug;
@@ -227,7 +250,7 @@ public class ALegend implements Legend {
 	}
 
 	@Row(0)
-	@Column(3)
+	@Column(4)
 	@ComponentWidth(100)
 	public boolean getNavigation() {
 		return navigation;
@@ -249,7 +272,7 @@ public class ALegend implements Legend {
 	}
 
 	@Row(0)
-	@Column(4)
+	@Column(5)
 	@ComponentWidth(100)
 	public boolean getFocus() {
 		return focus;
@@ -271,7 +294,7 @@ public class ALegend implements Legend {
 	}
 
 	@Row(0)
-	@Column(5)
+	@Column(6)
 	@ComponentWidth(100)
 	public boolean getRemove() {
 		return remove;

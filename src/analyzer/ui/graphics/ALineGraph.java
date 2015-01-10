@@ -31,6 +31,7 @@ public class ALineGraph extends JPanel implements LineGraph {
 	private static final int Y_HATCH_CNT = 5;
 	private static final int X_HATCH_CNT = 9;
 	private ArrayList<Color> colors = new ArrayList<Color>();
+	private List<Double> editList = new ArrayList<Double>();
 	private List<Double> insertionList = new ArrayList<Double>();
 	private List<Double> deletionList = new ArrayList<Double>();
 	private List<Double> debugList = new ArrayList<Double>();
@@ -39,6 +40,8 @@ public class ALineGraph extends JPanel implements LineGraph {
 	private List<Double> removeList = new ArrayList<Double>();
 	private List<Long> timeStampList = new ArrayList<Long>();
 	private List<List<Double>> lists = new ArrayList<List<Double>>();
+	private int editKeyStart;
+	private int editKeyEnd;
 	private int insertionKeyStart;
 	private int insertionKeyEnd;
 	private int deletionKeyStart;
@@ -65,12 +68,14 @@ public class ALineGraph extends JPanel implements LineGraph {
 		counter.addPropertyChangeListener(this);
 		ratioFileReader = aRatioFileReader;
 		ratioFileReader.addPropertyChangeListener(this);
+		lists.add(editList);
 		lists.add(insertionList);
 		lists.add(deletionList);
 		lists.add(debugList);
 		lists.add(navigationList);
 		lists.add(focusList);
 		lists.add(removeList);
+		colors.add(new Color(199, 21, 133));
 		colors.add(new Color(158, 0, 178));
 		colors.add(new Color(79, 191, 10));
 		colors.add(new Color(63, 0, 178));
@@ -172,6 +177,19 @@ public class ALineGraph extends JPanel implements LineGraph {
 				- Y_BORDER_GAP / 4 + 3);
 		int spaceBefore = X_BORDER_GAP;
 		g2.setStroke(GRAPH_STROKE);
+		
+		String edit = ("Edit");
+		g2.drawString(edit, spaceBefore,
+				Y_BORDER_GAP / 2 + (metrics.getHeight() / 2) - 3);
+		labelWidth = metrics.stringWidth(edit);
+		spaceBefore = spaceBefore + labelWidth + 5;
+		g2.setColor(new Color(199, 21, 133));
+		editKeyStart = spaceBefore;
+		editKeyEnd = spaceBefore + 30;
+		g2.drawLine(editKeyStart, Y_BORDER_GAP / 2, editKeyEnd,
+				Y_BORDER_GAP / 2);
+		g2.setColor(Color.black);
+		spaceBefore = spaceBefore + 30 + 5;
 
 		String insertion = ("Insertion");
 		g2.drawString(insertion, spaceBefore,
@@ -409,7 +427,7 @@ public class ALineGraph extends JPanel implements LineGraph {
 		if (evt.getPropertyName().equalsIgnoreCase("newRatioFeatures")) {
 			newRatios((RatioFeatures) evt.getNewValue());
 			repaint();
-		} else if (evt.getPropertyName().equalsIgnoreCase("start"))
+		} else if (evt.getPropertyName().equalsIgnoreCase("start") || evt.getPropertyName().equalsIgnoreCase("size"))
 			repaint();
 	}
 
@@ -423,6 +441,7 @@ public class ALineGraph extends JPanel implements LineGraph {
 			insertionList.add(ratioFeatures.getEditRatio());
 		else
 			insertionList.add(ratioFeatures.getInsertionRatio());
+		editList.add(ratioFeatures.getEditRatio());
 		deletionList.add(ratioFeatures.getDeletionRatio());
 		debugList.add(ratioFeatures.getDebugRatio());
 		navigationList.add(ratioFeatures.getNavigationRatio());
@@ -460,10 +479,11 @@ public class ALineGraph extends JPanel implements LineGraph {
 	//
 	// }
 
-	public void setData(List<Double> newInsertionList,
+	public void setData(List<Double> newEditList, List<Double> newInsertionList,
 			List<Double> newDeletionList, List<Double> newDebugList,
 			List<Double> newNavigationList, List<Double> newFocusList,
 			List<Double> newRemoveList, List<Long> newTimeStampList) {
+		editList = newEditList;
 		insertionList = newInsertionList;
 		deletionList = newDeletionList;
 		debugList = newDebugList;
@@ -476,6 +496,10 @@ public class ALineGraph extends JPanel implements LineGraph {
 
 	public List<List<Double>> getLists() {
 		return lists;
+	}
+	
+	public List<Double> getEditList() {
+		return editList;
 	}
 
 	public List<Double> getInsertionList() {
