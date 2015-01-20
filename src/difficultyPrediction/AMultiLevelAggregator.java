@@ -19,6 +19,7 @@ import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeaturesListener;
 import difficultyPrediction.metrics.APercentageCalculator;
 import difficultyPrediction.metrics.RatioCalculator;
+import difficultyPrediction.metrics.RatioCalculatorSelector;
 import difficultyPrediction.statusManager.StatusListener;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
@@ -42,7 +43,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		DifficultyRobot.getInstance().addStatusListener(this);
 		DifficultyRobot.getInstance().addPluginEventEventListener(this);
 		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
-		ratioCalculator = APercentageCalculator.getInstance();
+//		ratioCalculator = APercentageCalculator.getInstance();
+		ratioCalculator = RatioCalculatorSelector.getRatioFeatures();
 		propertyChangeSupport = new PropertyChangeSupport(this);
 
 	}
