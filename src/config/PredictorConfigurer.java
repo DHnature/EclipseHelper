@@ -17,9 +17,15 @@ public class PredictorConfigurer {
 		// below for demo UI, comment out when creating plug in
 //		EventRecorder.setAsyncFireEvent(false);
 		// change this for non replay or live mode
-		if (!DifficultyPredictionSettings.isReplayMode()) {
-			visualizePrediction(); // for running
+		if (DifficultyPredictionSettings.isReplayMode()) {
+			ReplayModePredictionConfigurer.configure();
 		}
+		else 
+			LiveModePredictionConfigurer.configure();
+//		if (!DifficultyPredictionSettings.isReplayMode()) {
+////			visualizePrediction(); // for running
+//			
+//		}
 
  	}
 	// can be called by analyzer

@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.PlatformUI;
 
 import trace.plugin.PluginThreadCreated;
-import config.FactoriesSelector;
+import config.InitializationSelector;
 import difficultyPrediction.extension.ADifficultyPredictionRegistry;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -276,7 +276,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	 */
 	@Override
 	public void commandProcessingStarted() {
-		FactoriesSelector.configureFactories();
+		InitializationSelector.configure();
 		maybeCreateDifficultyPredictionThread();
 		difficultyPredictionRunnable.add(new AStartOfQueueCommand());
 

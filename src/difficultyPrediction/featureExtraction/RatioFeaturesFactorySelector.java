@@ -14,4 +14,8 @@ public class RatioFeaturesFactorySelector {
 		return factory.createRatioFeatures();
 	}
 	
+	public static void init() {
+		factory = new ARatioFeaturesFactory();
+	}
+	
 }
