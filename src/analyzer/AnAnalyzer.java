@@ -35,7 +35,7 @@ import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import bus.uigen.models.AFileSetterModel;
 import bus.uigen.models.FileSetterModel;
-import config.InitializationSelector;
+import config.FactorySingletonInitializer;
 import config.PredictorConfigurer;
 import difficultyPrediction.ADifficultyPredictionPluginEventProcessor;
 import difficultyPrediction.DifficultyPredictionPluginEventProcessor;
@@ -282,7 +282,7 @@ public class AnAnalyzer implements Analyzer  {
 	}
 
 	public void syncLoadLogs() {
-		InitializationSelector.configure();
+		FactorySingletonInitializer.configure();
 		String participantId = parameters.getParticipants().getValue();
 		String numberOfSegments = "" + parameters.getPredictionParameters().getSegmentLength();
 

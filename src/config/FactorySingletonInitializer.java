@@ -7,13 +7,13 @@ import difficultyPrediction.metrics.ARatioCalculatorFactory;
 import difficultyPrediction.metrics.ATestRatioCalculatorFactory;
 import difficultyPrediction.metrics.RatioCalculatorSelector;
 
-public class InitializationSelector {
+public class FactorySingletonInitializer {
 	public static void configure() {
 		if (DifficultyPredictionSettings.isReplayMode()) {
-			ReplayModeInitializationSelector.configure();
+			ReplayModeInitializer.configure();
 		}
 		else 
-			LiveModeInitializationSelector.configure();
+			LiveModeInitializer.configure();
 
 	}
 

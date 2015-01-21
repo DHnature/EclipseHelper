@@ -58,7 +58,7 @@ import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import config.InitializationSelector;
+import config.FactorySingletonInitializer;
 import trace.logger.LogFileCreated;
 import trace.logger.LogHandlerBound;
 import trace.logger.MacroCommandsLogBegin;
