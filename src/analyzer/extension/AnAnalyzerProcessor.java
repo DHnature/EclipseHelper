@@ -62,6 +62,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	Integer lastCorrection = 0;
 	ParticipantTimeLine participantTimeLine;
 
+	private boolean isStuckPointFileGenerated;
 
 	@Override
 	public void newParticipant(String anId, String aFolder) {
@@ -70,7 +71,8 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		participantToTimeLine.put(anId, participantTimeLine );
 
 		currentParticipant=anId;
-
+		this.isStuckPointFileGenerated=false;
+		
 		if(aFolder!= null) {
 			DifficultyRobot.getInstance().addPluginEventEventListener(this);
 			DifficultyRobot.getInstance().addRatioFeaturesListener(this);
@@ -111,8 +113,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	}
 
 	//Add in the stuck interval and the stuck point data
-	private void addStuckData(ParticipantTimeLine l) {
-
+	public void addStuckData(ParticipantTimeLine l) {
 		
 		String participant=this.currentParticipant;
 

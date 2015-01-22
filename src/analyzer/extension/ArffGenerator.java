@@ -5,7 +5,7 @@ import difficultyPrediction.DifficultyPredictionEventListener;
 
 /**Arff file generator*/
 public interface ArffGenerator extends AnalyzerProcessor{
-	
+
 	
 	
 }

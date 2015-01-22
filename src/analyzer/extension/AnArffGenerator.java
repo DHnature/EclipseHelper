@@ -50,7 +50,10 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 		"focusPercentage","numeric",
 		"removePercentage","numeric",
 		"webLinkTimes","numeric",
+		//"barrierType","{none,\"undesirable output\",design,API}",
+		//"correction","{-1,0,1}",
 		"stuck","{YES,NO}"
+		
 	};
 	
 
@@ -154,6 +157,9 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 
 	/**Prep arff file method, called by newParticipant Method*/
 	private void prep() {
+		//add the stuck point data to the arff file
+		//super.addStuckData(super.participantTimeLine);
+		
 		//create a new bufferedwriter, with a different path
 
 
@@ -247,17 +253,20 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 		for(int i=0;i<p.getDebugList().size();i++) {
 			//get the correct numerical representation of predicition
 			long prediction=p.getPredictionCorrections().get(i)<0? p.getPredictions().get(i):p.getPredictionCorrections().get(i);
-
+			
 			arffWriter.writeData(
 					prediction==0? "NO":"YES", 
 //							p.getInsertionList().get(i),
 //							p.getDeletionList().get(i),
-							p.getEditList().get(i),
-							p.getDebugList().get(i),
-							p.getNavigationList().get(i),
-							p.getFocusList().get(i),
-							p.getRemoveList().get(i),
-							p.getWebLinks()==null?0:p.getWebLinks().get(i)==null?0:p.getWebLinks().get(i).size()
+							Double.toString(p.getEditList().get(i)),
+							Double.toString(p.getDebugList().get(i)),
+							Double.toString(p.getNavigationList().get(i)),
+							Double.toString(p.getFocusList().get(i)),
+							Double.toString(p.getRemoveList().get(i)),
+							Double.toString(p.getWebLinks()==null?0:p.getWebLinks().get(i)==null?0:p.getWebLinks().get(i).size())
+							//(p.getStuckInterval().get(i)==null?"none":p.getStuckInterval().get(i).getBarrierType().contains(" ")?"\""+p.getStuckInterval().get(i).getBarrierType()+"\"":
+							//	p.getStuckInterval().get(i).getBarrierType()),
+							//Integer.toString(p.getPredictionCorrections().get(i).intValue())
 					);
 			
 			
@@ -351,7 +360,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 		}
 
 		/**Writers the ratios in data along with the prediction*/
-		public ArffWriter writeData(String prediction, double ... data) {
+		public ArffWriter writeData(String prediction, String ... data) {
 			if(!this.datastarted) {
 				datastarted=true;
 				writeToArffFile("@data");
@@ -360,7 +369,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 			}
 
 			//write each ratio out
-			for(double d:data) {
+			for(String d:data) {
 				writeToArffFile(d+",");
 
 			}
@@ -405,7 +414,8 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 
 	}
 
-
+	Object b;
+	
 	public static void main(String[] args) {
 		Analyzer analyzer = new AnAnalyzer();
 		AnAnalyzerProcessor.analyzer=analyzer;
@@ -413,6 +423,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 		analyzer.addAnalyzerListener(arffGenerator);
 		OEFrame frame = ObjectEditor.edit(analyzer);
 		frame.setSize(550, 200);
+	
 
 	}
 
