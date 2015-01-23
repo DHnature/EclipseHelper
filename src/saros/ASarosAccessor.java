@@ -1,4 +1,5 @@
 package saros;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -6,21 +7,42 @@ import java.util.List;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.picocontainer.annotations.Inject;
 
 import de.fu_berlin.inf.dpp.accountManagement.*;
 import de.fu_berlin.inf.dpp.net.xmpp.JID;
+import de.fu_berlin.inf.dpp.session.ISarosSessionManager;
 import de.fu_berlin.inf.dpp.ui.util.CollaborationUtils;
 import de.fu_berlin.inf.dpp.ui.util.selection.retriever.SelectionRetrieverFactory;
 
 public class ASarosAccessor {
 	public static final String TEACHER_ID = "pd1@saros-con.imp.fu-berlin.de";
-
+	 @Inject
+	    private static ISarosSessionManager sessionManager;
 	JID teacherJID;
 	List<JID> contacts = new ArrayList();
 
 	public ASarosAccessor() {
 		  teacherJID = new JID(TEACHER_ID);
 		  contacts.add(teacherJID);
+		  Field f;
+		try {
+			f = CollaborationUtils.class.getDeclaredField("sessionManager");
+			  f.setAccessible(true);
+			  sessionManager = (ISarosSessionManager) f.get(CollaborationUtils.class); //IllegalAccessException
+
+
+		} catch (NoSuchFieldException | SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} //NoSuchFieldException
+ catch (IllegalArgumentException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		// TODO Auto-generated constructor stub
 	}
 	
