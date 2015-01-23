@@ -15,11 +15,15 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
+import saros.ASarosAccessor;
+
 public class InsurmountableDialog extends
 org.eclipse.jface.dialogs.TitleAreaDialog {
 
 	public InsurmountableDialog(Shell parentShell) {
 		super(parentShell);
+		// adding Saros code here for now, need to delete it later
+		ASarosAccessor.getInstance().shareFixedProjectWithFixedUser();
 	}
 	
 	@Override
