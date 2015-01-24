@@ -10,15 +10,23 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.picocontainer.annotations.Inject;
 
 import de.fu_berlin.inf.dpp.accountManagement.*;
+import de.fu_berlin.inf.dpp.monitoring.IProgressMonitor;
 import de.fu_berlin.inf.dpp.net.xmpp.JID;
+import de.fu_berlin.inf.dpp.project.SarosSessionManager;
+import de.fu_berlin.inf.dpp.session.ISarosSession;
+import de.fu_berlin.inf.dpp.session.ISarosSessionListener;
 import de.fu_berlin.inf.dpp.session.ISarosSessionManager;
+import de.fu_berlin.inf.dpp.session.User;
 import de.fu_berlin.inf.dpp.ui.util.CollaborationUtils;
 import de.fu_berlin.inf.dpp.ui.util.selection.retriever.SelectionRetrieverFactory;
 
-public class ASarosAccessor {
+public class ASarosAccessor implements ISarosSessionListener{
 	public static final String TEACHER_ID = "pd1@saros-con.imp.fu-berlin.de";
 	 @Inject
-	    private static ISarosSessionManager sessionManager;
+	    private static SarosSessionManager sessionManager;
+	 // the interface does not export enough
+//	    private static ISarosSessionManager sessionManager;
+
 	JID teacherJID;
 	List<JID> contacts = new ArrayList();
 
@@ -29,7 +37,8 @@ public class ASarosAccessor {
 		try {
 			f = CollaborationUtils.class.getDeclaredField("sessionManager");
 			  f.setAccessible(true);
-			  sessionManager = (ISarosSessionManager) f.get(CollaborationUtils.class); //IllegalAccessException
+			  sessionManager = (SarosSessionManager) f.get(CollaborationUtils.class); //IllegalAccessException
+			sessionManager.addSarosSessionListener(this);
 
 
 		} catch (NoSuchFieldException | SecurityException e) {
@@ -44,6 +53,11 @@ public class ASarosAccessor {
 			e.printStackTrace();
 		}
 		// TODO Auto-generated constructor stub
+	}
+	
+	public void resetIncomingHandler() {
+		
+		sessionManager.setNegotiationHandler(new EclipseHelperNegotiationHandler(sessionManager, null));
 	}
 	
 	public void shareFixedProjectWithFixedUser() {
@@ -72,6 +86,43 @@ public class ASarosAccessor {
 			instance = new ASarosAccessor();			
 		}
 		return instance;
+	}
+
+	@Override
+	public void postOutgoingInvitationCompleted(ISarosSession session,
+			User user, IProgressMonitor monitor) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sessionStarting(ISarosSession session) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sessionStarted(ISarosSession session) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sessionEnding(ISarosSession session) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void sessionEnded(ISarosSession session) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void projectAdded(String projectID) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
