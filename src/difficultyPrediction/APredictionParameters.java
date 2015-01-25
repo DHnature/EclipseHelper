@@ -1,5 +1,8 @@
 package difficultyPrediction;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import util.annotations.Column;
@@ -10,8 +13,9 @@ public class APredictionParameters implements PredictionParameters{
 	static PredictionParameters instance;
 	int segmentLength = 25;
 	int startupLag = 50;
-	int statusesAggregated = 5;
+	int statusAggregated = 5;
 	static OEFrame predictionFrame;
+	PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 	
 //	@Row(1)
 	@Row(0)
@@ -21,7 +25,10 @@ public class APredictionParameters implements PredictionParameters{
 		return segmentLength;
 	}
 	public void setSegmentLength(int newVal) {
+		int oldValue = segmentLength;
 		this.segmentLength = newVal;
+		propertyChangeSupport.firePropertyChange("SegmentLength", oldValue, newVal);
+		
 	}
 	@Row(0)
 	@Column(0)
@@ -29,17 +36,22 @@ public class APredictionParameters implements PredictionParameters{
 	public int getStartupLag() {
 		return startupLag;
 	}
-	public void setStartupLag(int startupLag) {
-		this.startupLag = startupLag;
+	public void setStartupLag(int newValue) {
+		int oldValue = startupLag;
+		this.startupLag = newValue;
+		propertyChangeSupport.firePropertyChange("StartupLag", oldValue, newValue);
+
 	}
 	@Row(0)
 	@Column(2)
 	@ComponentWidth(30)
 	public int getStatusAggregated() {
-		return statusesAggregated;
+		return statusAggregated;
 	}
-	public void setStatusAggregated(int statusesAggregated) {
-		this.statusesAggregated = statusesAggregated;
+	public void setStatusAggregated(int newValue) {
+		int oldValue = statusAggregated;
+		this.statusAggregated = newValue;
+		propertyChangeSupport.firePropertyChange("StatusAggregated", oldValue, newValue);
 	}
 	public static PredictionParameters getInstance() {
 		if (instance == null) {
@@ -57,13 +69,17 @@ public class APredictionParameters implements PredictionParameters{
 		}
 		predictionFrame = ObjectEditor.edit(getInstance());
 
-		predictionFrame.setSize(400, 100);
+		predictionFrame.setSize(450, 120);
 	}
 	@Override
 	public void reset() {
 		// TODO Auto-generated method stub
 		System.err.println("Reset not implemented");
 		
+	}
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener arg0) {
+		propertyChangeSupport.addPropertyChangeListener(arg0);
 	}
 
 }
