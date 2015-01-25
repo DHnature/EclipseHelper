@@ -7,7 +7,7 @@ import difficultyPrediction.APredictionParameters;
 
 public class LiveModePredictionConfigurer {
 	public static void configure() {
-		visualizePrediction();
+//		visualizePrediction();
 	}
 	// can be called by analyzer
 	public static void visualizePrediction() {

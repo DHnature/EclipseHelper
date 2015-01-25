@@ -29,6 +29,12 @@ public class EclipseHelperNegotiationHandler extends NegotiationHandler{
 		super(sessionManager, connectionService);
 		// TODO Auto-generated constructor stub
 	}
+	@Override
+    public void handleIncomingSessionNegotiation(
+        IncomingSessionNegotiation negotiation) {
+        showIncomingInvitationUI(negotiation);
+    }
+
 	
 	private void showIncomingInvitationUI(
 	        final IncomingSessionNegotiation process) {
@@ -65,9 +71,11 @@ public class EclipseHelperNegotiationHandler extends NegotiationHandler{
 
 	                // as we are not interested in the result
 	                wizardDialog.setBlockOnOpen(false);
-
+	                // as we re automatically accepting, no need to show dialog
 	                DialogUtils.openWindow(wizardDialog);
-	            }
+	                sessionWizard.performFinish();	
+	                wizardDialog.close();
+	                }
 	        });
 	    }
 
