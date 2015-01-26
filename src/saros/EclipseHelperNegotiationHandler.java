@@ -94,8 +94,10 @@ public class EclipseHelperNegotiationHandler extends NegotiationHandler{
 
             @Override
             public void run() {
-                AddProjectToSessionWizard projectWizard = new AddProjectToSessionWizard(
-                    process, process.getPeer(), fileLists);
+//                AddProjectToSessionWizard projectWizard = new AddProjectToSessionWizard(
+//                    process, process.getPeer(), fileLists);
+                EclipseHelperAddProjectToSessionWizard projectWizard = new EclipseHelperAddProjectToSessionWizard(
+                        process, process.getPeer(), fileLists);
 
                 final WizardDialogAccessable wizardDialog = new WizardDialogAccessable(
                     SWTUtils.getShell(), projectWizard, SWT.MIN | SWT.MAX,
