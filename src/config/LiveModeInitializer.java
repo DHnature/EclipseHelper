@@ -14,9 +14,7 @@ public class LiveModeInitializer {
 		RatioFeaturesFactorySelector.setFactory(new ARatioFeaturesFactory());
 //		RatioCalculatorSelector.setFactory(new ATestRatioCalculatorFactory());
 		RatioCalculatorSelector.setFactory(new ARatioCalculatorFactory());
-//		PredictionParametersSetterSelector.setSingleton(new APredictionParametersSetter());
-		PredictionParametersSetterSelector.setSingleton(new ATestPredictionParametersSetter());
-
+		PredictionParametersSetterSelector.setSingleton(new APredictionParametersSetter());
 
 	}
 
