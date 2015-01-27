@@ -1,6 +1,7 @@
 package config;
 
 import difficultyPrediction.DifficultyPredictionSettings;
+import difficultyPrediction.PredictionParametersSetterSelector;
 import difficultyPrediction.featureExtraction.ARatioFeaturesFactory;
 import difficultyPrediction.featureExtraction.RatioFeaturesFactorySelector;
 import difficultyPrediction.metrics.ARatioCalculatorFactory;
@@ -15,6 +16,8 @@ public class FactorySingletonInitializer {
 		else 
 			LiveModeInitializer.configure();
 
+		
+	PredictionParametersSetterSelector.getSingleton().setPredictionParameters();
 	}
 
 }

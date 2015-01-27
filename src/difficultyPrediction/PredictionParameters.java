@@ -3,8 +3,9 @@ package difficultyPrediction;
 import analyzer.Resettable;
 import util.annotations.Column;
 import util.annotations.Row;
+import util.models.PropertyListenerRegisterer;
 
-public interface PredictionParameters extends Resettable {
+public interface PredictionParameters extends Resettable, PropertyListenerRegisterer {
 	
 	public int getSegmentLength() ;
 	public void setSegmentLength(int newVal);

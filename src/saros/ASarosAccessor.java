@@ -55,8 +55,7 @@ public class ASarosAccessor implements ISarosSessionListener{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void resetIncomingHandler() {
-		
+	public void resetIncomingHandler() {		
 		sessionManager.setNegotiationHandler(new EclipseHelperNegotiationHandler(sessionManager, null));
 	}
 	

@@ -82,7 +82,12 @@ public class ADifficultyPredictionRunnable implements DifficultyPredictionRunnab
 				} else if (!(newCommand instanceof PredictionCommand)){
 					System.out.println("Ignoreing difficulty status Command " + newCommand);
 				} else {
-					String lastStatus = HelpViewPart.getStatusInformation();
+					String lastStatus = null;
+					try {
+					lastStatus = HelpViewPart.getStatusInformation();
+					} catch (Exception e) {
+						System.out.println ("Could not get last status");
+					}
 					final String currentStatus = getStatus((PredictionCommand) newCommand);
 					if (!currentStatus.equals(lastStatus)) {
 					if (DifficultyPredictionSettings.isReplayMode()) {

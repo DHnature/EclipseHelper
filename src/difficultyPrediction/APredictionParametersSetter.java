@@ -6,6 +6,7 @@ public class APredictionParametersSetter implements PredictionParametersSetter {
 	public static int STATUSES_AGGREGATED = 5;
 	public void setPredictionParameters() {
 		PredictionParameters predictionParameters = APredictionParameters.getInstance();
+		predictionParameters.setStartupLag(START_UP_LAG);
 		predictionParameters.setSegmentLength(SEGMENT_LENGTH);
 		predictionParameters.setStatusAggregated(STATUSES_AGGREGATED);
 		
