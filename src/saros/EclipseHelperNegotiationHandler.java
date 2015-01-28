@@ -123,8 +123,11 @@ public class EclipseHelperNegotiationHandler extends NegotiationHandler{
 
                 wizardDialog.setHelpAvailable(false);
                 projectWizard.setWizardDlg(wizardDialog);
-
+                
                 DialogUtils.openWindow(wizardDialog);
+                projectWizard.performFinish();
+                wizardDialog.close();
+                
             }
         });
     }
