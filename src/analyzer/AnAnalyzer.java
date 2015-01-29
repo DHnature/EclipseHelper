@@ -41,6 +41,7 @@ import difficultyPrediction.ADifficultyPredictionPluginEventProcessor;
 import difficultyPrediction.DifficultyPredictionPluginEventProcessor;
 import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.Mediator;
+import difficultyPrediction.PredictionParametersSetterSelector;
 import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -508,7 +509,7 @@ public class AnAnalyzer implements Analyzer  {
 		//		PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
 		//		Mediator mediator = difficultyPredictionRunnable.getMediator();
 		EventAggregator eventAggregator = mediator.getEventAggregator();
-		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer("" + DifficultyPredictionSettings.getSegmentLength()));
+		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer("" + PredictionParametersSetterSelector.getSingleton().getSegmentLength()));
 		notifyNewParticipant(aParticipantId, aParticipantFolder);
 
 		startTimeStamp = 0;

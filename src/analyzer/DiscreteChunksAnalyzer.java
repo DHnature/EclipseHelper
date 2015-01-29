@@ -1,6 +1,7 @@
 package analyzer;
 
 import difficultyPrediction.APredictionParameters;
+import difficultyPrediction.PredictionParametersSetterSelector;
 import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.eventAggregation.EventAggregationStrategy;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
@@ -15,7 +16,7 @@ public class DiscreteChunksAnalyzer implements EventAggregationStrategy {
 
 	int m_numberOfEvents;
 	private boolean ignoreEvents;
-	private int numberOfEventsToIgnore = 50;
+	private int numberOfEventsToIgnore = PredictionParametersSetterSelector.getSingleton().getStartupLag();
 	private EventAggregatorArray actions = new EventAggregatorArray();
 	
 	public DiscreteChunksAnalyzer(String numberOfEvents) {

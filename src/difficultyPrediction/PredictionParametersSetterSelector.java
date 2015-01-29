@@ -1,12 +1,13 @@
 package difficultyPrediction;
 
 public class PredictionParametersSetterSelector {
-	static PredictionParametersSetter singleton = new APredictionParametersSetter();
+	static PredictionParametersSetter Parameter_Setter = new APredictionParametersSetter();
 	public static PredictionParametersSetter getSingleton() {
-		return singleton;
+		return Parameter_Setter;
 	}
 
 	public static void setSingleton(PredictionParametersSetter newVal) {
-		singleton = newVal;
+		Parameter_Setter = newVal;
 	}
+	
 }

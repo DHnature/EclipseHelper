@@ -1,7 +1,9 @@
 package difficultyPrediction.eventAggregation;
 
+import difficultyPrediction.APredictionParameters;
+import difficultyPrediction.PredictionParametersSetterSelector;
 import edu.cmu.scs.fluorite.commands.ICommand;
-import difficultyPrediction.APredictionParameters; 
+import difficultyPrediction.APredictionParametersSetter;
 
 public class ADisjointDiscreteChunks implements EventAggregationStrategy {
 
@@ -20,10 +22,12 @@ public class ADisjointDiscreteChunks implements EventAggregationStrategy {
 		ignoreEvents = DEFAULT_IGNORE;
 	}
 	int numberOfEventsToIgnore() {
-	return APredictionParameters.getInstance().getStartupLag();
+		
+		return APredictionParameters.getInstance().getStartupLag();
 
 }
 	int maxNumberOfEvents() {
+	
 	return APredictionParameters.getInstance().getSegmentLength();
 
 }

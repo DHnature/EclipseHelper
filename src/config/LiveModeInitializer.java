@@ -12,11 +12,11 @@ import difficultyPrediction.metrics.RatioCalculatorSelector;
 public class LiveModeInitializer {
 	public static void configure() {
 		RatioFeaturesFactorySelector.setFactory(new ARatioFeaturesFactory());
-//		RatioCalculatorSelector.setFactory(new ATestRatioCalculatorFactory());
-		RatioCalculatorSelector.setFactory(new ARatioCalculatorFactory());
+		RatioCalculatorSelector.setFactory(new ATestRatioCalculatorFactory());
+//		RatioCalculatorSelector.setFactory(new ARatioCalculatorFactory());
 //		PredictionParametersSetterSelector.setSingleton(new APredictionParametersSetter());
 		PredictionParametersSetterSelector.setSingleton(new ATestPredictionParametersSetter());
-
+		
 
 	}
 

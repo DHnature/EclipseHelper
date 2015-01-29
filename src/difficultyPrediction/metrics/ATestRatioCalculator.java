@@ -56,15 +56,14 @@ public class ATestRatioCalculator implements RatioCalculator {
 	public boolean isEditEvent(ICommand event) {
 		boolean isEditEvent = false;
 		if ((event.getCommandType().equals("CopyCommand"))
-				|| (event.getCommandType().equals("CutCommand"))
-				|| (event.getCommandType().equals("Delete"))
+			
 				|| (event.getCommandType().equals("Insert"))
 				|| (event.getCommandType().equals("InsertStringCommand"))
 				|| (event.getCommandType().equals("PasteCommand"))
 				|| (event.getCommandType().equals("RedoCommand"))
-				|| (event.getCommandType().equals("Replace"))
+			
 				|| (event.getCommandType().equals("SelectTextCommand"))
-				|| (event.getCommandType().equals("UndoCommand"))
+				
 
 		) {
 			isEditEvent = true;
@@ -166,7 +165,13 @@ public class ATestRatioCalculator implements RatioCalculator {
 	@Override
 	public boolean isAddRemoveEvent(ICommand event) {
 		boolean isAddRemoveEvent = false;
-		// only had code for visual studio events here
+
+		if( (event.getCommandType().equals("CutCommand"))
+		|| (event.getCommandType().equals("Delete"))
+		|| (event.getCommandType().equals("Replace"))
+		|| (event.getCommandType().equals("UndoCommand")))
+			isAddRemoveEvent=true;
+		
 		return isAddRemoveEvent;
 	}
 
