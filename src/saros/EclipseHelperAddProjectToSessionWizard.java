@@ -27,7 +27,6 @@ import de.fu_berlin.inf.dpp.negotiation.FileListDiff;
 import de.fu_berlin.inf.dpp.negotiation.IncomingProjectNegotiation;
 import de.fu_berlin.inf.dpp.net.IConnectionManager;
 import de.fu_berlin.inf.dpp.net.xmpp.JID;
-import de.fu_berlin.inf.dpp.preferences.PreferenceUtils;
 import de.fu_berlin.inf.dpp.project.SarosSessionManager;
 import de.fu_berlin.inf.dpp.session.ISarosSession;
 import de.fu_berlin.inf.dpp.session.ISarosSessionManager;
@@ -47,9 +46,8 @@ public class EclipseHelperAddProjectToSessionWizard extends AddProjectToSessionW
 	List<FileList> fileLists;	
 	Field sessionManagerField;
 	Field  connectionManagerField;
-	Field namePageField;
-	Field preferenceUtilsField;
-	EclipseHelperEnterProjectNamePage myNamePage;
+//	Field namePageField;
+//	Field preferenceUtilsField;
 	String localProjectName;
 	Method getOpenEditorsForSharedProjectsMethod, displaySaveDirtyEditorsDialogMethod, 
 	createProjectsAndGetModifiedResourcesMethod, confirmOverwritingResourcesMethod, triggerProjectNegotiationMethod  ;
@@ -65,10 +63,10 @@ public class EclipseHelperAddProjectToSessionWizard extends AddProjectToSessionW
 			sessionManagerField.setAccessible(true);
 			connectionManagerField = AddProjectToSessionWizard.class.getDeclaredField("connectionManager");
 			connectionManagerField.setAccessible(true);
-			namePageField = AddProjectToSessionWizard.class.getDeclaredField("namePage");
-			namePageField.setAccessible(true);
-			preferenceUtilsField = AddProjectToSessionWizard.class.getDeclaredField("preferenceUtils");
-			preferenceUtilsField.setAccessible(true);
+//			namePageField = AddProjectToSessionWizard.class.getDeclaredField("namePage");
+//			namePageField.setAccessible(true);
+//			preferenceUtilsField = AddProjectToSessionWizard.class.getDeclaredField("preferenceUtils");
+//			preferenceUtilsField.setAccessible(true);
 			Method[] methods = AddProjectToSessionWizard.class.getDeclaredMethods();
 			for (Method method:methods) {
 				String methodName = method.getName();
@@ -98,31 +96,31 @@ public class EclipseHelperAddProjectToSessionWizard extends AddProjectToSessionW
 		// TODO Auto-generated constructor stub
 	}
 	
-	 @Override
-	    public void addPages() {
-//		 super.addPages();
-		 
-		 try {
-			ISarosSessionManager sessionManager = (ISarosSessionManager) sessionManagerField.get(this);
-			 IConnectionManager connectionManager = (IConnectionManager) connectionManagerField.get(this);
-			
-			myNamePage = (EclipseHelperEnterProjectNamePage) namePageField.get(this);
-
-		 
-	        ISarosSession session = sessionManager.getSarosSession();
-	        PreferenceUtils preferenceUtils = (PreferenceUtils) preferenceUtilsField.get(this);
-	        if (session == null)
-	            return;
-
-	        myNamePage = new EclipseHelperEnterProjectNamePage(session, connectionManager,
-	            preferenceUtils, fileLists, peer, process.getProjectNames());
-	        namePageField.set(this, myNamePage);
-
-	        addPage(myNamePage);
-	    } catch (Exception e) {
-	    	e.printStackTrace();
-	    }
-	 }
+//	 @Override
+//	    public void addPages() {
+////		 super.addPages();
+//		 
+//		 try {
+//			ISarosSessionManager sessionManager = (ISarosSessionManager) sessionManagerField.get(this);
+//			 IConnectionManager connectionManager = (IConnectionManager) connectionManagerField.get(this);
+//			
+//			myNamePage = (EnterProjectNamePage) namePageField.get(this);
+//
+//		 
+//	        ISarosSession session = sessionManager.getSarosSession();
+//	        PreferenceUtils preferenceUtils = (PreferenceUtils) preferenceUtilsField.get(this);
+//	        if (session == null)
+//	            return;
+//
+//	        myNamePage = new EclipseHelperEnterProjectNamePage(session, connectionManager,
+//	            preferenceUtils, fileLists, peer, process.getProjectNames());
+//	        namePageField.set(this, myNamePage);
+//
+//	        addPage(myNamePage);
+//	    } catch (Exception e) {
+//	    	e.printStackTrace();
+//	    }
+//	 }
 	 
 	 public void setLocalProjectName () {
 		 String aPeerName = peer.getName();
