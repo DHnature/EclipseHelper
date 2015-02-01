@@ -21,7 +21,7 @@ import de.fu_berlin.inf.dpp.ui.util.CollaborationUtils;
 import de.fu_berlin.inf.dpp.ui.util.selection.retriever.SelectionRetrieverFactory;
 
 public class ASarosAccessor implements ISarosSessionListener{
-	public static final String TEACHER_ID = "pd1@saros-con.imp.fu-berlin.de";
+	public static final String TEACHER_ID = "pd@saros-con.imp.fu-berlin.de";
 	 @Inject
 	    private static SarosSessionManager sessionManager;
 	 // the interface does not export enough
