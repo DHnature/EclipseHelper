@@ -2,9 +2,9 @@ package difficultyPrediction;
 
 public class ATestPredictionParametersSetter implements PredictionParametersSetter {
 //	public static int SEGMENT_LENGTH = 25;
-	private static int SEGMENT_LENGTH = 25;
+	private static int SEGMENT_LENGTH = 75;
 //	public static int START_UP_LAG = 50;
-	private static int START_UP_LAG = 15;
+	private static int START_UP_LAG = 25;
 	private static int STATUSES_AGGREGATED = 3;
 	public void setPredictionParameters() {
 		PredictionParameters predictionParameters = APredictionParameters.getInstance();

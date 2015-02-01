@@ -27,7 +27,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 				|| (event.getCommandType().equals("RunCommand"))) {
 			isDebugEvent = true;
 		}
-		
+
 		if(event.getCommandType().equals("CompilationCommand"))
 		{
 			CompilationCommand command = (CompilationCommand)event;
@@ -56,16 +56,19 @@ public class ATestRatioCalculator implements RatioCalculator {
 	public boolean isEditEvent(ICommand event) {
 		boolean isEditEvent = false;
 		if ((event.getCommandType().equals("CopyCommand"))
-			
+
 				|| (event.getCommandType().equals("Insert"))
 				|| (event.getCommandType().equals("InsertStringCommand"))
 				|| (event.getCommandType().equals("PasteCommand"))
 				|| (event.getCommandType().equals("RedoCommand"))
-			
 				|| (event.getCommandType().equals("SelectTextCommand"))
+				|| (event.getCommandType().equals("CutCommand"))
+				
+				|| (event.getCommandType().equals("Replace"))
 				
 
-		) {
+
+				) {
 			isEditEvent = true;
 		}
 
@@ -166,12 +169,11 @@ public class ATestRatioCalculator implements RatioCalculator {
 	public boolean isAddRemoveEvent(ICommand event) {
 		boolean isAddRemoveEvent = false;
 
-		if( (event.getCommandType().equals("CutCommand"))
-		|| (event.getCommandType().equals("Delete"))
-		|| (event.getCommandType().equals("Replace"))
-		|| (event.getCommandType().equals("UndoCommand")))
+		if (event.getCommandType().equals("Delete")
+				|| (event.getCommandType().equals("UndoCommand")))
 			isAddRemoveEvent=true;
-		
+
+
 		return isAddRemoveEvent;
 	}
 
@@ -337,32 +339,32 @@ public class ATestRatioCalculator implements RatioCalculator {
 	 */
 	@Override
 	public  String getFeatureName(ICommand myEvent) {
-		
-			if (isEditEvent(myEvent)) {
-				return "Edit";
-				
-			} else if (isDebugEvent(myEvent)) {
-				return "Debug";
 
-			} else if (isNavigationEvent(myEvent)) {
-				return "Navigation";
+		if (isEditEvent(myEvent)) {
+			return "Edit";
 
-			} else if (isFocusEvent(myEvent)) {
-				return "Focus";
+		} else if (isDebugEvent(myEvent)) {
+			return "Debug";
 
-			} else if (isAddRemoveEvent(myEvent)) {
-				return "RemoveClass";
-			} else {
-				return "Unclassified";
-			}
+		} else if (isNavigationEvent(myEvent)) {
+			return "Navigation";
 
-		
+		} else if (isFocusEvent(myEvent)) {
+			return "Focus";
+
+		} else if (isAddRemoveEvent(myEvent)) {
+			return "RemoveClass";
+		} else {
+			return "Unclassified";
+		}
+
+
 
 	}
-//	public static RatioCalculator getInstance() {
-//		if (instance == null)
-//			instance = new APercentageCalculator();
-//		return instance;
-//	}
+	//	public static RatioCalculator getInstance() {
+	//		if (instance == null)
+	//			instance = new APercentageCalculator();
+	//		return instance;
+	//	}
 
 }
