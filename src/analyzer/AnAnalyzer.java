@@ -311,7 +311,9 @@ public class AnAnalyzer implements Analyzer  {
 		participantList.removeAll(Collections.singleton(""));
 
 		System.out.println("Processing logs for: " + participantId);
-		List<String> participantIds = parameters.getParticipants().getChoices();
+		List<String> participantIds = new ArrayList<>(parameters.getParticipants().getChoices().size());
+		participantIds.addAll(parameters.getParticipants().getChoices());
+		
 		List<List<ICommand>> commandsList;
 
 		if(!stuckFileLoaded) {
@@ -322,22 +324,37 @@ public class AnAnalyzer implements Analyzer  {
 		}
 
 		if (participantList.get(0).equals(ALL_PARTICIPANTS)) {
-			boolean ignoreOn = false;
+			//remove all from the participants
+			participantIds.remove(ALL_PARTICIPANTS);
+			
 			//Build the ignore list
 			if(participantList.size()>1 && participantList.get(1).equalsIgnoreCase(IGNORE_KEYWORD)) {
-				ignoreOn=true;
-
+				//take out as the ignore function is not actually a participant
+				participantIds.remove(participantId);
+				parameters.getParticipants().getChoices().remove(participantId);
+				
+				//remove from the list of participants the ones we want to ignore
+				for(String ignore:participantList.subList(2, participantList.size())) {
+					List<String> participant=new ArrayList<>(Arrays.asList(ignore.split(",")));
+					participant.removeAll(Collections.singleton(""));
+					
+					for(String p:participant) {
+						if(participantIds.contains(p)) {
+							participantIds.remove(p);
+							
+						}
+						
+					}
+					
+				}
+				
 			}
 
 
 			notifyNewParticipant(ALL_PARTICIPANTS, null);
+			//all if first on the list
+			
 			for (String aParticipantId:participantIds) {
-				if (aParticipantId.equals(ALL_PARTICIPANTS) ||
-						(ignoreOn && participantList.contains(aParticipantId))) {
-
-					continue;
-				}
-
 				processParticipant(aParticipantId);
 
 			}
