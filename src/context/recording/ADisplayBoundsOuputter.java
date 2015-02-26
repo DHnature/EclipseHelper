@@ -17,12 +17,15 @@ import util.remote.ProcessExecer;
 
 public class ADisplayBoundsOuputter implements  DisplayBoundsOutputter {
 	// should really be specified in a config file
-	public static final String RECORDER_JAVA_PATH = "D:/\\\"Program Files\\\"/Java/jdk1.7.0_51/bin/java\"";
+	public static final String RECORDER_JAVA_PATH = "D:/Program Files/Java/jdk1.7.0_51/bin/java";
 	public static final String RECORDER_CLASS_PATH = "D:/dewan_backup/Java/eclipse/workspace/FileExample/bin";
 	public static final String RECORDER_MAIN_CLASS = "InputAndOutput";
-	public static final String RECORDER_LAUNCHING_COMMAND = RECORDER_JAVA_PATH + 
-									" " + "-cp" + " " + RECORDER_CLASS_PATH +
-									" " + RECORDER_MAIN_CLASS;
+//	public static final String RECORDER_LAUNCHING_COMMAND = RECORDER_JAVA_PATH + 
+//									" " + "-cp" + " " + RECORDER_CLASS_PATH +
+//									" " + RECORDER_MAIN_CLASS;
+	public static final String[] RECORDER_LAUNCHING_COMMAND = {RECORDER_JAVA_PATH, 
+			"-cp" ,  RECORDER_CLASS_PATH,
+			RECORDER_MAIN_CLASS};
 	Display display;
 	ProcessExecer processExecer;
 	ConsoleModel consoleModel;
@@ -68,7 +71,7 @@ public class ADisplayBoundsOuputter implements  DisplayBoundsOutputter {
 
 	}
 	@Override
-	public void startRecorder(String aCommand) {		
+	public void startRecorder(String[] aCommand) {		
 		processExecer = OEMisc.runWithProcessExecer(aCommand);
 		consoleModel = processExecer.getConsoleModel();
 		

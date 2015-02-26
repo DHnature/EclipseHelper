@@ -10,7 +10,7 @@ import org.eclipse.swt.widgets.Shell;
 
 public interface DisplayBoundsOutputter extends Listener, PropertyChangeListener, ControlListener {
 
-	public abstract void startRecorder(String aCommand);
+	public abstract void startRecorder(String aCommand[]);
 
 	public abstract void listenToRecorderIOEvents();
 
