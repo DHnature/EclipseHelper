@@ -8,19 +8,19 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
-public interface DisplayBoundsOutputter extends Listener, PropertyChangeListener, ControlListener {
+public interface DisplayBoundsOutputter extends Listener,  ControlListener {
 
-	public abstract void startRecorder(String aCommand[]);
+//	public abstract void startRecorder(String aCommand[]);
 
-	public abstract void listenToRecorderIOEvents();
+//	public abstract void listenToRecorderIOEvents();
 
 	public abstract String boundsToString();
 
-	public abstract void updateRecorder();
+//	public abstract void updateRecorder();
 
 	public abstract void handleEvent(Event event);
 
-	public abstract void propertyChange(PropertyChangeEvent evt);
+//	public abstract void propertyChange(PropertyChangeEvent evt);
 
 	void connectToDisplayAndRecorder();
 
