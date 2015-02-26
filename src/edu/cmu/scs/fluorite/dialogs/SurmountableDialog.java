@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import saros.ASarosAccessor;
+import context.saros.ASarosAccessor;
 
 public class SurmountableDialog extends
 		org.eclipse.jface.dialogs.TitleAreaDialog {

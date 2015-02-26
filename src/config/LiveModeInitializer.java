@@ -1,5 +1,6 @@
 package config;
 
+import context.recording.RecorderFactory;
 import difficultyPrediction.APredictionParametersSetter;
 import difficultyPrediction.ATestPredictionParametersSetter;
 import difficultyPrediction.PredictionParametersSetterSelector;
@@ -16,6 +17,7 @@ public class LiveModeInitializer {
 //		RatioCalculatorSelector.setFactory(new ARatioCalculatorFactory());
 //		PredictionParametersSetterSelector.setSingleton(new APredictionParametersSetter());
 		PredictionParametersSetterSelector.setSingleton(new ATestPredictionParametersSetter());
+		RecorderFactory.createSingleton();
 		
 
 	}

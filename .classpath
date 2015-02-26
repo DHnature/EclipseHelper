@@ -12,7 +12,7 @@
 	<classpathentry excluding="analyzer/extension/query/" kind="src" path="src"/>
 	<classpathentry kind="lib" path="lib/jackson-mapper-asl-1.9.13.jar" sourcepath="C:/Users/Dewan/.m2/repository/org/codehaus/jackson/jackson-mapper-asl/1.9.13/jackson-mapper-asl-1.9.13-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jackson-core-asl-1.9.13.jar"/>
-	<classpathentry kind="lib" path="lib/oeall22.jar"/>
+	<classpathentry kind="lib" path="lib/oeall22.jar" sourcepath="/util/src"/>
 	<classpathentry kind="lib" path="lib/joda-time-2.2-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/smack-core-4.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/smack-tcp-4.0.5.jar"/>
