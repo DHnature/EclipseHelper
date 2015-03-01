@@ -20,9 +20,8 @@ import de.fu_berlin.inf.dpp.session.User;
 import de.fu_berlin.inf.dpp.ui.util.CollaborationUtils;
 import de.fu_berlin.inf.dpp.ui.util.selection.retriever.SelectionRetrieverFactory;
 
-public class ASarosAccessor implements ISarosSessionListener{
-	public static final String TEACHER_ID = "pd@saros-con.imp.fu-berlin.de";
-	 @Inject
+public class ASarosAccessor implements ISarosSessionListener, SarosAccessor{
+	@Inject
 	    private static SarosSessionManager sessionManager;
 	 // the interface does not export enough
 //	    private static ISarosSessionManager sessionManager;
@@ -54,11 +53,17 @@ public class ASarosAccessor implements ISarosSessionListener{
 		}
 		// TODO Auto-generated constructor stub
 	}
-	
+	/* (non-Javadoc)
+	 * @see context.saros.SarosAccessor#resetIncomingHandler()
+	 */
+	@Override
 	public void resetIncomingHandler() {		
 		sessionManager.setNegotiationHandler(new EclipseHelperNegotiationHandler(sessionManager, null));
 	}
-	
+	/* (non-Javadoc)
+	 * @see context.saros.SarosAccessor#shareFixedProjectWithFixedUser()
+	 */
+	@Override
 	public void shareFixedProjectWithFixedUser() {
 		  final IProject[] workspaceProjects = ResourcesPlugin.getWorkspace()
 		            .getRoot().getProjects();
@@ -79,14 +84,17 @@ public class ASarosAccessor implements ISarosSessionListener{
 		 CollaborationUtils.startSession(
                 resources, contacts);
 	}
-	static ASarosAccessor instance;
-	public static ASarosAccessor getInstance() {
+	static SarosAccessor instance;
+	public static SarosAccessor getInstance() {
 		if (instance == null){
 			instance = new ASarosAccessor();			
 		}
 		return instance;
 	}
 
+	/* (non-Javadoc)
+	 * @see context.saros.SarosAccessor#postOutgoingInvitationCompleted(de.fu_berlin.inf.dpp.session.ISarosSession, de.fu_berlin.inf.dpp.session.User, de.fu_berlin.inf.dpp.monitoring.IProgressMonitor)
+	 */
 	@Override
 	public void postOutgoingInvitationCompleted(ISarosSession session,
 			User user, IProgressMonitor monitor) {
@@ -94,30 +102,47 @@ public class ASarosAccessor implements ISarosSessionListener{
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see context.saros.SarosAccessor#sessionStarting(de.fu_berlin.inf.dpp.session.ISarosSession)
+	 */
 	@Override
 	public void sessionStarting(ISarosSession session) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see context.saros.SarosAccessor#sessionStarted(de.fu_berlin.inf.dpp.session.ISarosSession)
+	 */
 	@Override
 	public void sessionStarted(ISarosSession session) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see context.saros.SarosAccessor#sessionEnding(de.fu_berlin.inf.dpp.session.ISarosSession)
+	 */
 	@Override
 	public void sessionEnding(ISarosSession session) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see context.saros.SarosAccessor#sessionEnded(de.fu_berlin.inf.dpp.session.ISarosSession)
+	 */
+	
 	@Override
 	public void sessionEnded(ISarosSession session) {
 		// TODO Auto-generated method stub
 		
 	}
 
+	/* (non-Javadoc)
+	 * @see context.saros.SarosAccessor#projectAdded(java.lang.String)
+	 */
+	
 	@Override
 	public void projectAdded(String projectID) {
 		// TODO Auto-generated method stub

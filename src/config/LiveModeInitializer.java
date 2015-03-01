@@ -1,6 +1,7 @@
 package config;
 
 import context.recording.RecorderFactory;
+import context.saros.SarosAccessorFactory;
 import difficultyPrediction.APredictionParametersSetter;
 import difficultyPrediction.ATestPredictionParametersSetter;
 import difficultyPrediction.PredictionParametersSetterSelector;
@@ -18,6 +19,7 @@ public class LiveModeInitializer {
 //		PredictionParametersSetterSelector.setSingleton(new APredictionParametersSetter());
 		PredictionParametersSetterSelector.setSingleton(new ATestPredictionParametersSetter());
 		RecorderFactory.createSingleton();
+		SarosAccessorFactory.createSingleton();
 		
 
 	}

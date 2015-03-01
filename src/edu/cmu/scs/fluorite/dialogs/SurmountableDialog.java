@@ -16,13 +16,14 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import context.saros.ASarosAccessor;
+import context.saros.SarosAccessorFactory;
 
 public class SurmountableDialog extends
 		org.eclipse.jface.dialogs.TitleAreaDialog {
 
 	public SurmountableDialog(Shell parentShell) {
 		super(parentShell);
-		ASarosAccessor.getInstance().resetIncomingHandler();
+		SarosAccessorFactory.getSingleton().resetIncomingHandler();
 	}
 
 	@Override
