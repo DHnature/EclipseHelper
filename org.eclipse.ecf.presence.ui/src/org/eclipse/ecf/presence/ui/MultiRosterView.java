@@ -669,6 +669,7 @@ public class MultiRosterView extends ViewPart implements IMultiRosterViewPart {
 
 			IAction difficultyDetails = new Action() {
 				public void run() {
+					ServerConnection.getServerConnection().getHelpRequest(name);
 				}
 			};
 			manager.add(difficultyDetails);
