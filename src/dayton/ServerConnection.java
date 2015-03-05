@@ -3,6 +3,7 @@ package dayton;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
@@ -10,11 +11,11 @@ import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterListener;
-import org.jivesoftware.smack.SmackException.NotConnectedException;
+import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
-import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
 public class ServerConnection implements RosterListener, PacketListener {
 	
@@ -23,6 +24,8 @@ public class ServerConnection implements RosterListener, PacketListener {
 	private XMPPConnection connection;
 	private Roster roster;
 	private List<ContactChangeListener> contactListeners = new ArrayList<ContactChangeListener>();
+	
+	private HashMap<String,String> helpRequests = new HashMap<String,String>();
 	
 	public static ServerConnection getServerConnection() {
 		if(serverConnection == null) {
@@ -38,21 +41,35 @@ public class ServerConnection implements RosterListener, PacketListener {
 	public void connect() {
 		//new Thread(new Runnable() {
 			//public void run() {
+		System.out.println("Logging in!");
+		//LogIntoXMPP.login();
 				try {
 					AccountSettings account = AccountSettings.getAccountSettings();
 					if(!account.getUsername().equals("")) {
-						ConnectionConfiguration config = new ConnectionConfiguration(account.getServer(),
-								account.getPort(),account.getServiceName());
-						connection = new XMPPTCPConnection(config);
+						ConnectionConfiguration config = new ConnectionConfiguration("talk.google.com",5222,"gmail.com");
+						connection = new XMPPConnection(config);
 						connection.connect();
 						System.out.println("Connected");
+						SASLAuthentication.supportSASLMechanism("PLAIN", 0);
+						//connection.login("daytonellwangertest@gmail.com","ellwangertest");
 						connection.login(account.getUsername(),account.getPassword());
 						System.out.println("Login successful");
+						//ConnectionConfiguration config = new ConnectionConfiguration(account.getServer(),
+						//account.getPort(),account.getServiceName());
+						/*connection = new XMPPTCPConnection(config);
+						connection.connect();
+						System.out.println("Connected");
+						connection.login("daytonellwangertest","ellwangertest");
+						//connection.login(account.getUsername(),account.getPassword());
+						System.out.println("Login successful");*/
 						roster = connection.getRoster();
-						roster.setSubscriptionMode(Roster.SubscriptionMode.manual);
+						//roster.setSubscriptionMode(Roster.SubscriptionMode.manual);
 						roster.addRosterListener(this);
 						connection.addPacketListener(this,null);
-						pingInstructor();
+						//LogIntoXMPP.ECFLogin();
+						//LogIntoXMPP.login();
+						//pingInstructor();
+						updateStatus("Connected");
 					}
 				} catch (Exception ex) {ex.printStackTrace(); System.out.println("Error connecting to server");}
 			//}
@@ -69,6 +86,14 @@ public class ServerConnection implements RosterListener, PacketListener {
 	
 	public boolean isConnected() {
 		return (connection == null) ? false : connection.isConnected();
+	}
+	
+	public void requestVideo(String user) {
+		Message videoRequest = new Message(user);
+		videoRequest.setSubject("videorequest");
+		try {
+			connection.sendPacket(videoRequest);
+		} catch (Exception ex) {System.out.println("Error sending message");}	
 	}
 	
 	public void updateStatus(String status) {
@@ -130,8 +155,8 @@ public class ServerConnection implements RosterListener, PacketListener {
 	}
 
 	@Override
-	public void processPacket(Packet packet) throws NotConnectedException {
-		if(packet instanceof Presence) {
+	public void processPacket(Packet packet) {
+		/*if(packet instanceof Presence) {
 			Presence presence = (Presence) packet;
 			if(presence.getType() == Presence.Type.subscribe &&
 				presence.getFrom().equals(AccountSettings.getAccountSettings().getInstructorUsername())) {
@@ -144,11 +169,63 @@ public class ServerConnection implements RosterListener, PacketListener {
 				} catch (Exception ex) {System.out.println("Error sending subscribed");}
 			} else if (presence.getType() == Presence.Type.subscribe){
 				//if(packet instanceof InstructorPing) {
-				gotPing((Presence) packet);
+				//gotPing((Presence) packet);
 				//}
+			}
+		}*/
+		System.out.println("Received packet");
+		if(packet instanceof Message) {
+			System.out.println("Received message");
+			String subject = ((Message) packet).getSubject();
+			if(subject.equals("videorequest")) {
+				try {
+					VideoSender.sendVideo();
+				} catch (Exception ex) {ex.printStackTrace();};
+				Message reply = new Message(packet.getFrom());
+				reply.setSubject("videouploaded");
+				try {
+					connection.sendPacket(reply);
+				} catch (Exception ex) {System.out.println("Error sending message");}
+			} else if (subject.equals("videouploaded")) {
+				try {
+					VideoReceiver.receiveVideo();
+				} catch (Exception ex) {ex.printStackTrace();};
+			} else if (subject.equals("helprequest")) {
+				try {
+					processHelpRequest((Message) packet);
+				} catch (Exception ex) {ex.printStackTrace();}
 			}
 		}
 	}	
+	
+	private void processHelpRequest(Message request) {
+		helpRequests.put(request.getFrom(),request.getBody());
+	}
+	
+	public void getHelpRequest(String user) {
+		String request = helpRequests.get(user);
+		if(request != null) {
+			String[] pieces = request.split("[]");
+			for(String s : pieces) {
+				System.out.println(s);
+			}
+		}
+	}
+	
+	public void sendHelpRequest(String[] helpQuery) {
+		Message helpMessage = new Message(AccountSettings.getAccountSettings().getInstructorUsername());
+		helpMessage.setSubject("helprequest");
+		String messageBody = "";
+		String seperator = "[]";
+		for(String s : helpQuery) {
+			messageBody += s;
+			messageBody += seperator;
+		}
+		helpMessage.setBody(messageBody);
+		try {
+			connection.sendPacket(helpMessage);
+		} catch (Exception ex) {System.out.println("Error sending message");}
+	}
 	
 	private void gotPing(Presence ping) {
 		System.out.println("Ping");

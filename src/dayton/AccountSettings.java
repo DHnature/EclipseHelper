@@ -73,6 +73,10 @@ public class AccountSettings implements Serializable {
 		return port;
 	}
 	
+	public boolean isInstructor() {
+		return instructorUsername.equals("");
+	}
+	
 	private static AccountSettings loadAccountSettings() {
 		try {
 			ObjectInputStream input = new ObjectInputStream(new FileInputStream(saveLocation));

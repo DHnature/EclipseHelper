@@ -34,6 +34,7 @@ Bundle-ClassPath: edu.cmu.scs.fluorite.jar,
  lib/jackson-mapper-asl-1.9.13.jar
 Bundle-Vendor: UNC Chapel HIll
 Export-Package: .,
+ dayton,
  edu.cmu.scs.fluorite.actions,
  edu.cmu.scs.fluorite.commands,
  edu.cmu.scs.fluorite.dialogs,

@@ -6,6 +6,9 @@
       <initializer
             class="edu.cmu.scs.fluorite.preferences.Initializer">
       </initializer>
+      <initializer
+            class="dayton.InitializeConnection">
+	</initializer>
    </extension>
 
    
