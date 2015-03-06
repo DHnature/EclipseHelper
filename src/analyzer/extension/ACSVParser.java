@@ -1,10 +1,9 @@
 package analyzer.extension;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.text.DateFormat;
+import java.io.InputStreamReader;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -20,7 +19,7 @@ public class ACSVParser implements CSVParser{
 
 	public void start(String filename) {
 		try {
-			stream=Files.newBufferedReader(Paths.get(filename));
+			stream=new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

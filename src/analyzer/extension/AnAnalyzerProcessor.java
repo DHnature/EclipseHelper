@@ -36,7 +36,6 @@ import analyzer.AnAnalyzer;
 import analyzer.Analyzer;
 import analyzer.ParticipantTimeLine;
 import analyzer.WebLink;
-import analyzer.ui.query.AQueryUI;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import difficultyPrediction.DifficultyPredictionSettings;
