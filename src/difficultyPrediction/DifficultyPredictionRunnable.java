@@ -16,4 +16,5 @@ public interface DifficultyPredictionRunnable extends Runnable {
 	public void add(ICommand newCommand);
 	void showStatusInBallonTip(String status);
 	void asyncShowStatusInBallonTip(String status);
+	void changeStatusInHelpView(String status);
 }

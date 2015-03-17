@@ -142,7 +142,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	@ComponentHeight(100)
 
 	public String getRatios() {
-		return commandsBuffer.toString();
+		return ratiosBuffer.toString();
 	}
 	@Row(3)
 	@PreferredWidgetClass(JTextArea.class)

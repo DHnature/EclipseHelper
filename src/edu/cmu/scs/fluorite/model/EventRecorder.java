@@ -708,7 +708,10 @@ public class EventRecorder {
 	}
 
 	public void recordCommand(final ICommand newCommand) {
+		System.out.println("Recording command:" + newCommand);
 		if (!mRecordCommands) {
+			System.out.println("Ignoring command:" + newCommand);
+
 			return;
 		}
 
@@ -725,6 +728,8 @@ public class EventRecorder {
 		final boolean isDocChange = (newCommand instanceof BaseDocumentChangeEvent);
 		final LinkedList<ICommand> commands = isDocChange ? mDocumentChangeCommands
 				: mNormalCommands;
+		System.out.println( " isDocChange" + isDocChange + " commandslist:" + commands);
+
 
 		boolean combined = false;
 		final ICommand lastCommand = commands.size() > 0 ? commands
@@ -735,9 +740,10 @@ public class EventRecorder {
 				&& isCombineEnabled(newCommand, lastCommand, isDocChange)) {
 			combined = lastCommand.combineWith(newCommand);
 		}
-
+		System.out.println ("Combining command:" + combined + " newCommand" + newCommand + " lastCommand " + lastCommand);
 		// If combining is failed, just add it.
 		if (!combined) {
+			System.out.println ("Adding command:" + newCommand);
 			commands.add(newCommand);
 			mCommands.add(newCommand);
 
@@ -772,6 +778,7 @@ public class EventRecorder {
 			// Remove the first item from the list
 			commands.removeFirst();
 			mCommands.removeFirst();
+			System.out.println ("Giving command to pluginevent processor" + firstCmd);
 			ADifficultyPredictionPluginEventProcessor.getInstance().newCommand(firstCmd);
 
 		}
