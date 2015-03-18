@@ -6,7 +6,6 @@ import java.util.List;
 
 import trace.difficultyPrediction.AggregatePredictionChanged;
 import trace.difficultyPrediction.PredictionChanged;
-import difficultyPrediction.AMultiLevelAggregator;
 import difficultyPrediction.MultiLevelAggregator;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.metrics.RatioCalculator;
@@ -21,6 +20,9 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 	protected int lastFeatureIndex;
 	protected boolean playBack;
 	
+	public ARewindableMultiLevelAggregator() {
+		addRatioBasedSlots();
+	}
 	
 	@Override
 	public void newCommand(ICommand newCommand) {
@@ -36,10 +38,20 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 			allAggregatedStatuses.add(allAggregatedStatuses.get(lastFeatureIndex - 1));
 		if (!playBack) super.newStatus(aStatus); 
 	}
+	void addRatioBasedSlots() {	
+		allFeatures.add(null);
+		allCommands.add(new ArrayList());
+		allPredictions.add(null);
+		allAggregatedStatuses.add(null);
+		
+
+		
+	}
 	@Override
 //	@Visible(false)
 	public void newRatios(RatioFeatures newVal) {
-		features.add(newVal);
+		allFeatures.set(lastFeatureIndex, newVal);
+		addRatioBasedSlots();
 		lastFeatureIndex++;
 		if (!playBack) super.newRatios(newVal);
 		

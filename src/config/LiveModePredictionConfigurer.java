@@ -2,7 +2,7 @@ package config;
 
 import analyzer.ui.balloons.ABalloonCreator;
 import analyzer.ui.graphics.LineGraphComposer;
-import difficultyPrediction.AMultiLevelAggregator;
+import analyzer.ui.text.AMultiLevelAggregator;
 import difficultyPrediction.APredictionParameters;
 
 public class LiveModePredictionConfigurer {
