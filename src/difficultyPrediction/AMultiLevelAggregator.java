@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.JTextArea;
 
+import analyzer.ui.text.AggregatorFactory;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import trace.difficultyPrediction.AggregatePredictionChanged;
@@ -26,16 +27,16 @@ import edu.cmu.scs.fluorite.commands.ICommand;
 public class AMultiLevelAggregator implements MultiLevelAggregator{
 	static OEFrame oeFrame;
 
-	List<ICommand> commands = new ArrayList();
-	List<RatioFeatures> features = new ArrayList();
-	List<String> predictions = new ArrayList();
-	String aggregatedStatus = "";
+	protected List<ICommand> commands = new ArrayList();
+	protected List<RatioFeatures> features = new ArrayList();
+	protected List<String> predictions = new ArrayList();
+	protected String aggregatedStatus = "";
 	static RatioCalculator ratioCalculator;
 	static MultiLevelAggregator instance;
-	StringBuffer commandsBuffer = new StringBuffer();
-	StringBuffer ratiosBuffer = new StringBuffer();
-	StringBuffer predictionsBuffer = new StringBuffer();
-	PropertyChangeSupport propertyChangeSupport;
+	protected StringBuffer commandsBuffer = new StringBuffer();
+	protected StringBuffer ratiosBuffer = new StringBuffer();
+	protected StringBuffer predictionsBuffer = new StringBuffer();
+	protected PropertyChangeSupport propertyChangeSupport;
 	
 	
 	public AMultiLevelAggregator() {
@@ -155,12 +156,13 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	
 	@Visible(false)
 	public static MultiLevelAggregator getInstance() {
+		return AggregatorFactory.getSingleton();
 		
-		if (instance == null) {
-			instance = new AMultiLevelAggregator();
-			
-		}
-		return instance;
+//		if (instance == null) {
+//			instance = new AMultiLevelAggregator();
+//			
+//		}
+//		return instance;
 	}
 	
 	public static void createUI() {
