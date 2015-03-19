@@ -28,7 +28,7 @@ import edu.cmu.scs.fluorite.commands.ICommand;
 public class AMultiLevelAggregator implements MultiLevelAggregator{
 	static OEFrame oeFrame;
 
-	protected List<ICommand> commands = new ArrayList();
+//	protected List<ICommand> commands = new ArrayList();
 	protected List<RatioFeatures> features = new ArrayList();
 	protected List<String> predictions = new ArrayList();
 	protected String aggregatedStatus = "";
@@ -53,7 +53,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 
 	@Override
 	public void newCommand(ICommand newCommand) {
-		commands.add(newCommand);
+//		commands.add(newCommand);
 		commandsBuffer.append(toClassifiedString(newCommand) + "\n");
 		propertyChangeSupport.firePropertyChange("Segment", "", commandsBuffer.toString());
 
@@ -117,7 +117,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //	@Visible(false)
 	public void newRatios(RatioFeatures newVal) {
 		features.add(newVal);
-		commands.clear();	
+//		commands.clear();	
 //		commandsBuffer.setLength(0);
 		commandsBuffer.append("\n");
 		ratiosBuffer.append(newVal + "\n");
