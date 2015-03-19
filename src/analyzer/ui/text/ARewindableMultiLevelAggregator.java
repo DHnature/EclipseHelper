@@ -21,6 +21,8 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 	protected List<String> allPredictions = new ArrayList();
 	protected List<String> allAggregatedStatuses = new ArrayList();
 	protected int lastFeatureIndex;
+	protected int previousAggregatedIndex;
+	protected int currentAggregatedStatus;
 	protected int currentFeatureIndex;
 	protected boolean playBack;
 	
@@ -57,8 +59,6 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 		addRatioBasedSlots();
 		lastFeatureIndex++;
 		if (!playBack) super.newRatios(newVal);
-		
-
 	}
 	@Visible(false)
 	public void newAggregatedStatus(String aStatus) {
@@ -77,8 +77,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 		currentFeatureIndex = currentFeatureIndex + 1;
 	}
 	
-	int lastAggregateIndex() {
-	
+	int previousAggregateIndex() {	
 		int retVal = currentFeatureIndex - 1;
 		while (retVal >= 0) {
 			if (allAggregatedStatuses.get(retVal) != null) return retVal;
@@ -90,17 +89,34 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 		return currentFeatureIndex < lastFeatureIndex;
 	}
 	
-	public void newFeatureIndex() {
+	public void resetWindowData() {
 		features.clear();
 		predictions.clear();
 		commandsBuffer.setLength(0);
-		int lastAggregateIndex = lastAggregateIndex();		
-		for (int featureIndex = lastAggregateIndex; featureIndex <= currentFeatureIndex; featureIndex++) {
+	}	
+	public void computeWindowBounds() {
+		previousAggregatedIndex = previousAggregateIndex();
+	}
+	
+	public void fireWindowEvents() {
+		String anAggregatedStatus = StatusConsts.INDETERMINATE;
+		for (int featureIndex = previousAggregateIndex() + 1; featureIndex <= currentFeatureIndex; featureIndex++) {
 			for (ICommand aCommand:allCommands.get(featureIndex)) {
-				
+				super.newCommand(aCommand);				
 			}
+			super.newRatios(allFeatures.get(featureIndex));
+			super.newStatus(allPredictions.get(featureIndex));
+			if (allAggregatedStatuses.get(featureIndex) != null)
+				anAggregatedStatus = allAggregatedStatuses.get(featureIndex);
 		}
+		newAggregatedStatus(anAggregatedStatus);
 		
+	}
+	
+	public void newWindow() {
+		resetWindowData();
+		computeWindowBounds();
+		fireWindowEvents();			
 	}
 	
 	public void back() {
