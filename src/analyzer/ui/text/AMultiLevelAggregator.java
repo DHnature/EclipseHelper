@@ -50,6 +50,14 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		propertyChangeSupport = new PropertyChangeSupport(this);
 
 	}
+	@Override
+	public void reset() {
+		features.clear();
+		predictions.clear();
+		commandsBuffer.setLength(0);
+		ratiosBuffer.setLength(0);
+		predictionsBuffer.setLength(0);		
+	}
 
 	@Override
 	public void newCommand(ICommand newCommand) {
@@ -185,12 +193,12 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		propertyChangeSupport.addPropertyChangeListener(listener);
 		
 	}
-	@Override
-	public void reset() {
-		// TODO Auto-generated method stub
-		System.err.println("Reset not implemented");
-		
-	}
+//	@Override
+//	public void reset() {
+//		// TODO Auto-generated method stub
+//		System.err.println("Reset not implemented");
+//		
+//	}
 	
 
 }
