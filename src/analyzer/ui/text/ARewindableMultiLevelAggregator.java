@@ -72,12 +72,14 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 	public void newRatios(RatioFeatures newVal) {
 		if (!playBack) {
 		allFeatures.set(lastFeatureIndex, newVal);
+		currentFeatureIndex = lastFeatureIndex;
 		addRatioBasedSlots();
-		lastFeatureIndex++;	
+		lastFeatureIndex++;
+
 		}
 //		if (!playBack) { 
 			super.newRatios(newVal);		
-			currentFeatureIndex = lastFeatureIndex;
+			
 //		}
 	}
 	@Visible(false)
