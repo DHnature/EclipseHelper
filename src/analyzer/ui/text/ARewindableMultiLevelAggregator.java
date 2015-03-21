@@ -1,11 +1,18 @@
 package analyzer.ui.text;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import analyzer.ui.AGeneralizedPlayAndRewindCounter;
+import analyzer.ui.GeneralizedPlayAndRewindCounter;
+import analyzer.ui.graphics.PlayAndRewindCounter;
 import trace.difficultyPrediction.AggregatePredictionChanged;
 import trace.difficultyPrediction.PredictionChanged;
+import util.annotations.Column;
+import util.annotations.Row;
 import util.annotations.Visible;
 import difficultyPrediction.MultiLevelAggregator;
 import difficultyPrediction.featureExtraction.RatioFeatures;
@@ -13,7 +20,7 @@ import difficultyPrediction.metrics.RatioCalculator;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.model.StatusConsts;
 
-public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
+public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator implements PropertyChangeListener {
 	protected List<List<ICommand>> allCommands = new ArrayList();
 //	protected List<StringBuffer> allCommandBuffers = new ArrayList();
 //	protected List<ICommand> allCommands = new ArrayList();
@@ -28,10 +35,17 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 	protected String currentAggregateStatus = StatusConsts.INDETERMINATE;
 	protected int currentFeatureIndex; // changes during replay
 	protected boolean playBack;
+	protected PlayAndRewindCounter player;
 	
 	public ARewindableMultiLevelAggregator() {
-		addRatioBasedSlots();
+		this (new AGeneralizedPlayAndRewindCounter());
+//		addRatioBasedSlots();
 	}
+	public ARewindableMultiLevelAggregator(PlayAndRewindCounter aPlayer) {
+		addRatioBasedSlots();
+		aPlayer.addPropertyChangeListener(this);
+	}
+
 	
 	@Override
 	@Visible(false)
@@ -95,20 +109,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 		}		
 	}
 	
-	public boolean preBack() {
-		return currentFeatureIndex > 0;
-	}
-	public void back() {
-		if (!preBack()) return;
-		setNewWindow(  currentFeatureIndex - 1);
-	}
-	public boolean preForward() {
-		return currentFeatureIndex < nextFeatureIndex;
-	}
-	public void forward() {
-		if (!preForward()) return;
-		setNewWindow (currentFeatureIndex + 1);
-	}
+	
 	
 	void setNewWindow(int newVal) {
 		playBack = true;
@@ -149,7 +150,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 	
     @Visible(false)
 	public void fireWindowEvents() {
-//		String anAggregatedStatus = StatusConsts.INDETERMINATE;
+		String anAggregatedStatus = StatusConsts.INDETERMINATE;
 		for (int featureIndex = 0; featureIndex <= currentFeatureIndex; featureIndex++) {
 			for (ICommand aCommand:allCommands.get(featureIndex)) {
 				super.newCommand(aCommand);				
@@ -173,16 +174,59 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 	public boolean preLive() {
 		return playBack;
 	}
-	
+//	@Row(0)
+//	@Column(0)
 	public void live() {		
 		end(); //play back all past events
 		playBack = false;
 	}
+//	@Row(0)
+//	@Column(1)
 	public void start() {
 		setNewWindow (0);
 	}
+//	@Row(0)
+//	@Column(2)
 	public void end() {
 		setNewWindow (nextFeatureIndex - 1);
 	}
-
+	public boolean preBack() {
+		return currentFeatureIndex > 0;
+	}
+//	@Row(0)
+//	@Column(3)
+	public void back() {
+		if (!preBack()) return;
+		setNewWindow(  currentFeatureIndex - 1);
+	}
+	public boolean preForward() {
+		return currentFeatureIndex < nextFeatureIndex - 1;
+	}
+//	@Row(0)
+//	@Column(4)
+	public void forward() {
+		if (!preForward()) return;
+		setNewWindow (currentFeatureIndex + 1);
+	}
+	@Row(0)
+//	@Column(1)
+	public int getCurrentFeature() {
+		return currentFeatureIndex;
+	}
+	
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equalsIgnoreCase("currentTime")) {
+			setNewWindow((Integer) evt.getNewValue());			
+		}
+//		if (evt.getPropertyName().equalsIgnoreCase("newRatioFeatures")) {
+////			newRatios((RatioFeatures) evt.getNewValue());
+////			repaint();
+//		} else if (evt.getPropertyName().equalsIgnoreCase("start") || evt.getPropertyName().equalsIgnoreCase("size") || evt.getPropertyName().equalsIgnoreCase("currentTime"))
+//			repaint();
+	}
+	public static void main (String[] args) {
+//		ObjectEditor.edit(AMultiLevelAggregator.getInstance());
+		createUI();
+	}
 }

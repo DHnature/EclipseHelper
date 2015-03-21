@@ -55,6 +55,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
     @Visible(false)
 	public void reset() {
 		aggregatedStatus = StatusConsts.INDETERMINATE;
+		oldAggregateStatus = StatusConsts.INDETERMINATE;
 		features.clear();
 		predictions.clear();
 		commandsBuffer.setLength(0);
@@ -156,7 +157,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		propertyChangeSupport.firePropertyChange("Ratios", "", ratiosBuffer.toString());
 
 	}
-	@Row(0)
+	@Row(1)
 	public String getAggregatedStatus() {
 		return aggregatedStatus;
 	}
@@ -165,19 +166,19 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		String featureName = ratioCalculator.getFeatureName(aCommand);
 		return featureName + " (" + aCommand + " )";
 	}
-	@Row(1)
+	@Row(2)
 	@PreferredWidgetClass(JTextArea.class)
 	@ComponentHeight(100)
 	public String getPredictions() {
 		return predictionsBuffer.toString();
 	}
-	@Row(2)
+	@Row(3)
 	@PreferredWidgetClass(JTextArea.class)
 	@ComponentHeight(100)
 	public String getRatios() {
 		return ratiosBuffer.toString();
 	}
-	@Row(3)
+	@Row(4)
 	@PreferredWidgetClass(JTextArea.class)
 	@ComponentHeight(200)
 	public String getSegment() {
@@ -206,10 +207,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		oeFrame.setSize(700, 500);
 	}
 
-	public static void main (String[] args) {
-//		ObjectEditor.edit(AMultiLevelAggregator.getInstance());
-		createUI();
-	}
+	
 
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener listener) {
@@ -222,6 +220,11 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //		System.err.println("Reset not implemented");
 //		
 //	}
+	
+	public static void main (String[] args) {
+//		ObjectEditor.edit(AMultiLevelAggregator.getInstance());
+		createUI();
+	}
 	
 
 }
