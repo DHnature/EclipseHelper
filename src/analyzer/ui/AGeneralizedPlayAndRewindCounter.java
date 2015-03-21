@@ -24,4 +24,27 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	public AGeneralizedPlayAndRewindCounter() {
 		super (new ARatioFileReader());
 	}
+	@Override
+	@Row(0)
+	@Column(0)
+	public void back() {
+		super.back();		
+	}
+//	@Override
+//	@Row(0)
+//	@Column(1)
+//	public void forward() {
+//		super.forward();		
+//	}
+//	
+//	@Override
+//	@Row(0)
+//	@Column(1)
+//	public void forward() {
+//		super.forward();		
+//	}
+	
+	public static void main (String[] args) {
+		ObjectEditor.edit(new AGeneralizedPlayAndRewindCounter());
+	}
 }

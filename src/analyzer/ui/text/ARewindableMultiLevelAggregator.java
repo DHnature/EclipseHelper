@@ -43,7 +43,12 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	}
 	public ARewindableMultiLevelAggregator(PlayAndRewindCounter aPlayer) {
 		addRatioBasedSlots();
-		aPlayer.addPropertyChangeListener(this);
+		player = aPlayer;
+		player.addPropertyChangeListener(this);
+	}
+	@Row(0)
+	public PlayAndRewindCounter getPlayer() {
+		return player;
 	}
 
 	
@@ -208,8 +213,9 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 		if (!preForward()) return;
 		setNewWindow (currentFeatureIndex + 1);
 	}
-	@Row(0)
+//	@Row(0)
 //	@Column(1)
+	@Visible(false)
 	public int getCurrentFeature() {
 		return currentFeatureIndex;
 	}
