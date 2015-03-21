@@ -21,7 +21,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 	protected List<RatioFeatures> allFeatures = new ArrayList();
 	protected List<String> allPredictions = new ArrayList();
 	protected List<String> allAggregatedStatuses = new ArrayList();
-	protected int lastFeatureIndex;
+	protected int nextFeatureIndex;
 //	protected int previousAggregatedIndex;
 //	protected int currentAggregatedStatus;
 //	protected int previousFeatureIndex;
@@ -37,7 +37,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 	@Visible(false)
 	public void newCommand(ICommand newCommand) {
 		if (!playBack) {
-		allCommands.get(lastFeatureIndex).add(newCommand);
+		allCommands.get(nextFeatureIndex).add(newCommand);
 //			allCommands.add(newCommand);
 		}
 		 super.newCommand(newCommand);
@@ -47,16 +47,17 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 	@Visible(false)
 	public void newStatus(String aStatus) {
 		if (!playBack) {
-		   allPredictions.set(lastFeatureIndex, aStatus);
+		   allPredictions.set(nextFeatureIndex - 1, aStatus); // next feature index was bumpted by new feature
 //		   allAggregatedStatuses.add(null);
 //		   if (lastFeatureIndex == 0)
 //			  allAggregatedStatuses.add(StatusConsts.INDETERMINATE);
 //		   else
 //			allAggregatedStatuses.add(allAggregatedStatuses.get(lastFeatureIndex - 1));
+		}
 //		if (!playBack) {
 			super.newStatus(aStatus); 
 			propagatePre();
-		}		
+				
 	}
     void propagatePre() {
 		propertyChangeSupport.firePropertyChange("this", null, this);
@@ -71,10 +72,10 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 	@Visible(false)
 	public void newRatios(RatioFeatures newVal) {
 		if (!playBack) {
-		allFeatures.set(lastFeatureIndex, newVal);
-		currentFeatureIndex = lastFeatureIndex;
+		allFeatures.set(nextFeatureIndex, newVal);
+		currentFeatureIndex = nextFeatureIndex;
 		addRatioBasedSlots();
-		lastFeatureIndex++;
+		nextFeatureIndex++;
 
 		}
 //		if (!playBack) { 
@@ -85,7 +86,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 	@Visible(false)
 	public void newAggregatedStatus(String aStatus) {
 		if (!playBack)
-		  allAggregatedStatuses.set(lastFeatureIndex, aStatus);
+		  allAggregatedStatuses.set(nextFeatureIndex - 1, aStatus); // index was bumped
 		super.newAggregatedStatus(aStatus);
 		
 	}
@@ -98,7 +99,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 		setNewWindow(  currentFeatureIndex - 1);
 	}
 	public boolean preForward() {
-		return currentFeatureIndex < lastFeatureIndex;
+		return currentFeatureIndex < nextFeatureIndex;
 	}
 	public void forward() {
 		if (!preForward()) return;
@@ -170,7 +171,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator {
 	}
 	public void live() {
 		playBack = false;
-		currentFeatureIndex = lastFeatureIndex;
+		currentFeatureIndex = nextFeatureIndex;
 	}
 
 }
