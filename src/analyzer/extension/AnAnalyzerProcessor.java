@@ -272,9 +272,14 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 			return -1;
 		}
 		switch (aCommand.getPredictionType()) {
-		case Indeterminate: return -1;
-		case MakingProgress: return 0;
-		case HavingDifficulty: return 1;
+		
+//		case Indeterminate: return -1;
+//		case MakingProgress: return 0;
+//		case HavingDifficulty: return 1;
+		
+		case Indeterminate: return ParticipantTimeLine.INDTERMINATE_INT;
+		case MakingProgress: return ParticipantTimeLine.PROGRESS_INT;
+		case HavingDifficulty: return ParticipantTimeLine.DIFFICULTY_INT;
 		}
 		return -1;
 	}
@@ -282,9 +287,14 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		if (aCommand.getStatus() == null)
 			return -1;
 		switch (aCommand.getStatus()) {
-		case Insurmountable:return 1;
-		case Surmountable: return 1;
-		case Making_Progress: return 0;
+		
+//		case Insurmountable:return 1;
+//		case Surmountable: return 1;
+//		case Making_Progress: return 0;
+		
+		case Insurmountable:return ParticipantTimeLine.INSURMOUNTABLE_INT;
+		case Surmountable: return ParticipantTimeLine.SURMOUNTABLE_INT;
+		case Making_Progress: return ParticipantTimeLine.PROGRESS_INT;
 
 		}
 		return -1;

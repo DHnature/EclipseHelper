@@ -20,6 +20,8 @@ public interface GeneralizedPlayAndRewindCounter extends PlayAndRewindCounter {
 	public void setNextFeatureIndex(int newVal) ;
 	
 	public boolean isPlayBack() ;
-	
+	public long getCurrentWallTime();
+	public void nextDifficulty();
+	public void previousDifficulty();
 
 }

@@ -6,6 +6,11 @@ import analyzer.extension.StuckInterval;
 import analyzer.extension.StuckPoint;
 
 public interface ParticipantTimeLine {
+	int INDTERMINATE_INT = -1;
+	int PROGRESS_INT = 0;
+	int DIFFICULTY_INT = 1;
+	int SURMOUNTABLE_INT = 1;
+	int INSURMOUNTABLE_INT = 1;
 	
 	public List<Double> getEditList();
 	
@@ -60,6 +65,10 @@ public interface ParticipantTimeLine {
 	public void setStuckPoint(List<StuckPoint> stuckPoint);
 
 	StringBuffer toText();
+	
+	public int getDifficultyPredictionBefore(int aCurrentIndex) ;
+	
+	public int getDifficultyPredictionAfter(int aCurrentIndex) ;
 
 	
 }

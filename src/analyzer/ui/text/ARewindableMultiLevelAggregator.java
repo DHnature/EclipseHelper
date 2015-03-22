@@ -6,6 +6,7 @@ import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
+import bus.uigen.OEFrame;
 import analyzer.ui.AGeneralizedPlayAndRewindCounter;
 import analyzer.ui.GeneralizedPlayAndRewindCounter;
 import analyzer.ui.PlayerFactory;
@@ -166,9 +167,17 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 //		previousAggregatedIndex = previousAggregateIndex();
 //	}
 	
+	public void suppressNotifications() {
+		propertyChangeSupport.firePropertyChange(OEFrame.SUPPRESS_NOTIFICATION_PROCESSING, false, true);
+	}
+	public void unsuppressNotifications() {
+		propertyChangeSupport.firePropertyChange(OEFrame.SUPPRESS_NOTIFICATION_PROCESSING, true, false);
+	}
+	
     @Visible(false)
 	public void fireWindowEvents() {
 		String anAggregatedStatus = StatusConsts.INDETERMINATE;
+		suppressNotifications();
 		for (int featureIndex = 0; featureIndex <= currentFeatureIndex; featureIndex++) {
 			for (ICommand aCommand:allCommands.get(featureIndex)) {
 				super.newCommand(aCommand);				
@@ -177,7 +186,8 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 			super.newStatus(allPredictions.get(featureIndex));
 			if (allAggregatedStatuses.get(featureIndex) != null)
 				super.newAggregatedStatus (allAggregatedStatuses.get(featureIndex));
-		}		
+		}
+		unsuppressNotifications();
 	}
 	@Visible(false)
 	public void newWindow() {

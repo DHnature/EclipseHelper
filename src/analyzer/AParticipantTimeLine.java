@@ -210,6 +210,22 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 		return timeStampList.size() -1; 
 	}
 	
+	public int getDifficultyPredictionBefore(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex -1; aDifficultyIndex >= 0; aDifficultyIndex--) {
+			if (predictionList.get(aDifficultyIndex) == DIFFICULTY_INT) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	
+	public int getDifficultyPredictionAfter(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex + 1; aDifficultyIndex < predictionList.size(); aDifficultyIndex++) {
+			if (predictionList.get(aDifficultyIndex) == DIFFICULTY_INT) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	
 	public List<StuckInterval> getStuckInterval() {
 		return stuckInterval;
 	}
