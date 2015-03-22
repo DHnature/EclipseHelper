@@ -8,6 +8,7 @@ import java.util.List;
 
 import analyzer.ui.AGeneralizedPlayAndRewindCounter;
 import analyzer.ui.GeneralizedPlayAndRewindCounter;
+import analyzer.ui.PlayerFactory;
 import analyzer.ui.graphics.PlayAndRewindCounter;
 import trace.difficultyPrediction.AggregatePredictionChanged;
 import trace.difficultyPrediction.PredictionChanged;
@@ -34,16 +35,16 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 //	protected int previousFeatureIndex;
 	protected String currentAggregateStatus = StatusConsts.INDETERMINATE;
 	protected int currentFeatureIndex; // changes during replay
-	protected boolean playBack;
-	protected PlayAndRewindCounter player;
+	private boolean playBack;
+	protected GeneralizedPlayAndRewindCounter player;
 	
+//	public ARewindableMultiLevelAggregator() {
+//		this (new AGeneralizedPlayAndRewindCounter());
+////		addRatioBasedSlots();
+//	}
 	public ARewindableMultiLevelAggregator() {
-		this (new AGeneralizedPlayAndRewindCounter());
-//		addRatioBasedSlots();
-	}
-	public ARewindableMultiLevelAggregator(PlayAndRewindCounter aPlayer) {
 		addRatioBasedSlots();
-		player = aPlayer;
+		player = PlayerFactory.getSingleton();
 		player.addPropertyChangeListener(this);
 	}
 	@Row(0)
@@ -55,7 +56,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	@Override
 	@Visible(false)
 	public void newCommand(ICommand newCommand) {
-		if (!playBack) {
+		if (!isPlayBack()) {
 		allCommands.get(nextFeatureIndex).add(newCommand);
 //			allCommands.add(newCommand);
 //		} else {
@@ -66,7 +67,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	@Override
 	@Visible(false)
 	public void newStatus(String aStatus) {
-		if (!playBack) {
+		if (!isPlayBack()) {
 		   allPredictions.set(nextFeatureIndex - 1, aStatus); // next feature index was bumpted by new feature
 //		   allAggregatedStatuses.add(null);
 //		   if (lastFeatureIndex == 0)
@@ -89,14 +90,19 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 		allPredictions.add(null);
 		allAggregatedStatuses.add(null);		
 	}
+	
 	@Override
 	@Visible(false)
 	public void newRatios(RatioFeatures newVal) {
-		if (!playBack) {
+		if (!isPlayBack()) {
 		allFeatures.set(nextFeatureIndex, newVal);
-		currentFeatureIndex = nextFeatureIndex;
+//		player.setCurrentTime(currentFeatureIndex);
 		addRatioBasedSlots();
+		currentFeatureIndex = nextFeatureIndex;
+
 		nextFeatureIndex++;
+		player.setNextFeatureIndex(nextFeatureIndex);
+
 
 //		} else {
 //		if (!playBack) { 
@@ -107,7 +113,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	}
 	@Visible(false)
 	public void newAggregatedStatus(String aStatus) {
-		if (!playBack) {
+		if (!isPlayBack()) {
 		  allAggregatedStatuses.set(nextFeatureIndex - 1, aStatus); // index was bumped
 //		} else {
 		super.newAggregatedStatus(aStatus);
@@ -117,7 +123,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	
 	
 	void setNewWindow(int newVal) {
-		playBack = true;
+		setPlayBack(true);
 		currentFeatureIndex = newVal;
 		newWindow();
 	}
@@ -177,13 +183,13 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	
 	
 	public boolean preLive() {
-		return playBack;
+		return isPlayBack();
 	}
 //	@Row(0)
 //	@Column(0)
 	public void live() {		
 		end(); //play back all past events
-		playBack = false;
+		setPlayBack(false);
 	}
 //	@Row(0)
 //	@Column(1)
@@ -222,7 +228,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (evt.getPropertyName().equalsIgnoreCase("currentTime")) {
+		if (player.isPlayBack() && evt.getPropertyName().equalsIgnoreCase("currentTime")) {
 			setNewWindow((Integer) evt.getNewValue());			
 		}
 //		if (evt.getPropertyName().equalsIgnoreCase("newRatioFeatures")) {
@@ -234,5 +240,12 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	public static void main (String[] args) {
 //		ObjectEditor.edit(AMultiLevelAggregator.getInstance());
 		createUI();
+	}
+	@Visible(false)
+	public boolean isPlayBack() {
+		return playBack || player.isPlayBack();
+	}
+	public void setPlayBack(boolean playBack) {
+		this.playBack = playBack;
 	}
 }
