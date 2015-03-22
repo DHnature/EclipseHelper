@@ -33,19 +33,14 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 		playBack = true;
 		super.back();		
 	}
-//	@Override
-//	@Row(0)
-//	@Column(1)
-//	public void forward() {
-//		super.forward();		
-//	}
-//	
-//	@Override
-//	@Row(0)
-//	@Column(1)
-//	public void forward() {
-//		super.forward();		
-//	}
+	@Override
+	@Row(0)
+	@Column(1)
+	public void forward() {
+		playBack = true;
+		super.forward();		
+	}
+
 	@Row(1)
 	@Column(2)
 	public void live() {		
@@ -55,11 +50,13 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	@Row(1)
 	@Column(0)
 	public void start() {
+		playBack = true;
 		setCurrentTime(0);
 	}
 	@Row(1)
 	@Column(1)
 	public void end() {
+		playBack = true;
 		setCurrentTime(nextFeatureIndex - 1);
 	}
 	@Visible(false)
@@ -69,12 +66,17 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	
 	public void setNextFeatureIndex(int newVal) {
 		nextFeatureIndex = newVal;
+		if (!isPlayBack())
 		setCurrentTime(nextFeatureIndex -1);
 	}
 	
 	public boolean isPlayBack() {
 		return playBack;
 	}
+	
+	void propagatePre() {
+		//propertyChangeSupport().firePropertyChange("this", null, this);
+    }
 	
 //	
 	

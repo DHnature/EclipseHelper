@@ -56,10 +56,11 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	@Override
 	@Visible(false)
 	public void newCommand(ICommand newCommand) {
-		if (!isPlayBack()) {
+//		if (!isPlayBack()) {
 		allCommands.get(nextFeatureIndex).add(newCommand);
 //			allCommands.add(newCommand);
 //		} else {
+		if (!isPlayBack()) {
 		 super.newCommand(newCommand);
 		}
 		
@@ -67,7 +68,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	@Override
 	@Visible(false)
 	public void newStatus(String aStatus) {
-		if (!isPlayBack()) {
+//		if (!isPlayBack()) {
 		   allPredictions.set(nextFeatureIndex - 1, aStatus); // next feature index was bumpted by new feature
 //		   allAggregatedStatuses.add(null);
 //		   if (lastFeatureIndex == 0)
@@ -75,10 +76,12 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 //		   else
 //			allAggregatedStatuses.add(allAggregatedStatuses.get(lastFeatureIndex - 1));
 //		} else {
-//		if (!playBack) {
+		if (!isPlayBack()) {
 			super.newStatus(aStatus); 
-			propagatePre(); // to reset back and forward
+//			propagatePre(); // to reset back and forward
 		}
+		propagatePre(); // to reset back and forward
+
 				
 	}
     void propagatePre() {
@@ -94,14 +97,17 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	@Override
 	@Visible(false)
 	public void newRatios(RatioFeatures newVal) {
-		if (!isPlayBack()) {
+		// buffer commands
 		allFeatures.set(nextFeatureIndex, newVal);
 //		player.setCurrentTime(currentFeatureIndex);
 		addRatioBasedSlots();
-		currentFeatureIndex = nextFeatureIndex;
-
 		nextFeatureIndex++;
 		player.setNextFeatureIndex(nextFeatureIndex);
+		if (!isPlayBack()) {
+
+		currentFeatureIndex = nextFeatureIndex -1;
+
+//		player.setNextFeatureIndex(nextFeatureIndex);
 
 
 //		} else {
@@ -113,9 +119,10 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	}
 	@Visible(false)
 	public void newAggregatedStatus(String aStatus) {
-		if (!isPlayBack()) {
+//		if (!isPlayBack()) {
 		  allAggregatedStatuses.set(nextFeatureIndex - 1, aStatus); // index was bumped
 //		} else {
+		if (!isPlayBack()) {
 		super.newAggregatedStatus(aStatus);
 		}		
 	}
