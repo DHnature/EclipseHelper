@@ -9,6 +9,8 @@ public class RecorderFactory {
 		boundsOutputter.connectToDisplayAndRecorder();
 	}
 	public static DisplayBoundsOutputter getSingleton() {
+		if (boundsOutputter == null)
+			createSingleton();
 		return boundsOutputter;
 	}
 

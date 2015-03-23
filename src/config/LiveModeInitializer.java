@@ -1,5 +1,6 @@
 package config;
 
+import analyzer.ui.video.LocalScreenRecorderAndPlayerFactory;
 import context.recording.RecorderFactory;
 import context.saros.SarosAccessorFactory;
 import difficultyPrediction.APredictionParametersSetter;
@@ -18,7 +19,8 @@ public class LiveModeInitializer {
 //		RatioCalculatorSelector.setFactory(new ARatioCalculatorFactory());
 //		PredictionParametersSetterSelector.setSingleton(new APredictionParametersSetter());
 		PredictionParametersSetterSelector.setSingleton(new ATestPredictionParametersSetter());
-		RecorderFactory.createSingleton();
+//		RecorderFactory.createSingleton();
+		LocalScreenRecorderAndPlayerFactory.createSingleton(); // subsumes RecorderFactory
 		SarosAccessorFactory.createSingleton();
 		
 

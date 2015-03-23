@@ -204,7 +204,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 			return;
 		}
 		 oeFrame = ObjectEditor.edit(getInstance());
-		oeFrame.setSize(700, 500);
+		oeFrame.setSize(700, 700);
 	}
 
 	

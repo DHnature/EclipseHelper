@@ -57,15 +57,20 @@ public class ABalloonCreator implements Resettable{
 	}
 	public static void createUI() {
 		if (frame != null) {
-			instance.reset();
+//			instance.reset();
+			getInstance().reset();
 			return;
 		}
 //		OEFrame frame = ObjectEditor.edit(new ABalloonCreator());
-		instance = new ABalloonCreator();
-	    frame = ObjectEditor.edit(instance);
-
+//		instance = new ABalloonCreator();
+//	    frame = ObjectEditor.edit(instance);
+		frame = ObjectEditor.edit(getInstance());
 		frame.setSize(400, 150);
-
+	}
+	public static ABalloonCreator getInstance() {
+		if (instance == null)
+			instance = new ABalloonCreator();
+		return instance;
 	}
 	@Override
 	public void reset() {

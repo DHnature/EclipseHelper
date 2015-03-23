@@ -29,40 +29,40 @@ public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implem
 //	Display display;
 	ProcessExecer processExecer;
 	ConsoleModel consoleModel;
-	public ADisplayBoundsPiper() {
-		display = Display.getCurrent();
-		display.addListener(SWT.RESIZE, this);
-//		startRecorder(RECORDER_LAUNCHING_COMMAND);
-//		listenToRecorderIOEvents();
-		
-	}	
-	@Override
-	public void connectToDisplayAndRecorder() {
-		listenToDisplayEvents();
-		connectToRecorder();
-	
-	}
+//	public ADisplayBoundsPiper() {
+//		display = Display.getCurrent();
+//		display.addListener(SWT.RESIZE, this);
+////		startRecorder(RECORDER_LAUNCHING_COMMAND);
+////		listenToRecorderIOEvents();
+//		
+//	}	
+//	@Override
+//	public void connectToDisplayAndRecorder() {
+//		listenToDisplayEvents();
+//		connectToRecorder();
+//	
+//	}
 //	@Override
 	public void connectToRecorder() {
 		startRecorder(RECORDER_LAUNCHING_COMMAND);		
 		listenToRecorderIOEvents();
 	}
-	@Override
-	public void listenToDisplayEvents() {
-		System.out.println("Shell " + display.getActiveShell());
-//		display.getActiveShell().addListener(SWT.RESIZE, this);
-		Shell[] shells = display.getShells();
-		for (Shell shell:shells) {
-			
-			shell.addListener(SWT.RESIZE, this);
-			shell.addControlListener(this);
-			System.out.println("Shell " + shell);
-
-			System.out.println("Shell bounds " + shell.getBounds());
-		}
-//		display.addListener(SWT.RESIZE, this);
-
-	}
+//	@Override
+//	public void listenToDisplayEvents() {
+//		System.out.println("Shell " + display.getActiveShell());
+////		display.getActiveShell().addListener(SWT.RESIZE, this);
+//		Shell[] shells = display.getShells();
+//		for (Shell shell:shells) {
+//			
+//			shell.addListener(SWT.RESIZE, this);
+//			shell.addControlListener(this);
+//			System.out.println("Shell " + shell);
+//
+//			System.out.println("Shell bounds " + shell.getBounds());
+//		}
+////		display.addListener(SWT.RESIZE, this);
+//
+//	}
 	/* (non-Javadoc)
 	 * @see context.recording.DisplayBoundsOutputter#startRecorder(java.lang.String)
 	 */
