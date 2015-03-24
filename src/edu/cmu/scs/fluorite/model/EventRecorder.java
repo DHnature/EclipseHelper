@@ -693,11 +693,11 @@ public class EventRecorder {
 
 	public void recordCommand(final ICommand newCommand) {
 		System.out.println("Recording command:" + newCommand);
-		if (!mRecordCommands) {
-			System.out.println("Ignoring command:" + newCommand);
-
-			return;
-		}
+//		if (!mRecordCommands) {
+//			System.out.println("Ignoring command:" + newCommand);
+//
+//			return;
+//		}
 
 		long timestamp = Calendar.getInstance().getTime().getTime();
 		timestamp -= mStartTimestamp;

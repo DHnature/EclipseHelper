@@ -139,11 +139,11 @@ public class ADifficultyPredictionRunnable implements
 						// });
 
 					}
-					if (!DifficultyPredictionSettings.isReplayMode())
-						ServerConnection.getServerConnection()
-								.updateStatus(
-										((PredictionCommand) newCommand)
-												.getName());
+//					if (!DifficultyPredictionSettings.isReplayMode())
+//						ServerConnection.getServerConnection()
+//								.updateStatus(
+//										((PredictionCommand) newCommand)
+//												.getName());
 				}
 				// moving this below
 				DifficultyRobot.getInstance().notifyNewCommand(newCommand);
