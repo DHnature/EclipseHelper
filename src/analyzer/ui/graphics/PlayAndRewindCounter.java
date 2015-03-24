@@ -31,14 +31,14 @@ public interface PlayAndRewindCounter extends PropertyListenerRegistrar,
 
 	public void setCurrentTime(int newVal);
 
-	public boolean preBack();
-
-	public boolean preRewind();
-
-	public boolean preForward();
-
-	public boolean prePause();
-
-	public boolean prePlay();
+//	public boolean preBack();
+//
+//	public boolean preRewind();
+//
+//	public boolean preForward();
+//
+//	public boolean prePause();
+//
+//	public boolean prePlay();
 
 }

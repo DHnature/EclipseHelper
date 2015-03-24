@@ -17,6 +17,7 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	private int currentTime = 0;
 	private int displaySize = 10;// default
 	private RatioFileReader ratioFileReader;
+	private int counter = 0;
 
 	public APlayAndRewindCounter(RatioFileReader reader) {
 		ratioFileReader = reader;
@@ -24,45 +25,49 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 		propertyChangeSupport = new PropertyChangeSupport(this);
 	}
 
-	public boolean preBack() {
-		if (running) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+	// It would be nice to have preconditions that disabled buttons that should
+	// not be pressed, but something in object editor is causing it not to work
+	// properly so for now I just disable within the methods.
 
-	public boolean preRewind() {
-		if (running) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	public boolean preForward() {
-		if (running) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	public boolean prePause() {
-		if (!running) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	public boolean prePlay() {
-		if (running) {
-			return false;
-		} else {
-			return true;
-		}
-	}
+	// public boolean preBack() {
+	// if (running) {
+	// return false;
+	// } else {
+	// return true;
+	// }
+	// }
+	//
+	// public boolean preRewind() {
+	// if (running) {
+	// return false;
+	// } else {
+	// return true;
+	// }
+	// }
+	//
+	// public boolean preForward() {
+	// if (running) {
+	// return false;
+	// } else {
+	// return true;
+	// }
+	// }
+	//
+	// public boolean prePause() {
+	// if (!running) {
+	// return false;
+	// } else {
+	// return true;
+	// }
+	// }
+	//
+	// public boolean prePlay() {
+	// if (running) {
+	// return false;
+	// } else {
+	// return true;
+	// }
+	// }
 
 	@Row(0)
 	@Column(0)
@@ -76,23 +81,24 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@Column(1)
 	@ComponentWidth(100)
 	public void rewind() {
-		running = true;
-		new Thread(new Runnable() {
-			public void run() {
-				while (running) {
-					back();
-					if (!running) {
-						return;
-					}
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+		if (!running) {
+			running = true;
+			new Thread(new Runnable() {
+				public void run() {
+					while (running) {
+						back();
+						if (!running) {
+							return;
+						}
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 				}
-			}
-		}).start();
-
+			}).start();
+		}
 	}
 
 	@Row(0)
@@ -106,22 +112,24 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@Column(3)
 	@ComponentWidth(100)
 	public void play() {
-		running = true;
-		new Thread(new Runnable() {
-			public void run() {
-				while (running) {
-					forward();
-					if (!running) {
-						return;
-					}
-					try {
-						Thread.sleep(1000);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+		if (!running) {
+			running = true;
+			new Thread(new Runnable() {
+				public void run() {
+					while (running) {
+						forward();
+						if (!running) {
+							return;
+						}
+						try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 				}
-			}
-		}).start();
+			}).start();
+		}
 	}
 
 	@Row(0)
@@ -130,6 +138,15 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	public void forward() {
 		setCurrentTime(currentTime + 1);
 		setStart(start + 1);
+	}
+
+	@Row(0)
+	@Column(5)
+	@ComponentWidth(100)
+	public void live() {
+		System.out.println(counter);
+		setCurrentTime(counter-1);
+		setStart(counter-1);
 	}
 
 	public int getStart() {
@@ -147,7 +164,7 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	}
 
 	@Row(0)
-	@Column(6)
+	@Column(7)
 	@ComponentWidth(50)
 	public int getCurrentTime() {
 		return currentTime;
@@ -172,10 +189,13 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equalsIgnoreCase("newRatioFeatures")) {
+			counter = counter + 1;
+		}
 	}
 
 	@Row(0)
-	@Column(5)
+	@Column(6)
 	@ComponentWidth(50)
 	public int getSize() {
 		return displaySize;
