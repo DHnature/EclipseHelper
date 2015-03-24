@@ -11,7 +11,7 @@ import bus.uigen.ObjectEditor;
 
 public class APlayAndRewindCounter implements PlayAndRewindCounter {
 
-	private PropertyChangeSupport propertyChangeSupport;
+	protected PropertyChangeSupport propertyChangeSupport;
 	private boolean running = false;
 	private int start = 0;
 	private int currentTime = 0;
@@ -29,51 +29,54 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	// not be pressed, but something in object editor is causing it not to work
 	// properly so for now I just disable within the methods.
 
-	// public boolean preBack() {
-	// if (running) {
-	// return false;
-	// } else {
-	// return true;
-	// }
-	// }
-	//
-	// public boolean preRewind() {
-	// if (running) {
-	// return false;
-	// } else {
-	// return true;
-	// }
-	// }
-	//
-	// public boolean preForward() {
-	// if (running) {
-	// return false;
-	// } else {
-	// return true;
-	// }
-	// }
-	//
-	// public boolean prePause() {
-	// if (!running) {
-	// return false;
-	// } else {
-	// return true;
-	// }
-	// }
-	//
-	// public boolean prePlay() {
-	// if (running) {
-	// return false;
-	// } else {
-	// return true;
-	// }
-	// }
+	 public boolean preBack() {
+	 if (running) {
+	 return false;
+	 } else {
+	 return true;
+	 }
+	 }
+	
+	 public boolean preRewind() {
+	 if (running) {
+	 return false;
+	 } else {
+	 return true;
+	 }
+	 }
+	
+	 public boolean preForward() {
+	 if (running) {
+	 return false;
+	 } else {
+	 return true;
+	 }
+	 }
+	
+	 public boolean prePause() {
+	 if (!running) {
+	 return false;
+	 } else {
+	 return true;
+	 }
+	 }
+	
+	 public boolean prePlay() {
+	 if (running) {
+	 return false;
+	 } else {
+	 return true;
+	 }
+	 }
+	 protected void propagatePre() {
+			propertyChangeSupport.firePropertyChange("this", null, this);
+	    }
 
 	@Row(0)
 	@Column(0)
 	@ComponentWidth(100)
 	public void back() {
-		setCurrentTime(currentTime - 1);
+		setCurrentFeatureIndex(currentTime - 1);
 		setStart(start - 1);
 	}
 
@@ -136,7 +139,7 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@Column(4)
 	@ComponentWidth(100)
 	public void forward() {
-		setCurrentTime(currentTime + 1);
+		setCurrentFeatureIndex(currentTime + 1);
 		setStart(start + 1);
 	}
 
@@ -145,7 +148,7 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@ComponentWidth(100)
 	public void live() {
 		System.out.println(counter);
-		setCurrentTime(counter-1);
+		setCurrentFeatureIndex(counter-1);
 		setStart(counter-1);
 	}
 
@@ -170,11 +173,12 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 		return currentTime;
 	}
 
-	public void setCurrentTime(int newVal) {
+	public void setCurrentFeatureIndex(int newVal) {
 		int oldTime = currentTime;
 		currentTime = newVal;
 		propertyChangeSupport
 				.firePropertyChange("currentTime", oldTime, newVal);
+		propagatePre();
 	}
 
 	@Override

@@ -29,7 +29,7 @@ public interface PlayAndRewindCounter extends PropertyListenerRegistrar,
 
 	public int getCurrentTime();
 
-	public void setCurrentTime(int newVal);
+	public void setCurrentFeatureIndex(int newVal);
 
 //	public boolean preBack();
 //

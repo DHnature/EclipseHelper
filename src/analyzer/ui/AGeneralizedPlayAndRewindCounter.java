@@ -59,14 +59,14 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	@ComponentWidth(100)
 	public void start() {
 		playBack = true;
-		setCurrentTime(0);
+		setCurrentFeatureIndex(0);
 	}
 	@Row(1)
 	@Column(1)
 	@ComponentWidth(100)
 	public void end() {
 		playBack = true;
-		setCurrentTime(nextFeatureIndex - 1);
+		setCurrentFeatureIndex(nextFeatureIndex - 1);
 	}
 	int previousDifficulty;
 	public boolean prePreviousDifficulty() {
@@ -80,7 +80,7 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 		if (!prePreviousDifficulty())
 			return;
 		playBack = true;
-		setCurrentTime(previousDifficulty);		
+		setCurrentFeatureIndex(previousDifficulty);		
 	}
 	int nextDifficulty;
 	public boolean preNextDifficulty() {
@@ -94,7 +94,7 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 		if (!preNextDifficulty())
 			return;
 		playBack = true;
-		setCurrentTime(nextDifficulty);		
+		setCurrentFeatureIndex(nextDifficulty);		
 	}
 	
 	@Visible(false)
@@ -105,16 +105,16 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	public void setNextFeatureIndex(int newVal) {
 		nextFeatureIndex = newVal;
 		if (!isPlayBack())
-		setCurrentTime(nextFeatureIndex -1);
+		setCurrentFeatureIndex(nextFeatureIndex -1);
 	}
 	
 	public boolean isPlayBack() {
 		return playBack;
 	}
 	
-	void propagatePre() {
-		//propertyChangeSupport().firePropertyChange("this", null, this);
-    }
+//	void propagatePre() {
+//		//propertyChangeSupport().firePropertyChange("this", null, this);
+//    }
 	
 //	
 	
