@@ -64,9 +64,9 @@ public class ADifficultyPredictionRunnable implements
 																			// handle
 																			// this
 																			// config
-					ServerConnection.getServerConnection().updateStatus(
-							((DifficulyStatusCommand) newCommand).getStatus()
-									.toString());
+//					ServerConnection.getServerConnection().updateStatus(
+//							((DifficulyStatusCommand) newCommand).getStatus()
+//									.toString());
 				}
 				if (newCommand instanceof AnEndOfQueueCommand) {// stop event
 					DifficultyRobot.getInstance().notifyStopCommand();
