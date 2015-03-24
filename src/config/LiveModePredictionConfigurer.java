@@ -2,8 +2,8 @@ package config;
 
 import analyzer.extension.AnalyzerProcessorFactory;
 import analyzer.extension.LiveAnalyzerProcessorFactory;
-import analyzer.ui.APredictionVisualizationController;
-import analyzer.ui.PredictionVisualizationControllerFactory;
+import analyzer.ui.APredictionController;
+import analyzer.ui.PredictionControllerFactory;
 import analyzer.ui.balloons.ABalloonCreator;
 import analyzer.ui.graphics.LineGraphComposer;
 import analyzer.ui.graphics.LineGraphFactory;
@@ -25,7 +25,7 @@ public class LiveModePredictionConfigurer {
 		AggregatorFactory.createSingleton();
 //		LocalScreenRecorderAndPlayerFactory.createSingleton();
 		ABalloonCreator.getInstance();
-		APredictionVisualizationController.createUI();
+		APredictionController.createUI();
 		
 //		LineGraphComposer.composeUI();
 // 		APredictionParameters.createUI();

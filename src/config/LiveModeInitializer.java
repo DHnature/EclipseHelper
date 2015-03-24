@@ -21,7 +21,7 @@ public class LiveModeInitializer {
 		PredictionParametersSetterSelector.setSingleton(new ATestPredictionParametersSetter());
 //		RecorderFactory.createSingleton();
 		LocalScreenRecorderAndPlayerFactory.createSingleton(); // subsumes RecorderFactory
-		SarosAccessorFactory.createSingleton();
+//		SarosAccessorFactory.createSingleton();
 		
 
 	}
