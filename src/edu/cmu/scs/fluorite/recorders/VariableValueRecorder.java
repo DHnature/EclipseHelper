@@ -1,18 +1,8 @@
 package edu.cmu.scs.fluorite.recorders;
 
-import java.util.Map;
-
-import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.variables.IValueVariable;
 import org.eclipse.core.variables.IValueVariableListener;
-import org.eclipse.debug.core.DebugEvent;
-import org.eclipse.debug.core.IDebugEventSetListener;
-import org.eclipse.debug.core.ILaunchConfiguration;
-import org.eclipse.debug.core.model.IDebugTarget;
-import org.eclipse.debug.core.model.IProcess;
 import org.eclipse.ui.IEditorPart;
-
-import edu.cmu.scs.fluorite.commands.RunCommand;
 
 public class VariableValueRecorder extends BaseRecorder implements
 IValueVariableListener {

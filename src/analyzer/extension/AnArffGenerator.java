@@ -7,23 +7,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
-import java.util.Stack;
 
-import bus.uigen.OEFrame;
-import bus.uigen.ObjectEditor;
 import analyzer.AParticipantTimeLine;
 import analyzer.AnAnalyzer;
 import analyzer.Analyzer;
 import analyzer.ParticipantTimeLine;
+import bus.uigen.OEFrame;
+import bus.uigen.ObjectEditor;
 import difficultyPrediction.DifficultyRobot;
-import difficultyPrediction.extension.APrintingDifficultyPredictionListener;
 import difficultyPrediction.featureExtraction.RatioFeatures;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand;
 
 /**Class that generates Arff Files from the input ratios via difficulty listener event callbacks and
  * new predictions.

@@ -1,8 +1,5 @@
 package difficultyPrediction;
 
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-
 import org.eclipse.swt.widgets.ToolTip;
 
 import edu.cmu.scs.fluorite.commands.ICommand;

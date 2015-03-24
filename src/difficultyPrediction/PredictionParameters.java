@@ -1,9 +1,7 @@
 package difficultyPrediction;
 
-import analyzer.Resettable;
-import util.annotations.Column;
-import util.annotations.Row;
 import util.models.PropertyListenerRegisterer;
+import analyzer.Resettable;
 
 public interface PredictionParameters extends Resettable, PropertyListenerRegisterer {
 	

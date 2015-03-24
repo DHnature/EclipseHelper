@@ -7,7 +7,6 @@ import org.eclipse.swt.custom.StyledText;
 import org.eclipse.ui.IEditorPart;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
 
 import edu.cmu.scs.fluorite.model.EventRecorder;
 import edu.cmu.scs.fluorite.util.Utilities;

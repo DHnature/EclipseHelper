@@ -7,22 +7,19 @@ import java.util.List;
 
 import javax.swing.JTextArea;
 
-import bus.uigen.OEFrame;
-import bus.uigen.ObjectEditor;
 import trace.difficultyPrediction.AggregatePredictionChanged;
 import trace.difficultyPrediction.PredictionChanged;
 import util.annotations.ComponentHeight;
 import util.annotations.PreferredWidgetClass;
 import util.annotations.Row;
 import util.annotations.Visible;
+import bus.uigen.OEFrame;
+import bus.uigen.ObjectEditor;
 import difficultyPrediction.DifficultyRobot;
 import difficultyPrediction.MultiLevelAggregator;
 import difficultyPrediction.featureExtraction.RatioFeatures;
-import difficultyPrediction.featureExtraction.RatioFeaturesListener;
-import difficultyPrediction.metrics.APercentageCalculator;
 import difficultyPrediction.metrics.RatioCalculator;
 import difficultyPrediction.metrics.RatioCalculatorSelector;
-import difficultyPrediction.statusManager.StatusListener;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.model.StatusConsts;
 

@@ -2,31 +2,22 @@ package edu.cmu.scs.fluorite.viewpart;
 
 // import com.gtalk.GTalkPlugin;
 
-import edu.cmu.scs.fluorite.viewpart.Constants;
-import edu.cmu.scs.fluorite.viewpart.Util;
-
-/*    */
-import java.util.Collection;
 import java.util.Vector;
-/*    */
-import java.util.Iterator;
 
-/*    */
-import org.eclipse.jface.preference.IPreferenceStore;
 /*    */
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 /*    */
 import org.eclipse.jface.viewers.Viewer;
-/*    */
-import org.jivesoftware.smack.RosterEntry;
-/*    */
-import org.jivesoftware.smack.packet.Presence;
-/*    */
-import org.jivesoftware.smack.util.StringUtils;
 
 import buddylist.database.DatabaseConnection;
 import buddylist.database.DatabaseUtils;
 import buddylist.database.Users;
+/*    */
+/*    */
+/*    */
+/*    */
+/*    */
+/*    */
 
 /*    */
 /*    */public class ChatViewContentProvider

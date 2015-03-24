@@ -1,7 +1,5 @@
 package analyzer.ui.text;
 
-import context.recording.ADisplayBoundsFileWriter;
-import context.recording.DisplayBoundsOutputter;
 import difficultyPrediction.MultiLevelAggregator;
 
 public class AggregatorFactory {

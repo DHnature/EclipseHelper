@@ -1,11 +1,9 @@
 package trace.difficultyPrediction;
 
-import difficultyPrediction.StatusInformation;
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
-import trace.plugin.PluginEarlyStarted;
-import util.trace.Traceable;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
+import difficultyPrediction.StatusInformation;
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
 
 
 public class NewExtractedStatusInformation extends TraceableInfo {

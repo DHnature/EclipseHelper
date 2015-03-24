@@ -1,7 +1,5 @@
 package analyzer.ui.balloons;
 
-import org.eclipse.ui.PlatformUI;
-
 import util.annotations.Column;
 import util.annotations.ComponentWidth;
 import util.annotations.Row;
@@ -9,7 +7,6 @@ import analyzer.Resettable;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import difficultyPrediction.ADifficultyPredictionRunnable;
-import edu.cmu.scs.fluorite.commands.PredictionCommand;
 
 public class ABalloonCreator implements Resettable{
 	static ABalloonCreator instance;

@@ -3,11 +3,11 @@ package difficultyPrediction;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import bus.uigen.OEFrame;
-import bus.uigen.ObjectEditor;
 import util.annotations.Column;
 import util.annotations.ComponentWidth;
 import util.annotations.Row;
+import bus.uigen.OEFrame;
+import bus.uigen.ObjectEditor;
 
 public class APredictionParameters implements PredictionParameters{
 	static PredictionParameters instance;

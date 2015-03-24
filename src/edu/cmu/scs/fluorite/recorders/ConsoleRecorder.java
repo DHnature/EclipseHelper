@@ -8,7 +8,6 @@ import org.eclipse.ui.console.IConsoleListener;
 import org.eclipse.ui.console.TextConsole;
 
 import edu.cmu.scs.fluorite.commands.ExceptionCommand;
-import edu.cmu.scs.fluorite.commands.ShellCommand;
 
 public class ConsoleRecorder extends BaseRecorder implements IConsoleListener {
 

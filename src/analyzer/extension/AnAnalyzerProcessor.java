@@ -5,8 +5,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -15,29 +13,12 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.TimeZone;
 
-import javax.swing.JFrame;
-
-
-
-
-
-
-
-
-
-
-
-import org.joda.time.DateTime;
-
 import util.misc.Common;
 import analyzer.AParticipantTimeLine;
 import analyzer.AWebLink;
-import analyzer.AnAnalyzer;
 import analyzer.Analyzer;
 import analyzer.ParticipantTimeLine;
 import analyzer.WebLink;
-import bus.uigen.OEFrame;
-import bus.uigen.ObjectEditor;
 import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.DifficultyRobot;
 import difficultyPrediction.extension.APrintingDifficultyPredictionListener;

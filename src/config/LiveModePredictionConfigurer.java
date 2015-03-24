@@ -1,16 +1,10 @@
 package config;
 
-import analyzer.extension.AnalyzerProcessorFactory;
 import analyzer.extension.LiveAnalyzerProcessorFactory;
 import analyzer.ui.APredictionController;
-import analyzer.ui.PredictionControllerFactory;
 import analyzer.ui.balloons.ABalloonCreator;
-import analyzer.ui.graphics.LineGraphComposer;
 import analyzer.ui.graphics.LineGraphFactory;
-import analyzer.ui.text.AMultiLevelAggregator;
 import analyzer.ui.text.AggregatorFactory;
-import analyzer.ui.video.ALocalScreenRecorderAndPlayer;
-import analyzer.ui.video.LocalScreenRecorderAndPlayerFactory;
 import difficultyPrediction.APredictionParameters;
 
 public class LiveModePredictionConfigurer {

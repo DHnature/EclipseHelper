@@ -1,7 +1,7 @@
 package difficultyPrediction;
 
-import analyzer.Resettable;
 import util.models.PropertyListenerRegistrar;
+import analyzer.Resettable;
 import difficultyPrediction.featureExtraction.RatioFeaturesListener;
 import difficultyPrediction.statusManager.StatusListener;
 

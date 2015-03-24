@@ -9,16 +9,13 @@ import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.picocontainer.annotations.Inject;
 
-import de.fu_berlin.inf.dpp.accountManagement.*;
 import de.fu_berlin.inf.dpp.monitoring.IProgressMonitor;
 import de.fu_berlin.inf.dpp.net.xmpp.JID;
 import de.fu_berlin.inf.dpp.project.SarosSessionManager;
 import de.fu_berlin.inf.dpp.session.ISarosSession;
 import de.fu_berlin.inf.dpp.session.ISarosSessionListener;
-import de.fu_berlin.inf.dpp.session.ISarosSessionManager;
 import de.fu_berlin.inf.dpp.session.User;
 import de.fu_berlin.inf.dpp.ui.util.CollaborationUtils;
-import de.fu_berlin.inf.dpp.ui.util.selection.retriever.SelectionRetrieverFactory;
 
 public class ASarosAccessor implements ISarosSessionListener, SarosAccessor{
 	@Inject

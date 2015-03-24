@@ -1,30 +1,25 @@
 package edu.cmu.scs.fluorite.viewpart;
 
 import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.part.ViewPart;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.part.ViewPart;
 
+import trace.view.help.HelpViewCreated;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand.Status;
 import edu.cmu.scs.fluorite.dialogs.InsurmountableDialog;
 import edu.cmu.scs.fluorite.dialogs.SurmountableDialog;
 import edu.cmu.scs.fluorite.model.EventRecorder;
 import edu.cmu.scs.fluorite.model.StatusConsts;
-
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.custom.CTabItem;
-
-import trace.view.help.HelpViewCreated;
 
 public class HelpViewPart extends ViewPart {
 	public HelpViewPart() {

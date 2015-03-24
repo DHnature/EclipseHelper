@@ -1,20 +1,10 @@
 package context.recording;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
-import bus.uigen.misc.OEMisc;
 import util.misc.Common;
-import util.pipe.ConsoleModel;
-import util.remote.ProcessExecer;
 
 
 public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter implements  DisplayBoundsOutputter {

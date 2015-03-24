@@ -7,7 +7,6 @@ import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -33,12 +32,11 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import org.jivesoftware.smack.XMPPException;
 
-import edu.cmu.scs.fluorite.plugin.Activator;
-
 import buddylist.chat.Account;
 import buddylist.chat.AccountsManager;
 import buddylist.chat.Buddy_1;
 import buddylist.chat.ChatViewController;
+import edu.cmu.scs.fluorite.plugin.Activator;
 
 public class AccountsView extends ViewPart implements buddylist.chat.AccountsView  {
 

@@ -6,7 +6,6 @@ import java.util.List;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.jivesoftware.smack.XMPPException;
 
-
 import buddylist.views.SWTChatViewController;
 
 /**

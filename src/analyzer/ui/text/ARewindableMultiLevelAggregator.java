@@ -2,23 +2,15 @@ package analyzer.ui.text;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 import java.util.List;
 
-import bus.uigen.OEFrame;
-import analyzer.ui.AGeneralizedPlayAndRewindCounter;
+import util.annotations.Visible;
 import analyzer.ui.GeneralizedPlayAndRewindCounter;
 import analyzer.ui.PlayerFactory;
 import analyzer.ui.graphics.PlayAndRewindCounter;
-import trace.difficultyPrediction.AggregatePredictionChanged;
-import trace.difficultyPrediction.PredictionChanged;
-import util.annotations.Column;
-import util.annotations.Row;
-import util.annotations.Visible;
-import difficultyPrediction.MultiLevelAggregator;
+import bus.uigen.OEFrame;
 import difficultyPrediction.featureExtraction.RatioFeatures;
-import difficultyPrediction.metrics.RatioCalculator;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.model.StatusConsts;
 

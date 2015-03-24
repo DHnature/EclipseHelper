@@ -2,14 +2,9 @@ package trace.view;
 
 import org.eclipse.swt.widgets.Composite;
 
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
-import trace.plugin.PluginStopped;
-import trace.recorder.MacroRecordingStarted;
-import trace.recorder.NewMacroCommand;
-import trace.recorder.RecordedCommandsCleared;
-import util.trace.Traceable;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
 
 
 public class ViewCreated extends TraceableInfo {

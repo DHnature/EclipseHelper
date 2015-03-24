@@ -6,11 +6,11 @@ import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import difficultyPrediction.featureExtraction.ARatioFeatures;
-import difficultyPrediction.featureExtraction.RatioFeatures;
 import util.misc.ThreadSupport;
 import bus.uigen.ObjectEditor;
 import bus.uigen.uiFrame;
+import difficultyPrediction.featureExtraction.ARatioFeatures;
+import difficultyPrediction.featureExtraction.RatioFeatures;
 
 public class LineGraphComposer {
 

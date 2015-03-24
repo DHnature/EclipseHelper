@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Calendar;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.ISODateTimeFormat;
 
 import difficultyPrediction.Mediator;
 import difficultyPrediction.PluginEventListener;
@@ -15,7 +14,6 @@ import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
 import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime;
-import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeaturesListener;

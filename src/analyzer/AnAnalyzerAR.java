@@ -1,7 +1,5 @@
 package analyzer;
 
-import java.awt.Color;
-
 import bus.uigen.ObjectEditor;
 import bus.uigen.attributes.AttributeNames;
 import bus.uigen.undo.ExecutableCommand;

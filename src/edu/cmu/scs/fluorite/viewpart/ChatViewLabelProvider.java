@@ -2,13 +2,11 @@
 /*    */ 
 ///*    */ import com.gtalk.GTalkPlugin;
 
-import edu.cmu.scs.fluorite.plugin.Activator;
-import edu.cmu.scs.fluorite.viewpart.Constants;
-import edu.cmu.scs.fluorite.viewpart.Util;
-
 /*    */ import org.eclipse.jface.viewers.LabelProvider;
 /*    */ import org.eclipse.swt.graphics.Image;
 /*    */ import org.jivesoftware.smack.RosterEntry;
+
+import edu.cmu.scs.fluorite.plugin.Activator;
 /*    */ 
 /*    */ class ChatViewLabelProvider extends LabelProvider
 /*    */ {

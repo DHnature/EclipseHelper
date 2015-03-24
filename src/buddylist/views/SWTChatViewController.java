@@ -8,7 +8,6 @@ import org.eclipse.ui.IViewPart;
 import org.eclipse.ui.PartInitException;
 import org.eclipse.ui.PlatformUI;
 
-
 import buddylist.chat.Account;
 import buddylist.chat.AccountType;
 import buddylist.chat.Buddy_1;

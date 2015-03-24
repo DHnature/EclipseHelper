@@ -14,11 +14,11 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 
-import difficultyPrediction.featureExtraction.ARatioFeatures;
-import difficultyPrediction.featureExtraction.RatioFeatures;
 import util.annotations.Column;
 import util.annotations.ComponentWidth;
 import util.annotations.Row;
+import difficultyPrediction.featureExtraction.ARatioFeatures;
+import difficultyPrediction.featureExtraction.RatioFeatures;
 
 public class ARatioFileReader implements RatioFileReader {
 

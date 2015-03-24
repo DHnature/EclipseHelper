@@ -5,12 +5,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.Vector;
 
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.TableColumn;
-import org.eclipse.ui.IActionBars;
-import org.eclipse.ui.PlatformUI;
-import org.eclipse.ui.part.ViewPart;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
 import org.eclipse.jface.layout.TableColumnLayout;
@@ -21,13 +15,17 @@ import org.eclipse.jface.viewers.TableViewerColumn;
 import org.eclipse.jface.window.Window;
 import org.eclipse.jface.wizard.WizardDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Table;
+import org.eclipse.swt.widgets.TableColumn;
+import org.eclipse.ui.IActionBars;
+import org.eclipse.ui.part.ViewPart;
 
 import buddylist.chat.Buddy;
 import buddylist.database.DatabaseUtils;
 import buddylist.database.GetUserInformation;
 import buddylist.database.Users;
 import buddylist.views.AddAccountWizard;
-
 import edu.cmu.scs.fluorite.plugin.Activator;
 
 public class BuddyListViewPart extends ViewPart {

@@ -4,7 +4,6 @@ import difficultyPrediction.ATestPredictionParametersSetter;
 import difficultyPrediction.PredictionParametersSetterSelector;
 import difficultyPrediction.featureExtraction.ARatioFeaturesFactory;
 import difficultyPrediction.featureExtraction.RatioFeaturesFactorySelector;
-import difficultyPrediction.metrics.ARatioCalculatorFactory;
 import difficultyPrediction.metrics.ATestRatioCalculatorFactory;
 import difficultyPrediction.metrics.RatioCalculatorSelector;
 

@@ -1,13 +1,13 @@
 package analyzer.ui;
 
 //import context.saros.SarosAccessorFactory;
-import difficultyPrediction.APredictionParameters;
 import analyzer.ui.balloons.ABalloonCreator;
 import analyzer.ui.graphics.LineGraphComposer;
 import analyzer.ui.text.AMultiLevelAggregator;
 import analyzer.ui.video.ALocalScreenRecorderAndPlayer;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
+import difficultyPrediction.APredictionParameters;
 
 public class APredictionController implements PredictionController {
 	

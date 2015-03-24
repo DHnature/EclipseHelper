@@ -1,21 +1,15 @@
 package difficultyPrediction;
 
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.ToolTip;
-import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.PlatformUI;
 
 import trace.difficultyPrediction.CommandIgnoredBecauseQueueFull;
 import config.PredictorConfigurer;
-import bus.uigen.ObjectEditor;
-import analyzer.ui.graphics.LineGraphComposer;
 import dayton.ServerConnection;
-import difficultyPrediction.eventAggregation.ADisjointDiscreteChunks;
-import difficultyPrediction.eventAggregation.EventAggregationStrategy;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;

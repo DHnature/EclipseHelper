@@ -4,13 +4,12 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import bus.uigen.OEFrame;
-import bus.uigen.ObjectEditor;
-import util.annotations.Row;
 import util.annotations.Visible;
 import analyzer.ui.GeneralizedPlayAndRewindCounter;
 import analyzer.ui.PlayerFactory;
 import analyzer.ui.graphics.PlayAndRewindCounter;
+import bus.uigen.OEFrame;
+import bus.uigen.ObjectEditor;
 import context.recording.ADisplayBoundsPiper;
 
 public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implements LocalScreenRecorderAndPlayer{

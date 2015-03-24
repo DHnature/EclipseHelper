@@ -1,9 +1,5 @@
 package difficultyPrediction;
 
-import java.util.concurrent.BlockingQueue;
-
-import difficultyPrediction.featureExtraction.RatioFeatures;
-import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;
 
 public interface DifficultyPredictionPluginEventProcessor extends PluginEventListener{

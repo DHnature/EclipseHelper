@@ -1,6 +1,5 @@
 package difficultyPrediction.statusManager;
 
-import analyzer.ui.graphics.LineGraphComposer;
 import difficultyPrediction.APredictionParameters;
 import difficultyPrediction.metrics.APredictionHolder;
 

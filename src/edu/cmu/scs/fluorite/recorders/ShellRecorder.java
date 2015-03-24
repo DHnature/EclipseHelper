@@ -1,15 +1,10 @@
 package edu.cmu.scs.fluorite.recorders;
 
-import org.eclipse.ui.IEditorPart;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.events.ShellListener;
-import org.eclipse.jface.text.IDocument;
-import org.eclipse.jface.text.IDocumentListener;
+import org.eclipse.ui.IEditorPart;
 
-import edu.cmu.scs.fluorite.commands.FileOpenCommand;
 import edu.cmu.scs.fluorite.commands.ShellCommand;
-import edu.cmu.scs.fluorite.model.FileSnapshotManager;
-import edu.cmu.scs.fluorite.util.Utilities;
 
 public class ShellRecorder extends BaseRecorder implements ShellListener {
 

@@ -1,11 +1,9 @@
 package trace.difficultyPrediction;
 
-import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
-import trace.plugin.PluginEarlyStarted;
-import util.trace.Traceable;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
+import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
 
 
 public class NewEventSegmentAggregation extends TraceableInfo {

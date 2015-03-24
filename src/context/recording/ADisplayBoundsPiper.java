@@ -3,16 +3,11 @@ package context.recording;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
-import bus.uigen.misc.OEMisc;
 import util.pipe.ConsoleModel;
 import util.remote.ProcessExecer;
+import bus.uigen.misc.OEMisc;
 
 
 public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implements  DisplayBoundsOutputter, PropertyChangeListener {

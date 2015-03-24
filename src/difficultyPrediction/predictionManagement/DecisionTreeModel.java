@@ -6,10 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import org.eclipse.ui.part.PluginDropAdapter;
-
+import weka.classifiers.trees.J48;
 import difficultyPrediction.DifficultyPredictionSettings;
-import weka.classifiers.trees.*;
 
 public class DecisionTreeModel implements PredictionManagerStrategy {
 	public PredictionManager predictionManager;

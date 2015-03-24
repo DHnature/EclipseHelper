@@ -24,8 +24,8 @@ import org.xml.sax.SAXException;
 import edu.cmu.scs.fluorite.commands.AbstractCommand;
 import edu.cmu.scs.fluorite.commands.AnnotateCommand;
 import edu.cmu.scs.fluorite.commands.CompilationCommand;
-import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
+import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.model.EventRecorder;
 
 public class LogReader {

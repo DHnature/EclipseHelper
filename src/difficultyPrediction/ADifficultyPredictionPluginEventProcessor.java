@@ -1,18 +1,12 @@
 package difficultyPrediction;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.BlockingQueue;
-
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.ToolTip;
-import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.PlatformUI;
 
 import trace.plugin.PluginThreadCreated;
 import config.FactorySingletonInitializer;
 import difficultyPrediction.extension.ADifficultyPredictionRegistry;
-import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;
 import edu.cmu.scs.fluorite.model.EventRecorder;

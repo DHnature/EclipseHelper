@@ -1,7 +1,7 @@
 package analyzer.extension;
 
-import difficultyPrediction.DifficultyPredictionEventListener;
 import analyzer.AnalyzerListener;
+import difficultyPrediction.DifficultyPredictionEventListener;
 
 public interface AnalyzerProcessor extends AnalyzerListener, DifficultyPredictionEventListener {
 

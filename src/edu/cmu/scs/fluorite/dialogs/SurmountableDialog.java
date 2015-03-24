@@ -15,7 +15,6 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import context.saros.ASarosAccessor;
 import context.saros.SarosAccessorFactory;
 
 public class SurmountableDialog extends

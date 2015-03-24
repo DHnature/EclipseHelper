@@ -3,18 +3,13 @@
 /*    */
 ///*    */ /*    */ /*    */ import com.gtalk.views.GTalkChatView;
 
-import edu.cmu.scs.fluorite.util.StringUtil;
-import edu.cmu.scs.fluorite.viewpart.Constants;
-import edu.cmu.scs.fluorite.viewpart.Util;
-
 /*    */
 import java.text.DateFormat;
 /*    */
 import java.util.Date;
+
 /*    */
 import org.eclipse.swt.custom.CTabFolder;
-/*    */
-import org.eclipse.swt.custom.CTabItem;
 /*    */
 import org.eclipse.swt.custom.StyledText;
 /*    */
@@ -22,13 +17,14 @@ import org.eclipse.swt.events.KeyEvent;
 /*    */
 import org.eclipse.swt.events.KeyListener;
 /*    */
-import org.eclipse.swt.widgets.Display;
-/*    */
 import org.eclipse.swt.widgets.Text;
 /*    */
 
 import buddylist.database.DatabaseConnection;
 import buddylist.database.DatabaseUtils;
+import edu.cmu.scs.fluorite.util.StringUtil;
+/*    */
+/*    */
 
 
 /*    */public class SendListener

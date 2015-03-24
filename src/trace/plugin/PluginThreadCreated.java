@@ -1,9 +1,8 @@
 package trace.plugin;
 
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
-import util.trace.TraceableInfo;
 import util.trace.Tracer;
 import util.trace.session.ThreadCreated;
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
 
 public class PluginThreadCreated extends ThreadCreated{
 //	String threadName;

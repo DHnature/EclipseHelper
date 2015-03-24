@@ -2,14 +2,7 @@ package analyzer;
 
 import java.util.List;
 
-import config.PredictorConfigurer;
-import difficultyPrediction.APredictionParameters;
-import difficultyPrediction.DifficultyPredictionSettings;
-import difficultyPrediction.PredictionParameters;
-import bus.uigen.OEFrame;
-import bus.uigen.ObjectEditor;
 import util.annotations.Column;
-import util.annotations.ComponentWidth;
 import util.annotations.Explanation;
 import util.annotations.Row;
 import util.annotations.StructurePattern;
@@ -17,6 +10,10 @@ import util.annotations.StructurePatternNames;
 import util.misc.Common;
 import util.models.ADynamicEnum;
 import util.models.DynamicEnum;
+import bus.uigen.ObjectEditor;
+import difficultyPrediction.APredictionParameters;
+import difficultyPrediction.DifficultyPredictionSettings;
+import difficultyPrediction.PredictionParameters;
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
 // there should really be a has-a relationship between the two
 public class AnAnalyzerParametersSelector /*extends APredictionParameters*/  {

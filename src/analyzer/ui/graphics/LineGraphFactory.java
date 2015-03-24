@@ -1,8 +1,6 @@
 package analyzer.ui.graphics;
 
 import analyzer.ui.PlayerFactory;
-import context.recording.ADisplayBoundsFileWriter;
-import context.recording.DisplayBoundsOutputter;
 
 public class LineGraphFactory {
 	static LineGraph singleton;

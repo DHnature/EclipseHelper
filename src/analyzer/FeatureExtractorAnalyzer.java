@@ -4,7 +4,6 @@ import java.util.List;
 
 import difficultyPrediction.Mediator;
 import difficultyPrediction.featureExtraction.FeatureExtractionStrategy;
-import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeaturesFactorySelector;
 import edu.cmu.scs.fluorite.commands.ICommand;

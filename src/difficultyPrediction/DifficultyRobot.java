@@ -2,48 +2,26 @@ package difficultyPrediction;
 
 
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.Calendar;
 
-//import main.Server;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import java.util.List;
-
-import analyzer.AnAnalyzer;
-import analyzer.ui.graphics.LineGraphComposer;
 import trace.difficultyPrediction.NewCommand;
 import trace.difficultyPrediction.NewExtractedStatusInformation;
-import trace.difficultyPrediction.NewPrediction;
 import trace.difficultyPrediction.PredictionValueToStatus;
 import trace.difficultyPrediction.StatusAggregationStarted;
 import util.trace.Tracer;
+import analyzer.AnAnalyzer;
 //import database.Status;
 import difficultyPrediction.eventAggregation.ADisjointDiscreteChunks;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
 import difficultyPrediction.eventAggregation.EventAggregator;
-import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEvents;
 import difficultyPrediction.featureExtraction.ARatioBasedFeatureExtractor;
-import difficultyPrediction.featureExtraction.ARatioFeatures;
+import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEvents;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeaturesListener;
-import difficultyPrediction.predictionManagement.DecisionTreeModel;
 import difficultyPrediction.predictionManagement.APredictionManager;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
+import difficultyPrediction.predictionManagement.DecisionTreeModel;
 import difficultyPrediction.predictionManagement.PredictionManager;
 import difficultyPrediction.statusManager.StatusAggregationDiscreteChunks;
 import difficultyPrediction.statusManager.StatusListener;
@@ -53,6 +31,10 @@ import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
 import edu.cmu.scs.fluorite.model.EventRecorder;
+//import main.Server;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 public class DifficultyRobot implements Mediator {	
 	//Server server;
