@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.ViewPart;
 
+import bus.uigen.ObjectEditor;
 import trace.view.help.HelpViewCreated;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand.Status;
@@ -104,6 +105,21 @@ public class HelpViewPart extends ViewPart {
 					EventRecorder.getInstance().recordCommand(command);
 					lblStatusValue.setText(StatusConsts.INSURMOUNTABLE_TEXT);
 				}
+			}
+		});
+		Button btnTestbed = new Button(parent, SWT.NONE);
+		FormData fd_btnTestbed = new FormData();
+		fd_btnTestbed.top = new FormAttachment(0, 124);
+		fd_btnTestbed.left = new FormAttachment(0, 5);
+		btnTestbed.setLayoutData(fd_btnTestbed);
+		btnTestbed.setText("Analytics");
+//		HelpViewCreated.newCase(parent, this);
+		btnTestbed.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				ObjectEditor.edit("Hello world");
+//				DifficulyStatusCommand command = new DifficulyStatusCommand(Status.Making_Progress);
+//				EventRecorder.getInstance().recordCommand(command);
+//				lblStatusValue.setText(StatusConsts.PROGRESS_TEXT);
 			}
 		});
 	}
