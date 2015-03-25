@@ -4,7 +4,8 @@ public class LocalScreenRecorderAndPlayerFactory {
 	static LocalScreenRecorderAndPlayer singleton;
 	public static void createSingleton() {
 //		singleton = new AMultiLevelAggregator();
-		singleton = new ALocalScreenRecorderAndPlayer();
+//		singleton = new ALocalScreenRecorderAndPlayer();
+		singleton = new ALocalScreenPlayer();
 
 	}
 	

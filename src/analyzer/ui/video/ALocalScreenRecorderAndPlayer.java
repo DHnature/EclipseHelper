@@ -4,6 +4,11 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ControlEvent;
+import org.eclipse.swt.widgets.Event;
+import org.eclipse.swt.widgets.Shell;
+
 import util.annotations.Visible;
 import analyzer.ui.GeneralizedPlayAndRewindCounter;
 import analyzer.ui.PlayerFactory;
@@ -28,6 +33,7 @@ public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implement
 		propertyChangeSupport.firePropertyChange("connected", null, true);
 	
 	}
+	
 	
 	public boolean isConnected() {
 		return connected;
@@ -69,6 +75,12 @@ public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implement
 	public void addPropertyChangeListener(PropertyChangeListener arg0) {
 		propertyChangeSupport.addPropertyChangeListener(arg0);
 	}
+	public void handleEvent(Event event) {
+		
+//		updateRecorder((Shell) event.widget);
+		
+	}
+
 	public static void createUI() {
 		
 		OEFrame oeFrame = ObjectEditor.edit(LocalScreenRecorderAndPlayerFactory.getSingleton());
