@@ -1,6 +1,8 @@
 package analyzer.ui;
 
 //import context.saros.SarosAccessorFactory;
+import javax.swing.WindowConstants;
+
 import analyzer.ui.balloons.ABalloonCreator;
 import analyzer.ui.graphics.LineGraphComposer;
 import analyzer.ui.text.AMultiLevelAggregator;
@@ -56,6 +58,8 @@ public class APredictionController implements PredictionController {
 	public static void createUI() {
 		OEFrame oeFrame = ObjectEditor.edit(PredictionControllerFactory.getSingleton());
 		oeFrame.setSize(800, 150);
+		oeFrame.getFrame().setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		oeFrame.setAutoExitEnabled(false);
 	}
 	
 	public static void main(String[] args) {

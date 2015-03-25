@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JTextArea;
+import javax.swing.WindowConstants;
 
 import trace.difficultyPrediction.AggregatePredictionChanged;
 import trace.difficultyPrediction.PredictionChanged;
@@ -202,6 +203,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		}
 		 oeFrame = ObjectEditor.edit(getInstance());
 		oeFrame.setSize(700, 700);
+		oeFrame.getFrame().setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		oeFrame.setAutoExitEnabled(false);
 	}
 
 	
