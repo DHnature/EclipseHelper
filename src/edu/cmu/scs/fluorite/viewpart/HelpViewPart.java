@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.ViewPart;
 
+import analyzer.ui.APredictionController;
 import bus.uigen.ObjectEditor;
 import trace.view.help.HelpViewCreated;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
@@ -116,10 +117,7 @@ public class HelpViewPart extends ViewPart {
 //		HelpViewCreated.newCase(parent, this);
 		btnTestbed.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				ObjectEditor.edit("Hello world");
-//				DifficulyStatusCommand command = new DifficulyStatusCommand(Status.Making_Progress);
-//				EventRecorder.getInstance().recordCommand(command);
-//				lblStatusValue.setText(StatusConsts.PROGRESS_TEXT);
+				APredictionController.createUI();
 			}
 		});
 	}

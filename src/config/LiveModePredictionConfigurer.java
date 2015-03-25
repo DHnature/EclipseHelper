@@ -19,7 +19,7 @@ public class LiveModePredictionConfigurer {
 		AggregatorFactory.createSingleton();
 //		LocalScreenRecorderAndPlayerFactory.createSingleton();
 		ABalloonCreator.getInstance();
-		APredictionController.createUI();
+//		APredictionController.createUI();
 		
 //		LineGraphComposer.composeUI();
 // 		APredictionParameters.createUI();
