@@ -69,6 +69,9 @@ public class HelpViewPart extends ViewPart {
 		Button btnSurmountable = new Button(parent, SWT.NONE);
 		FormData fd_btnSurmountable = new FormData();
 		fd_btnSurmountable.top = new FormAttachment(0, 62);
+		int width = fd_btnMakingProgress.width;
+//		int width = btnSurmountable.getS
+//		Point size = fd_btnMakingProgress.
 		fd_btnSurmountable.left = new FormAttachment(0, 159);
 		btnSurmountable.setLayoutData(fd_btnSurmountable);
 		btnSurmountable.setText(StatusConsts.SURMOUNTABLE_TEXT);
