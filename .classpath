@@ -16,6 +16,6 @@
 	<classpathentry kind="lib" path="lib/smack-core-4.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/smack-tcp-4.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/xpp3-1.1.4c.jar"/>
-	<classpathentry kind="lib" path="D:/dewan_backup/Java/EclipseHelper/lib/oeall22.jar" sourcepath="/uigen/src"/>
+	<classpathentry kind="lib" path="lib/oeall22.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

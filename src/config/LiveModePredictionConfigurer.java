@@ -1,5 +1,6 @@
 package config;
 
+import util.misc.ThreadSupport;
 import analyzer.extension.LiveAnalyzerProcessorFactory;
 import analyzer.ui.APredictionController;
 import analyzer.ui.balloons.ABalloonCreator;
@@ -19,7 +20,8 @@ public class LiveModePredictionConfigurer {
 		AggregatorFactory.createSingleton();
 //		LocalScreenRecorderAndPlayerFactory.createSingleton();
 		ABalloonCreator.getInstance();
-//		APredictionController.createUI();
+//		ThreadSupport.sleep(10000);
+		APredictionController.createUI();
 		
 //		LineGraphComposer.composeUI();
 // 		APredictionParameters.createUI();

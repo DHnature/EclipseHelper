@@ -7,7 +7,7 @@ public class InitializeConnection extends AbstractPreferenceInitializer {
 
 	@Override
 	public void initializeDefaultPreferences() {
-		LogIntoXMPP.login();
+//		LogIntoXMPP.login();
 	}
 	
 }

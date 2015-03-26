@@ -25,52 +25,33 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 		propertyChangeSupport = new PropertyChangeSupport(this);
 	}
 
-	// It would be nice to have preconditions that disabled buttons that should
-	// not be pressed, but something in object editor is causing it not to work
-	// properly so for now I just disable within the methods.
+	public boolean preRewind() {
+		if (running) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 
-	 public boolean preBack() {
-	 if (running) {
-	 return false;
-	 } else {
-	 return true;
-	 }
-	 }
-	
-	 public boolean preRewind() {
-	 if (running) {
-	 return false;
-	 } else {
-	 return true;
-	 }
-	 }
-	
-	 public boolean preForward() {
-	 if (running) {
-	 return false;
-	 } else {
-	 return true;
-	 }
-	 }
-	
-	 public boolean prePause() {
-	 if (!running) {
-	 return false;
-	 } else {
-	 return true;
-	 }
-	 }
-	
-	 public boolean prePlay() {
-	 if (running) {
-	 return false;
-	 } else {
-	 return true;
-	 }
-	 }
-	 protected void propagatePre() {
-			propertyChangeSupport.firePropertyChange("this", null, this);
-	    }
+	public boolean prePause() {
+		if (!running) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	public boolean prePlay() {
+		if (running) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	protected void propagatePre() {
+		propertyChangeSupport.firePropertyChange("this", null, this);
+	}
 
 	@Row(0)
 	@Column(0)
@@ -84,24 +65,23 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@Column(1)
 	@ComponentWidth(100)
 	public void rewind() {
-		if (!running) {
-			running = true;
-			new Thread(new Runnable() {
-				public void run() {
-					while (running) {
-						back();
-						if (!running) {
-							return;
-						}
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+		running = true;
+		propagatePre();
+		new Thread(new Runnable() {
+			public void run() {
+				while (running) {
+					back();
+					if (!running) {
+						return;
+					}
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
 				}
-			}).start();
-		}
+			}
+		}).start();
 	}
 
 	@Row(0)
@@ -109,30 +89,30 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@ComponentWidth(100)
 	public void pause() {
 		running = false;
+		propagatePre();
 	}
 
 	@Row(0)
 	@Column(3)
 	@ComponentWidth(100)
 	public void play() {
-		if (!running) {
-			running = true;
-			new Thread(new Runnable() {
-				public void run() {
-					while (running) {
-						forward();
-						if (!running) {
-							return;
-						}
-						try {
-							Thread.sleep(1000);
-						} catch (InterruptedException e) {
-							e.printStackTrace();
-						}
+		running = true;
+		propagatePre();
+		new Thread(new Runnable() {
+			public void run() {
+				while (running) {
+					forward();
+					if (!running) {
+						return;
+					}
+					try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
 					}
 				}
-			}).start();
-		}
+			}
+		}).start();
 	}
 
 	@Row(0)
@@ -147,9 +127,8 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@Column(5)
 	@ComponentWidth(100)
 	public void live() {
-		System.out.println(counter);
-		setCurrentFeatureIndex(counter-1);
-		setStart(counter-1);
+		setCurrentFeatureIndex(counter - 1);
+		setStart(counter - 1);
 	}
 
 	public int getStart() {
@@ -178,7 +157,6 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 		currentTime = newVal;
 		propertyChangeSupport
 				.firePropertyChange("currentTime", oldTime, newVal);
-		propagatePre();
 	}
 
 	@Override
