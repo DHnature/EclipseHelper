@@ -16,10 +16,17 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
     boolean playBack;
     int nextFeatureIndex;
     ParticipantTimeLine liveParticipantTimeLine;
+    long absoluteStartTime;
+    @Override
+	public long getAbsoluteStartTime() {
+		return absoluteStartTime;
+	}
 
 	public AGeneralizedPlayAndRewindCounter(RatioFileReader reader) {
 		super(reader);
+		absoluteStartTime = System.currentTimeMillis();
 		liveParticipantTimeLine = LiveAnalyzerProcessorFactory.getSingleton().getParticipantTimeLine();
+		
 	}
 
 	public AGeneralizedPlayAndRewindCounter() {

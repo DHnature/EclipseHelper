@@ -17,4 +17,6 @@ public interface GeneralizedPlayAndRewindCounter extends PlayAndRewindCounter {
 	public void nextDifficulty();
 	public void previousDifficulty();
 
+	long getAbsoluteStartTime();
+
 }
