@@ -23,7 +23,7 @@ org.eclipse.jface.dialogs.TitleAreaDialog {
 	public InsurmountableDialog(Shell parentShell) {
 		super(parentShell);
 		// adding Saros code here for now, need to delete it later
-		SarosAccessorFactory.getSingleton().shareFixedProjectWithFixedUser();
+//		SarosAccessorFactory.getSingleton().shareFixedProjectWithFixedUser();
 	}
 	
 	@Override

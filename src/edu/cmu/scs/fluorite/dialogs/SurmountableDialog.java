@@ -22,7 +22,7 @@ public class SurmountableDialog extends
 
 	public SurmountableDialog(Shell parentShell) {
 		super(parentShell);
-		SarosAccessorFactory.getSingleton().resetIncomingHandler();
+//		SarosAccessorFactory.getSingleton().resetIncomingHandler();
 	}
 
 	@Override
