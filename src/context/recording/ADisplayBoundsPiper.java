@@ -11,19 +11,42 @@ import bus.uigen.misc.OEMisc;
 
 
 public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implements  DisplayBoundsOutputter, PropertyChangeListener {
-	// should really be specified in a config file
+	/*
 	public static final String RECORDER_JAVA_PATH = "D:/Program Files/Java/jdk1.7.0_51/bin/java";
 	public static final String RECORDER_CLASS_PATH = "D:/dewan_backup/Java/eclipse/workspace/FileExample/bin";
 	public static final String RECORDER_MAIN_CLASS = "InputAndOutput";
-//	public static final String RECORDER_LAUNCHING_COMMAND = RECORDER_JAVA_PATH + 
-//									" " + "-cp" + " " + RECORDER_CLASS_PATH +
-//									" " + RECORDER_MAIN_CLASS;
-	public static final String[] RECORDER_LAUNCHING_COMMAND = {RECORDER_JAVA_PATH, 
-			"-cp" ,  RECORDER_CLASS_PATH,
-			RECORDER_MAIN_CLASS};
-//	Display display;
+	*/
+	
+	public static final String WORKSPACE_PATH = "/Users/nicholasdillon/Documents/UNC/Research/WorkspaceIUI/VLCj/";
+	public static final String RECORDER_JAVA_PATH = "/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/bin/java"; 
+	public static final String RECORDER_CLASS_PATH = WORKSPACE_PATH + "bin:"
+			+ WORKSPACE_PATH + "jna-3.5.2.jar:"
+			+ WORKSPACE_PATH + "logback-classic-1.1.2.jar:"
+			+ WORKSPACE_PATH + "logback-core-1.1.2.jar:"
+			+ WORKSPACE_PATH + "lwjgl.jar:"
+			+ WORKSPACE_PATH + "platform-3.5.2.jar:"
+			+ WORKSPACE_PATH + "vlcj-3.0.1.jar:"
+			+ WORKSPACE_PATH + "vlcj-3.0.1-tests.jar:"
+			+ WORKSPACE_PATH + "vlcj-3.0.1-test-sources.jar:"
+			+ WORKSPACE_PATH + "vlcj-3.0.1-sources.jar:"
+			+ WORKSPACE_PATH + "vlcj-3.0.1-javadoc.jar";
+	public static final String RECORDER_MAIN_CLASS = "VLCplayer";
+	
+	/*
+	public static final String RECORDER_JAVA_PATH = "/Library/Java/JavaVirtualMachines/jdk1.7.0_10.jdk/Contents/Home/bin/java";
+	public static final String RECORDER_CLASS_PATH = "/Users/nicholasdillon/Documents/UNC/Research/WorkspaceIUI/Record20secs/bin:"
+			+ "/Users/nicholasdillon/Documents/UNC/Research/WorkspaceIUI/Record20secs/slf4j-api-1.7.7.jar:"
+			+ "/Users/nicholasdillon/Documents/UNC/Research/WorkspaceIUI/Record20secs/slf4j-simple-1.7.7.jar:" 
+			+ "/Users/nicholasdillon/Documents/UNC/Research/WorkspaceIUI/Record20secs/xuggle-xuggler-5.4.jar";
+	public static final String RECORDER_MAIN_CLASS = "Record20secs";
+	*/
+	
+	public static final String[] RECORDER_LAUNCHING_COMMAND = 
+		{RECORDER_JAVA_PATH, "-cp" ,  RECORDER_CLASS_PATH, RECORDER_MAIN_CLASS};
+	
 	ProcessExecer processExecer;
 	ConsoleModel consoleModel;
+	
 //	public ADisplayBoundsPiper() {
 //		display = Display.getCurrent();
 //		display.addListener(SWT.RESIZE, this);
@@ -66,10 +89,10 @@ public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implem
 
 	}
 //	@Override
-	public void startRecorder(String[] aCommand) {		
+	public void startRecorder(String[] aCommand) {
 		processExecer = OEMisc.runWithProcessExecer(aCommand);
+		System.err.println(processExecer);
 		consoleModel = processExecer.getConsoleModel();
-		
 	}
 	
 	/* (non-Javadoc)

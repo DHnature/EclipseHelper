@@ -1,5 +1,7 @@
 package config;
 
+import context.recording.ADisplayBoundsFileWriter;
+import context.recording.ADisplayBoundsPiper;
 import context.recording.RecorderFactory;
 import analyzer.ui.video.LocalScreenRecorderAndPlayerFactory;
 import difficultyPrediction.ATestPredictionParametersSetter;
@@ -16,11 +18,9 @@ public class LiveModeInitializer {
 //		RatioCalculatorSelector.setFactory(new ARatioCalculatorFactory());
 //		PredictionParametersSetterSelector.setSingleton(new APredictionParametersSetter());
 		PredictionParametersSetterSelector.setSingleton(new ATestPredictionParametersSetter());
-		RecorderFactory.createSingleton();
+//		RecorderFactory.createSingleton();
 		LocalScreenRecorderAndPlayerFactory.createSingleton(); // does not subsume RecorderFactory
 //		SarosAccessorFactory.createSingleton();
-		
-
+		(new ADisplayBoundsFileWriter()).connectToDisplayAndRecorder();;
 	}
-
 }

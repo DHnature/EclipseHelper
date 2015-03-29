@@ -91,8 +91,6 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	public void newStatus(String aStatus) {
 		if (!aStatus.equals(oldStatus)) {
 			PredictionChanged.newCase(aStatus, getRatios(), this);
-			
-
 			oldStatus = aStatus;
 		}
 		predictions.add(aStatus);
