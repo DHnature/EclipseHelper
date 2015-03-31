@@ -10,30 +10,51 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 
 import util.annotations.Visible;
+import util.pipe.ConsoleModel;
+import util.remote.ProcessExecer;
 import analyzer.ui.GeneralizedPlayAndRewindCounter;
 import analyzer.ui.PlayerFactory;
 import analyzer.ui.graphics.PlayAndRewindCounter;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
+import bus.uigen.misc.OEMisc;
 import context.recording.ADisplayBoundsPiper;
 
 public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implements LocalScreenRecorderAndPlayer{
 	
+	ProcessExecer processExecer;
+	ConsoleModel consoleModel;
 	protected GeneralizedPlayAndRewindCounter player;
 	protected boolean connected;
 	protected PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+	
 	public ALocalScreenRecorderAndPlayer() {
+		//super();
 		player = PlayerFactory.getSingleton();
 		player.addPropertyChangeListener(this);
 	}
+	
 	@Override
 	public void connectToDisplayAndRecorder() {
-//		super.connectToDisplayAndRecorder();
+		super.connectToDisplayAndRecorder();
 		connected = true;
 		propertyChangeSupport.firePropertyChange("connected", null, true);
-	
 	}
 	
+	public void connectToRecorder() {
+		startRecorder(RECORDER_LAUNCHING_COMMAND);		
+		listenToRecorderIOEvents();
+	}
+	
+	public void startRecorder(String[] aCommand) {
+		processExecer = OEMisc.runWithProcessExecer(aCommand);
+		System.err.println("Starting recorder " + processExecer);
+		consoleModel = processExecer.getConsoleModel();
+	}
+	
+	public void listenToRecorderIOEvents() {
+		processExecer.consoleModel().addPropertyChangeListener(this);
+	}
 	
 	public boolean isConnected() {
 		return connected;
@@ -47,7 +68,7 @@ public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implement
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (!isConnected()) return;
 		if (player.isPlayBack() && evt.getPropertyName().equalsIgnoreCase("currentTime")) {
-			seek (player.getCurrentWallTime());		
+			seek (player.getCurrentWallTime());		// +player.getAbsoluteStartTime()
 		}
 	}
 	@Override
@@ -59,13 +80,17 @@ public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implement
 	@Override
 	public void play() {
 		// TODO Auto-generated method stub
-		
+		processExecer.consoleModel().setInput("play");
 	}
+	
+	
+	
 	@Override
 	public void pause() {
 		// TODO Auto-generated method stub
-		
+		processExecer.consoleModel().setInput("pause");
 	}
+	
 	@Override
 	public long getWallTime() {
 		// TODO Auto-generated method stub
@@ -82,9 +107,7 @@ public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implement
 	}
 
 	public static void createUI() {
-		
 		OEFrame oeFrame = ObjectEditor.edit(LocalScreenRecorderAndPlayerFactory.getSingleton());
 		oeFrame.setSize(250, 150);
 	}
-
 }
