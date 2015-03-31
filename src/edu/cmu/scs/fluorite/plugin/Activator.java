@@ -42,8 +42,9 @@ public class Activator extends AbstractUIPlugin {
 	public void start(BundleContext context) throws Exception {
 		super.start(context);
 		plugin = this;
-
 		if (getPreferenceStore().getBoolean(Initializer.Pref_EnableEventLogger)) {
+			System.out.println ("Read preference store, initializing fluorite");
+
 			// NOTE: This event recording must start after the workbench is
 			// fully loaded.
 			// So, run this in UIJob so it runs after the workbench loads.
@@ -57,6 +58,7 @@ public class Activator extends AbstractUIPlugin {
 				}
 
 			};
+			System.out.println ("Set system etc in start");
 
 			uiJob.setSystem(true);
 			uiJob.setUser(false);

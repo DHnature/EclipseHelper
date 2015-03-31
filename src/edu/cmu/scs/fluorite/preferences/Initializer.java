@@ -30,38 +30,76 @@ public class Initializer extends AbstractPreferenceInitializer {
 
 	@Override
 	public void initializeDefaultPreferences() {
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_EnableEventLogger, true);
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_ShowConsole, false);
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_WriteToConsole, false);
-
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_CombineCommands, true);
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_CombineTimeThreshold, 2000);
-
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_LogInsertedText, true);
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_LogDeletedText, true);
-
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_LogTopBottomLines, false);
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_LogMouseWheel, false);
-
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_FindForward, true);
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_FindCaseSensitive, false);
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_FindWrapSearch, false);
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_FindWholeWord, false);
-		Activator.getDefault().getPreferenceStore()
-				.setDefault(Pref_FindRegExp, false);
+		initializeDefaultPreferencesStatic();
+//		System.out.println ("Initialized preference store");
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_EnableEventLogger, true);
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_ShowConsole, false);
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_WriteToConsole, false);
+//
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_CombineCommands, true);
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_CombineTimeThreshold, 2000);
+//
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_LogInsertedText, true);
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_LogDeletedText, true);
+//
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_LogTopBottomLines, false);
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_LogMouseWheel, false);
+//
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_FindForward, true);
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_FindCaseSensitive, false);
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_FindWrapSearch, false);
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_FindWholeWord, false);
+//		Activator.getDefault().getPreferenceStore()
+//				.setDefault(Pref_FindRegExp, false);
 	}
+	// added by PD to call this method 
+    public static void initializeDefaultPreferencesStatic() {
+        System.out.println ("Initialized preference store");
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_EnableEventLogger, true);
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_ShowConsole, false);
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_WriteToConsole, false);
+
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_CombineCommands, true);
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_CombineTimeThreshold, 2000);
+
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_LogInsertedText, true);
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_LogDeletedText, true);
+
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_LogTopBottomLines, false);
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_LogMouseWheel, false);
+
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_FindForward, true);
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_FindCaseSensitive, false);
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_FindWrapSearch, false);
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_FindWholeWord, false);
+        Activator.getDefault().getPreferenceStore()
+                        .setDefault(Pref_FindRegExp, false);
+}
 
 }
