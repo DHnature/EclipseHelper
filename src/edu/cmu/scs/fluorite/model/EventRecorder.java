@@ -112,7 +112,7 @@ public class EventRecorder {
 	private LinkedList<ICommand> mNormalCommands;
 	private LinkedList<ICommand> mDocumentChangeCommands;
 	private boolean mCurrentlyExecutingCommand;
-	private boolean mRecordCommands;
+	private boolean mRecordCommands = true;
 	private IAction mSavedFindAction;
 
 	private int mLastCaretOffset;
