@@ -5,8 +5,8 @@ import analyzer.ui.video.ALocalScreenRecorderAndPlayer;
 public class RecorderFactory {
 	static DisplayBoundsOutputter boundsOutputter;
 	public static void createSingleton() {
-		boundsOutputter = new ALocalScreenRecorderAndPlayer();
-//		boundsOutputter = new ADisplayBoundsFileWriter();
+//		boundsOutputter = new ALocalScreenRecorderAndPlayer();
+		boundsOutputter = new ADisplayBoundsFileWriter();
 
 		boundsOutputter.connectToDisplayAndRecorder();
 	}

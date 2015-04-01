@@ -27,8 +27,9 @@ public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter i
 	ConsoleModel consoleModel;
 
 	public void connectToRecorder() {
-		System.err.println("Calling connect to recorder");
-		startRecorder(RECORDER_LAUNCHING_COMMAND);
+		// commenting out code added probably by Nick
+//		System.err.println("Calling connect to recorder");
+//		startRecorder(RECORDER_LAUNCHING_COMMAND);
 		// Doesnt matter; just launch recorder and continuously write to file
 		//listenToRecorderIOEvents();
 	}
@@ -38,9 +39,10 @@ public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter i
 
 	}
 
-	public void startRecorder(String[] aCommand) {		
-		processExecer = OEMisc.runWithProcessExecer(aCommand);
-		consoleModel = processExecer.getConsoleModel();
+	public void startRecorder(String[] aCommand) {	
+		// do not need this
+//		processExecer = OEMisc.runWithProcessExecer(aCommand);
+//		consoleModel = processExecer.getConsoleModel();
 		
 	}
 
