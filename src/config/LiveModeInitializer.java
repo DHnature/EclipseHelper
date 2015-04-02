@@ -21,6 +21,6 @@ public class LiveModeInitializer {
 		RecorderFactory.createSingleton();
 		LocalScreenPlayerFactory.createSingleton(); // does not subsume RecorderFactory
 //		SarosAccessorFactory.createSingleton();
-		(new ADisplayBoundsFileWriter()).connectToDisplayAndRecorder();;
+		(new ADisplayBoundsFileWriter()).start();;
 	}
 }

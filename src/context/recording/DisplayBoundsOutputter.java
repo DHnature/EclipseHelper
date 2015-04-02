@@ -19,7 +19,7 @@ public interface DisplayBoundsOutputter extends Listener,  ControlListener {
 
 //	public abstract void propertyChange(PropertyChangeEvent evt);
 
-	void connectToDisplayAndRecorder();
+	void start();
 
 	void connectToRecorder();
 
@@ -30,5 +30,7 @@ public interface DisplayBoundsOutputter extends Listener,  ControlListener {
 	String boundsToString(Shell aShell);
 	
 	void createUI();
+
+	boolean isStarted();
 
 }

@@ -13,6 +13,7 @@ import bus.uigen.misc.OEMisc;
 import bus.uigen.models.AFileSetterModel;
 import bus.uigen.models.FileSetterModel;
 import util.annotations.LayoutName;
+import util.annotations.Row;
 import util.annotations.Visible;
 import util.misc.Common;
 import util.pipe.ConsoleModel;
@@ -34,16 +35,20 @@ public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter i
 	ProcessExecer processExecer;
 	ConsoleModel consoleModel;
 	FileSetterModel recorderJava = new AFileSetterModel(JFileChooser.FILES_ONLY);
-	
+	@Row(0)
 	public FileSetterModel getJava7Location() {
 		return recorderJava;		
 	}
-	
+	@Visible(false)
 	public void setJava7Location() {
 		System.out.println("Java 7 Location");
 	}
+	@Row(1)
+	public void start() {
+		super.start();
+	}
 	
-	
+	@Visible(false)
 	public void connectToRecorder() {
 		// commenting out code added probably by Nick
 //		System.err.println("Calling connect to recorder");

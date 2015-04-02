@@ -9,6 +9,7 @@ import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 
+import util.annotations.Row;
 import util.annotations.Visible;
 import analyzer.ui.GeneralizedPlayAndRewindCounter;
 import analyzer.ui.SessionPlayerFactory;
@@ -21,16 +22,25 @@ public class ALocalScreenPlayer extends ALocalScreenRecorderAndPlayer {
 	
 	
 	@Override
+	@Visible(false)
 	public void listenToDisplayEvents() {
 	
 	}
 	
+	@Override
+	@Row(1)
+	public void start() {
+		super.start();
+		
+	}
 	
+	@Visible(false)
 	public void handleEvent(Event event) {
 		
 //		updateRecorder((Shell) event.widget);
 		
 	}
+	@Visible(false)
 	public void controlMoved(ControlEvent e) {
 //		Shell aShell = (Shell)e.getSource();
 ////		System.out.println ("Changed shell " + boundsToString ((Shell)e.getSource()));

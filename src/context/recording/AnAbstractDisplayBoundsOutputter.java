@@ -25,7 +25,9 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 //			RECORDER_MAIN_CLASS};
 	Display display;
 	protected OEFrame oeFrame;
-//	ProcessExecer processExecer;
+	protected boolean started;
+
+	//	ProcessExecer processExecer;
 //	ConsoleModel consoleModel;
 	public AnAbstractDisplayBoundsOutputter() {
 //		display = Display.getCurrent();
@@ -34,13 +36,15 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 //		listenToRecorderIOEvents();
 		
 	}
-	
+	public boolean preStartRecorder() {
+		return !started;
+	}
 	@Override
-	public void connectToDisplayAndRecorder() {
+	public void start() {
 		connectToDisplay();
 		listenToDisplayEvents();
 		connectToRecorder();
-	
+		started = true;	
 	}
 	@Visible(false)
 	public void connectToDisplay() {
@@ -130,10 +134,16 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	@Visible(false)
+	public boolean isStarted() {
+		return started;
+	}
 	@Visible(false)
 	public void createUI() {
 		oeFrame = ObjectEditor.edit(RecorderFactory.getSingleton());
 		oeFrame.setSize(250, 150);
 	}
+	
 
 }

@@ -25,7 +25,7 @@ public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implement
 	ProcessExecer processExecer;
 	ConsoleModel consoleModel;
 	protected GeneralizedPlayAndRewindCounter player;
-	protected boolean connected;
+//	protected boolean connected;
 	protected PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 	
 	public ALocalScreenRecorderAndPlayer() {
@@ -35,30 +35,30 @@ public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implement
 	}
 	
 	@Override
-	public void connectToDisplayAndRecorder() {
-		super.connectToDisplayAndRecorder();
-		connected = true;
-		propertyChangeSupport.firePropertyChange("connected", null, true);
+	public void start() {
+		super.start();
+//		connected = true;
+//		propertyChangeSupport.firePropertyChange("connected", null, true);
 	}
-	
+	@Visible(false)
 	public void connectToRecorder() {
 		launchRecorder(RECORDER_LAUNCHING_COMMAND);		
 		listenToRecorderIOEvents();
 	}
-	
+	@Visible(false)
 	public void launchRecorder(String[] aCommand) {
 		processExecer = OEMisc.runWithProcessExecer(aCommand);
 		System.err.println("Starting recorder " + processExecer);
 		consoleModel = processExecer.getConsoleModel();
 	}
-	
+	@Visible(false)
 	public void listenToRecorderIOEvents() {
 		processExecer.consoleModel().addPropertyChangeListener(this);
 	}
 	
-	public boolean isConnected() {
-		return connected;
-	}
+//	public boolean isConnected() {
+//		return connected;
+//	}
 	
 	@Visible(false)
 	public PlayAndRewindCounter getPlayer() {
@@ -66,7 +66,7 @@ public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implement
 	}
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
-		if (!isConnected()) return;
+		if (!isStarted()) return;
 		if (player.isPlayBack() && evt.getPropertyName().equalsIgnoreCase("currentTime")) {
 			seek (player.getCurrentWallTime());		// +player.getAbsoluteStartTime()
 		}
@@ -105,7 +105,7 @@ public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implement
 //		updateRecorder((Shell) event.widget);
 		
 	}
-
+	@Visible(false)
 	public void createUI() {
 		OEFrame oeFrame = ObjectEditor.edit(LocalScreenPlayerFactory.getSingleton());
 		oeFrame.setSize(250, 150);

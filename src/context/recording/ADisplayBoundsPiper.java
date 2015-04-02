@@ -5,6 +5,7 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.swt.widgets.Shell;
 
+import util.annotations.Visible;
 import util.pipe.ConsoleModel;
 import util.remote.ProcessExecer;
 import bus.uigen.misc.OEMisc;
@@ -61,6 +62,7 @@ public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implem
 //	
 //	}
 //	@Override
+	@Visible(false)
 	public void connectToRecorder() {
 		launchRecorder(RECORDER_LAUNCHING_COMMAND);		
 		listenToRecorderIOEvents();
@@ -84,11 +86,13 @@ public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implem
 	/* (non-Javadoc)
 	 * @see context.recording.DisplayBoundsOutputter#startRecorder(java.lang.String)
 	 */
+	@Visible(false)
 	public void launchRecorder() {
 		launchRecorder(RECORDER_LAUNCHING_COMMAND);
 
 	}
 //	@Override
+	@Visible(false)
 	public void launchRecorder(String[] aCommand) {
 		processExecer = OEMisc.runWithProcessExecer(aCommand);
 		System.err.println(processExecer);
@@ -99,6 +103,7 @@ public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implem
 	 * @see context.recording.DisplayBoundsOutputter#listenToRecorderIOEvents()
 	 */
 //	@Override
+	@Visible(false)
 	public void listenToRecorderIOEvents() {
 		processExecer.consoleModel().addPropertyChangeListener(this);
 	}
@@ -130,6 +135,7 @@ public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implem
 //		processExecer.consoleModel().setInput(boundsToString());
 //	}
 	@Override
+	@Visible(false)
 	public void updateRecorder(Shell aShell) {
 		System.out.println("Updated shell:" + boundsToString(aShell));
 		if (processExecer != null) {
