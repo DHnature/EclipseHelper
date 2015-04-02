@@ -1,12 +1,12 @@
 package analyzer.ui.graphics;
 
-import analyzer.ui.PlayerFactory;
+import analyzer.ui.SessionPlayerFactory;
 
 public class LineGraphFactory {
 	static LineGraph singleton;
 	public static void createSingleton() {
 //		boundsOutputter = new ADisplayBoundsPiper();
-		singleton = new ALineGraph(PlayerFactory.getSingleton(), new ARatioFileReader());
+		singleton = new ALineGraph(SessionPlayerFactory.getSingleton(), new ARatioFileReader());
 
 	}
 	public static LineGraph getSingleton() {

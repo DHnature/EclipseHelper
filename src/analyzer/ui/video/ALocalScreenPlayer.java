@@ -11,7 +11,7 @@ import org.eclipse.swt.widgets.Shell;
 
 import util.annotations.Visible;
 import analyzer.ui.GeneralizedPlayAndRewindCounter;
-import analyzer.ui.PlayerFactory;
+import analyzer.ui.SessionPlayerFactory;
 import analyzer.ui.graphics.PlayAndRewindCounter;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;

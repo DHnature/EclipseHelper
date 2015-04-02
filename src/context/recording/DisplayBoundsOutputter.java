@@ -28,5 +28,7 @@ public interface DisplayBoundsOutputter extends Listener,  ControlListener {
 	void updateRecorder(Shell aShell);
 
 	String boundsToString(Shell aShell);
+	
+	void createUI();
 
 }

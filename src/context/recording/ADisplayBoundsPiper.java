@@ -62,7 +62,7 @@ public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implem
 //	}
 //	@Override
 	public void connectToRecorder() {
-		startRecorder(RECORDER_LAUNCHING_COMMAND);		
+		launchRecorder(RECORDER_LAUNCHING_COMMAND);		
 		listenToRecorderIOEvents();
 	}
 //	@Override
@@ -84,12 +84,12 @@ public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implem
 	/* (non-Javadoc)
 	 * @see context.recording.DisplayBoundsOutputter#startRecorder(java.lang.String)
 	 */
-	public void startRecorder() {
-		startRecorder(RECORDER_LAUNCHING_COMMAND);
+	public void launchRecorder() {
+		launchRecorder(RECORDER_LAUNCHING_COMMAND);
 
 	}
 //	@Override
-	public void startRecorder(String[] aCommand) {
+	public void launchRecorder(String[] aCommand) {
 		processExecer = OEMisc.runWithProcessExecer(aCommand);
 		System.err.println(processExecer);
 		consoleModel = processExecer.getConsoleModel();

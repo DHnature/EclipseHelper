@@ -3,13 +3,20 @@ package context.recording;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+
 import org.eclipse.swt.widgets.Shell;
 
+import bus.uigen.attributes.AttributeNames;
 import bus.uigen.misc.OEMisc;
+import bus.uigen.models.AFileSetterModel;
+import bus.uigen.models.FileSetterModel;
+import util.annotations.LayoutName;
 import util.misc.Common;
 import util.pipe.ConsoleModel;
 import util.remote.ProcessExecer;
-
+@LayoutName(AttributeNames.GRID_BAG_LAYOUT)
 public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter implements  DisplayBoundsOutputter {
 	
 	public static final String WORKSPACE_PATH = "/Users/nicholasdillon/Documents/UNC/Research/WorkspaceIUI/Record20secs/";
@@ -25,6 +32,16 @@ public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter i
 	
 	ProcessExecer processExecer;
 	ConsoleModel consoleModel;
+	FileSetterModel recorderJava = new AFileSetterModel(JFileChooser.FILES_ONLY);
+	
+	public FileSetterModel getJava7Location() {
+		return recorderJava;		
+	}
+	
+	public void setJava7Location() {
+		System.out.println("Java 7 Location");
+	}
+	
 
 	public void connectToRecorder() {
 		// commenting out code added probably by Nick
@@ -34,12 +51,12 @@ public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter i
 		//listenToRecorderIOEvents();
 	}
 
-	public void startRecorder() {
-		startRecorder(RECORDER_LAUNCHING_COMMAND);
+	public void launchRecorder() {
+		launchRecorder(RECORDER_LAUNCHING_COMMAND);
 
 	}
 
-	public void startRecorder(String[] aCommand) {	
+	public void launchRecorder(String[] aCommand) {	
 		// do not need this
 //		processExecer = OEMisc.runWithProcessExecer(aCommand);
 //		consoleModel = processExecer.getConsoleModel();
@@ -65,5 +82,11 @@ public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter i
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void createUI() {
+		super.createUI();	
+		oeFrame.setSize(500, 150);
+		recorderJava.initFrame((JFrame) (oeFrame.getFrame().getPhysicalComponent()));		
 	}
 }

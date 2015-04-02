@@ -6,7 +6,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 
-import analyzer.ui.video.LocalScreenRecorderAndPlayerFactory;
+import analyzer.ui.video.LocalScreenPlayerFactory;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 
@@ -23,23 +23,30 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 //			"-cp" ,  RECORDER_CLASS_PATH,
 //			RECORDER_MAIN_CLASS};
 	Display display;
+	protected OEFrame oeFrame;
 //	ProcessExecer processExecer;
 //	ConsoleModel consoleModel;
 	public AnAbstractDisplayBoundsOutputter() {
-		display = Display.getCurrent();
-		display.addListener(SWT.RESIZE, this);
+//		display = Display.getCurrent();
+//		display.addListener(SWT.RESIZE, this);
 //		startRecorder(RECORDER_LAUNCHING_COMMAND);
 //		listenToRecorderIOEvents();
 		
 	}	
 	@Override
 	public void connectToDisplayAndRecorder() {
+		connectToDisplay();
 		listenToDisplayEvents();
 		connectToRecorder();
 	
 	}
+	public void connectToDisplay() {
+		display = Display.getCurrent();
+		display.addListener(SWT.RESIZE, this);
+	}
 	@Override
 	public void listenToDisplayEvents() {
+		
 		System.out.println("Shell " + display.getActiveShell());
 //		display.getActiveShell().addListener(SWT.RESIZE, this);
 		Shell[] shells = display.getShells();
@@ -116,8 +123,8 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 		// TODO Auto-generated method stub
 		
 	}
-	public static void createUI() {
-		OEFrame oeFrame = ObjectEditor.edit(RecorderFactory.getSingleton());
+	public void createUI() {
+		oeFrame = ObjectEditor.edit(RecorderFactory.getSingleton());
 		oeFrame.setSize(250, 150);
 	}
 

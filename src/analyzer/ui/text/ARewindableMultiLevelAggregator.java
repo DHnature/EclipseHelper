@@ -7,7 +7,7 @@ import java.util.List;
 
 import util.annotations.Visible;
 import analyzer.ui.GeneralizedPlayAndRewindCounter;
-import analyzer.ui.PlayerFactory;
+import analyzer.ui.SessionPlayerFactory;
 import analyzer.ui.graphics.PlayAndRewindCounter;
 import bus.uigen.OEFrame;
 import difficultyPrediction.featureExtraction.RatioFeatures;
@@ -37,7 +37,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 //	}
 	public ARewindableMultiLevelAggregator() {
 		addRatioBasedSlots();
-		player = PlayerFactory.getSingleton();
+		player = SessionPlayerFactory.getSingleton();
 		player.addPropertyChangeListener(this);
 	}
 //	@Row(0)

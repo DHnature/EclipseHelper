@@ -2,7 +2,7 @@ package analyzer.ui;
 
 import analyzer.ui.graphics.RatioFileReader;
 
-public class PlayerFactory {
+public class SessionPlayerFactory {
 	static GeneralizedPlayAndRewindCounter singleton;
 	public static void createSingleton() {
 //		singleton = new AMultiLevelAggregator();

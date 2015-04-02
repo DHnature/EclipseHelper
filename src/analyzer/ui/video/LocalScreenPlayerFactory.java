@@ -1,6 +1,6 @@
 package analyzer.ui.video;
 
-public class LocalScreenRecorderAndPlayerFactory {
+public class LocalScreenPlayerFactory {
 	static LocalScreenRecorderAndPlayer singleton;
 	public static void createSingleton() {
 //		singleton = new AMultiLevelAggregator();

@@ -4,10 +4,12 @@ package analyzer.ui;
 import javax.swing.WindowConstants;
 
 import context.recording.AnAbstractDisplayBoundsOutputter;
+import context.recording.RecorderFactory;
 import analyzer.ui.balloons.ABalloonCreator;
 import analyzer.ui.graphics.LineGraphComposer;
 import analyzer.ui.text.AMultiLevelAggregator;
 import analyzer.ui.video.ALocalScreenRecorderAndPlayer;
+import analyzer.ui.video.LocalScreenPlayerFactory;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import difficultyPrediction.APredictionParameters;
@@ -17,7 +19,7 @@ public class APredictionController implements PredictionController {
 	protected GeneralizedPlayAndRewindCounter player;
 	
 	public APredictionController() {
-		player = PlayerFactory.getSingleton();
+		player = SessionPlayerFactory.getSingleton();
 	}
 
 	@Override
@@ -32,11 +34,11 @@ public class APredictionController implements PredictionController {
 
 	@Override
 	public void localScreenPlayer() {
- 		ALocalScreenRecorderAndPlayer.createUI();		
+ 		LocalScreenPlayerFactory.getSingleton().createUI();		
 	}
 	@Override
 	public void screenRecorder() {
- 		AnAbstractDisplayBoundsOutputter.createUI();		
+ 		RecorderFactory.getSingleton().createUI();		
 	}
 
 	@Override

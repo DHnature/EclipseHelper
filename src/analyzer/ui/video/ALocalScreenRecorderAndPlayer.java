@@ -13,7 +13,7 @@ import util.annotations.Visible;
 import util.pipe.ConsoleModel;
 import util.remote.ProcessExecer;
 import analyzer.ui.GeneralizedPlayAndRewindCounter;
-import analyzer.ui.PlayerFactory;
+import analyzer.ui.SessionPlayerFactory;
 import analyzer.ui.graphics.PlayAndRewindCounter;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
@@ -30,7 +30,7 @@ public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implement
 	
 	public ALocalScreenRecorderAndPlayer() {
 		//super();
-		player = PlayerFactory.getSingleton();
+		player = SessionPlayerFactory.getSingleton();
 		player.addPropertyChangeListener(this);
 	}
 	
@@ -42,11 +42,11 @@ public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implement
 	}
 	
 	public void connectToRecorder() {
-		startRecorder(RECORDER_LAUNCHING_COMMAND);		
+		launchRecorder(RECORDER_LAUNCHING_COMMAND);		
 		listenToRecorderIOEvents();
 	}
 	
-	public void startRecorder(String[] aCommand) {
+	public void launchRecorder(String[] aCommand) {
 		processExecer = OEMisc.runWithProcessExecer(aCommand);
 		System.err.println("Starting recorder " + processExecer);
 		consoleModel = processExecer.getConsoleModel();
@@ -106,8 +106,8 @@ public class ALocalScreenRecorderAndPlayer extends ADisplayBoundsPiper implement
 		
 	}
 
-	public static void createUI() {
-		OEFrame oeFrame = ObjectEditor.edit(LocalScreenRecorderAndPlayerFactory.getSingleton());
+	public void createUI() {
+		OEFrame oeFrame = ObjectEditor.edit(LocalScreenPlayerFactory.getSingleton());
 		oeFrame.setSize(250, 150);
 	}
 }
