@@ -13,6 +13,7 @@ import bus.uigen.misc.OEMisc;
 import bus.uigen.models.AFileSetterModel;
 import bus.uigen.models.FileSetterModel;
 import util.annotations.LayoutName;
+import util.annotations.Visible;
 import util.misc.Common;
 import util.pipe.ConsoleModel;
 import util.remote.ProcessExecer;
@@ -42,7 +43,7 @@ public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter i
 		System.out.println("Java 7 Location");
 	}
 	
-
+	
 	public void connectToRecorder() {
 		// commenting out code added probably by Nick
 //		System.err.println("Calling connect to recorder");
@@ -50,19 +51,19 @@ public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter i
 		// Doesnt matter; just launch recorder and continuously write to file
 		//listenToRecorderIOEvents();
 	}
-
+	@Visible(false)
 	public void launchRecorder() {
 		launchRecorder(RECORDER_LAUNCHING_COMMAND);
 
 	}
-
+	@Visible(false)
 	public void launchRecorder(String[] aCommand) {	
 		// do not need this
 //		processExecer = OEMisc.runWithProcessExecer(aCommand);
 //		consoleModel = processExecer.getConsoleModel();
 		
 	}
-
+	@Visible(false)
 	@Override
 	public void updateRecorder(Shell aShell) {
 		String baseName = ADisplayBoundsFileWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
@@ -83,7 +84,7 @@ public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter i
 			e.printStackTrace();
 		}
 	}
-	
+	@Visible(false)
 	public void createUI() {
 		super.createUI();	
 		oeFrame.setSize(500, 150);

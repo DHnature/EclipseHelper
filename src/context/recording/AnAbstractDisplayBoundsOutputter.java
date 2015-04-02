@@ -6,6 +6,7 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 
+import util.annotations.Visible;
 import analyzer.ui.video.LocalScreenPlayerFactory;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
@@ -32,7 +33,8 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 //		startRecorder(RECORDER_LAUNCHING_COMMAND);
 //		listenToRecorderIOEvents();
 		
-	}	
+	}
+	
 	@Override
 	public void connectToDisplayAndRecorder() {
 		connectToDisplay();
@@ -40,10 +42,12 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 		connectToRecorder();
 	
 	}
+	@Visible(false)
 	public void connectToDisplay() {
 		display = Display.getCurrent();
 		display.addListener(SWT.RESIZE, this);
 	}
+	@Visible(false)
 	@Override
 	public void listenToDisplayEvents() {
 		
@@ -70,6 +74,7 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 	/* (non-Javadoc)
 	 * @see context.recording.DisplayBoundsOutputter#boundsToString()
 	 */
+	@Visible(false)
 	@Override
 	public String boundsToString() {
 		if (display == null) return "";
@@ -77,7 +82,7 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 		if (aShell == null) return "";
 		return aShell.getBounds().toString();
 	}
-	
+	@Visible(false)
 	@Override
 	public String boundsToString(Shell aShell) {
 		
@@ -97,13 +102,14 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 	/* (non-Javadoc)
 	 * @see context.recording.DisplayBoundsOutputter#handleEvent(org.eclipse.swt.widgets.Event)
 	 */
+	@Visible(false)
 	@Override
 	public void handleEvent(Event event) {
 	
 		updateRecorder((Shell) event.widget);
 		
 	}
-	
+	@Visible(false)
 	@Override
 	public void controlMoved(ControlEvent e) {
 		Shell aShell = (Shell)e.getSource();
@@ -112,6 +118,7 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 		// TODO Auto-generated method stub
 		
 	}
+	@Visible(false)
 	@Override
 	public void controlResized(ControlEvent e) {
 		Shell aShell = (Shell)e.getSource();
@@ -123,6 +130,7 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 		// TODO Auto-generated method stub
 		
 	}
+	@Visible(false)
 	public void createUI() {
 		oeFrame = ObjectEditor.edit(RecorderFactory.getSingleton());
 		oeFrame.setSize(250, 150);
