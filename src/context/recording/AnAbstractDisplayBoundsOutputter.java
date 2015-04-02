@@ -6,6 +6,10 @@ import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 
+import analyzer.ui.video.LocalScreenRecorderAndPlayerFactory;
+import bus.uigen.OEFrame;
+import bus.uigen.ObjectEditor;
+
 
 public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBoundsOutputter {
 	// should really be specified in a config file
@@ -111,6 +115,10 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 
 		// TODO Auto-generated method stub
 		
+	}
+	public static void createUI() {
+		OEFrame oeFrame = ObjectEditor.edit(RecorderFactory.getSingleton());
+		oeFrame.setSize(250, 150);
 	}
 
 }

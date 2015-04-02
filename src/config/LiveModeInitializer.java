@@ -18,7 +18,7 @@ public class LiveModeInitializer {
 //		RatioCalculatorSelector.setFactory(new ARatioCalculatorFactory());
 //		PredictionParametersSetterSelector.setSingleton(new APredictionParametersSetter());
 		PredictionParametersSetterSelector.setSingleton(new ATestPredictionParametersSetter());
-//		RecorderFactory.createSingleton();
+		RecorderFactory.createSingleton();
 		LocalScreenRecorderAndPlayerFactory.createSingleton(); // does not subsume RecorderFactory
 //		SarosAccessorFactory.createSingleton();
 		(new ADisplayBoundsFileWriter()).connectToDisplayAndRecorder();;

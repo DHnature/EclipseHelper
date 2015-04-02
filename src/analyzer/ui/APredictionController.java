@@ -3,6 +3,7 @@ package analyzer.ui;
 //import context.saros.SarosAccessorFactory;
 import javax.swing.WindowConstants;
 
+import context.recording.AnAbstractDisplayBoundsOutputter;
 import analyzer.ui.balloons.ABalloonCreator;
 import analyzer.ui.graphics.LineGraphComposer;
 import analyzer.ui.text.AMultiLevelAggregator;
@@ -30,8 +31,12 @@ public class APredictionController implements PredictionController {
 	}
 
 	@Override
-	public void localScreenRecorderAndPlayer() {
+	public void localScreenPlayer() {
  		ALocalScreenRecorderAndPlayer.createUI();		
+	}
+	@Override
+	public void screenRecorder() {
+ 		AnAbstractDisplayBoundsOutputter.createUI();		
 	}
 
 	@Override
