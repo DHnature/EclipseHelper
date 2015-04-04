@@ -1,15 +1,25 @@
 package context.recording;
 
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ControlEvent;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Shell;
 
+import config.HelperConfigurationManagerFactory;
+import util.annotations.Row;
 import util.annotations.Visible;
+import util.pipe.ConsoleModel;
+import util.remote.ProcessExecer;
 import analyzer.ui.video.LocalScreenPlayerFactory;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
+import bus.uigen.misc.OEMisc;
+import bus.uigen.models.AFileSetterModel;
+import bus.uigen.models.FileSetterModel;
 
 
 public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBoundsOutputter {
@@ -26,6 +36,10 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 	Display display;
 	protected OEFrame oeFrame;
 	protected boolean started;
+	FileSetterModel recorderJava = new AFileSetterModel(JFileChooser.FILES_ONLY);
+	protected ProcessExecer processExecer;
+	protected ConsoleModel consoleModel;
+
 
 	//	ProcessExecer processExecer;
 //	ConsoleModel consoleModel;
@@ -34,22 +48,62 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 //		display.addListener(SWT.RESIZE, this);
 //		startRecorder(RECORDER_LAUNCHING_COMMAND);
 //		listenToRecorderIOEvents();
+//		String aJavaPath = HelperConfigurationManagerFactory.getSingleton().getRecorderJavaPath();
+		String aJavaPath = configuredJavaPath();
+
+		if (aJavaPath != null && !aJavaPath.isEmpty())
+			recorderJava.setText(aJavaPath);
 		
 	}
-	public boolean preStartRecorder() {
+	
+//	public String configuredJavaPath() {
+//		return HelperConfigurationManagerFactory.getSingleton().getRecorderJavaPath();
+//	}
+	
+	protected String getJavaPath() {
+		return recorderJava.getText();
+	}
+	@Visible(false)
+	public void launch() {
+		launch(launchCommand());
+
+	}
+	
+	@Visible(false)
+	public void launch(String[] aCommand) {	
+		// do not need this
+		processExecer = OEMisc.runWithProcessExecer(aCommand);
+		consoleModel = processExecer.getConsoleModel();
+		
+	}
+	public boolean preStart() {
 		return !started;
 	}
+	@Row(0)
 	@Override
+	public FileSetterModel getJavaLocationSetter() {
+		return recorderJava;		
+	}
+	@Visible(false)
+	public void setJavaLocation() {
+		System.out.println("Java 7 Location");
+	}
+	@Override
+	@Row(1)
 	public void start() {
-		connectToDisplay();
-		listenToDisplayEvents();
-		connectToRecorder();
+//		connectToDisplay();
+//		listenToDisplayEvents();
+		connectToExternalProgram();
 		started = true;	
 	}
 	@Visible(false)
 	public void connectToDisplay() {
+		if (display != null)
+			return;
 		display = Display.getCurrent();
 		display.addListener(SWT.RESIZE, this);
+		listenToDisplayEvents();
+		
 	}
 	@Visible(false)
 	@Override
@@ -141,8 +195,10 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 	}
 	@Visible(false)
 	public void createUI() {
-		oeFrame = ObjectEditor.edit(RecorderFactory.getSingleton());
-		oeFrame.setSize(250, 150);
+		DisplayBoundsOutputter aRecorder = RecorderFactory.getSingleton();
+		oeFrame = ObjectEditor.edit(aRecorder);
+		oeFrame.setSize(350, 150);
+		aRecorder.getJavaLocationSetter().initFrame((JFrame) oeFrame.getFrame().getPhysicalComponent());
 	}
 	
 

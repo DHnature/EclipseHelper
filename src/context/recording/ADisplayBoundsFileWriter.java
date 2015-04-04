@@ -33,49 +33,58 @@ public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter i
 	public static final String[] RECORDER_LAUNCHING_COMMAND = 
 		{RECORDER_JAVA_PATH, "-cp" ,  RECORDER_CLASS_PATH, RECORDER_MAIN_CLASS};
 	
-	ProcessExecer processExecer;
-	ConsoleModel consoleModel;
-	FileSetterModel recorderJava = new AFileSetterModel(JFileChooser.FILES_ONLY);
+//	ProcessExecer processExecer;
+//	ConsoleModel consoleModel;
+//	FileSetterModel recorderJava = new AFileSetterModel(JFileChooser.FILES_ONLY);
 	public ADisplayBoundsFileWriter() {		
-		String aRecorderJavaPath = HelperConfigurationManagerFactory.getSingleton().getRecorderJavaPath();
-		if (aRecorderJavaPath != null && !aRecorderJavaPath.isEmpty())
-			recorderJava.setText(aRecorderJavaPath);
+//		String aRecorderJavaPath = HelperConfigurationManagerFactory.getSingleton().getRecorderJavaPath();
+//		if (aRecorderJavaPath != null && !aRecorderJavaPath.isEmpty())
+//			recorderJava.setText(aRecorderJavaPath);
 			
 			
 	}
-	@Row(0)
-	public FileSetterModel getJava7Location() {
-		return recorderJava;		
+	public String configuredJavaPath() {
+		return HelperConfigurationManagerFactory.getSingleton().getRecorderJavaPath();
 	}
+	@Override
 	@Visible(false)
-	public void setJava7Location() {
-		System.out.println("Java 7 Location");
+	public String[] launchCommand() {
+		return new String[] {getJavaPath(), "-cp",RECORDER_CLASS_PATH, RECORDER_MAIN_CLASS}; 
 	}
-	@Row(1)
-	public void start() {
-		super.start();
-	}
+//	@Row(0)
+//	public FileSetterModel getJavaLocation() {
+//		return recorderJava;		
+//	}
+//	@Visible(false)
+//	public void setJavaLocation() {
+//		System.out.println("Java 7 Location");
+//	}
+//	@Row(1)
+//	public void start() {
+//		super.start();
+//	}
 	
 	@Visible(false)
-	public void connectToRecorder() {
+	public void connectToExternalProgram() {
 		// commenting out code added probably by Nick
-//		System.err.println("Calling connect to recorder");
+		System.err.println("Calling connect to recorder");
+		launch();
 //		startRecorder(RECORDER_LAUNCHING_COMMAND);
 		// Doesnt matter; just launch recorder and continuously write to file
 		//listenToRecorderIOEvents();
 	}
-	@Visible(false)
-	public void launchRecorder() {
-		launchRecorder(RECORDER_LAUNCHING_COMMAND);
-
-	}
-	@Visible(false)
-	public void launchRecorder(String[] aCommand) {	
-		// do not need this
-//		processExecer = OEMisc.runWithProcessExecer(aCommand);
-//		consoleModel = processExecer.getConsoleModel();
-		
-	}
+//	@Visible(false)
+//	public void launch() {
+//		launch(RECORDER_LAUNCHING_COMMAND);
+//
+//	}
+//	@Visible(false)
+//	public void launch(String[] aCommand) {	
+//		// do not need this
+////		processExecer = OEMisc.runWithProcessExecer(aCommand);
+////		consoleModel = processExecer.getConsoleModel();
+//		
+//	}
 	@Visible(false)
 	@Override
 	public void updateRecorder(Shell aShell) {
@@ -103,4 +112,6 @@ public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter i
 		oeFrame.setSize(500, 150);
 		recorderJava.initFrame((JFrame) (oeFrame.getFrame().getPhysicalComponent()));		
 	}
+
+	
 }

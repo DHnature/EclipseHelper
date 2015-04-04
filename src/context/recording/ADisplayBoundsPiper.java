@@ -5,12 +5,15 @@ import java.beans.PropertyChangeListener;
 
 import org.eclipse.swt.widgets.Shell;
 
+import config.HelperConfigurationManagerFactory;
+import util.annotations.LayoutName;
 import util.annotations.Visible;
 import util.pipe.ConsoleModel;
 import util.remote.ProcessExecer;
+import bus.uigen.attributes.AttributeNames;
 import bus.uigen.misc.OEMisc;
 
-
+@LayoutName(AttributeNames.GRID_BAG_LAYOUT)
 public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implements  DisplayBoundsOutputter, PropertyChangeListener {
 	/*
 	public static final String RECORDER_JAVA_PATH = "D:/Program Files/Java/jdk1.7.0_51/bin/java";
@@ -45,8 +48,8 @@ public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implem
 	public static final String[] RECORDER_LAUNCHING_COMMAND = 
 		{RECORDER_JAVA_PATH, "-cp" ,  RECORDER_CLASS_PATH, RECORDER_MAIN_CLASS};
 	
-	ProcessExecer processExecer;
-	ConsoleModel consoleModel;
+//	ProcessExecer processExecer;
+//	ConsoleModel consoleModel;
 	
 //	public ADisplayBoundsPiper() {
 //		display = Display.getCurrent();
@@ -63,9 +66,19 @@ public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implem
 //	}
 //	@Override
 	@Visible(false)
-	public void connectToRecorder() {
-		launchRecorder(RECORDER_LAUNCHING_COMMAND);		
+	public void connectToExternalProgram() {
+//		launchRecorder(RECORDER_LAUNCHING_COMMAND);	
+		System.err.println("Calling connect to recorder");
+		launch();
 		listenToRecorderIOEvents();
+	}
+	public String configuredJavaPath() {
+		return HelperConfigurationManagerFactory.getSingleton().getRecorderJavaPath();
+	}
+	@Override
+	@Visible(false)
+	public String[] launchCommand() {
+		return new String[] {getJavaPath(), "-cp",RECORDER_CLASS_PATH, RECORDER_MAIN_CLASS}; 
 	}
 //	@Override
 //	public void listenToDisplayEvents() {
@@ -86,18 +99,18 @@ public class ADisplayBoundsPiper extends AnAbstractDisplayBoundsOutputter implem
 	/* (non-Javadoc)
 	 * @see context.recording.DisplayBoundsOutputter#startRecorder(java.lang.String)
 	 */
-	@Visible(false)
-	public void launchRecorder() {
-		launchRecorder(RECORDER_LAUNCHING_COMMAND);
-
-	}
-//	@Override
-	@Visible(false)
-	public void launchRecorder(String[] aCommand) {
-		processExecer = OEMisc.runWithProcessExecer(aCommand);
-		System.err.println(processExecer);
-		consoleModel = processExecer.getConsoleModel();
-	}
+//	@Visible(false)
+//	public void launchRecorder() {
+//		launchRecorder(RECORDER_LAUNCHING_COMMAND);
+//
+//	}
+////	@Override
+//	@Visible(false)
+//	public void launchRecorder(String[] aCommand) {
+//		processExecer = OEMisc.runWithProcessExecer(aCommand);
+//		System.err.println(processExecer);
+//		consoleModel = processExecer.getConsoleModel();
+//	}
 	
 	/* (non-Javadoc)
 	 * @see context.recording.DisplayBoundsOutputter#listenToRecorderIOEvents()

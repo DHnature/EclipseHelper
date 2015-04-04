@@ -16,23 +16,26 @@ import analyzer.ui.SessionPlayerFactory;
 import analyzer.ui.graphics.PlayAndRewindCounter;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
+import config.HelperConfigurationManagerFactory;
 import context.recording.ADisplayBoundsPiper;
 //bad hierarchy, just removing recording stuff from superclass, but that is what you get if there is no multiple inheirtance
 public class ALocalScreenPlayer extends ALocalScreenRecorderAndPlayer {
 	
-	
+	public String configuredJavaPath() {
+		return HelperConfigurationManagerFactory.getSingleton().getPlayerJavaPath();
+	}
 	@Override
 	@Visible(false)
 	public void listenToDisplayEvents() {
 	
 	}
 	
-	@Override
-	@Row(1)
-	public void start() {
-		super.start();
-		
-	}
+//	@Override
+//	@Row(1)
+//	public void start() {
+//		super.start();
+//		
+//	}
 	
 	@Visible(false)
 	public void handleEvent(Event event) {

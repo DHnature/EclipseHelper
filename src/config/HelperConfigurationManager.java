@@ -11,5 +11,6 @@ public interface HelperConfigurationManager {
 			PropertiesConfiguration dynamicConfiguration) ;
 	void init();
 	String getRecorderJavaPath();
+	String getPlayerJavaPath();
 
 }

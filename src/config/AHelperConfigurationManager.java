@@ -13,6 +13,8 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
     public static final String CONFIG_FILE = "config.properties";
     public static final String STATIC_CONFIGURATION_FILE_NAME = "helper-config/helper-config.properties";
     public static final String RECORDER_JAVA = "recorder.javalocation";
+    public static final String PLAYER_JAVA = "player.javalocation";
+
     protected static PropertiesConfiguration staticConfiguration;
     static File userPropsFile;
 
@@ -26,6 +28,12 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
     public String getRecorderJavaPath() {
     	
        return staticConfiguration == null?null:staticConfiguration.getString(RECORDER_JAVA, "java");
+
+    }
+    @Override
+    public String getPlayerJavaPath() {
+    	
+       return staticConfiguration == null?null:staticConfiguration.getString(PLAYER_JAVA, "java");
 
     }
 

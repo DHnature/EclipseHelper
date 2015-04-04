@@ -5,11 +5,15 @@ import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
 
+import bus.uigen.models.FileSetterModel;
+
 public interface DisplayBoundsOutputter extends Listener,  ControlListener {
 
 //	public abstract void startRecorder(String aCommand[]);
 
 //	public abstract void listenToRecorderIOEvents();
+	public void connectToDisplay();
+
 
 	public abstract String boundsToString();
 
@@ -20,8 +24,11 @@ public interface DisplayBoundsOutputter extends Listener,  ControlListener {
 //	public abstract void propertyChange(PropertyChangeEvent evt);
 
 	void start();
+	
+	String[] launchCommand();
+	String configuredJavaPath();
 
-	void connectToRecorder();
+	void connectToExternalProgram();
 
 	void listenToDisplayEvents();
 
@@ -32,5 +39,8 @@ public interface DisplayBoundsOutputter extends Listener,  ControlListener {
 	void createUI();
 
 	boolean isStarted();
+
+
+	FileSetterModel getJavaLocationSetter();
 
 }

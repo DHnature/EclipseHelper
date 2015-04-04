@@ -6,7 +6,9 @@ public class RecorderFactory {
 	static DisplayBoundsOutputter singleton;
 	public static void createSingleton() {
 //		boundsOutputter = new ALocalScreenRecorderAndPlayer();
-		singleton = new ADisplayBoundsFileWriter();
+//		singleton = new ADisplayBoundsFileWriter();
+		singleton = new ADisplayBoundsPiper();
+		
 		// do not connect by default
 //		boundsOutputter.connectToDisplayAndRecorder();
 	}
