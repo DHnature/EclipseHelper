@@ -11,7 +11,7 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
 
     public static final String CONFIG_DIR = "config";
     public static final String CONFIG_FILE = "config.properties";
-    public static final String STATIC_CONFIGURATION_FILE_NAME = "helper-config/config.properties";
+    public static final String STATIC_CONFIGURATION_FILE_NAME = "helper-config/helper-config.properties";
     public static final String RECORDER_JAVA = "recorder.javalocation";
     protected static PropertiesConfiguration staticConfiguration;
     static File userPropsFile;
@@ -58,41 +58,53 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
 
 //            StaticConfigurationFileRead.newCase(STATIC_CONFIGURATION_FILE_NAME, this);
             setStaticConfiguration(configuration);
-            if (configuration == null)
-            	return;
-            String dynamicConfigurationName = configuration.getString("helper.dynamicConfiguration", "dynamicconfig.properties");
-            
-            File file = new File(dynamicConfigurationName);
-            if (!file.exists()) {
-                file.createNewFile();
-//                DynamicConfigurationFileCreated.newCase(dynamicConfigurationName, this);
-//	         	convertToDynamicConfiguration();
-            }
-            dynamicConfiguration = new PropertiesConfiguration(dynamicConfigurationName);
+//            if (configuration == null)
+//            	return;
+//            String dynamicConfigurationName = configuration.getString("helper.dynamicConfiguration", "dynamicconfig.properties");
+//            
+//            File file = new File(dynamicConfigurationName);
+//            if (!file.exists()) {
+//                file.createNewFile();
+////                DynamicConfigurationFileCreated.newCase(dynamicConfigurationName, this);
+////	         	convertToDynamicConfiguration();
+//            }
+//            dynamicConfiguration = new PropertiesConfiguration(dynamicConfigurationName);
 //            DynamicConfigurationFileRead.newCase(dynamicConfigurationName, this);
 
 //	         GraderSettings.get().convertToDynamicConfiguration();
-        } catch (ConfigurationException e) {
+        } catch (Exception e) {
 //            StaticConfigurationFileNotRead.newCase(STATIC_CONFIGURATION_FILE_NAME, this);
             System.err.println("Error loading config file.");
             System.err.println(e.getMessage());
             e.printStackTrace();
 
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+//        } catch (IOException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
         }
     }
 
     PropertiesConfiguration createStaticConfiguration() {
     	try {
-    		File file = new File (STATIC_CONFIGURATION_FILE_NAME);
-    		if (!file.exists())
-    			file= new File (System.getProperty("user.home") + "/" + STATIC_CONFIGURATION_FILE_NAME);
+    		File file= new File (System.getProperty("user.home") + "/" + STATIC_CONFIGURATION_FILE_NAME);
+    		if (!file.exists()) {
+    			System.err.println("Configuration file not found at:" + file.getAbsolutePath());
+			    file= new File (STATIC_CONFIGURATION_FILE_NAME);
+    		}
     		if (!file.exists()) {
     			System.err.println("Configuration file not found at:" + file.getAbsolutePath());
     			return null;
+    		} else {
+    			System.out.println("Configuration file found at:" + file.getAbsolutePath());
+
     		}
+//    		File file = new File (STATIC_CONFIGURATION_FILE_NAME);
+//    		if (!file.exists())
+//    			file= new File (System.getProperty("user.home") + "/" + STATIC_CONFIGURATION_FILE_NAME);
+//    		if (!file.exists()) {
+//    			System.err.println("Configuration file not found at:" + file.getAbsolutePath());
+//    			return null;
+//    		}
     		
 			return new PropertiesConfiguration(file.getAbsolutePath());
 		} catch (ConfigurationException e) {
