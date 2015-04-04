@@ -8,11 +8,14 @@ public class AnAnalyzerAR implements ExecutableCommand{
 	public Object execute(Object theFrame) {
 
 
-		ObjectEditor.setAttribute(AnAnalyzer.class,  AttributeNames.STRETCHABLE_BY_PARENT, true);
+//		ObjectEditor.setAttribute(AnAnalyzer.class,  AttributeNames.STRETCHABLE_BY_PARENT, true);
 		ObjectEditor.setAttribute(AnAnalyzer.class,  AttributeNames.LAYOUT, AttributeNames.GRID_BAG_LAYOUT);
+		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "AnalyzerParameters", AttributeNames.CONTAINER_WIDTH, 200);
+		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "AnalyzerParameters", AttributeNames.CONTAINER_HEIGHT, 100);
+
 //		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "SegmentLength", AttributeNames.STRETCHABLE_BY_PARENT, false);
 
-		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "LogsFolder", AttributeNames.LABEL_POSITION, AttributeNames.LABEL_IS_LEFT);
+//		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "LogsFolder", AttributeNames.LABEL_POSITION, AttributeNames.LABEL_IS_LEFT);
 //		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "DownloadFolder", AttributeNames.CONTAINER_BACKGROUND, Color.PINK);
 
 //		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "TextEditor", AttributeNames.LABEL_POSITION, AttributeNames.LABEL_IS_LEFT);

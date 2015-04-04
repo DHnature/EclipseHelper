@@ -23,6 +23,8 @@ import java.util.Vector;
 
 import javax.swing.JFileChooser;
 
+import util.annotations.ComponentWidth;
+import util.annotations.LayoutName;
 import util.annotations.Row;
 import util.annotations.Visible;
 import analyzer.extension.ACSVParser;
@@ -33,6 +35,7 @@ import analyzer.extension.StuckInterval;
 import analyzer.extension.StuckPoint;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
+import bus.uigen.attributes.AttributeNames;
 import bus.uigen.models.AFileSetterModel;
 import bus.uigen.models.FileSetterModel;
 import config.FactorySingletonInitializer;
@@ -46,7 +49,7 @@ import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.util.LogReader;
-
+@LayoutName(AttributeNames.GRID_BAG_LAYOUT)
 public class AnAnalyzer implements Analyzer  {
 	public static final String PARTICIPANT_DIRECTORY = "data/";
 	public static final String EXPERIMENTAL_DATA = "ExperimentalData/";
@@ -642,6 +645,8 @@ public class AnAnalyzer implements Analyzer  {
 	 */
 	@Override
 	@Row(1)
+//	@ComponentWidth(100)
+//	@Visible(false)
 	public AnAnalyzerParametersSelector getAnalyzerParameters() {
 		return parameters;
 	}
@@ -797,12 +802,13 @@ public class AnAnalyzer implements Analyzer  {
 		}
 		return instance;
 	}
-
+	@Override
+	@Visible(false)
 	public Map<String,Queue<StuckPoint>> getStuckPointMap() {
 		return this.stuckPoint;
 
 	}
-
+	@Visible(false)
 	public Map<String, Queue<StuckInterval>> getStuckIntervalMap(){
 		return this.stuckInterval;
 
@@ -816,7 +822,7 @@ public class AnAnalyzer implements Analyzer  {
 		DifficultyPredictionSettings.setReplayMode(true);
 
 		OEFrame frame = ObjectEditor.edit(AnAnalyzer.getInstance());
-		frame.setSize(550, 450);
+		frame.setSize(500, 250);
 
 	}
 

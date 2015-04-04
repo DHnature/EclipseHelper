@@ -40,47 +40,7 @@ public class AnAnalyzerParametersSelector /*extends APredictionParameters*/  {
 	public PredictionParameters getPredictionParameters() {
 		return APredictionParameters.getInstance();
 	}
-//	@Row(0)
-//	@Column(1)
-//	@ComponentWidth(30)
-//	public int getSegmentLength() {
-//		return APredictionParameters.getInstance().getSegmentLength();
-////		return super.getSegmentLength();
-////		return 0;
-//	}
-//	
-//	@Row(0)
-//	@Column(0)
-//	@ComponentWidth(30)
-////	@Column(0)
-//	public int getStartupLag() {
-////		return super.getStartupLag();
-//		return APredictionParameters.getInstance().getStartupLag();
-//
-////		return 0;
-//	}
-////	
-//	@Row(0)
-//	@ComponentWidth(30)
-//	@Column(2)
-//	public int getStatusAggregated() {
-//		return APredictionParameters.getInstance().getStatusAggregated();
-//
-////		return super.getStatusAggregated();
-////		return 0;
-//	}
-//	int segmentLength = 50;
-//	@Row(0)
-//	@Column(0)
-//	public int getSegmentLength() {
-//		return super.getSegmentLength();
-//	}
-//	public void setSegmentLength(int newVal) {
-//		this.segmentLength = newVal;
-//	}
-	
-//	@Row(0)
-//	@Column(1)
+
 	@Row(1)
 	@Column(0)
 	public DynamicEnum<String> getParticipants() {
@@ -90,9 +50,14 @@ public class AnAnalyzerParametersSelector /*extends APredictionParameters*/  {
 	public void setParticipants(DynamicEnum<String> aNewVal) {
 		participants = aNewVal;
 	}
+	@Row(1)
+	@Column(1)
+	public boolean isVisualizePrediction() {
+		return visualizePrediction;
+	}
 //	@Row(1)
-	@Column(0)
 	@Row(2)
+	@Column(0)
 	@Explanation("Load the names of the participants in the selected folder")
 	public void loadDirectory() {
 		if (analyzer != null)
@@ -131,11 +96,7 @@ public class AnAnalyzerParametersSelector /*extends APredictionParameters*/  {
 //			 analyzer.setNewRatioFiles(newRatioFiles);
 		DifficultyPredictionSettings.setNewRatioFiles(newRatioFiles);
 	}
-	@Row(1)
-	@Column(1)
-	public boolean isVisualizePrediction() {
-		return visualizePrediction;
-	}
+	
 	public void setVisualizePrediction(boolean newVal) {
 //		if (newVal) {
 //			PredictorConfigurer.visualizePrediction();

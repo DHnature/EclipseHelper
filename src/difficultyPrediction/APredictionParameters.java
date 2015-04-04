@@ -19,18 +19,6 @@ public class APredictionParameters implements PredictionParameters{
 	
 //	@Row(1)
 	@Row(0)
-	@Column(1)
-	@ComponentWidth(30)
-	public int getSegmentLength() {
-		return segmentLength;
-	}
-	public void setSegmentLength(int newVal) {
-		int oldValue = segmentLength;
-		this.segmentLength = newVal;
-		propertyChangeSupport.firePropertyChange("SegmentLength", oldValue, newVal);
-		
-	}
-	@Row(0)
 	@Column(0)
 	@ComponentWidth(30)
 	public int getStartupLag() {
@@ -42,6 +30,18 @@ public class APredictionParameters implements PredictionParameters{
 		propertyChangeSupport.firePropertyChange("StartupLag", oldValue, newValue);
 
 	}
+	@Row(0)
+	@Column(1)
+	@ComponentWidth(30)
+	public int getSegmentLength() {
+		return segmentLength;
+	}
+	public void setSegmentLength(int newVal) {
+		int oldValue = segmentLength;
+		this.segmentLength = newVal;
+		propertyChangeSupport.firePropertyChange("SegmentLength", oldValue, newVal);
+		
+	}	
 	@Row(0)
 	@Column(2)
 	@ComponentWidth(30)
