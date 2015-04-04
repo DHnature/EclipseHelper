@@ -3,17 +3,17 @@ package context.recording;
 import analyzer.ui.video.ALocalScreenRecorderAndPlayer;
 
 public class RecorderFactory {
-	static DisplayBoundsOutputter boundsOutputter;
+	static DisplayBoundsOutputter singleton;
 	public static void createSingleton() {
 //		boundsOutputter = new ALocalScreenRecorderAndPlayer();
-		boundsOutputter = new ADisplayBoundsFileWriter();
+		singleton = new ADisplayBoundsFileWriter();
 		// do not connect by default
 //		boundsOutputter.connectToDisplayAndRecorder();
 	}
 	public static DisplayBoundsOutputter getSingleton() {
-		if (boundsOutputter == null)
+		if (singleton == null)
 			createSingleton();
-		return boundsOutputter;
+		return singleton;
 	}
 
 }

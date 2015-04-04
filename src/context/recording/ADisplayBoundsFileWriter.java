@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 
 import org.eclipse.swt.widgets.Shell;
 
+import config.HelperConfigurationManagerFactory;
 import bus.uigen.attributes.AttributeNames;
 import bus.uigen.misc.OEMisc;
 import bus.uigen.models.AFileSetterModel;
@@ -35,6 +36,13 @@ public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter i
 	ProcessExecer processExecer;
 	ConsoleModel consoleModel;
 	FileSetterModel recorderJava = new AFileSetterModel(JFileChooser.FILES_ONLY);
+	public ADisplayBoundsFileWriter() {		
+		String aRecorderJavaPath = HelperConfigurationManagerFactory.getSingleton().getRecorderJavaPath();
+		if (aRecorderJavaPath != null && !aRecorderJavaPath.isEmpty())
+			recorderJava.setText(aRecorderJavaPath);
+			
+			
+	}
 	@Row(0)
 	public FileSetterModel getJava7Location() {
 		return recorderJava;		

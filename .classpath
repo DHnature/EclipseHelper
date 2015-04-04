@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry exported="true" kind="lib" path="lib/commons-configuration-1.9.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/joda-time-2.2.jar" sourcepath="C:/Users/Dewan/.m2/repository/joda-time/joda-time/2.2/joda-time-2.2-sources.jar">
 		<attributes>
 			<attribute name="javadoc_location" value="jar:file:/Users/jasoncarter/Documents/workspace/EclipseHelper/lib/joda-time-2.2-javadoc.jar!/"/>
@@ -16,6 +17,7 @@
 	<classpathentry kind="lib" path="lib/smack-core-4.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/smack-tcp-4.0.5.jar"/>
 	<classpathentry kind="lib" path="lib/xpp3-1.1.4c.jar"/>
-	<classpathentry kind="lib" path="lib/oeall22.jar"/>
+	<classpathentry kind="lib" path="lib/oeall22.jar" sourcepath="/util"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
