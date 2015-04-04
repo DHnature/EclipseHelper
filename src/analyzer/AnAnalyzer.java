@@ -650,85 +650,15 @@ public class AnAnalyzer implements Analyzer  {
 	public AnAnalyzerParametersSelector getAnalyzerParameters() {
 		return parameters;
 	}
-	//	@Visible(false)
-	//	@Override
-	//	public boolean isNewRatioFiles() {
-	//		return DifficultyPredictionSettings.isNewRatioFiles();
-	//	}
-	//	@Override
-	//	public void setNewRatioFiles(boolean newRatioFiles) {
-	//		this.newRatioFiles = newRatioFiles;
-	//	}
-	//	int segmentLength = 50;
-	//	@Row(1)
-	//	public int getSegmentLength() {
-	//		return segmentLength;
-	//	}
-	//	public void setSegmentLength(int newVal) {
-	//		this.segmentLength = newVal;
-	//	}
-
+	
 	// let us do this in the analyzerprocessor
 	public static void maybeRecordFeatures(RatioFeatures details) {
-		//		if (!DifficultyPredictionSettings.isReplayMode())  {
-		//			LineGraphComposer.getLineGraph().newRatios(details);
-		//			return;
-		//		}
+	
 		if (!DifficultyPredictionSettings.isNewRatioFiles() && DifficultyPredictionSettings.isRatioFileExists())
 			return;
 		return;
 
-		//		String aFileName = DifficultyPredictionSettings.getRatiosFileName();
-		//
-		//
-		//		long absoluteTime = startTimeStamp + details.getSavedTimeStamp();
-		//		
-		//		java.util.Date time=new Date(absoluteTime);
-		//
-		//		Calendar mydate = Calendar.getInstance();
-		////		mydate.setTimeInMillis(details.getSavedTimeStamp());
-		//		mydate.setTimeInMillis(absoluteTime);
-		//		
-		//		//mydate.get(Calendar.HOUR)
-		//		//mydate.get(Calendar.MINUTE)
-		//		//mydate.get(Calendar.SECOND)
-		////		DateTime timestamp = new DateTime(details.getSavedTimeStamp());
-		//		DateTime timestamp = new DateTime(absoluteTime);
-		//
-		//		//timestamp.get(timestamp)
-		//		
-		////		System.out.println(timestamp.toString("MM-dd-yyyy H:mm:ss"));
-		//		try
-		//		{
-		////		    String filename= "/users/jasoncarter/filename.csv";
-		////		    String filename = dataFolder + "ratios.csv";
-		//		    FileWriter fw = new FileWriter(aFileName,true); //the true will append the new data
-		//		   
-		//		    fw.write(""+ details.getInsertionRatio());
-		//		    fw.write(",");
-		//		    fw.write("" + details.getDeletionRatio());
-		//		    fw.write(",");
-		//		    fw.write("" + details.getDebugRatio());
-		//		    fw.write(",");
-		//		    fw.write("" + details.getNavigationRatio());
-		//		    fw.write(",");
-		//		    fw.write("" + details.getFocusRatio());
-		//		    fw.write(",");
-		//			fw.write("" + details.getRemoveRatio());
-		//			fw.write(",");
-		//			String timeStampString = time.toString();
-		//			timeStampString = timestamp.toString("MM-dd-yyyy H:mm:ss");
-		////			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
-		////			fw.write("" + timestamp.toString("MM-dd-yyyy H:mm:ss"));
-		//			fw.write("" + timeStampString);
-		//			fw.write("\n");
-		//		    fw.close();
-		//		}
-		//		catch(IOException ioe)
-		//		{
-		//		    System.err.println("IOException: " + ioe.getMessage());
-		//		}
-
+		
 
 
 	}
