@@ -97,6 +97,24 @@ public class AnAnalyzerParametersSelector /*extends APredictionParameters*/  {
 		DifficultyPredictionSettings.setNewRatioFiles(newRatioFiles);
 	}
 	
+	public boolean preIsReplayOutputFiles() {
+		return !isNewOutputFiles();
+	}
+	
+	@Row(2)
+	@Column(3)
+	public boolean isReplayOutputFiles() {
+		
+		
+		return DifficultyPredictionSettings.isReplayRatioFiles();
+	}
+	
+	public void setReplayOutputFiles(boolean newVal) {
+//		if (analyzer != null)
+//			 analyzer.setNewRatioFiles(newRatioFiles);
+		DifficultyPredictionSettings.setReplayRatioFiles(newVal);
+	}
+	
 	public void setVisualizePrediction(boolean newVal) {
 //		if (newVal) {
 //			PredictorConfigurer.visualizePrediction();

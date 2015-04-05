@@ -33,6 +33,8 @@ import analyzer.extension.AStuckPoint;
 import analyzer.extension.CSVParser;
 import analyzer.extension.StuckInterval;
 import analyzer.extension.StuckPoint;
+import analyzer.ui.graphics.ARatioFileReader;
+import analyzer.ui.graphics.RatioFileReader;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import bus.uigen.attributes.AttributeNames;
@@ -64,6 +66,7 @@ public class AnAnalyzer implements Analyzer  {
 	public static final String PARTICIPANT_OUTPUT_DIRECTORY = "data/OutputData/";
 
 	public static final String PARTICIPANT_INFORMATION_FILE = "Participant_Info.csv";
+	public static final String RATIOS_FILE_NAME = "ratios.csv";
 	public static final int SEGMENT_LENGTH = 50;
 	public static final String ALL_PARTICIPANTS = "All";
 	public static final String IGNORE_KEYWORD="IGNORE";
@@ -72,6 +75,7 @@ public class AnAnalyzer implements Analyzer  {
 	static Map<String, Queue<StuckPoint>> stuckPoint=new HashMap<>();
 	static Map<String, Queue<StuckInterval>> stuckInterval=new HashMap<>();
 	static boolean stuckFileLoaded=false;
+	static RatioFileReader ratioFileReader;
 
 	static long startTimeStamp;
 	List<List<ICommand>> nestedCommandsList;
@@ -469,7 +473,9 @@ public class AnAnalyzer implements Analyzer  {
 	 * @see analyzer.Analyzer#processParticipant(java.lang.String)
 	 */
 	@Override
+	// modularize this method
 	public void processParticipant(String aParticipantId) {
+		
 		if (parameters.isVisualizePrediction()) {
 			PredictorConfigurer.visualizePrediction();
 		}
@@ -480,7 +486,9 @@ public class AnAnalyzer implements Analyzer  {
 		File anOutputFolder = new File(aFullParticipantOutputFolderName);
 		if (!anOutputFolder.exists())
 			anOutputFolder.mkdirs();
-		String aFullRatiosFileName = aFullParticipantOutputFolderName + "ratios.csv";		
+//		String aFullRatiosFileName = aFullParticipantOutputFolderName + "ratios.csv";		
+		String aFullRatiosFileName = aFullParticipantOutputFolderName + RATIOS_FILE_NAME;		
+
 		File aRatiosFile = new File(aFullRatiosFileName);
 		if (aRatiosFile.exists()) {
 			DifficultyPredictionSettings.setRatioFileExists(true);
@@ -496,7 +504,9 @@ public class AnAnalyzer implements Analyzer  {
 			}
 		}
 		// erase file if it exists
-		if (aRatiosFile.exists() && DifficultyPredictionSettings.isNewRatioFiles())	
+//		if (aRatiosFile.exists() && DifficultyPredictionSettings.isNewRatioFiles())	{
+		if (DifficultyPredictionSettings.isRatioFileExists() && DifficultyPredictionSettings.isNewRatioFiles())	{
+
 			try {
 				FileOutputStream writer = new FileOutputStream(aRatiosFile);
 				writer.close();
@@ -508,8 +518,12 @@ public class AnAnalyzer implements Analyzer  {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
-
+		}
+		if (DifficultyPredictionSettings.isRatioFileExists() && DifficultyPredictionSettings.isReplayRatioFiles()) {
+			 System.out.println ("Need to read ratio file and replay logs");
+			 ratioFileReader = new ARatioFileReader();
+			 ratioFileReader.readFile(aRatiosFile.getAbsolutePath());
+		} else {
 
 		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
 		DifficultyPredictionSettings.setRatiosFileName(aFullRatiosFileName);
@@ -589,6 +603,7 @@ public class AnAnalyzer implements Analyzer  {
 		//		for (ICommand aCommand: commandsList) {
 		//			
 		//		}
+		}
 
 
 	}

@@ -24,7 +24,7 @@ public class ARatioFileReader implements RatioFileReader {
 
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(
 			this);
-	private DuriRatioFeatures ratioFeatures = new ADuriRatioFeatures();
+	private RatioFileComponents ratioFeatures = new ADuriRatioFeatures();
 	private String path = "";
 	private JFileChooser fileChooser;
 

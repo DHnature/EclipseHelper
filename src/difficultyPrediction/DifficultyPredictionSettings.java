@@ -5,6 +5,9 @@ public class DifficultyPredictionSettings {
 	static boolean ratioFileExists;
 	static boolean replayMode;
 	static boolean newRatioFiles;
+	static boolean replayRatioFiles;
+	
+
 	static int segmentLength = 50;
 
 	public DifficultyPredictionSettings() {
@@ -48,6 +51,12 @@ public class DifficultyPredictionSettings {
 
 	public static void setNewRatioFiles(boolean newRatioFiles) {
 		DifficultyPredictionSettings.newRatioFiles = newRatioFiles;
+	}
+	public static boolean isReplayRatioFiles() {
+		return replayRatioFiles;
+	}
+	public static void setReplayRatioFiles(boolean replayRatioFiles) {
+		DifficultyPredictionSettings.replayRatioFiles = replayRatioFiles;
 	}
 	
 	

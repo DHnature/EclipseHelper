@@ -4,7 +4,7 @@ import java.util.List;
 
 import difficultyPrediction.featureExtraction.ARatioFeatures;
 
-public class ADuriRatioFeatures extends ARatioFeatures implements DuriRatioFeatures {
+public class ADuriRatioFeatures extends ARatioFeatures implements RatioFileComponents {
 //	private double editRatio;
 //	private double debugRatio;
 //	private double navigationRatio;

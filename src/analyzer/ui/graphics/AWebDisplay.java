@@ -56,7 +56,7 @@ public class AWebDisplay extends JPanel implements WebDisplay {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equalsIgnoreCase("newRatioFeatures")) {
-			newRatios((DuriRatioFeatures) evt.getNewValue());
+			newRatios((RatioFileComponents) evt.getNewValue());
 			repaint();
 		} else if (evt.getPropertyName().equalsIgnoreCase("start")
 				|| evt.getPropertyName().equalsIgnoreCase("size")) {
@@ -86,7 +86,7 @@ public class AWebDisplay extends JPanel implements WebDisplay {
 	public void mouseClicked(MouseEvent event) {
 	}
 
-	public void newRatios(DuriRatioFeatures ratioFeatures) {
+	public void newRatios(RatioFileComponents ratioFeatures) {
 		websiteList.add(ratioFeatures.getWebLinkList());
 	}
 

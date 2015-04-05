@@ -4,7 +4,7 @@ import java.util.List;
 
 import difficultyPrediction.featureExtraction.RatioFeatures;
 
-public interface DuriRatioFeatures extends RatioFeatures {
+public interface RatioFileComponents extends RatioFeatures {
 	public void setEditRatio(double editRatio);
 
 	public double getDebugRatio();
