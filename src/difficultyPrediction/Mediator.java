@@ -14,7 +14,7 @@ import difficultyPrediction.statusManager.StatusManagerDetails;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 
-public interface Mediator {
+public interface Mediator extends MediatorRegistrar {
 	public void eventAggregator_HandOffEvents(AnEventAggregator aggregator, AnEventAggregatorDetails details);
 //	public void featureExtractor_HandOffFeatures(RatioBasedFeatureExtractor extractor, AFeatureExtractorDetails details);
 	public void predictionManager_HandOffPrediction(PredictionManager manager, APredictionManagerDetails details);
@@ -49,25 +49,25 @@ public interface Mediator {
 
 
 	public void setStatusInformation(StatusInformation statusInformation) ;
-	public void addRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) ;
-	
-	public void removeRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) ;
-	
-	public void addStatusListener(StatusListener aListener) ;
-	public void removeStatusListener(StatusListener aListener) ;
-		
-	public void  notifyNewRatios(RatioFeatures aRatios) ;
-	
-	public void  notifyNewStatus(String aStatus) ;
-	public abstract void addPluginEventEventListener(
-			PluginEventListener aListener);
-
-	public abstract void removePluginEventListener(
-			PluginEventListener aListener);
-
-	public abstract void notifyStartCommand();
-
-	public abstract void notifyStopCommand();
-
-	public abstract void notifyNewCommand(ICommand aCommand);
+//	public void addRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) ;
+//	
+//	public void removeRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) ;
+//	
+//	public void addStatusListener(StatusListener aListener) ;
+//	public void removeStatusListener(StatusListener aListener) ;
+//		
+//	public void  notifyNewRatios(RatioFeatures aRatios) ;
+//	
+//	public void  notifyNewStatus(String aStatus) ;
+//	public abstract void addPluginEventEventListener(
+//			PluginEventListener aListener);
+//
+//	public abstract void removePluginEventListener(
+//			PluginEventListener aListener);
+//
+//	public abstract void notifyStartCommand();
+//
+//	public abstract void notifyStopCommand();
+//
+//	public abstract void notifyNewCommand(ICommand aCommand);
 }
