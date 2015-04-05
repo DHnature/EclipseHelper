@@ -36,23 +36,24 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class DifficultyRobot implements Mediator {	
+public class DifficultyRobot extends AMediatorRegistrar implements Mediator {	
 	//Server server;
 	static Mediator  instance;
-	List<StatusListener> statusListeners = new ArrayList();
-	List<RatioFeaturesListener> ratioFeaturesListeners = new ArrayList<>();
-	String id = "";
+//	List<StatusListener> statusListeners = new ArrayList();
+//	List<RatioFeaturesListener> ratioFeaturesListeners = new ArrayList<>();
+//	String id = "";
 	EventAggregator eventAggregator;
 	RatioBasedFeatureExtractor featureExtractor;
 	PredictionManager predictionManager;
 	StatusManager statusManager;
 	private StatusInformation statusInformation;
-	List<PluginEventListener> listeners = new ArrayList();
+//	List<PluginEventListener> listeners = new ArrayList();
 	
 
 	
 	public DifficultyRobot(String id) {
-		this.id = id;
+//		this.id = id;
+		super(id);
 		eventAggregator = new AnEventAggregator(this);
 //		eventAggregator.eventAggregationStrategy = new ADisjointDiscreteChunks();
 		eventAggregator.setEventAggregationStrategy(new ADisjointDiscreteChunks());
@@ -241,92 +242,94 @@ public class DifficultyRobot implements Mediator {
 		this.statusInformation = statusInformation;
 	}
 	
-	public void addRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) {
-		ratioFeaturesListeners.add(aRatioFeaturesListener);
-	}
+	// moved this code to superclass
 	
-	public void removeRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) {
-		ratioFeaturesListeners.remove(aRatioFeaturesListener);
-	}
-	
-	public void addStatusListener(StatusListener aListener) {
-		statusListeners.add(aListener);
-	}	
-	public void removeStatusListener(StatusListener aListener) {
-		statusListeners.remove(aListener);
-	}
-		
-	public void  notifyNewRatios(RatioFeatures aRatios) {
-		for (RatioFeaturesListener aListener:ratioFeaturesListeners) {
-			aListener.newRatios(aRatios);
-		}
-	}
-	
-	public void  notifyNewStatus(String aStatus) {
-		for (StatusListener aListener:statusListeners) {
-			aListener.newStatus(aStatus);
-			aListener.newStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
-		}
-	}
-	
-	
-//	public void  notifyNewIntStatus(int aStatus) {
-//		for (StatusListener aListener:statusListeners) {
-//			aListener.newStatus(aStatus);
+//	public void addRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) {
+//		ratioFeaturesListeners.add(aRatioFeaturesListener);
+//	}
+//	
+//	public void removeRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) {
+//		ratioFeaturesListeners.remove(aRatioFeaturesListener);
+//	}
+//	
+//	public void addStatusListener(StatusListener aListener) {
+//		statusListeners.add(aListener);
+//	}	
+//	public void removeStatusListener(StatusListener aListener) {
+//		statusListeners.remove(aListener);
+//	}
+//		
+//	public void  notifyNewRatios(RatioFeatures aRatios) {
+//		for (RatioFeaturesListener aListener:ratioFeaturesListeners) {
+//			aListener.newRatios(aRatios);
 //		}
 //	}
-	
-	public void  notifyNewAggregateStatus(int aStatus) {
-		for (StatusListener aListener:statusListeners) {
-			aListener.newAggregatedStatus(aStatus);
-		}
-	}
-	
-	public void  notifyNewAggregateStatus(String aStatus) {
-		for (StatusListener aListener:statusListeners) {
-			aListener.newAggregatedStatus(aStatus);
-			aListener.newAggregatedStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
-		}
-	}
-	
-	@Override
-	public void addPluginEventEventListener(PluginEventListener aListener){
-		listeners.add(aListener);
-	}
-	/* (non-Javadoc)
-	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#addRemovePredictionEventListener(difficultyPrediction.DifficultyPredictionEventListener)
-	 */
-	@Override
-	public void removePluginEventListener(PluginEventListener aListener){
-		listeners.remove(aListener);
-	}
-	/* (non-Javadoc)
-	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStart()
-	 */
-	@Override
-	public void notifyStartCommand() {
-		for (PluginEventListener aListener:listeners) {
-			aListener.commandProcessingStarted();
-		}
-	}
-	/* (non-Javadoc)
-	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStop()
-	 */
-	@Override
-	public void notifyStopCommand() {
-		for (PluginEventListener aListener:listeners) {
-			aListener.commandProcessingStopped();
-		}
-	}
-	/* (non-Javadoc)
-	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyRecordCommand(edu.cmu.scs.fluorite.commands.ICommand)
-	 */
-	@Override
-	public void notifyNewCommand(ICommand aCommand) {
-		for (PluginEventListener aListener:listeners) {
-			aListener.newCommand(aCommand);
-		}
-	}
+//	
+//	public void  notifyNewStatus(String aStatus) {
+//		for (StatusListener aListener:statusListeners) {
+//			aListener.newStatus(aStatus);
+//			aListener.newStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
+//		}
+//	}
+//	
+//	
+////	public void  notifyNewIntStatus(int aStatus) {
+////		for (StatusListener aListener:statusListeners) {
+////			aListener.newStatus(aStatus);
+////		}
+////	}
+//	
+//	public void  notifyNewAggregateStatus(int aStatus) {
+//		for (StatusListener aListener:statusListeners) {
+//			aListener.newAggregatedStatus(aStatus);
+//		}
+//	}
+//	
+//	public void  notifyNewAggregateStatus(String aStatus) {
+//		for (StatusListener aListener:statusListeners) {
+//			aListener.newAggregatedStatus(aStatus);
+//			aListener.newAggregatedStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
+//		}
+//	}
+//	
+//	@Override
+//	public void addPluginEventEventListener(PluginEventListener aListener){
+//		listeners.add(aListener);
+//	}
+//	/* (non-Javadoc)
+//	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#addRemovePredictionEventListener(difficultyPrediction.DifficultyPredictionEventListener)
+//	 */
+//	@Override
+//	public void removePluginEventListener(PluginEventListener aListener){
+//		listeners.remove(aListener);
+//	}
+//	/* (non-Javadoc)
+//	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStart()
+//	 */
+//	@Override
+//	public void notifyStartCommand() {
+//		for (PluginEventListener aListener:listeners) {
+//			aListener.commandProcessingStarted();
+//		}
+//	}
+//	/* (non-Javadoc)
+//	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStop()
+//	 */
+//	@Override
+//	public void notifyStopCommand() {
+//		for (PluginEventListener aListener:listeners) {
+//			aListener.commandProcessingStopped();
+//		}
+//	}
+//	/* (non-Javadoc)
+//	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyRecordCommand(edu.cmu.scs.fluorite.commands.ICommand)
+//	 */
+//	@Override
+//	public void notifyNewCommand(ICommand aCommand) {
+//		for (PluginEventListener aListener:listeners) {
+//			aListener.newCommand(aCommand);
+//		}
+//	}
 	
 	
 	public static Mediator getInstance() {

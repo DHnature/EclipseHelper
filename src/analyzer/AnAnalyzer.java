@@ -519,13 +519,16 @@ public class AnAnalyzer implements Analyzer  {
 				e.printStackTrace();
 			}
 		}
+		// we will replay commands in both cases
+		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
+
 		if (DifficultyPredictionSettings.isRatioFileExists() && DifficultyPredictionSettings.isReplayRatioFiles()) {
 			 System.out.println ("Need to read ratio file and replay logs");
 			 ratioFileReader = new ARatioFileReader();
 			 ratioFileReader.readFile(aRatiosFile.getAbsolutePath());
 		} else {
 
-		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
+//		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
 		DifficultyPredictionSettings.setRatiosFileName(aFullRatiosFileName);
 		difficultyEventProcessor = new ADifficultyPredictionPluginEventProcessor();
 		ADifficultyPredictionPluginEventProcessor.setInstance(difficultyEventProcessor);
