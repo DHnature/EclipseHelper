@@ -31,7 +31,7 @@ public interface Analyzer {
 	public abstract List<List<ICommand>> convertXMLLogToObjects(
 			String aFolderName);
 
-	public abstract AnAnalyzerParametersSelector getAnalyzerParameters();
+	public abstract AnalyzerParameters getAnalyzerParameters();
 
 	public abstract DifficultyPredictionPluginEventProcessor getDifficultyEventProcessor();
 

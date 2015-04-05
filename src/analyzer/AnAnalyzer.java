@@ -81,13 +81,14 @@ public class AnAnalyzer implements Analyzer  {
 	List<List<ICommand>> nestedCommandsList;
 
 	FileSetterModel participantsFolder, ouputFolder, experimentalData;
-	AnAnalyzerParametersSelector parameters;
+	AnalyzerParameters parameters;
 	LogReader reader;
 	//	protected Thread difficultyPredictionThread;	
 	//	protected DifficultyPredictionRunnable difficultyPredictionRunnable;
 	//	protected BlockingQueue<ICommand> pendingPredictionCommands;
 	DifficultyPredictionPluginEventProcessor difficultyEventProcessor;
 	List<AnalyzerListener> listeners = new ArrayList();
+//	int currentParticipant = -1;
 
 	//	boolean newRatioFiles;
 
@@ -99,7 +100,7 @@ public class AnAnalyzer implements Analyzer  {
 		reader = new LogReader();
 		participantsFolder = new AFileSetterModel(JFileChooser.DIRECTORIES_ONLY);
 		participantsFolder.setText(PARTICIPANT_DIRECTORY);
-		parameters = new AnAnalyzerParametersSelector(this);
+		parameters = new AnAnalyzerParameters(this);
 		parameters.getParticipants().addChoice(ALL_PARTICIPANTS);
 		parameters.getParticipants().setValue(ALL_PARTICIPANTS);
 
@@ -182,7 +183,7 @@ public class AnAnalyzer implements Analyzer  {
 		final Runnable aRunnable = 
 				new Runnable() {
 			public void run() {
-				syncLoadLogs();
+				doLoadLogs();
 			}};
 			Thread aThread = (new Thread(aRunnable));
 			aThread.start();
@@ -289,10 +290,10 @@ public class AnAnalyzer implements Analyzer  {
 
 	}
 
-	public void syncLoadLogs() {
+	public void doLoadLogs() {
 		FactorySingletonInitializer.configure();
 		String participantId = parameters.getParticipants().getValue();
-		String numberOfSegments = "" + parameters.getPredictionParameters().getSegmentLength();
+//		String numberOfSegments = "" + parameters.getPredictionParameters().getSegmentLength();
 
 
 
@@ -304,9 +305,9 @@ public class AnAnalyzer implements Analyzer  {
 
 		if(participantId.equalsIgnoreCase(""))
 			participantId = ALL_PARTICIPANTS;
-
-		if(numberOfSegments.equalsIgnoreCase(""))
-			numberOfSegments = "" + SEGMENT_LENGTH;
+//
+//		if(numberOfSegments.equalsIgnoreCase(""))
+//			numberOfSegments = "" + SEGMENT_LENGTH;
 
 		//todo need to ask for discrete chunks or sliding window
 		//may d for discrete and s for sliding window
@@ -329,7 +330,9 @@ public class AnAnalyzer implements Analyzer  {
 			loadStuckPoint();
 			stuckFileLoaded=true;
 		}
-
+//		if (parameters.isVisualizePrediction()) {
+//			PredictorConfigurer.visualizePrediction();
+//		}
 		if (participantList.get(0).equals(ALL_PARTICIPANTS)) {
 			//remove all from the participants
 			participantIds.remove(ALL_PARTICIPANTS);
@@ -369,7 +372,7 @@ public class AnAnalyzer implements Analyzer  {
 			notifyFinishParticipant(ALL_PARTICIPANTS, null);
 
 		} else {
-			String aParticipanttFolder = participants.get(participantId);
+//			String aParticipanttFolder = participants.get(participantId);
 			processParticipant(participantId);
 
 		}
@@ -469,6 +472,7 @@ public class AnAnalyzer implements Analyzer  {
 		}
 
 	}
+	
 	/* (non-Javadoc)
 	 * @see analyzer.Analyzer#processParticipant(java.lang.String)
 	 */
@@ -476,9 +480,10 @@ public class AnAnalyzer implements Analyzer  {
 	// modularize this method
 	public void processParticipant(String aParticipantId) {
 		
-		if (parameters.isVisualizePrediction()) {
-			PredictorConfigurer.visualizePrediction();
-		}
+//		if (parameters.isVisualizePrediction()) {
+//			PredictorConfigurer.visualizePrediction();
+//		}
+		parameters.getParticipants().setValue(aParticipantId);
 		String aParticipantFolder = participants.get(aParticipantId);
 		//		notifyNewParticipant(aParticipantId);
 		String aFullParticipantOutputFolderName =participantsFolder.getText() + OUTPUT_DATA + aParticipantFolder + "/";
@@ -665,7 +670,7 @@ public class AnAnalyzer implements Analyzer  {
 	@Row(1)
 //	@ComponentWidth(100)
 //	@Visible(false)
-	public AnAnalyzerParametersSelector getAnalyzerParameters() {
+	public AnalyzerParameters getAnalyzerParameters() {
 		return parameters;
 	}
 	
