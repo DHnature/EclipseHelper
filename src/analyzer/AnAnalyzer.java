@@ -497,7 +497,7 @@ public class AnAnalyzer implements Analyzer  {
 		File aRatiosFile = new File(aFullRatiosFileName);
 		if (aRatiosFile.exists()) {
 			DifficultyPredictionSettings.setRatioFileExists(true);
-
+			
 		} else {
 			//		if (!aRatiosFile.exists())
 			try {
@@ -529,8 +529,10 @@ public class AnAnalyzer implements Analyzer  {
 
 		if (DifficultyPredictionSettings.isRatioFileExists() && DifficultyPredictionSettings.isReplayRatioFiles()) {
 			 System.out.println ("Need to read ratio file and replay logs");
-			 ratioFileReader = new ARatioFileReader();
-			 ratioFileReader.readFile(aRatiosFile.getAbsolutePath());
+			 RatioFilePlayerFactory.getSingleton().setReplayedData(nestedCommandsList, aRatiosFile.getAbsolutePath());
+				RatioFilePlayerFactory.getSingleton().replay();
+//			 ratioFileReader = new ARatioFileReader();
+//			 ratioFileReader.readFile(aRatiosFile.getAbsolutePath());
 		} else {
 
 //		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
@@ -540,16 +542,6 @@ public class AnAnalyzer implements Analyzer  {
 		difficultyEventProcessor.commandProcessingStarted();
 		Mediator mediator = difficultyEventProcessor.getDifficultyPredictionRunnable().getMediator();
 
-		//		difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
-		//		pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
-		//		difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
-		//		difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
-		//		difficultyPredictionThread.setPriority(Math.min(
-		//				Thread.currentThread().getPriority(),
-		//				DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
-		//		difficultyPredictionThread.start();
-		//		PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
-		//		Mediator mediator = difficultyPredictionRunnable.getMediator();
 		EventAggregator eventAggregator = mediator.getEventAggregator();
 		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer("" + PredictionParametersSetterSelector.getSingleton().getSegmentLength()));
 		notifyNewParticipant(aParticipantId, aParticipantFolder);

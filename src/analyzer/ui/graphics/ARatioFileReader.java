@@ -25,6 +25,9 @@ public class ARatioFileReader implements RatioFileReader {
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(
 			this);
 	private RatioFileComponents ratioFeatures = new ADuriRatioFeatures();
+	List<RatioFileComponents> ratioFeaturesList;
+	
+
 	private String path = "";
 	private JFileChooser fileChooser;
 
@@ -54,14 +57,19 @@ public class ARatioFileReader implements RatioFileReader {
 	}
 
 	public void readFile(String fileName) {
+		ratioFeaturesList = new ArrayList();
 		BufferedReader br = null;
 		String row = "";
 
 		try {
 			br = new BufferedReader(new FileReader(fileName));
+			propertyChangeSupport.firePropertyChange(START_RATIOS,
+					null, "marker");
 			while ((row = br.readLine()) != null) {
 				readRow(row);
 			}
+			propertyChangeSupport.firePropertyChange(END_RATIOS,
+					null, "marker");
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -113,9 +121,15 @@ public class ARatioFileReader implements RatioFileReader {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		propertyChangeSupport.firePropertyChange("newRatioFeatures",
+//		ratioFeaturesList.add(ratioFeatures);
+		propertyChangeSupport.firePropertyChange(NEW_RATIO,
+//		propertyChangeSupport.firePropertyChange("newRatioFeatures",
 				oldRatioFeatures, ratioFeatures);
 	}
+	
+//	public List<RatioFileComponents> getRatioFeaturesList() {
+//		return ratioFeaturesList;
+//	}
 
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener aListener) {

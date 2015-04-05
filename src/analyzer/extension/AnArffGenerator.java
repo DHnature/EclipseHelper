@@ -19,6 +19,7 @@ import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import difficultyPrediction.DifficultyRobot;
 import difficultyPrediction.featureExtraction.RatioFeatures;
+import difficultyPrediction.predictionManagement.PredictionManagerStrategy;
 
 /**Class that generates Arff Files from the input ratios via difficulty listener event callbacks and
  * new predictions.
@@ -250,7 +251,9 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 			long prediction=p.getPredictionCorrections().get(i)<0? p.getPredictions().get(i):p.getPredictionCorrections().get(i);
 			
 			arffWriter.writeData(
-					prediction==0? "NO":"YES", 
+//					prediction==0? "NO":"YES", 
+							prediction==0? PredictionManagerStrategy.PROGRESS_PREDICTION: PredictionManagerStrategy.DIFFICULTY_PREDICTION, 
+	
 //							p.getInsertionList().get(i),
 //							p.getDeletionList().get(i),
 							Double.toString(p.getEditList().get(i)),

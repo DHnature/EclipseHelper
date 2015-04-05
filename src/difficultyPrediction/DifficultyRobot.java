@@ -23,6 +23,7 @@ import difficultyPrediction.predictionManagement.APredictionManager;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
 import difficultyPrediction.predictionManagement.DecisionTreeModel;
 import difficultyPrediction.predictionManagement.PredictionManager;
+import difficultyPrediction.predictionManagement.PredictionManagerStrategy;
 import difficultyPrediction.statusManager.StatusAggregationDiscreteChunks;
 import difficultyPrediction.statusManager.StatusListener;
 import difficultyPrediction.statusManager.StatusManager;
@@ -31,6 +32,7 @@ import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
 import edu.cmu.scs.fluorite.model.EventRecorder;
+
 //import main.Server;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -165,7 +167,8 @@ public class DifficultyRobot extends AMediatorRegistrar implements Mediator {
 		Tracer.info(this, "Saving to log:" + prediction);
 		PredictionValueToStatus.newCase(this);
 		 PredictionType predictionType = PredictionType.MakingProgress;
-		 if(prediction.predictionValue.equals("NO"))
+//		 if(prediction.predictionValue.equals("NO"))
+		 if(prediction.predictionValue.equals(PredictionManagerStrategy.PROGRESS_PREDICTION))
          {
         	 predictionType = PredictionType.MakingProgress;
          }
@@ -173,7 +176,9 @@ public class DifficultyRobot extends AMediatorRegistrar implements Mediator {
          {
         	 predictionType = PredictionType.Indeterminate;
          }
-         if(prediction.predictionValue.equals("YES"))
+//         if(prediction.predictionValue.equals("YES"))
+         if(prediction.predictionValue.equals(PredictionManagerStrategy.DIFFICULTY_PREDICTION))
+
          {
         	 predictionType = PredictionType.HavingDifficulty;
          }
