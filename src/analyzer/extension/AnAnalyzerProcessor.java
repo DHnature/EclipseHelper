@@ -48,7 +48,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	
 	public AnAnalyzerProcessor() {
 		RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);
-		RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);
+		RatioFilePlayerFactory.getSingleton().addRatioFeaturesListener(this);
 	}
 
 	@Override

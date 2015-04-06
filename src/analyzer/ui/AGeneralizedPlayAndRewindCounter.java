@@ -15,7 +15,7 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 
     boolean playBack;
     int nextFeatureIndex;
-    ParticipantTimeLine liveParticipantTimeLine;
+//    ParticipantTimeLine liveParticipantTimeLine;
     long absoluteStartTime;
     @Override
 	public long getAbsoluteStartTime() {
@@ -24,8 +24,8 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 
 	public AGeneralizedPlayAndRewindCounter(RatioFileReader reader) {
 		super(reader);
-		absoluteStartTime = System.currentTimeMillis();
-		liveParticipantTimeLine = LiveAnalyzerProcessorFactory.getSingleton().getParticipantTimeLine();
+		absoluteStartTime = System.currentTimeMillis();	
+//		liveParticipantTimeLine = LiveAnalyzerProcessorFactory.getSingleton().getParticipantTimeLine();
 		
 	}
 
@@ -72,7 +72,7 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	}
 	int previousDifficulty;
 	public boolean prePreviousDifficulty() {
-		previousDifficulty = liveParticipantTimeLine.getDifficultyPredictionBefore(getCurrentTime());
+		previousDifficulty = LiveAnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getDifficultyPredictionBefore(getCurrentTime());
 		return previousDifficulty >= 0;
 	}
 	@Row(1)
@@ -86,7 +86,7 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	}
 	int nextDifficulty;
 	public boolean preNextDifficulty() {
-		nextDifficulty = liveParticipantTimeLine.getDifficultyPredictionAfter(getCurrentTime());
+		nextDifficulty = LiveAnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getDifficultyPredictionAfter(getCurrentTime());
 		return nextDifficulty >= 0;
 	}
 	@Row(1)
@@ -127,8 +127,8 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	@Override
 	@Visible(false)
 	public long getCurrentWallTime() {
-		if (getCurrentTime() >= liveParticipantTimeLine.getTimeStampList().size())
+		if (getCurrentTime() >= LiveAnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getTimeStampList().size())
 			return 0;
-		return liveParticipantTimeLine.getTimeStampList().get(getCurrentTime());
+		return LiveAnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getTimeStampList().get(getCurrentTime());
 	}
 }
