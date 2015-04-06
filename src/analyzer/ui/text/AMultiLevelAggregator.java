@@ -86,8 +86,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	@Override
     @Visible(false)
 	public void commandProcessingStarted() {
-//		reset();
-//		propertyChangeSupport.firePropertyChange("this", "", this);
+		reset();
+		propertyChangeSupport.firePropertyChange("this", "", this);
 
 		
 	}
@@ -95,8 +95,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	@Override
     @Visible(false)
 	public void commandProcessingStopped() {
-		reset();
-		propertyChangeSupport.firePropertyChange("this", "", this);
+//		reset();
+//		propertyChangeSupport.firePropertyChange("this", "", this);
 
 		
 	}
