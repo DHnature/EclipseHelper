@@ -26,6 +26,7 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 		super("");
 		ratioFileReader = new ARatioFileReader();
 		timeStampComputer = new ATimeStampComputer();
+		flattenedCommandsList = new ArrayList();
 		ratioFileReader.addPropertyChangeListener(this);
 		// TODO Auto-generated constructor stub
 	}
@@ -36,13 +37,15 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 	@Override
 	public void setReplayedData(List<List<ICommand>> aNestedCommandsList, String aRatioFileName) {
 //		nestedCommandsList = aNestedCommandsList;
+		timeStampComputer.reset();
 		flattenCommandsList(aNestedCommandsList);
 		ratioFileName = aRatioFileName;
+		nextStartCommandIndex = 0;
 	
 	}
 	
 	void flattenCommandsList(List<List<ICommand>> aNestedCommandsList) {
-		flattenedCommandsList = new ArrayList();
+		flattenedCommandsList.clear();
 		for (int index = 0; index < aNestedCommandsList.size(); index++) {
 			List<ICommand> commands = aNestedCommandsList.get(index);
 			for (int i = 0; i < commands.size(); i++) {
@@ -94,11 +97,11 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 			ICommand nextCommand = flattenedCommandsList.get(anIndex);
 			long aComputedTimeStamp = timeStampComputer.computeTimestamp(nextCommand);
 			String aComputedTimeStampString =  AParticipantTimeLine.toDateString( aComputedTimeStamp);
-			System.out.println("computed time stamp" + aComputedTimeStampString);
+			System.out.println(anIndex + " computed time stamp" + aComputedTimeStampString);
 
-			String aCommandTimeStampString =  AParticipantTimeLine.toDateString( nextCommand.getTimestamp());
-			String aCommandTimeStampString2 =  AParticipantTimeLine.toDateString( nextCommand.getTimestamp2());
-			System.out.println("command time stamp 1" + aCommandTimeStampString + " 2 " + aCommandTimeStampString2);
+//			String aCommandTimeStampString =  AParticipantTimeLine.toDateString( nextCommand.getTimestamp());
+//			String aCommandTimeStampString2 =  AParticipantTimeLine.toDateString( nextCommand.getTimestamp2());
+//			System.out.println("command time stamp 1" + aCommandTimeStampString + " 2 " + aCommandTimeStampString2);
 
 //			if (nextCommand.getTimestamp() <= aTimeStamp && 
 //					nextCommand.getTimestamp2() <= aTimeStamp)

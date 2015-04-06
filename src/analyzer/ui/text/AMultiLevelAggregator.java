@@ -14,6 +14,7 @@ import util.annotations.ComponentHeight;
 import util.annotations.PreferredWidgetClass;
 import util.annotations.Row;
 import util.annotations.Visible;
+import analyzer.RatioFilePlayerFactory;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import difficultyPrediction.DifficultyRobot;
@@ -41,14 +42,24 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	
 	public AMultiLevelAggregator() {
 //		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
+		
+		// for live or replayed prediction events
 		DifficultyRobot.getInstance().addStatusListener(this);
 		DifficultyRobot.getInstance().addPluginEventEventListener(this);
 		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
+		
+		// for rati file relay
+		RatioFilePlayerFactory.getSingleton().addStatusListener(this);
+		RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);
+		RatioFilePlayerFactory.getSingleton().addRatioFeaturesListener(this);
+		
 //		ratioCalculator = APercentageCalculator.getInstance();
 		ratioCalculator = RatioCalculatorSelector.getRatioFeatures();
 		propertyChangeSupport = new PropertyChangeSupport(this);
 
 	}
+	
+	
 	@Override
     @Visible(false)
 	public void reset() {
@@ -75,14 +86,18 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	@Override
     @Visible(false)
 	public void commandProcessingStarted() {
-		// TODO Auto-generated method stub
+//		reset();
+//		propertyChangeSupport.firePropertyChange("this", "", this);
+
 		
 	}
 
 	@Override
     @Visible(false)
 	public void commandProcessingStopped() {
-		// TODO Auto-generated method stub
+		reset();
+		propertyChangeSupport.firePropertyChange("this", "", this);
+
 		
 	}
 	String oldStatus = "";
