@@ -528,7 +528,8 @@ public class AnAnalyzer implements Analyzer  {
 		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
 
 		if (DifficultyPredictionSettings.isRatioFileExists() && DifficultyPredictionSettings.isReplayRatioFiles()) {
-			 System.out.println ("Need to read ratio file and replay logs");
+//			 System.out.println ("Need to read ratio file and replay logs");
+			notifyNewParticipant(aParticipantId, aParticipantFolder); // should probably factor this out
 			 RatioFilePlayerFactory.getSingleton().setReplayedData(nestedCommandsList, aRatiosFile.getAbsolutePath());
 				RatioFilePlayerFactory.getSingleton().replay();
 //			 ratioFileReader = new ARatioFileReader();
@@ -742,10 +743,11 @@ public class AnAnalyzer implements Analyzer  {
 	static Analyzer instance;
 	@Visible(false)
 	public static Analyzer getInstance() {
-		if (instance == null) {
-			instance = new AnAnalyzer();
-		}
-		return instance;
+		return AnalyzerFactory.getSingleton();
+//		if (instance == null) {
+//			instance = new AnAnalyzer();
+//		}
+//		return instance;
 	}
 	@Override
 	@Visible(false)

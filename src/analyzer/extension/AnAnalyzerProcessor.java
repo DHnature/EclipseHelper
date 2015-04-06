@@ -18,7 +18,9 @@ import analyzer.AParticipantTimeLine;
 import analyzer.AWebLink;
 import analyzer.Analyzer;
 import analyzer.ParticipantTimeLine;
+import analyzer.RatioFilePlayerFactory;
 import analyzer.WebLink;
+import analyzer.ui.graphics.RatioFileReader;
 import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.DifficultyRobot;
 import difficultyPrediction.extension.APrintingDifficultyPredictionListener;
@@ -43,6 +45,11 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 	ParticipantTimeLine participantTimeLine;
 
 	private boolean isStuckPointFileGenerated;
+	
+	public AnAnalyzerProcessor() {
+		RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);
+		RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);
+	}
 
 	@Override
 	public void newParticipant(String anId, String aFolder) {
@@ -53,9 +60,16 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		currentParticipant=anId;
 		this.isStuckPointFileGenerated=false;
 		
+		
+		
 		if(aFolder!= null) {
+			// should this not be in the constructor?
 			DifficultyRobot.getInstance().addPluginEventEventListener(this);
 			DifficultyRobot.getInstance().addRatioFeaturesListener(this);
+//			
+//			RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);
+//			RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);
+
 		}
 
 	}
