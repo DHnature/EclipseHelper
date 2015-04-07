@@ -1,11 +1,13 @@
 package analyzer.ui.graphics;
 
-public class AWebLink implements WebLink {
+import analyzer.WebLink;
+
+public class ADuriWebLink implements WebLink {
 
 	protected String searchString;
 	protected String urlString;
 	
-	public AWebLink(String aSearchString, String aUrlString) {
+	public ADuriWebLink(String aSearchString, String aUrlString) {
 		super();
 		this.searchString = aSearchString;
 		this.urlString = aUrlString;

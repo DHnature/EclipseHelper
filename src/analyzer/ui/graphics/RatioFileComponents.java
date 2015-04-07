@@ -2,6 +2,7 @@ package analyzer.ui.graphics;
 
 import java.util.List;
 
+import analyzer.WebLink;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 
 public interface RatioFileComponents extends RatioFeatures {
@@ -75,7 +76,7 @@ public interface RatioFileComponents extends RatioFeatures {
 
 	public List<WebLink> getWebLinkList();
 
-	public void setWebLinkList(List<WebLink> newWebLinkList);
+	public void setWebLinkList(List <WebLink> newWebLinkList);
 
 	public void setDifficultyType(String newType);
 

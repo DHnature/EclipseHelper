@@ -1,6 +1,6 @@
 package analyzer.ui.graphics;
 
-public interface WebLink {
+public interface DuriWebLink {
 
 	public abstract String getSearchString();
 

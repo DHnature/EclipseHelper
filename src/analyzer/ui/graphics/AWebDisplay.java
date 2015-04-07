@@ -12,6 +12,8 @@ import java.util.List;
 
 import javax.swing.JPanel;
 
+import analyzer.WebLink;
+
 public class AWebDisplay extends JPanel implements WebDisplay {
 
 	private static final long serialVersionUID = -1030791239928741198L;

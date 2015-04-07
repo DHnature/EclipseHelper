@@ -14,6 +14,8 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 
+import analyzer.AWebLink;
+import analyzer.WebLink;
 import util.annotations.Column;
 import util.annotations.ComponentWidth;
 import util.annotations.Row;
@@ -105,7 +107,7 @@ public class ARatioFileReader implements RatioFileReader {
 		if (parts[11].equalsIgnoreCase(" null")) {
 			ratioFeatures.setWebLinkList(null);
 		} else {
-			List<WebLink> list = new ArrayList<WebLink>();
+			List <WebLink> list = new ArrayList<WebLink>();
 			for (int i = 10; i < parts.length; i++) {
 				String[] searchAndUrl = parts[i].split("\t");
 				if (searchAndUrl.length > 1) {

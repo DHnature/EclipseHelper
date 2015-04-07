@@ -2,6 +2,7 @@ package analyzer.ui.graphics;
 
 import java.util.List;
 
+import analyzer.WebLink;
 import difficultyPrediction.featureExtraction.ARatioFeatures;
 
 public class ADuriRatioFeatures extends ARatioFeatures implements RatioFileComponents {
