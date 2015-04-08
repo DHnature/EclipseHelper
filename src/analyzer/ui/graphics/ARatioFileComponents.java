@@ -5,7 +5,7 @@ import java.util.List;
 import analyzer.WebLink;
 import difficultyPrediction.featureExtraction.ARatioFeatures;
 
-public class ADuriRatioFeatures extends ARatioFeatures implements RatioFileComponents {
+public class ARatioFileComponents extends ARatioFeatures implements RatioFileComponents {
 //	private double editRatio;
 //	private double debugRatio;
 //	private double navigationRatio;
@@ -26,7 +26,7 @@ public class ADuriRatioFeatures extends ARatioFeatures implements RatioFileCompo
 	private List<WebLink> webLinkList;
 	private String difficultyType;
 
-	public ADuriRatioFeatures() {
+	public ARatioFileComponents() {
 
 	}
 
@@ -183,11 +183,11 @@ public class ADuriRatioFeatures extends ARatioFeatures implements RatioFileCompo
 	}
 	
 	protected RatioFileComponents emptyCopy() {
-		return new ADuriRatioFeatures();
+		return new ARatioFileComponents();
 	}
 	
 	public RatioFileComponents clone() {
-		ADuriRatioFeatures retVal = (ADuriRatioFeatures) super.clone();
+		ARatioFileComponents retVal = (ARatioFileComponents) super.clone();
 		retVal.actualStatus = actualStatus;		
 		retVal.difficultyType = difficultyType;		
 		retVal.predictedStatus = predictedStatus;		

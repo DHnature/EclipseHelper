@@ -6,6 +6,7 @@ import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeaturesListener;
+import difficultyPrediction.featureExtraction.WebLinkListener;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
 import difficultyPrediction.predictionManagement.PredictionManager;
 import difficultyPrediction.statusManager.StatusListener;
@@ -21,6 +22,9 @@ public interface MediatorRegistrar {
 	
 	public void addStatusListener(StatusListener aListener) ;
 	public void removeStatusListener(StatusListener aListener) ;
+	
+	public void addWebLinkListener(WebLinkListener aListener) ;
+	public void removeWebLinkListener(WebLinkListener aListener) ;
 		
 	public void  notifyNewRatios(RatioFeatures aRatios) ;
 	

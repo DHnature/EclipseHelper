@@ -123,13 +123,15 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 	 */
 	@Override
 	public void fireRatioFileComponents(RatioFileComponents aRatioFileComponents) {
-		notifyNewRatios(aRatioFileComponents);	
-		notifyNewStatus(aRatioFileComponents.getPredictedStatus() == 0?
+		notifyNewRatios(aRatioFileComponents);
+		String newStatus = aRatioFileComponents.getPredictedStatus() == 0?
 				PredictionManagerStrategy.PROGRESS_PREDICTION:
-					PredictionManagerStrategy.DIFFICULTY_PREDICTION);
-		notifyNewAggregateStatus(aRatioFileComponents.getPredictedStatus() == 0?
-				PredictionManagerStrategy.PROGRESS_PREDICTION:
-					PredictionManagerStrategy.DIFFICULTY_PREDICTION);
+					PredictionManagerStrategy.DIFFICULTY_PREDICTION;
+		notifyNewStatus(newStatus);
+		// we did not record incremental status
+		notifyNewAggregateStatus(newStatus);
+		notifyNewWebLinks(aRatioFileComponents.getWebLinkList()); // will be erased at next agrregated status, must be before ag
+
 	}
 		
 

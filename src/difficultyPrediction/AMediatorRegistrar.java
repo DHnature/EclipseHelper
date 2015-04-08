@@ -9,6 +9,7 @@ import trace.difficultyPrediction.PredictionValueToStatus;
 import trace.difficultyPrediction.StatusAggregationStarted;
 import util.trace.Tracer;
 import analyzer.AnAnalyzer;
+import analyzer.WebLink;
 //import database.Status;
 import difficultyPrediction.eventAggregation.ADisjointDiscreteChunks;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
@@ -19,6 +20,7 @@ import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEvents
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeaturesListener;
+import difficultyPrediction.featureExtraction.WebLinkListener;
 import difficultyPrediction.predictionManagement.APredictionManager;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
 import difficultyPrediction.predictionManagement.DecisionTreeModel;
@@ -31,6 +33,8 @@ import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
 import edu.cmu.scs.fluorite.model.EventRecorder;
+
+
 //import main.Server;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -40,6 +44,7 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 	//Server server;
 //	static Mediator  instance;
 	List<StatusListener> statusListeners = new ArrayList();
+	List<WebLinkListener> webLinkListeners = new ArrayList();
 	List<RatioFeaturesListener> ratioFeaturesListeners = new ArrayList<>();
 	String id = "";
 ////	EventAggregator eventAggregator;
@@ -255,6 +260,18 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 	public void removeStatusListener(StatusListener aListener) {
 		statusListeners.remove(aListener);
 	}
+	@Override
+	public void addWebLinkListener(WebLinkListener aListener) {
+		webLinkListeners.add(aListener);
+		
+	}
+
+
+	@Override
+	public void removeWebLinkListener(WebLinkListener aListener) {
+		webLinkListeners.remove(aListener);
+		
+	}
 		
 	public void  notifyNewRatios(RatioFeatures aRatios) {
 		for (RatioFeaturesListener aListener:ratioFeaturesListeners) {
@@ -262,13 +279,20 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 		}
 	}
 	
+	
 	public void  notifyNewStatus(String aStatus) {
 		for (StatusListener aListener:statusListeners) {
 			aListener.newStatus(aStatus);
 			aListener.newStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
 		}
 	}
-	
+	public void  notifyNewWebLinks(List<WebLink> aWebLinks) {
+		for (WebLinkListener aListener:webLinkListeners) {
+			for (WebLink aWebLink:aWebLinks) {
+				aListener.newWebLink(aWebLink);
+			}
+		}
+	}
 	
 //	public void  notifyNewIntStatus(int aStatus) {
 //		for (StatusListener aListener:statusListeners) {
@@ -327,6 +351,9 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 			aListener.newCommand(aCommand);
 		}
 	}
+
+
+	
 	
 	
 //	public static Mediator getInstance() {

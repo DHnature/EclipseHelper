@@ -15,8 +15,11 @@ import util.annotations.ComponentHeight;
 import util.annotations.PreferredWidgetClass;
 import util.annotations.Row;
 import util.annotations.Visible;
+import util.models.AListenableVector;
+import analyzer.AWebLink;
 import analyzer.ParticipantTimeLine;
 import analyzer.RatioFilePlayerFactory;
+import analyzer.WebLink;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import difficultyPrediction.DifficultyRobot;
@@ -44,11 +47,13 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	protected StringBuffer ratiosBuffer = new StringBuffer();
 	protected StringBuffer predictionsBuffer = new StringBuffer();
 	protected PropertyChangeSupport propertyChangeSupport;
-	protected String webSearch = "";
+	protected List<WebLink> webLinks = new AListenableVector<>();
+	protected int numWebLinks;
 	
-	protected String webURL = "";
 	
 	
+
+
 	public AMultiLevelAggregator() {
 //		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
 		
@@ -56,14 +61,19 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		DifficultyRobot.getInstance().addStatusListener(this);
 		DifficultyRobot.getInstance().addPluginEventEventListener(this);
 		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
+		DifficultyRobot.getInstance().addWebLinkListener(this);
 		
 		// for rati file relay
 		RatioFilePlayerFactory.getSingleton().addStatusListener(this);
 		RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);
 		RatioFilePlayerFactory.getSingleton().addRatioFeaturesListener(this);
+		RatioFilePlayerFactory.getSingleton().addWebLinkListener(this);
+
 		
 //		ratioCalculator = APercentageCalculator.getInstance();
 		ratioCalculator = RatioCalculatorSelector.getRatioFeatures();
+		webLinks.add(new AWebLink("", ""));
+		numWebLinks = 0;
 		propertyChangeSupport = new PropertyChangeSupport(this);
 
 	}
@@ -160,8 +170,17 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		predictionsBuffer.setLength(0);
 		ratiosBuffer.setLength(0);
 		commandsBuffer.setLength(0);
+		clearWebLinks();
 		
 	}
+    
+    protected void clearWebLinks() {
+    	for (WebLink aWebLink: webLinks) {
+    		aWebLink.setSearchString("");
+    		aWebLink.setUrlString("");
+    	}
+    	numWebLinks=0;
+    }
 
 	@Override
     @Visible(false)
@@ -216,27 +235,36 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		return ratiosBuffer.toString();
 	}
 	@Row(4)
-	@ComponentHeight(100)
-	public String getWebSearch() {
-		return webSearch;
+	public List<WebLink> getWebLinks() {
+		return webLinks;
 	}
 
 
-	public void setWebSearch(String webSearch) {
-		this.webSearch = webSearch;
-	}
-
+//	public void setWebLinks(List<WebLink> webLinks) {
+//		this.webLinks = webLinks;
+//	}
+//	@Row(4)
+//	@ComponentHeight(100)
+//	public String getWebSearch() {
+//		return webSearch;
+//	}
+//
+//
+//	public void setWebSearch(String webSearch) {
+//		this.webSearch = webSearch;
+//	}
+//
+//	@Row(5)
+//	@ComponentHeight(100)
+//	public String getWebURL() {
+//		return webURL;
+//	}
+//
+//
+//	public void setWebURL(String webURL) {
+//		this.webURL = webURL;
+//	}
 	@Row(5)
-	@ComponentHeight(100)
-	public String getWebURL() {
-		return webURL;
-	}
-
-
-	public void setWebURL(String webURL) {
-		this.webURL = webURL;
-	}
-	@Row(6)
 	@PreferredWidgetClass(JTextArea.class)
 	@ComponentHeight(200)
 	public String getSegment() {
@@ -254,6 +282,17 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //			
 //		}
 //		return instance;
+	}
+	
+	@Override
+	public void newWebLink(WebLink aWebLink) {		
+		if (numWebLinks < webLinks.size()) {
+			webLinks.get(numWebLinks).setSearchString(aWebLink.getSearchString());
+			webLinks.get(numWebLinks).setUrlString(aWebLink.getUrlString());
+		} else {
+			webLinks.add(aWebLink);
+		}
+		
 	}
 	
 	public static void createUI() {
@@ -287,6 +326,9 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //		ObjectEditor.edit(AMultiLevelAggregator.getInstance());
 		createUI();
 	}
+
+
+	
 	
 
 }

@@ -1,6 +1,8 @@
 package analyzer;
 
-public interface WebLink {
+import util.models.PropertyListenerRegistrar;
+
+public interface WebLink extends PropertyListenerRegistrar{
 
 	public abstract String getSearchString();
 

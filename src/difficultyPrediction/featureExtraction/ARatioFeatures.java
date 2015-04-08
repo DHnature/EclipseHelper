@@ -4,7 +4,7 @@ import java.util.Date;
 
 import analyzer.extension.StuckInterval;
 import analyzer.extension.StuckPoint;
-import analyzer.ui.graphics.ADuriRatioFeatures;
+import analyzer.ui.graphics.ARatioFileComponents;
 import analyzer.ui.graphics.RatioFileComponents;
 import edu.cmu.scs.fluorite.model.EventRecorder;
 

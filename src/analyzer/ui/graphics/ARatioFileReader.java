@@ -26,7 +26,7 @@ public class ARatioFileReader implements RatioFileReader {
 
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(
 			this);
-	private RatioFileComponents ratioFeatures = new ADuriRatioFeatures();
+	private RatioFileComponents ratioFeatures = new ARatioFileComponents();
 	List<RatioFileComponents> ratioFeaturesList;
 	
 
@@ -92,7 +92,7 @@ public class ARatioFileReader implements RatioFileReader {
 	private void readRow(String row) {
 		// TODO: fix oldRatioFeatures
 		RatioFeatures oldRatioFeatures = new ARatioFeatures();
-		ratioFeatures = new ADuriRatioFeatures(); // creating a new feature each time for text UI
+		ratioFeatures = new ARatioFileComponents(); // creating a new feature each time for text UI
 		String[] parts = row.split(",");
 		SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy H:mm:ss");
 		ratioFeatures.setEditRatio(Double.parseDouble(parts[1].trim()));
