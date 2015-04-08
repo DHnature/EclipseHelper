@@ -14,9 +14,9 @@ public class ALiveAnalyzerProcessor extends AnAnalyzerProcessor implements LiveA
     		newParticipant(LIVE_USER_NAME, DUMMY_FOLDER_NAME);
     	}
     }
-	@Override
-	public ParticipantTimeLine getParticipantTimeLine() {
-		return participantTimeLine;
-	}
+//	@Override
+//	public ParticipantTimeLine getParticipantTimeLine() {
+//		return participantTimeLine;
+//	}
 
 }

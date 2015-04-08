@@ -1,10 +1,10 @@
 package analyzer.extension;
 
-public class AnalyzerProcessorFactory {
+public class RepredictingAnalyzerProcessorFactory {
 	static AnalyzerProcessor singleton;
 	
 	public static void setSingleton(AnalyzerProcessor singleton) {
-		AnalyzerProcessorFactory.singleton = singleton;
+		RepredictingAnalyzerProcessorFactory.singleton = singleton;
 	}
 
 	public static void createSingleton() {

@@ -418,5 +418,9 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 
 
 	}
+	@Override
+	public ParticipantTimeLine getParticipantTimeLine() {
+		return participantTimeLine;
+	}
 
 }

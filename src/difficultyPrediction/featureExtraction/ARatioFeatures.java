@@ -4,6 +4,8 @@ import java.util.Date;
 
 import analyzer.extension.StuckInterval;
 import analyzer.extension.StuckPoint;
+import analyzer.ui.graphics.ADuriRatioFeatures;
+import analyzer.ui.graphics.RatioFileComponents;
 import edu.cmu.scs.fluorite.model.EventRecorder;
 
 public class ARatioFeatures implements RatioFeatures {
@@ -142,6 +144,34 @@ public class ARatioFeatures implements RatioFeatures {
 				+ "Debug (" + getDebugRatio() + ") " 
 				+ "Navigation (" + getNavigationRatio() + ") "
 				+ "Focus (" + getFocusRatio() + ") ";
+		
+	}
+	protected RatioFeatures emptyCopy() {
+		return new ARatioFeatures();
+	}
+	
+
+	public RatioFeatures clone() {
+		ARatioFeatures retVal = (ARatioFeatures) emptyCopy();
+//		retVal.actualStatus = actualStatus;
+		retVal.debugRatio = debugRatio;
+		retVal.debugTimeRatio = debugTimeRatio;
+		retVal.deletionRatio = deletionRatio;
+		retVal.deletionTimeRatio = deletionTimeRatio;
+//		retVal.difficultyType = difficultyType;
+		retVal.editRatio = editRatio;
+		retVal.exceptionsPerRun = exceptionsPerRun;
+		retVal.focusRatio = focusRatio;
+		retVal.focusTimeRatio = focusTimeRatio;
+		retVal.insertionRatio = insertionRatio;
+		retVal.navigationRatio = navigationRatio;
+		retVal.navigationTimeRatio = navigationTimeRatio;
+//		retVal.predictedStatus = predictedStatus;
+		retVal.removeRatio = removeRatio;
+		retVal.removeTimeRatio = removeTimeRatio;
+		retVal.savedTimeStamp = savedTimeStamp;
+//		retVal.webLinkList = webLinkList;
+		return retVal;
 		
 	}
 	

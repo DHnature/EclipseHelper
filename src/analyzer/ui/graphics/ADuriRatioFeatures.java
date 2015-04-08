@@ -181,5 +181,19 @@ public class ADuriRatioFeatures extends ARatioFeatures implements RatioFileCompo
 	public String getDifficultyType() {
 		return difficultyType;
 	}
+	
+	protected RatioFileComponents emptyCopy() {
+		return new ADuriRatioFeatures();
+	}
+	
+	public RatioFileComponents clone() {
+		ADuriRatioFeatures retVal = (ADuriRatioFeatures) super.clone();
+		retVal.actualStatus = actualStatus;		
+		retVal.difficultyType = difficultyType;		
+		retVal.predictedStatus = predictedStatus;		
+		retVal.webLinkList = webLinkList;
+		return retVal;
+		
+	}
 
 }

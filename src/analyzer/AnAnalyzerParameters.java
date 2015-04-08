@@ -17,6 +17,8 @@ import util.annotations.Visible;
 import util.misc.Common;
 import util.models.ADynamicEnum;
 import util.models.DynamicEnum;
+import analyzer.extension.AFileReplayAnalyzerProcessor;
+import analyzer.extension.AnalyzerProcessorFactory;
 import analyzer.ui.APredictionController;
 import bus.uigen.ObjectEditor;
 import difficultyPrediction.APredictionParameters;
@@ -184,6 +186,12 @@ public class AnAnalyzerParameters implements AnalyzerParameters  {
 //		if (analyzer != null)
 //			 analyzer.setNewRatioFiles(newRatioFiles);
 		DifficultyPredictionSettings.setReplayRatioFiles(newVal);
+//		if (newVal) {
+//			AnalyzerProcessorFactory.setSingleton(new AFileReplayAnalyzerProcessor());
+//		} else {
+//			AnalyzerProcessorFactory.createSingleton(); // just get the default one
+//		}
+			
 	}
 	/* (non-Javadoc)
 	 * @see analyzer.AnalyzerParameters#isVisualizePrediction()

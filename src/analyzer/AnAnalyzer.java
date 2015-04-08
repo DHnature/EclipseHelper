@@ -30,7 +30,9 @@ import util.annotations.Visible;
 import analyzer.extension.ACSVParser;
 import analyzer.extension.AStuckInterval;
 import analyzer.extension.AStuckPoint;
+import analyzer.extension.AnalyzerProcessorFactory;
 import analyzer.extension.CSVParser;
+import analyzer.extension.FileReplayAnalyzerProcessorFactory;
 import analyzer.extension.StuckInterval;
 import analyzer.extension.StuckPoint;
 import analyzer.ui.graphics.ARatioFileReader;
@@ -529,6 +531,7 @@ public class AnAnalyzer implements Analyzer  {
 
 		if (DifficultyPredictionSettings.isRatioFileExists() && DifficultyPredictionSettings.isReplayRatioFiles()) {
 //			 System.out.println ("Need to read ratio file and replay logs");
+			AnalyzerProcessorFactory.setSingleton(FileReplayAnalyzerProcessorFactory.getSingleton());
 			notifyNewParticipant(aParticipantId, aParticipantFolder); // should probably factor this out
 			 RatioFilePlayerFactory.getSingleton().setReplayedData(nestedCommandsList, aRatiosFile.getAbsolutePath());
 				RatioFilePlayerFactory.getSingleton().replay();

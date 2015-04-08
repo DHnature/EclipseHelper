@@ -5,6 +5,7 @@ import util.annotations.ComponentWidth;
 import util.annotations.Row;
 import util.annotations.Visible;
 import analyzer.ParticipantTimeLine;
+import analyzer.extension.AnalyzerProcessorFactory;
 import analyzer.extension.LiveAnalyzerProcessorFactory;
 import analyzer.ui.graphics.APlayAndRewindCounter;
 import analyzer.ui.graphics.ARatioFileReader;
@@ -72,7 +73,7 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	}
 	int previousDifficulty;
 	public boolean prePreviousDifficulty() {
-		previousDifficulty = LiveAnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getDifficultyPredictionBefore(getCurrentTime());
+		previousDifficulty = AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getDifficultyPredictionBefore(getCurrentTime());
 		return previousDifficulty >= 0;
 	}
 	@Row(1)
@@ -86,7 +87,7 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	}
 	int nextDifficulty;
 	public boolean preNextDifficulty() {
-		nextDifficulty = LiveAnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getDifficultyPredictionAfter(getCurrentTime());
+		nextDifficulty = AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getDifficultyPredictionAfter(getCurrentTime());
 		return nextDifficulty >= 0;
 	}
 	@Row(1)
@@ -127,8 +128,8 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	@Override
 	@Visible(false)
 	public long getCurrentWallTime() {
-		if (getCurrentTime() >= LiveAnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getTimeStampList().size())
+		if (getCurrentTime() >= AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getTimeStampList().size())
 			return 0;
-		return LiveAnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getTimeStampList().get(getCurrentTime());
+		return AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getTimeStampList().get(getCurrentTime());
 	}
 }
