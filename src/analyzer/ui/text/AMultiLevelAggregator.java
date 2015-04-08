@@ -2,6 +2,7 @@ package analyzer.ui.text;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import util.annotations.ComponentHeight;
 import util.annotations.PreferredWidgetClass;
 import util.annotations.Row;
 import util.annotations.Visible;
+import analyzer.ParticipantTimeLine;
 import analyzer.RatioFilePlayerFactory;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
@@ -22,6 +24,8 @@ import difficultyPrediction.MultiLevelAggregator;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.metrics.RatioCalculator;
 import difficultyPrediction.metrics.RatioCalculatorSelector;
+import difficultyPrediction.predictionManagement.PredictionManagerStrategy;
+import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.model.StatusConsts;
 
@@ -32,12 +36,17 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	protected List<RatioFeatures> features = new ArrayList();
 	protected List<String> predictions = new ArrayList();
 	protected String aggregatedStatus = "";
+	protected String manualStatus = "";
+	
 	static RatioCalculator ratioCalculator;
 	static MultiLevelAggregator instance;
 	protected StringBuffer commandsBuffer = new StringBuffer();
 	protected StringBuffer ratiosBuffer = new StringBuffer();
 	protected StringBuffer predictionsBuffer = new StringBuffer();
 	protected PropertyChangeSupport propertyChangeSupport;
+	protected String webSearch = "";
+	
+	protected String webURL = "";
 	
 	
 	public AMultiLevelAggregator() {
@@ -71,16 +80,26 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		ratiosBuffer.setLength(0);
 		predictionsBuffer.setLength(0);		
 	}
+	public static String toString(DifficulyStatusCommand aCommand) {
+		if (aCommand.getStatus() == null)
+			return "";
+		return aCommand.getStatus().toString();		
+	}
 
 	@Override
     @Visible(false)
 	public void newCommand(ICommand newCommand) {
+		if (newCommand instanceof DifficulyStatusCommand) {
+			String oldStatus = manualStatus;
+			manualStatus = toString((DifficulyStatusCommand) newCommand);
+			propertyChangeSupport.firePropertyChange("Corrected Status", oldStatus, manualStatus);
+
+		} else {
 		maybeClearNonAggregatedStatus();
 //		commands.add(newCommand);
 		commandsBuffer.append(toClassifiedString(newCommand) + "\n");
 		propertyChangeSupport.firePropertyChange("Segment", "", commandsBuffer.toString());
-
-		
+		}	
 	}
 
 	@Override
@@ -168,6 +187,13 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		propertyChangeSupport.firePropertyChange("Ratios", "", ratiosBuffer.toString());
 
 	}
+	@Row(0)
+	public String getManualStatus() {
+		return manualStatus;
+	}
+	public void setManualStatus(String correstedStatus) {
+		this.manualStatus = correstedStatus;
+	}
 	@Row(1)
 	public String getAggregatedStatus() {
 		return aggregatedStatus;
@@ -190,6 +216,27 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		return ratiosBuffer.toString();
 	}
 	@Row(4)
+	@ComponentHeight(100)
+	public String getWebSearch() {
+		return webSearch;
+	}
+
+
+	public void setWebSearch(String webSearch) {
+		this.webSearch = webSearch;
+	}
+
+	@Row(5)
+	@ComponentHeight(100)
+	public String getWebURL() {
+		return webURL;
+	}
+
+
+	public void setWebURL(String webURL) {
+		this.webURL = webURL;
+	}
+	@Row(6)
 	@PreferredWidgetClass(JTextArea.class)
 	@ComponentHeight(200)
 	public String getSegment() {
@@ -227,6 +274,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		propertyChangeSupport.addPropertyChangeListener(listener);
 		
 	}
+	
+	
 //	@Override
 //	public void reset() {
 //		// TODO Auto-generated method stub
