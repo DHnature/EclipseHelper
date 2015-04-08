@@ -17,6 +17,7 @@ import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEvents
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeaturesListener;
+import difficultyPrediction.featureExtraction.WebLinkListener;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
 import difficultyPrediction.predictionManagement.PredictionManager;
 import difficultyPrediction.statusManager.StatusListener;
@@ -258,6 +259,18 @@ public class AnalyzerMediator implements Mediator {
 
 	@Override
 	public void notifyNewCommand(ICommand aCommand) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addWebLinkListener(WebLinkListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeWebLinkListener(WebLinkListener aListener) {
 		// TODO Auto-generated method stub
 		
 	}
