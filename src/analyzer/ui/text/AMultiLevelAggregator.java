@@ -15,7 +15,10 @@ import util.annotations.ComponentHeight;
 import util.annotations.PreferredWidgetClass;
 import util.annotations.Row;
 import util.annotations.Visible;
+import util.misc.Common;
+import util.models.ALabelBeanModel;
 import util.models.AListenableVector;
+import util.models.LabelBeanModel;
 import analyzer.AWebLink;
 import analyzer.ParticipantTimeLine;
 import analyzer.RatioFilePlayerFactory;
@@ -47,7 +50,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	protected StringBuffer ratiosBuffer = new StringBuffer();
 	protected StringBuffer predictionsBuffer = new StringBuffer();
 	protected PropertyChangeSupport propertyChangeSupport;
-	protected List<WebLink> webLinks = new AListenableVector<>();
+	protected List<LabelBeanModel> webLinks = new AListenableVector<>();
 	protected int numWebLinks;
 	
 	
@@ -72,7 +75,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		
 //		ratioCalculator = APercentageCalculator.getInstance();
 		ratioCalculator = RatioCalculatorSelector.getRatioFeatures();
-		webLinks.add(new AWebLink("", ""));
+		webLinks.add(new ALabelBeanModel(Common.toBlueColoredUnderlinedHrefHTML("https://www.google.com", "google")));
 		numWebLinks = 0;
 		propertyChangeSupport = new PropertyChangeSupport(this);
 
@@ -175,9 +178,10 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	}
     
     protected void clearWebLinks() {
-    	for (WebLink aWebLink: webLinks) {
-    		aWebLink.setSearchString("");
-    		aWebLink.setUrlString("");
+    	for (LabelBeanModel aWebLink: webLinks) {
+    		aWebLink.setText("");
+//    		aWebLink.setSearchString("");
+//    		aWebLink.setUrlString("");
     	}
     	numWebLinks=0;
     }
@@ -234,10 +238,14 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	public String getRatios() {
 		return ratiosBuffer.toString();
 	}
-	@Row(4)
-	public List<WebLink> getWebLinks() {
+	@Row(4)	
+	public List<LabelBeanModel> getWebLinks() {
 		return webLinks;
 	}
+//	
+//	public void setWebLinks(List<LabelBeanModel> newVal) {
+//		webLinks = newVal;
+//	}
 
 
 //	public void setWebLinks(List<WebLink> webLinks) {
@@ -287,10 +295,11 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	@Override
 	public void newWebLink(WebLink aWebLink) {		
 		if (numWebLinks < webLinks.size()) {
-			webLinks.get(numWebLinks).setSearchString(aWebLink.getSearchString());
-			webLinks.get(numWebLinks).setUrlString(aWebLink.getUrlString());
+//			webLinks.get(numWebLinks).setSearchString(aWebLink.getSearchString());
+//			webLinks.get(numWebLinks).setUrlString(aWebLink.getUrlString());
+			webLinks.get(numWebLinks).setText(aWebLink.getClickableLink().getText());
 		} else {
-			webLinks.add(aWebLink);
+			webLinks.add(new ALabelBeanModel(aWebLink.getClickableLink().getText()));
 		}
 		
 	}

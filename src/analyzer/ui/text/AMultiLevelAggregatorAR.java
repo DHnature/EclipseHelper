@@ -14,6 +14,8 @@ public class AMultiLevelAggregatorAR implements ExecutableCommand{
 		ObjectEditor.setAttribute(AMultiLevelAggregator.class,  AttributeNames.STRETCHABLE_BY_PARENT, true);
 		ObjectEditor.setAttribute(AMultiLevelAggregator.class,  AttributeNames.LAYOUT, AttributeNames.GRID_BAG_LAYOUT);
 //		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "SegmentLength", AttributeNames.STRETCHABLE_BY_PARENT, false);
+		ObjectEditor.setPropertyAttribute(AMultiLevelAggregator.class, "WebLinks", AttributeNames.CONTAINER_WIDTH, 300);
+		ObjectEditor.setPropertyAttribute(AMultiLevelAggregator.class, "WebLinks", AttributeNames.CONTAINER_HEIGHT, 50);
 
 		ObjectEditor.setPropertyAttribute(AMultiLevelAggregator.class, "*", AttributeNames.LABEL_POSITION, AttributeNames.LABEL_IN_BORDER);
 //		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "DownloadFolder", AttributeNames.CONTAINER_BACKGROUND, Color.PINK);

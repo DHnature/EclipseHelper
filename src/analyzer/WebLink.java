@@ -1,5 +1,6 @@
 package analyzer;
 
+import util.models.LabelBeanModel;
 import util.models.PropertyListenerRegistrar;
 
 public interface WebLink extends PropertyListenerRegistrar{
@@ -13,5 +14,7 @@ public interface WebLink extends PropertyListenerRegistrar{
 	public abstract void setUrlString(String newVal);
 
 	public abstract String toString();
+
+	LabelBeanModel getClickableLink();
 
 }
