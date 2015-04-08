@@ -13,14 +13,15 @@ public class AFileReplayAnalyzerProcessor extends ALiveAnalyzerProcessor{
 		RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);
 		RatioFilePlayerFactory.getSingleton().addRatioFeaturesListener(this);
 	}
+	// do nothing, the new Ratios has everything needed
 	public void newCommand(ICommand newCommand) {
-		maybeInitializeTimeStamp(newCommand);
-		maybeProcessPrediction(newCommand);
-		maybeProcessCorrection(newCommand);
-		//		if (newCommand.getTimestamp() == 0 && newCommand.getTimestamp2() != 0) {
-		//			newStartTimeStamp(newCommand.getTimestamp2() );
-		//		}
-		System.out.println("Extension**New User/Prediction Command:" + newCommand);	
+//		maybeInitializeTimeStamp(newCommand);
+//		maybeProcessPrediction(newCommand);
+//		maybeProcessCorrection(newCommand);
+//		//		if (newCommand.getTimestamp() == 0 && newCommand.getTimestamp2() != 0) {
+//		//			newStartTimeStamp(newCommand.getTimestamp2() );
+//		//		}
+//		System.out.println("Extension**New User/Prediction Command:" + newCommand);	
 
 	}
 	public void newRatios(RatioFeatures newVal) {
