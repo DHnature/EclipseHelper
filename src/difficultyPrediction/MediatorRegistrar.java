@@ -3,6 +3,7 @@ package difficultyPrediction;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
 import difficultyPrediction.eventAggregation.EventAggregator;
+import difficultyPrediction.featureExtraction.BarrierListener;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeaturesListener;
@@ -40,5 +41,9 @@ public interface MediatorRegistrar {
 	public abstract void notifyStopCommand();
 
 	public abstract void notifyNewCommand(ICommand aCommand);
+
+	void addBarrierListener(BarrierListener aListener);
+
+	void removeBarrierListener(BarrierListener aListener);
 
 }

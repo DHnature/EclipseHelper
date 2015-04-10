@@ -16,6 +16,7 @@ import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
 import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.featureExtraction.ARatioBasedFeatureExtractor;
+import difficultyPrediction.featureExtraction.BarrierListener;
 import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEvents;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
@@ -35,6 +36,7 @@ import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
 import edu.cmu.scs.fluorite.model.EventRecorder;
 
 
+
 //import main.Server;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,6 +48,7 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 	List<StatusListener> statusListeners = new ArrayList();
 	List<WebLinkListener> webLinkListeners = new ArrayList();
 	List<RatioFeaturesListener> ratioFeaturesListeners = new ArrayList<>();
+	List<BarrierListener> barrierListeners = new ArrayList<>();
 	String id = "";
 ////	EventAggregator eventAggregator;
 //	RatioBasedFeatureExtractor featureExtractor;
@@ -265,17 +268,31 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 		webLinkListeners.add(aListener);
 		
 	}
-
-
 	@Override
 	public void removeWebLinkListener(WebLinkListener aListener) {
 		webLinkListeners.remove(aListener);
+		
+	}
+	@Override
+	public void addBarrierListener(BarrierListener aListener) {
+		barrierListeners.add(aListener);
+		
+	}
+	@Override
+	public void removeBarrierListener(BarrierListener aListener) {
+		barrierListeners.remove(aListener);
 		
 	}
 		
 	public void  notifyNewRatios(RatioFeatures aRatios) {
 		for (RatioFeaturesListener aListener:ratioFeaturesListeners) {
 			aListener.newRatios(aRatios);
+		}
+	}
+	
+	public void  notifyNewBarrier(String newVal) {
+		for (BarrierListener aListener:barrierListeners) {
+			aListener.newBarrier(newVal);
 		}
 	}
 	

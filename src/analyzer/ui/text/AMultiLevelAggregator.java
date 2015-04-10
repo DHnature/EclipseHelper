@@ -11,6 +11,7 @@ import javax.swing.WindowConstants;
 
 import trace.difficultyPrediction.AggregatePredictionChanged;
 import trace.difficultyPrediction.PredictionChanged;
+import util.annotations.Column;
 import util.annotations.ComponentHeight;
 import util.annotations.PreferredWidgetClass;
 import util.annotations.Row;
@@ -43,6 +44,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	protected List<String> predictions = new ArrayList();
 	protected String aggregatedStatus = "";
 	protected String manualStatus = "";
+	protected String barrier = "";
 	
 	static RatioCalculator ratioCalculator;
 	static MultiLevelAggregator instance;
@@ -211,34 +213,50 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 
 	}
 	@Row(0)
+	@Override
+	public String getBarrier() {
+		return barrier;
+	}
+	@Row(1)
+	@Override
 	public String getManualStatus() {
 		return manualStatus;
 	}
-	public void setManualStatus(String correstedStatus) {
-		this.manualStatus = correstedStatus;
-	}
-	@Row(1)
+//	@Override
+//	public void setManualStatus(String newVal) {
+//		this.manualStatus = newVal;
+//	}
+	
+//	@Override
+//	public void setBarrier(String newVal) {
+//		this.barrier = newVal;
+//	}
+	@Row(2)
+	@Override
 	public String getAggregatedStatus() {
 		return aggregatedStatus;
 	}
     @Visible(false)
-	public  String toClassifiedString (ICommand aCommand) {
+	protected  String toClassifiedString (ICommand aCommand) {
 		String featureName = ratioCalculator.getFeatureName(aCommand);
 		return featureName + " (" + aCommand + " )";
-	}
-	@Row(2)
-	@PreferredWidgetClass(JTextArea.class)
-	@ComponentHeight(100)
-	public String getPredictions() {
-		return predictionsBuffer.toString();
 	}
 	@Row(3)
 	@PreferredWidgetClass(JTextArea.class)
 	@ComponentHeight(100)
+	@Override
+	public String getPredictions() {
+		return predictionsBuffer.toString();
+	}
+	@Row(4)
+	@PreferredWidgetClass(JTextArea.class)
+	@ComponentHeight(100)
+	@Override
 	public String getRatios() {
 		return ratiosBuffer.toString();
 	}
-	@Row(4)	
+	@Row(5)	
+	@Override
 	public List<LabelBeanModel> getWebLinks() {
 		return webLinks;
 	}
@@ -322,6 +340,12 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		propertyChangeSupport.addPropertyChangeListener(listener);
 		
 	}
+	@Override
+	public void newBarrier(String newValue) {
+		String oldValue = barrier;
+		barrier = newValue;
+		propertyChangeSupport.firePropertyChange("barrier", oldValue, newValue);		
+	}
 	
 	
 //	@Override
@@ -335,6 +359,9 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //		ObjectEditor.edit(AMultiLevelAggregator.getInstance());
 		createUI();
 	}
+
+
+	
 
 
 	

@@ -13,6 +13,7 @@ import difficultyPrediction.StatusInformation;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
 import difficultyPrediction.eventAggregation.EventAggregator;
+import difficultyPrediction.featureExtraction.BarrierListener;
 import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
@@ -271,6 +272,18 @@ public class AnalyzerMediator implements Mediator {
 
 	@Override
 	public void removeWebLinkListener(WebLinkListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addBarrierListener(BarrierListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeBarrierListener(BarrierListener aListener) {
 		// TODO Auto-generated method stub
 		
 	}
