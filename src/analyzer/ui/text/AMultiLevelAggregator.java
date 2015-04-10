@@ -44,7 +44,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	protected List<String> predictions = new ArrayList();
 	protected String aggregatedStatus = "";
 	protected String manualStatus = "";
-	protected String barrier = "";
+	protected String manualBarrier = "";
 	
 	static RatioCalculator ratioCalculator;
 	static MultiLevelAggregator instance;
@@ -62,17 +62,22 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	public AMultiLevelAggregator() {
 //		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
 		
+		// need to remove the code duplication below by having a single object that gets bound to
+		// either the robot or RatioFilePlayer
+		
 		// for live or replayed prediction events
 		DifficultyRobot.getInstance().addStatusListener(this);
 		DifficultyRobot.getInstance().addPluginEventEventListener(this);
 		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
 		DifficultyRobot.getInstance().addWebLinkListener(this);
+		DifficultyRobot.getInstance().addBarrierListener(this);
 		
 		// for rati file relay
 		RatioFilePlayerFactory.getSingleton().addStatusListener(this);
 		RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);
 		RatioFilePlayerFactory.getSingleton().addRatioFeaturesListener(this);
 		RatioFilePlayerFactory.getSingleton().addWebLinkListener(this);
+		RatioFilePlayerFactory.getSingleton().addBarrierListener(this);
 
 		
 //		ratioCalculator = APercentageCalculator.getInstance();
@@ -89,25 +94,33 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	public void reset() {
 		aggregatedStatus = StatusConsts.INDETERMINATE;
 		oldAggregateStatus = StatusConsts.INDETERMINATE;
+		setBarrier("");
 		features.clear();
 		predictions.clear();
 		commandsBuffer.setLength(0);
 		ratiosBuffer.setLength(0);
-		predictionsBuffer.setLength(0);		
+		predictionsBuffer.setLength(0);	
 	}
 	public static String toString(DifficulyStatusCommand aCommand) {
 		if (aCommand.getStatus() == null)
 			return "";
 		return aCommand.getStatus().toString();		
 	}
+	
+	protected void setManualStatus(String newValue) {
+		String oldStatus = manualStatus;
+		manualStatus = newValue;
+		propertyChangeSupport.firePropertyChange("Corrected Status", oldStatus, manualStatus);
+	}
 
 	@Override
     @Visible(false)
 	public void newCommand(ICommand newCommand) {
 		if (newCommand instanceof DifficulyStatusCommand) {
-			String oldStatus = manualStatus;
-			manualStatus = toString((DifficulyStatusCommand) newCommand);
-			propertyChangeSupport.firePropertyChange("Corrected Status", oldStatus, manualStatus);
+			setManualStatus(toString((DifficulyStatusCommand) newCommand));
+//			String oldStatus = manualStatus;
+//			manualStatus = toString((DifficulyStatusCommand) newCommand);
+//			propertyChangeSupport.firePropertyChange("Corrected Status", oldStatus, manualStatus);
 
 		} else {
 		maybeClearNonAggregatedStatus();
@@ -175,6 +188,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		predictionsBuffer.setLength(0);
 		ratiosBuffer.setLength(0);
 		commandsBuffer.setLength(0);
+		setManualStatus("");
+		setBarrier("");;
 		clearWebLinks();
 		
 	}
@@ -210,12 +225,14 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		commandsBuffer.append("\n");
 		ratiosBuffer.append(newVal + "\n");
 		propertyChangeSupport.firePropertyChange("Ratios", "", ratiosBuffer.toString());
+//		setManualStatus("");
+//		setBarrier("");
 
 	}
 	@Row(0)
 	@Override
-	public String getBarrier() {
-		return barrier;
+	public String getManualBarrier() {
+		return manualBarrier;
 	}
 	@Row(1)
 	@Override
@@ -290,7 +307,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //	public void setWebURL(String webURL) {
 //		this.webURL = webURL;
 //	}
-	@Row(5)
+	@Row(6)
 	@PreferredWidgetClass(JTextArea.class)
 	@ComponentHeight(200)
 	public String getSegment() {
@@ -342,10 +359,18 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	}
 	@Override
 	public void newBarrier(String newValue) {
-		String oldValue = barrier;
-		barrier = newValue;
+		setBarrier(newValue);
+//		String oldValue = manualBarrier;
+//		manualBarrier = newValue;
+//		propertyChangeSupport.firePropertyChange("barrier", oldValue, newValue);		
+	}
+	
+	 void setBarrier(String newValue) {
+		String oldValue = manualBarrier;
+		manualBarrier = newValue;
 		propertyChangeSupport.firePropertyChange("barrier", oldValue, newValue);		
 	}
+	
 	
 	
 //	@Override

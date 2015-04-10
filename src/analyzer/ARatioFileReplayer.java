@@ -131,7 +131,7 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 		// we did not record incremental status
 		notifyNewAggregateStatus(newStatus);
 		notifyNewWebLinks(aRatioFileComponents.getWebLinkList()); // will be erased at next agrregated status, must be before ag
-
+		notifyNewBarrier(aRatioFileComponents.getDifficultyType());
 	}
 		
 

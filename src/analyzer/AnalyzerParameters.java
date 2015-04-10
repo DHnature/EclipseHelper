@@ -52,6 +52,8 @@ public interface AnalyzerParameters extends PropertyListenerRegistrar {
 	//		return instance;
 	//	}
 
+	void visualizePredictions();
+
 //	String getCurrentParticipant();
 //
 //	void setCurrentParticipant(String currentParticipant);

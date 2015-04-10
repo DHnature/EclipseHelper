@@ -197,11 +197,12 @@ public class AnAnalyzerParameters implements AnalyzerParameters  {
 	 * @see analyzer.AnalyzerParameters#isVisualizePrediction()
 	 */
 	
-	public boolean preVisualizePredictions() {
+	protected boolean preVisualizePredictions() {
 		return !isVisualizePrediction();
 	}
 	@Row(1)
 	@Column(2)
+	@Override
 	public void visualizePredictions() {
 //		PredictorConfigurer.visualizePrediction();
 		APredictionController.createUI();

@@ -18,7 +18,7 @@ public interface MultiLevelAggregator extends
 
 //	void setManualStatus(String newVal);
 
-	String getBarrier();
+	String getManualBarrier();
 
 //	void setBarrier(String newVal);
 
