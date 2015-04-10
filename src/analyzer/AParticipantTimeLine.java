@@ -225,6 +225,38 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 		}
 		return -1;
 	}
+	@Override
+	public int getActualDifficultyBefore(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex -1; aDifficultyIndex >= 0; aDifficultyIndex--) {
+			if (predictionCorrections.get(aDifficultyIndex) == DIFFICULTY_INT) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	@Override
+	public int getActualDifficultyAfter(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex + 1; aDifficultyIndex < predictionList.size(); aDifficultyIndex++) {
+			if (predictionCorrections.get(aDifficultyIndex) == DIFFICULTY_INT) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	@Override
+	public int getBarrierBefore(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex -1; aDifficultyIndex >= 0; aDifficultyIndex--) {
+			if (stuckPoint.get(aDifficultyIndex).getType() != null && !stuckPoint.get(aDifficultyIndex).getType().isEmpty()) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	@Override
+	public int getBarrierAfter(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex + 1; aDifficultyIndex < stuckPoint.size(); aDifficultyIndex++) {
+			if (stuckPoint.get(aDifficultyIndex).getType() != null && !stuckPoint.get(aDifficultyIndex).getType().isEmpty()) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
 	
 	public List<StuckInterval> getStuckInterval() {
 		return stuckInterval;
@@ -261,12 +293,8 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 			aStringBuffer.append(predictionCorrections.get(index) + ", ");
 			aStringBuffer.append((stuckInterval.get(index)==null? ", ":stuckInterval.get(index).toText())+", ");
 			aStringBuffer.append((stuckPoint.get(index)==null? "":stuckPoint.get(index).toText())+", ");
-			aStringBuffer.append(webLinks.get(index) + "\n"); 
-			
-	
-			
-			//test if null first
-			
+			aStringBuffer.append(webLinks.get(index) + "\n"); 			
+			//test if null first			
 		}
 		return aStringBuffer;
 		
