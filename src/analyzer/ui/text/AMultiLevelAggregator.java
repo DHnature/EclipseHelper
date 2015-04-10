@@ -82,7 +82,9 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		
 //		ratioCalculator = APercentageCalculator.getInstance();
 		ratioCalculator = RatioCalculatorSelector.getRatioFeatures();
-		webLinks.add(new ALabelBeanModel(Common.toBlueColoredUnderlinedHrefHTML("https://www.google.com", "google")));
+//		webLinks.add(new ALabelBeanModel(Common.toBlueColoredUnderlinedHrefHTML("https://www.google.com", "google")));
+		webLinks.add(new ALabelBeanModel(""));
+
 		numWebLinks = 0;
 		propertyChangeSupport = new PropertyChangeSupport(this);
 
@@ -100,6 +102,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		commandsBuffer.setLength(0);
 		ratiosBuffer.setLength(0);
 		predictionsBuffer.setLength(0);	
+		clearWebLinks();
 	}
 	public static String toString(DifficulyStatusCommand aCommand) {
 		if (aCommand.getStatus() == null)

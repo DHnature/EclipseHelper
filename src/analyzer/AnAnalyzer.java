@@ -1,4 +1,6 @@
 package analyzer;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -90,12 +92,14 @@ public class AnAnalyzer implements Analyzer  {
 	//	protected BlockingQueue<ICommand> pendingPredictionCommands;
 	DifficultyPredictionPluginEventProcessor difficultyEventProcessor;
 	List<AnalyzerListener> listeners = new ArrayList();
+	PropertyChangeSupport propertyChangeSupport;
 //	int currentParticipant = -1;
 
 	//	boolean newRatioFiles;
 
 
 	public AnAnalyzer() {
+		propertyChangeSupport = new PropertyChangeSupport(this);
 		DifficultyPredictionSettings.setReplayMode(true);
 		DifficultyPredictionSettings.setSegmentLength(SEGMENT_LENGTH);
 
@@ -106,6 +110,10 @@ public class AnAnalyzer implements Analyzer  {
 		parameters.getParticipants().addChoice(ALL_PARTICIPANTS);
 		parameters.getParticipants().setValue(ALL_PARTICIPANTS);
 
+	}
+	void notifyPre() {
+		propertyChangeSupport.
+		firePropertyChange("this", null, this);
 	}
 	/* (non-Javadoc)
 	 * @see analyzer.Analyzer#getParticipantsFolder()
@@ -130,6 +138,7 @@ public class AnAnalyzer implements Analyzer  {
 	@Visible(false)
 	public void setParticipantsFolderName(String aName) {
 		participantsFolder.setText(aName);
+		notifyPre();
 	}
 	boolean directoryLoaded;
 	/* (non-Javadoc)
@@ -165,7 +174,8 @@ public class AnAnalyzer implements Analyzer  {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		directoryLoaded = true;		
+		directoryLoaded = true;	
+		notifyPre();
 	}
 	/* (non-Javadoc)
 	 * @see analyzer.Analyzer#preLoadLogs()
@@ -774,6 +784,11 @@ public class AnAnalyzer implements Analyzer  {
 		OEFrame frame = ObjectEditor.edit(AnAnalyzer.getInstance());
 		frame.setSize(500, 250);
 
+	}
+	@Override
+	public void addPropertyChangeListener(PropertyChangeListener arg0) {
+		propertyChangeSupport.addPropertyChangeListener(arg0);
+		
 	}
 
 }

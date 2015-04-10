@@ -37,7 +37,14 @@ public class AFileReplayAnalyzerProcessor extends ALiveAnalyzerProcessor{
 		participantTimeLine.getWebLinks().add(aRatioFeatures.getWebLinkList());
 		if (! (aRatioFeatures.getPredictedStatus() != aRatioFeatures.getActualStatus())) {
 			participantTimeLine.getPredictionCorrections().add(aRatioFeatures.getActualStatus()) ;
-		}		
+		}
+		String type = aRatioFeatures.getDifficultyType();
+		if (!(type != null || type.isEmpty())) {
+			StuckPoint aStuckPoint = new AStuckPoint();
+			aStuckPoint.setType(type);		
+			participantTimeLine.getStuckPoint().add(aStuckPoint);
+		}
+		
 		System.err.println("Extension**New Ratios:" + newVal + " at time:" + (new Date(currentTime)).toString());		
 	}
 
