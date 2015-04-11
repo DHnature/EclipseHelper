@@ -10,7 +10,12 @@ public interface ParticipantTimeLine {
 	int PROGRESS_INT = 0;
 	int DIFFICULTY_INT = 1;
 	int SURMOUNTABLE_INT = 1;
-	int INSURMOUNTABLE_INT = 1;
+	int INSURMOUNTABLE_INT = 2;
+	String INDTERMINATE_STRING = "Indeterminate";
+	String PROGRESS_STRING = "Progress";
+	String DIFFICULTY_STRING = "YES";
+	String SURMOUNTABLE_STRING  = "Surmountable";
+	String INSURMOUNTABLE_STRING = "Insurmountable";
 	
 	public List<Double> getEditList();
 	

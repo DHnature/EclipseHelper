@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import util.annotations.Visible;
+import analyzer.WebLink;
 import analyzer.ui.GeneralizedPlayAndRewindCounter;
 import analyzer.ui.SessionPlayerFactory;
 import analyzer.ui.graphics.PlayAndRewindCounter;
@@ -22,6 +23,12 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	protected List<RatioFeatures> allFeatures = new ArrayList();
 	protected List<String> allPredictions = new ArrayList();
 	protected List<String> allAggregatedStatuses = new ArrayList();
+	// this stuff can be taken from participant time line
+	protected List<String> allManualStatuses = new ArrayList();
+	protected List<String> allBarriers = new ArrayList();
+	protected List<List<WebLink>> allWebLinks = new ArrayList();
+
+
 	protected int nextFeatureIndex; // does not change during replay
 //	protected int previousAggregatedIndex;
 //	protected int currentAggregatedStatus;
@@ -78,6 +85,48 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 
 				
 	}
+	@Override
+	@Visible(false)
+	public void newManualStatus(String aStatus) {
+//		if (!isPlayBack()) {
+		   allManualStatuses.set(nextFeatureIndex - 1, aStatus); // next feature index was bumpted by new feature
+//		   allAggregatedStatuses.add(null);
+//		   if (lastFeatureIndex == 0)
+//			  allAggregatedStatuses.add(StatusConsts.INDETERMINATE);
+//		   else
+//			allAggregatedStatuses.add(allAggregatedStatuses.get(lastFeatureIndex - 1));
+//		} else {
+		if (!isPlayBack()) {
+			super.newManualStatus(aStatus); 
+//			propagatePre(); // to reset back and forward
+		}
+		propagatePre(); // to reset back and forward
+
+				
+	}
+	@Override
+	@Visible(false)
+	public void newBarrier(String aStatus) {
+		   allBarriers.set(nextFeatureIndex - 1, aStatus); // next feature index was bumpted by new feature
+
+		if (!isPlayBack()) {
+			super.newBarrier(aStatus); 
+		}
+		propagatePre(); // to reset back and forward				
+	}
+	
+	@Override
+	@Visible(false)
+	public void newWebLinks(List<WebLink> aWebLinks) {
+		if (aWebLinks == null | aWebLinks.size() == 0)
+		   allWebLinks.set(nextFeatureIndex - 1, aWebLinks); // next feature index was bumpted by new feature
+
+		if (!isPlayBack()) {
+			super.newWebLinks(aWebLinks); 
+		}
+		propagatePre(); // to reset back and forward				
+	}
+	
     void propagatePre() {
 		propertyChangeSupport.firePropertyChange("this", null, this);
     }
@@ -85,7 +134,10 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 		allFeatures.add(null);
 		allCommands.add(new ArrayList());
 		allPredictions.add(null);
-		allAggregatedStatuses.add(null);		
+		allAggregatedStatuses.add(null);
+		allManualStatuses.add(null);
+		allBarriers.add(null);
+		allWebLinks.add(null);
 	}
 	
 	@Override
@@ -179,6 +231,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 			super.newStatus(allPredictions.get(featureIndex));
 			if (allAggregatedStatuses.get(featureIndex) != null)
 				super.newAggregatedStatus (allAggregatedStatuses.get(featureIndex));
+			super.newManualStatus(allManualStatuses.get(featureIndex));
 		}
 		unsuppressNotifications();
 	}

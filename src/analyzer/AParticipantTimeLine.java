@@ -299,6 +299,30 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 		return aStringBuffer;
 		
 	}
+	
+
+	public static String statusIntToString(int anIntStatus) {
+		switch (anIntStatus) {
+		case ParticipantTimeLine.INSURMOUNTABLE_INT: return ParticipantTimeLine.INSURMOUNTABLE_STRING;
+		case	ParticipantTimeLine.SURMOUNTABLE_INT: return ParticipantTimeLine.SURMOUNTABLE_STRING;
+		case ParticipantTimeLine.PROGRESS_INT: return ParticipantTimeLine.PROGRESS_STRING;
+		case ParticipantTimeLine.INDTERMINATE_INT: return ParticipantTimeLine.INDTERMINATE_STRING;
+		default: return ParticipantTimeLine.INDTERMINATE_STRING;
+
+		
+		}
+		
+	}
+	
+	public static String manualStatusIntToString(int anIntStatus) {
+		if (anIntStatus == INDTERMINATE_INT)
+			return "";
+		else return statusIntToString(anIntStatus);
+
+		
+		
+		
+	}
 
 	
 	

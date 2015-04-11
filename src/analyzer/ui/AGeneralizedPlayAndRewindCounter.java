@@ -71,34 +71,67 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 		playBack = true;
 		setCurrentFeatureIndex(nextFeatureIndex - 1);
 	}
-	int previousDifficulty;
-	public boolean prePreviousDifficulty() {
-		previousDifficulty = AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getDifficultyPredictionBefore(getCurrentTime());
-		return previousDifficulty >= 0;
+	int previousPredictedDifficulty;
+	public boolean prePreviousPredictedDifficulty() {
+		previousPredictedDifficulty = AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getDifficultyPredictionBefore(getCurrentTime());
+		return previousPredictedDifficulty >= 0;
 	}
 	@Row(1)
 	@Column(3)
 	@ComponentWidth(100)
-	public void previousDifficulty() {
-		if (!prePreviousDifficulty())
+	public void previousPredictedDifficulty() {
+		if (!prePreviousPredictedDifficulty())
 			return;
 		playBack = true;
-		setCurrentFeatureIndex(previousDifficulty);		
+		setCurrentFeatureIndex(previousPredictedDifficulty);		
 	}
-	int nextDifficulty;
-	public boolean preNextDifficulty() {
-		nextDifficulty = AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getDifficultyPredictionAfter(getCurrentTime());
-		return nextDifficulty >= 0;
+	int nextPredictedDifficulty;
+	public boolean preNextPredictedDifficulty() {
+		nextPredictedDifficulty = AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getDifficultyPredictionAfter(getCurrentTime());
+		return nextPredictedDifficulty >= 0;
 	}
 	@Row(1)
 	@Column(4)
 	@ComponentWidth(100)
-	public void nextDifficulty() {
-		if (!preNextDifficulty())
+	public void nextPredictedDifficulty() {
+		if (!preNextPredictedDifficulty())
 			return;
 		playBack = true;
-		setCurrentFeatureIndex(nextDifficulty);		
+		setCurrentFeatureIndex(nextPredictedDifficulty);		
 	}
+	
+	int previousActualDifficulty;
+	public boolean prePreviousActualDifficulty() {
+		previousActualDifficulty = AnalyzerProcessorFactory.getSingleton().
+				getParticipantTimeLine().
+				getActualDifficultyBefore(getCurrentTime());
+		return previousActualDifficulty >= 0;
+	}
+	@Row(2)
+	@Column(0)
+	@ComponentWidth(100)
+	public void previousActualDifficulty() {
+		if (!prePreviousActualDifficulty())
+			return;
+		playBack = true;
+		setCurrentFeatureIndex(previousActualDifficulty);		
+	}
+	int nextActualDifficulty;
+	public boolean preNextActualDifficulty() {
+		nextActualDifficulty = AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getActualDifficultyAfter(getCurrentTime());
+		return nextActualDifficulty >= 0;
+	}
+	@Row(2)
+	@Column(1)
+	@ComponentWidth(100)
+	public void nextActualDifficulty() {
+		if (!preNextActualDifficulty())
+			return;
+		playBack = true;
+		setCurrentFeatureIndex(nextActualDifficulty);		
+	}
+	
+	
 	
 	@Visible(false)
 	public int getNextFeatureIndex() {

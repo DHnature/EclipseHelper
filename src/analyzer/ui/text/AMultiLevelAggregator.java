@@ -21,6 +21,7 @@ import util.models.ALabelBeanModel;
 import util.models.AListenableVector;
 import util.models.LabelBeanModel;
 import analyzer.AWebLink;
+import analyzer.AnalyzerFactory;
 import analyzer.ParticipantTimeLine;
 import analyzer.RatioFilePlayerFactory;
 import analyzer.WebLink;
@@ -113,17 +114,20 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	protected void setManualStatus(String newValue) {
 		String oldStatus = manualStatus;
 		manualStatus = newValue;
-		propertyChangeSupport.firePropertyChange("Corrected Status", oldStatus, manualStatus);
+		propertyChangeSupport.firePropertyChange("Manual Status", oldStatus, manualStatus);
 	}
 
 	@Override
     @Visible(false)
 	public void newCommand(ICommand newCommand) {
 		if (newCommand instanceof DifficulyStatusCommand) {
+			if (!AnalyzerFactory.getSingleton().getAnalyzerParameters().isReplayOutputFiles()) {
+		
 			setManualStatus(toString((DifficulyStatusCommand) newCommand));
 //			String oldStatus = manualStatus;
 //			manualStatus = toString((DifficulyStatusCommand) newCommand);
 //			propertyChangeSupport.firePropertyChange("Corrected Status", oldStatus, manualStatus);
+			}
 
 		} else {
 		maybeClearNonAggregatedStatus();
@@ -131,6 +135,11 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		commandsBuffer.append(toClassifiedString(newCommand) + "\n");
 		propertyChangeSupport.firePropertyChange("Segment", "", commandsBuffer.toString());
 		}	
+	}
+
+	@Override
+	public void newManualStatus(String newValue) {
+		setManualStatus(newValue);
 	}
 
 	@Override
@@ -191,8 +200,10 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		predictionsBuffer.setLength(0);
 		ratiosBuffer.setLength(0);
 		commandsBuffer.setLength(0);
+		if (!AnalyzerFactory.getSingleton().getAnalyzerParameters().isReplayOutputFiles()) {
 		setManualStatus("");
-		setBarrier("");;
+		setBarrier("");
+		}
 		clearWebLinks();
 		
 	}
@@ -338,8 +349,17 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 			webLinks.get(numWebLinks).setText(aWebLink.getClickableLink().getText());
 		} else {
 			webLinks.add(new ALabelBeanModel(aWebLink.getClickableLink().getText()));
-		}
-		
+		}		
+	}
+	
+	
+	@Override
+	public void newWebLinks(List<WebLink> aWebLinks) {	
+		if (aWebLinks == null || aWebLinks.isEmpty())
+			return;
+		for (WebLink aWebLink:aWebLinks) {
+		   newWebLink(aWebLink);
+	    }	
 	}
 	
 	public static void createUI() {
@@ -387,6 +407,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //		ObjectEditor.edit(AMultiLevelAggregator.getInstance());
 		createUI();
 	}
+
+
 
 
 	

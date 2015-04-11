@@ -118,6 +118,7 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 //		return flattenedCommandsList.size() - 1;
 	}
 	
+	
 	/* (non-Javadoc)
 	 * @see analyzer.RatioFilePlayer#fireRatioFileComponents(analyzer.ui.graphics.RatioFileComponents)
 	 */
@@ -132,6 +133,8 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 		notifyNewAggregateStatus(newStatus);
 		notifyNewWebLinks(aRatioFileComponents.getWebLinkList()); // will be erased at next agrregated status, must be before ag
 		notifyNewBarrier(aRatioFileComponents.getDifficultyType());
+		notifyNewManualStatus(AParticipantTimeLine.
+				manualStatusIntToString(aRatioFileComponents.getActualStatus()));
 	}
 		
 

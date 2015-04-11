@@ -212,4 +212,10 @@ public class AStatusBar extends JPanel implements StatusBar {
 		predictedList.set(predictedList.size() - 1, aStatus);
 
 	}
+
+	@Override
+	public void newManualStatus(String aStatus) {
+		// TODO Auto-generated method stub
+		
+	}
 }

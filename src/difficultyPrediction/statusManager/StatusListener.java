@@ -5,5 +5,6 @@ public interface StatusListener {
 	void newAggregatedStatus(String aStatus);
 	void newStatus(int aStatus);
 	void newAggregatedStatus(int aStatus);
+	void newManualStatus(String aStatus);
 
 }

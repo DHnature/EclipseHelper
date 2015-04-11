@@ -35,9 +35,9 @@ public class AFileReplayAnalyzerProcessor extends ALiveAnalyzerProcessor{
 		participantTimeLine.getNavigationList().add(aRatioFeatures.getNavigationRatio());
 		participantTimeLine.getPredictions().add(aRatioFeatures.getPredictedStatus());
 		participantTimeLine.getWebLinks().add(aRatioFeatures.getWebLinkList());
-		if (! (aRatioFeatures.getPredictedStatus() != aRatioFeatures.getActualStatus())) {
+//		if (! (aRatioFeatures.getPredictedStatus() != aRatioFeatures.getActualStatus())) {
 			participantTimeLine.getPredictionCorrections().add(aRatioFeatures.getActualStatus()) ;
-		}
+//		}
 		String type = aRatioFeatures.getDifficultyType();
 		if (!(type != null || type.isEmpty())) {
 			StuckPoint aStuckPoint = new AStuckPoint();

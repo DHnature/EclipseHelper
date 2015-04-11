@@ -303,11 +303,18 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 			aListener.newStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
 		}
 	}
+	
+	public void  notifyNewManualStatus(String aStatus) {
+		for (StatusListener aListener:statusListeners) {
+			aListener.newManualStatus(aStatus);
+		}
+	}
 	public void  notifyNewWebLinks(List<WebLink> aWebLinks) {
 		for (WebLinkListener aListener:webLinkListeners) {
-			for (WebLink aWebLink:aWebLinks) {
-				aListener.newWebLink(aWebLink);
-			}
+//			for (WebLink aWebLink:aWebLinks) {
+//				aListener.newWebLink(aWebLink);
+//			}
+			aListener.newWebLinks(aWebLinks);
 		}
 	}
 	
