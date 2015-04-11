@@ -83,5 +83,9 @@ public interface ParticipantTimeLine {
 
 	int getBarrierAfter(int aCurrentIndex);
 
+	int getWebLinksBefore(int aCurrentIndex);
+
+	int getWebLinksAfter(int aCurrentIndex);
+
 	
 }

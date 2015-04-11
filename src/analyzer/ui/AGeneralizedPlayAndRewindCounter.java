@@ -78,7 +78,7 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	}
 	@Row(1)
 	@Column(3)
-	@ComponentWidth(100)
+	@ComponentWidth(150)
 	public void previousPredictedDifficulty() {
 		if (!prePreviousPredictedDifficulty())
 			return;
@@ -92,7 +92,7 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	}
 	@Row(1)
 	@Column(4)
-	@ComponentWidth(100)
+	@ComponentWidth(150)
 	public void nextPredictedDifficulty() {
 		if (!preNextPredictedDifficulty())
 			return;
@@ -107,9 +107,9 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 				getActualDifficultyBefore(getCurrentTime());
 		return previousActualDifficulty >= 0;
 	}
-	@Row(2)
-	@Column(0)
-	@ComponentWidth(100)
+	@Row(1)
+	@Column(5)
+	@ComponentWidth(150)
 	public void previousActualDifficulty() {
 		if (!prePreviousActualDifficulty())
 			return;
@@ -121,9 +121,9 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 		nextActualDifficulty = AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getActualDifficultyAfter(getCurrentTime());
 		return nextActualDifficulty >= 0;
 	}
-	@Row(2)
-	@Column(1)
-	@ComponentWidth(100)
+	@Row(1)
+	@Column(6)
+	@ComponentWidth(150)
 	public void nextActualDifficulty() {
 		if (!preNextActualDifficulty())
 			return;
@@ -131,7 +131,73 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 		setCurrentFeatureIndex(nextActualDifficulty);		
 	}
 	
+/////
+	int previousBarrier;
+	public boolean prePreviousBarrier() {
+		previousBarrier = AnalyzerProcessorFactory.getSingleton().
+				getParticipantTimeLine().
+				getBarrierBefore(getCurrentTime());
+		return previousBarrier >= 0;
+	}
+	@Row(2)
+	@Column(0)
+	@ComponentWidth(150)
+	public void previousBarrier() {
+		if (!prePreviousBarrier())
+			return;
+		playBack = true;
+		setCurrentFeatureIndex(previousBarrier);		
+	}
+	int nextBarrier;
+	public boolean preNextBarrier() {
+		nextBarrier = AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getBarrierAfter(getCurrentTime());
+		return nextBarrier >= 0;
+	}
+	@Row(2)
+	@Column(1)
+	@ComponentWidth(150)
+	public void nextBarrier() {
+		if (!preNextBarrier())
+			return;
+		playBack = true;
+		setCurrentFeatureIndex(nextBarrier);		
+	}
 	
+	
+////	
+	int previousWebLinks;
+	public boolean prePreviousWebLinks() {
+		previousWebLinks = AnalyzerProcessorFactory.getSingleton().
+				getParticipantTimeLine().
+				getWebLinksBefore(getCurrentTime());
+		return previousWebLinks >= 0;
+	}
+	@Row(2)
+	@Column(2)
+	@ComponentWidth(150)
+	@Override
+	public void previousWebLinks() {
+		if (!prePreviousWebLinks())
+			return;
+		playBack = true;
+		setCurrentFeatureIndex(previousWebLinks);		
+	}
+	int nextWebLinks;
+	@Override
+	public boolean preNextWebLinks() {
+		nextWebLinks = AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getWebLinksAfter(getCurrentTime());
+		return nextWebLinks >= 0;
+	}
+	@Row(2)
+	@Column(3)
+	@ComponentWidth(150)
+	@Override
+	public void nextWebLinks() {
+		if (!preNextWebLinks())
+			return;
+		playBack = true;
+		setCurrentFeatureIndex(nextWebLinks);		
+	}
 	
 	@Visible(false)
 	public int getNextFeatureIndex() {

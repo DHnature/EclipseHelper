@@ -257,7 +257,22 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 		}
 		return -1;
 	}
-	
+	@Override
+	public int getWebLinksBefore(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex -1; aDifficultyIndex >= 0; aDifficultyIndex--) {
+			if (webLinks.get(aDifficultyIndex) != null && !webLinks.get(aDifficultyIndex).isEmpty()) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	@Override
+	public int getWebLinksAfter(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex + 1; aDifficultyIndex < webLinks.size(); aDifficultyIndex++) {
+			if (webLinks.get(aDifficultyIndex) != null && !webLinks.get(aDifficultyIndex).isEmpty()) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
 	public List<StuckInterval> getStuckInterval() {
 		return stuckInterval;
 	}

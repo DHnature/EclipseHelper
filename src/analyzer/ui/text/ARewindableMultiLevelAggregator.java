@@ -118,7 +118,8 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	@Override
 	@Visible(false)
 	public void newWebLinks(List<WebLink> aWebLinks) {
-		if (aWebLinks == null | aWebLinks.size() == 0)
+		if (aWebLinks == null | aWebLinks.isEmpty())
+			return;
 		   allWebLinks.set(nextFeatureIndex - 1, aWebLinks); // next feature index was bumpted by new feature
 
 		if (!isPlayBack()) {
@@ -232,6 +233,8 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 			if (allAggregatedStatuses.get(featureIndex) != null)
 				super.newAggregatedStatus (allAggregatedStatuses.get(featureIndex));
 			super.newManualStatus(allManualStatuses.get(featureIndex));
+			super.newBarrier(allBarriers.get(featureIndex));
+			super.newWebLinks(allWebLinks.get(featureIndex));
 		}
 		unsuppressNotifications();
 	}
