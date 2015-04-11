@@ -27,7 +27,7 @@ import difficultyPrediction.PredictionParameters;
 @StructurePattern(StructurePatternNames.BEAN_PATTERN)
 // there should really be a has-a relationship between the two
 public class AnAnalyzerParameters implements AnalyzerParameters  {
-	PropertyChangeSupport propertyChangeSupport;
+	PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 	static PredictionParameters instance;
 
 	DynamicEnum<String> participants;
@@ -40,7 +40,7 @@ public class AnAnalyzerParameters implements AnalyzerParameters  {
 	
 	public AnAnalyzerParameters(List<String> aParticipants) {
 		participants = new ADynamicEnum(aParticipants);
-		propertyChangeSupport = new PropertyChangeSupport(this);
+//		propertyChangeSupport = new PropertyChangeSupport(this);
 		
 	}
 	public AnAnalyzerParameters(String[] aParticipants) {
