@@ -226,9 +226,9 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 		return -1;
 	}
 	@Override
-	public int getActualDifficultyBefore(int aCurrentIndex) {
+	public int getDifficultyCorrectionBefore(int aCurrentIndex) {
 		for (int aDifficultyIndex = aCurrentIndex -1; aDifficultyIndex >= 0; aDifficultyIndex--) {
-			if (predictionCorrections.get(aDifficultyIndex) == DIFFICULTY_INT) 
+			if (predictionCorrections.get(aDifficultyIndex) != INDTERMINATE_INT) 
 				return aDifficultyIndex;
 		}
 		return -1;
@@ -236,7 +236,9 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 	@Override
 	public int getActualDifficultyAfter(int aCurrentIndex) {
 		for (int aDifficultyIndex = aCurrentIndex + 1; aDifficultyIndex < predictionList.size(); aDifficultyIndex++) {
-			if (predictionCorrections.get(aDifficultyIndex) == DIFFICULTY_INT) 
+//			if (predictionCorrections.get(aDifficultyIndex) == DIFFICULTY_INT) 
+			if (predictionCorrections.get(aDifficultyIndex) != INDTERMINATE_INT) 
+
 				return aDifficultyIndex;
 		}
 		return -1;

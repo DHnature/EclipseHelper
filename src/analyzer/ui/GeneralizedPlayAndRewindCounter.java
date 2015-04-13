@@ -16,8 +16,8 @@ public interface GeneralizedPlayAndRewindCounter extends PlayAndRewindCounter {
 	public long getCurrentWallTime();
 	public void nextPredictedDifficulty();
 	public void previousPredictedDifficulty();
-	public void nextActualDifficulty();
-	public void previousActualDifficulty();
+	public void nextDifficultyCorrection();
+	public void previousDifficultyCorrection();
 	
 	public void nextBarrier();
 	public void previousBarrier();

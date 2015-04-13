@@ -108,35 +108,35 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 		setCurrentFormattedWallTime();
 	}
 	
-	int previousActualDifficulty;
-	public boolean prePreviousActualDifficulty() {
-		previousActualDifficulty = AnalyzerProcessorFactory.getSingleton().
+	int previousDifficultyCorrection;
+	public boolean prePreviousDifficultyCorrection() {
+		previousDifficultyCorrection = AnalyzerProcessorFactory.getSingleton().
 				getParticipantTimeLine().
-				getActualDifficultyBefore(getCurrentTime());
-		return previousActualDifficulty >= 0;
+				getDifficultyCorrectionBefore(getCurrentTime());
+		return previousDifficultyCorrection >= 0;
 	}
 	@Row(1)
 	@Column(5)
 	@ComponentWidth(150)
-	public void previousActualDifficulty() {
-		if (!prePreviousActualDifficulty())
+	public void previousDifficultyCorrection() {
+		if (!prePreviousDifficultyCorrection())
 			return;
 		playBack = true;
-		setCurrentFeatureIndex(previousActualDifficulty);		
+		setCurrentFeatureIndex(previousDifficultyCorrection);		
 	}
-	int nextActualDifficulty;
-	public boolean preNextActualDifficulty() {
-		nextActualDifficulty = AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getActualDifficultyAfter(getCurrentTime());
-		return nextActualDifficulty >= 0;
+	int nextDifficultyCorrection;
+	public boolean preNextDifficultyCorrection() {
+		nextDifficultyCorrection = AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getActualDifficultyAfter(getCurrentTime());
+		return nextDifficultyCorrection >= 0;
 	}
 	@Row(1)
 	@Column(6)
 	@ComponentWidth(150)
-	public void nextActualDifficulty() {
-		if (!preNextActualDifficulty())
+	public void nextDifficultyCorrection() {
+		if (!preNextDifficultyCorrection())
 			return;
 		playBack = true;
-		setCurrentFeatureIndex(nextActualDifficulty);		
+		setCurrentFeatureIndex(nextDifficultyCorrection);		
 	}
 	
 /////
@@ -249,10 +249,15 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	@Override
 	@Visible(false)
 	public long getCurrentWallTime() {
-		if ((getCurrentTime() < 0 || AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine() == null) ||			
-		   getCurrentTime() >= AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getTimeStampList().size())
+		if ( AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine() == null)
+				return 0;
+		// we do not know in which order currentimes are updated in listeners of ratio file replayer
+		int aCurrentTime = Math.min(getCurrentTime(),  AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().
+			   	getTimeStampList().size( ) - 1);
+		if (aCurrentTime < 0)
 			return 0;
-		return AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getTimeStampList().get(getCurrentTime());
+		;
+		return AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getTimeStampList().get(aCurrentTime);
 	}
 	 
 	@Override

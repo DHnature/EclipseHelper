@@ -75,7 +75,7 @@ public interface ParticipantTimeLine {
 	
 	public int getDifficultyPredictionAfter(int aCurrentIndex) ;
 
-	int getActualDifficultyBefore(int aCurrentIndex);
+	int getDifficultyCorrectionBefore(int aCurrentIndex);
 
 	int getActualDifficultyAfter(int aCurrentIndex);
 
