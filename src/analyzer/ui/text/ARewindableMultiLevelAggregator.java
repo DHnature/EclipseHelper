@@ -53,6 +53,8 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 		currentFeatureIndex = 0;
 		nextFeatureIndex = 0;
 		playBack = false;
+		// this should really be done directly
+		player.live();
 		player.setNextFeatureIndex(nextFeatureIndex);
 //		player.setSize(size);
 		propertyChangeSupport.firePropertyChange("this", "", this);
