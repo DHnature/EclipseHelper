@@ -25,7 +25,9 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 	public ARatioFileReplayer() {
 		super("");
 		ratioFileReader = new ARatioFileReader();
-		timeStampComputer = new ATimeStampComputer();
+//		timeStampComputer = new ATimeStampComputer();
+		timeStampComputer = TimeStampComputerFactory.getSingleton();
+
 		flattenedCommandsList = new ArrayList();
 		ratioFileReader.addPropertyChangeListener(this);
 		// TODO Auto-generated constructor stub
@@ -91,12 +93,12 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 	
 	void fireCommands(long aTimeStamp) {
 
-		String aTimeStampString = AParticipantTimeLine.toDateString(aTimeStamp);
+		String aTimeStampString = ATimeStampComputer.toDateString(aTimeStamp);
 		System.out.println("ratio time stamp" + aTimeStampString);
 		for (int anIndex = nextStartCommandIndex; anIndex < flattenedCommandsList.size(); anIndex++) {
 			ICommand nextCommand = flattenedCommandsList.get(anIndex);
 			long aComputedTimeStamp = timeStampComputer.computeTimestamp(nextCommand);
-			String aComputedTimeStampString =  AParticipantTimeLine.toDateString( aComputedTimeStamp);
+			String aComputedTimeStampString =  ATimeStampComputer.toDateString( aComputedTimeStamp);
 			System.out.println(anIndex + " computed time stamp" + aComputedTimeStampString);
 
 //			String aCommandTimeStampString =  AParticipantTimeLine.toDateString( nextCommand.getTimestamp());

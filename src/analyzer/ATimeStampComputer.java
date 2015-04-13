@@ -1,5 +1,7 @@
 package analyzer;
 
+import org.joda.time.DateTime;
+
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 public class ATimeStampComputer implements TimeStampComputer {
@@ -20,6 +22,10 @@ public class ATimeStampComputer implements TimeStampComputer {
 		}
 		return aCommand.getTimestamp() + startTimeStamp;
 			
+	}
+	public static String toDateString(long aTimeStamp) {
+		DateTime dateTime = new DateTime(aTimeStamp);
+		return dateTime.toString("MM-dd-yyyy H:mm:ss");
 	}
 
 }

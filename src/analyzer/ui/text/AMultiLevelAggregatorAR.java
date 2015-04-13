@@ -14,8 +14,9 @@ public class AMultiLevelAggregatorAR implements ExecutableCommand{
 		ObjectEditor.setAttribute(AMultiLevelAggregator.class,  AttributeNames.STRETCHABLE_BY_PARENT, true);
 		ObjectEditor.setAttribute(AMultiLevelAggregator.class,  AttributeNames.LAYOUT, AttributeNames.GRID_BAG_LAYOUT);
 //		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "SegmentLength", AttributeNames.STRETCHABLE_BY_PARENT, false);
+
 		ObjectEditor.setPropertyAttribute(AMultiLevelAggregator.class, "WebLinks", AttributeNames.CONTAINER_WIDTH, 300);
-		ObjectEditor.setPropertyAttribute(AMultiLevelAggregator.class, "WebLinks", AttributeNames.CONTAINER_HEIGHT, 50);
+		ObjectEditor.setPropertyAttribute(AMultiLevelAggregator.class, "WebLinks", AttributeNames.CONTAINER_HEIGHT, 40);
 
 		ObjectEditor.setPropertyAttribute(AMultiLevelAggregator.class, "*", AttributeNames.LABEL_POSITION, AttributeNames.LABEL_IN_BORDER);
 //		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "DownloadFolder", AttributeNames.CONTAINER_BACKGROUND, Color.PINK);
@@ -23,6 +24,8 @@ public class AMultiLevelAggregatorAR implements ExecutableCommand{
 //		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "TextEditor", AttributeNames.LABEL_POSITION, AttributeNames.LABEL_IS_LEFT);
 //		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "Diff", AttributeNames.LABEL_POSITION, AttributeNames.LABEL_IS_LEFT);
 //		ObjectEditor.setPropertyAttribute(AMultiLevelAggregator.class, "Segment", AttributeNames.SCROLLED, true);			
+		ObjectEditor.setPropertyAttribute(AMultiLevelAggregator.class, "Segment", AttributeNames.SCROLLED, true);
+
 		ObjectEditor.setPropertyAttribute(AMultiLevelAggregator.class, "Segment", AttributeNames.COMPONENT_WIDTH, 650);
 //		ObjectEditor.setPropertyAttribute(AMainProjectStepper.class, "Transcript", AttributeNames.COMPONENT_HEIGHT, 240);
 		ObjectEditor.setPropertyAttribute(AMultiLevelAggregator.class, "Segment", AttributeNames.ADD_ANCHOR_CONSTRAINT, GridBagConstraints.PAGE_END);

@@ -285,10 +285,6 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 	public void setStuckPoint(List<StuckPoint> stuckPoint) {
 		this.stuckPoint = stuckPoint;
 	}
-	public static String toDateString(long aTimeStamp) {
-		DateTime dateTime = new DateTime(aTimeStamp);
-		return dateTime.toString("MM-dd-yyyy H:mm:ss");
-	}
 	@Override
 	public StringBuffer toText() {
 		StringBuffer aStringBuffer = new StringBuffer(4096);

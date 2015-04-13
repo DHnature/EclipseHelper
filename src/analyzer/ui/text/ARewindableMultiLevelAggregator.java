@@ -47,6 +47,18 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 		player = SessionPlayerFactory.getSingleton();
 		player.addPropertyChangeListener(this);
 	}
+	public void reset() {
+		super.reset();
+		currentAggregateStatus = StatusConsts.INDETERMINATE;
+		currentFeatureIndex = 0;
+		nextFeatureIndex = 0;
+		playBack = false;
+		player.setNextFeatureIndex(nextFeatureIndex);
+//		player.setSize(size);
+		propertyChangeSupport.firePropertyChange("this", "", this);
+	}
+	
+	
 //	@Row(0)
 	@Visible(false)
 	public PlayAndRewindCounter getPlayer() {

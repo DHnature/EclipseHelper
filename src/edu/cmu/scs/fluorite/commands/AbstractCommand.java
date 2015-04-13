@@ -229,4 +229,11 @@ public abstract class AbstractCommand implements
 		currentCommandID = -1;
 		fireCommandIndexChanged();
 	}
+	
+	public String toString() {		
+		return getCommandType() + " " + 
+					getName() + " " + 
+					(getDescription() != null? getDescription(): "") +  " " + 
+					getCategory();
+	}
 }

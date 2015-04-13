@@ -2,8 +2,10 @@ package analyzer.ui;
 
 import util.annotations.Column;
 import util.annotations.ComponentWidth;
+import util.annotations.Label;
 import util.annotations.Row;
 import util.annotations.Visible;
+import analyzer.ATimeStampComputer;
 import analyzer.ParticipantTimeLine;
 import analyzer.extension.AnalyzerProcessorFactory;
 import analyzer.extension.LiveAnalyzerProcessorFactory;
@@ -19,6 +21,7 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 //    ParticipantTimeLine liveParticipantTimeLine;
     long absoluteStartTime;
     @Override
+    @Visible(false)
 	public long getAbsoluteStartTime() {
 		return absoluteStartTime;
 	}
@@ -98,6 +101,11 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 			return;
 		playBack = true;
 		setCurrentFeatureIndex(nextPredictedDifficulty);		
+	}
+	
+	public void setCurrentFeatureIndex(int newVal) {
+		super.setCurrentFeatureIndex(newVal);
+		setCurrentFormattedWallTime();
 	}
 	
 	int previousActualDifficulty;
@@ -209,6 +217,11 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 		if (!isPlayBack())
 		setCurrentFeatureIndex(nextFeatureIndex -1);
 	}
+	@Visible(false)
+	public int getSize() {
+		return super.getSize();
+	}
+
 	
 	public boolean isPlayBack() {
 		return playBack;
@@ -223,12 +236,44 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	public static void main (String[] args) {
 		ObjectEditor.edit(new AGeneralizedPlayAndRewindCounter());
 	}
+	
+	@Row(0)
+	@Column(6)
+	@ComponentWidth(50)	
+	public int getCurrentTime() {
+		return super.getCurrentTime();
+	}
+	
+	
 
 	@Override
 	@Visible(false)
 	public long getCurrentWallTime() {
-		if (getCurrentTime() >= AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getTimeStampList().size())
+		if ((getCurrentTime() < 0 || AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine() == null) ||			
+		   getCurrentTime() >= AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getTimeStampList().size())
 			return 0;
 		return AnalyzerProcessorFactory.getSingleton().getParticipantTimeLine().getTimeStampList().get(getCurrentTime());
+	}
+	 
+	@Override
+	@Row(0)
+	@Column(7)
+	@ComponentWidth(150)
+	@Label("")
+	public String getCurrentFormattedWallTime() {
+		long aCurrentTime = getCurrentWallTime();
+		if (aCurrentTime == 0)
+			return "";
+		return ATimeStampComputer.toDateString(aCurrentTime);
+	}
+	String currentFormattedWallTime = "";
+	 void setCurrentFormattedWallTime() {
+		 String oldValue = currentFormattedWallTime;
+		 long aCurrentTime = getCurrentWallTime();
+		 currentFormattedWallTime =  aCurrentTime == 0?
+			"":	 ATimeStampComputer.toDateString(aCurrentTime);
+	
+		propertyChangeSupport
+				.firePropertyChange("currentFormattedWallTime", oldValue, currentFormattedWallTime);
 	}
 }

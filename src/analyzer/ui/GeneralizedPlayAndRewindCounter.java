@@ -30,4 +30,6 @@ public interface GeneralizedPlayAndRewindCounter extends PlayAndRewindCounter {
 
 	void nextWebLinks();
 
+	String getCurrentFormattedWallTime();
+
 }

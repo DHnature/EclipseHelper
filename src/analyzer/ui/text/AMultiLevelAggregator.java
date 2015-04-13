@@ -20,10 +20,12 @@ import util.misc.Common;
 import util.models.ALabelBeanModel;
 import util.models.AListenableVector;
 import util.models.LabelBeanModel;
+import analyzer.ATimeStampComputer;
 import analyzer.AWebLink;
 import analyzer.AnalyzerFactory;
 import analyzer.ParticipantTimeLine;
 import analyzer.RatioFilePlayerFactory;
+import analyzer.TimeStampComputerFactory;
 import analyzer.WebLink;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
@@ -270,11 +272,13 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
     @Visible(false)
 	protected  String toClassifiedString (ICommand aCommand) {
 		String featureName = ratioCalculator.getFeatureName(aCommand);
-		return featureName + " (" + aCommand + " )";
+		return 
+				featureName + " " + ATimeStampComputer.toDateString(TimeStampComputerFactory.getSingleton().computeTimestamp(aCommand)) + 
+				" (" + aCommand + " )";
 	}
 	@Row(3)
 	@PreferredWidgetClass(JTextArea.class)
-	@ComponentHeight(100)
+	@ComponentHeight(80)
 	@Override
 	public String getPredictions() {
 		return predictionsBuffer.toString();
@@ -344,9 +348,13 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	@Override
 	public void newWebLink(WebLink aWebLink) {		
 		if (numWebLinks < webLinks.size()) {
+			try {
 //			webLinks.get(numWebLinks).setSearchString(aWebLink.getSearchString());
 //			webLinks.get(numWebLinks).setUrlString(aWebLink.getUrlString());
 			webLinks.get(numWebLinks).setText(aWebLink.getClickableLink().getText());
+			} catch (Exception e) {
+				webLinks.get(numWebLinks).setText(e.getMessage());
+			}
 		} else {
 			webLinks.add(new ALabelBeanModel(aWebLink.getClickableLink().getText()));
 		}		
