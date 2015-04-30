@@ -13,6 +13,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.ViewPart;
 
+import config.LiveModePredictionConfigurer;
 import analyzer.ui.APredictionController;
 import bus.uigen.ObjectEditor;
 import trace.view.help.HelpViewCreated;
@@ -120,7 +121,8 @@ public class HelpViewPart extends ViewPart {
 //		HelpViewCreated.newCase(parent, this);
 		btnTestbed.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				APredictionController.createUI();
+//				APredictionController.createUI();
+				LiveModePredictionConfigurer.visualizePrediction();
 			}
 		});
 	}

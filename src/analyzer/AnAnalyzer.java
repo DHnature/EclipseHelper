@@ -100,7 +100,8 @@ public class AnAnalyzer implements Analyzer  {
 
 	public AnAnalyzer() {
 		propertyChangeSupport = new PropertyChangeSupport(this);
-		DifficultyPredictionSettings.setReplayMode(true);
+		// whoever invokes the analyzer should set the replay mode
+//		DifficultyPredictionSettings.setReplayMode(true);
 		DifficultyPredictionSettings.setSegmentLength(SEGMENT_LENGTH);
 
 		reader = new LogReader();

@@ -66,10 +66,12 @@ import trace.workbench.PartListenerAdded;
 import difficultyPrediction.ADifficultyPredictionPluginEventProcessor;
 import edu.cmu.scs.fluorite.actions.FindAction;
 import edu.cmu.scs.fluorite.commands.BaseDocumentChangeEvent;
+import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.FileOpenCommand;
 import edu.cmu.scs.fluorite.commands.FindCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.MoveCaretCommand;
+import edu.cmu.scs.fluorite.commands.PredictionCommand;
 import edu.cmu.scs.fluorite.commands.SelectTextCommand;
 import edu.cmu.scs.fluorite.preferences.Initializer;
 import edu.cmu.scs.fluorite.recorders.BreakPointRecorder;
@@ -691,9 +693,15 @@ public class EventRecorder {
 	public void resumeRecording() {
 		mRecordCommands = true;
 	}
+	
+	boolean isPredictionRelatedCommand(final ICommand newCommand) {
+		return newCommand instanceof PredictionCommand ||
+				newCommand instanceof DifficulyStatusCommand;
+	}
 
 	public void recordCommand(final ICommand newCommand) {
 		System.out.println("Recording command:" + newCommand);
+		
 		if (!mRecordCommands) {
 			System.out.println("Ignoring command:" + newCommand);
 
@@ -721,14 +729,14 @@ public class EventRecorder {
 				.get(commands.size() - 1) : null;
 
 		// See if combining with previous command is possible .
-		if (lastCommand != null
+		if (!isPredictionRelatedCommand(newCommand) && lastCommand != null
 				&& isCombineEnabled(newCommand, lastCommand, isDocChange)) {
 			combined = lastCommand.combineWith(newCommand);
 		}
 		System.out.println ("Combining command:" + combined + " newCommand" + newCommand + " lastCommand " + lastCommand);
 		// If combining is failed, just add it.
 		if (!combined) {
-			System.out.println ("Adding command:" + newCommand);
+			System.out.println ("Adding command:" + newCommand + " to both commands and mCommands");
 			commands.add(newCommand);
 			mCommands.add(newCommand);
 
@@ -745,7 +753,9 @@ public class EventRecorder {
 		}
 
 
-		
+		if (mCommands.getFirst() != commands.getFirst() ) {
+			System.err.println("Commands and mcommands have diverged");
+		}
 		
 		
 		

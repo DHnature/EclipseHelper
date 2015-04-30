@@ -191,7 +191,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	
 	
 	void setNewWindow(int newVal) {
-		setPlayBack(true);
+//		setPlayBack(true);
 		currentFeatureIndex = newVal;
 		newWindow();
 	}
@@ -267,10 +267,10 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	}
 //	@Row(0)
 //	@Column(0)
-	public void live() {		
-		end(); //play back all past events
-		setPlayBack(false);
-	}
+//	public void live() {		
+//		end(); //play back all past events
+//		setPlayBack(false);
+//	}
 //	@Row(0)
 //	@Column(1)
 	public void start() {
@@ -323,9 +323,11 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	}
 	@Visible(false)
 	public boolean isPlayBack() {
-		return playBack || player.isPlayBack();
+//		return playBack || player.isPlayBack();
+		return player.isPlayBack();
+
 	}
-	public void setPlayBack(boolean playBack) {
-		this.playBack = playBack;
-	}
+//	public void setPlayBack(boolean playBack) {
+//		this.playBack = playBack;
+//	}
 }

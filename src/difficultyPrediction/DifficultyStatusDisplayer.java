@@ -10,6 +10,6 @@ public interface DifficultyStatusDisplayer {
 
 	public abstract void asyncShowStatusInBallonTip(String status);
 
-	ToolTip getBallonTip();
+	ToolTip getBalloonTip();
 
 }

@@ -11,7 +11,7 @@ public class ADifficultyStatusDisplayer implements DifficultyStatusDisplayer {
 	protected ToolTip ballonTip;
 	String lastStatus = "";
 	@Override
-	public ToolTip getBallonTip() {
+	public ToolTip getBalloonTip() {
 		return ballonTip;
 	}
 

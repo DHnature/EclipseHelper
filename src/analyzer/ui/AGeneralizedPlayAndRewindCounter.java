@@ -32,6 +32,10 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 //		liveParticipantTimeLine = LiveAnalyzerProcessorFactory.getSingleton().getParticipantTimeLine();
 		
 	}
+	
+	public void setPlayBack(boolean newValue) {
+		playBack = newValue;
+	}
 
 	public AGeneralizedPlayAndRewindCounter() {
 		this (new ARatioFileReader());
@@ -41,7 +45,8 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	@Column(0)
 	@ComponentWidth(100)
 	public void back() {
-		playBack = true;
+//		playBack = true;
+		setPlayBack(true);
 		super.back();		
 	}
 	@Override
@@ -49,7 +54,9 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	@Column(4)
 	@ComponentWidth(100)
 	public void forward() {
-		playBack = true;
+//		playBack = true;
+		setPlayBack(true);
+
 		super.forward();		
 	}
 
@@ -58,7 +65,10 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	@ComponentWidth(100)
 	public void live() {		
 		end(); //play back all past events
-		playBack = false;
+//		playBack = false;
+//		setPlayBack()
+		setPlayBack(false);
+
 	}
 	@Row(1)
 	@Column(0)
@@ -71,7 +81,9 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	@Column(1)
 	@ComponentWidth(100)
 	public void end() {
-		playBack = true;
+//		playBack = true;
+		setPlayBack(true);
+
 		setCurrentFeatureIndex(nextFeatureIndex - 1);
 	}
 	int previousPredictedDifficulty;
@@ -99,7 +111,7 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	public void nextPredictedDifficulty() {
 		if (!preNextPredictedDifficulty())
 			return;
-		playBack = true;
+		setPlayBack(true);
 		setCurrentFeatureIndex(nextPredictedDifficulty);		
 	}
 	
@@ -121,7 +133,9 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	public void previousDifficultyCorrection() {
 		if (!prePreviousDifficultyCorrection())
 			return;
-		playBack = true;
+//		playBack = true;
+		setPlayBack(true);
+
 		setCurrentFeatureIndex(previousDifficultyCorrection);		
 	}
 	int nextDifficultyCorrection;
@@ -135,7 +149,9 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	public void nextDifficultyCorrection() {
 		if (!preNextDifficultyCorrection())
 			return;
-		playBack = true;
+//		playBack = true;
+		setPlayBack(true);
+
 		setCurrentFeatureIndex(nextDifficultyCorrection);		
 	}
 	
@@ -153,7 +169,9 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	public void previousBarrier() {
 		if (!prePreviousBarrier())
 			return;
-		playBack = true;
+//		playBack = true;
+		setPlayBack(true);
+
 		setCurrentFeatureIndex(previousBarrier);		
 	}
 	int nextBarrier;
@@ -167,7 +185,9 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	public void nextBarrier() {
 		if (!preNextBarrier())
 			return;
-		playBack = true;
+//		playBack = true;
+		setPlayBack(true);
+
 		setCurrentFeatureIndex(nextBarrier);		
 	}
 	
@@ -187,7 +207,9 @@ public class AGeneralizedPlayAndRewindCounter extends APlayAndRewindCounter impl
 	public void previousWebLinks() {
 		if (!prePreviousWebLinks())
 			return;
-		playBack = true;
+//		playBack = true;
+		setPlayBack(true);
+
 		setCurrentFeatureIndex(previousWebLinks);		
 	}
 	int nextWebLinks;

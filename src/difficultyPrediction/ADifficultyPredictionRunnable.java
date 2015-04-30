@@ -31,11 +31,13 @@ public class ADifficultyPredictionRunnable implements
 	protected ToolTip ballonTip;
 	// protected TrayItem trayItem;
 	static DifficultyPredictionRunnable instance;
+	DifficultyStatusDisplayer difficultyStatusDisplayer;
 
 	public ADifficultyPredictionRunnable() {
 		// mediator = new DifficultyRobot("");
 		mediator = DifficultyRobot.getInstance();
 		instance = this;
+		difficultyStatusDisplayer = new ADifficultyStatusDisplayer();
 	}
 
 	// void startExternalComponents() {
@@ -119,15 +121,22 @@ public class ADifficultyPredictionRunnable implements
 //													.getName());
 						System.out.println("Async Display Status Update:" + newCommand);
 						PlatformUI.getWorkbench().getDisplay()
-								.asyncExec(new Runnable() {
-									@Override
-									public void run() {
-										// PredictionCommand predictionCommand =
-										// (PredictionCommand) newCommand;
-										// changeStatusInHelpView(predictionCommand);
-										changeStatusInHelpView(currentStatus);
-									}
-								});
+						.asyncExec(new ADisplayStatusUpdatingRunnable(difficultyStatusDisplayer, currentStatus));
+						
+//						PlatformUI.getWorkbench().getDisplay()
+//								.asyncExec(new Runnable() {
+//									@Override
+//									public void run() {
+//										// PredictionCommand predictionCommand =
+//										// (PredictionCommand) newCommand;
+//										// changeStatusInHelpView(predictionCommand);
+//										changeStatusInHelpView(currentStatus);
+//									}
+//								});
+						
+						
+						
+						
 						// PlatformUI.getWorkbench().getDisplay()
 						// .asyncExec(new Runnable() {
 						// @Override
@@ -225,44 +234,47 @@ public class ADifficultyPredictionRunnable implements
 
 	@Override
 	public void changeStatusInHelpView(String status) {
-		lastStatus = HelpViewPart.getStatusInformation();
-		 if (status.equals(lastStatus)) return;
-		System.out.println("Changing status sync");
-		showStatusInBallonTip(status);
-		HelpViewPart.displayStatusInformation(status);
-		lastStatus = status;
+		difficultyStatusDisplayer.changeStatusInHelpView(status);
+//		lastStatus = HelpViewPart.getStatusInformation();
+//		 if (status.equals(lastStatus)) return;
+//		System.out.println("Changing status sync");
+//		showStatusInBallonTip(status);
+//		HelpViewPart.displayStatusInformation(status);
+//		lastStatus = status;
 
 	}
 
 	@Override
 	public void showStatusInBallonTip(String status) {
-		if (ballonTip == null) {
-			ballonTip = new ToolTip(PlatformUI.getWorkbench()
-					.getActiveWorkbenchWindow().getShell(), SWT.BALLOON
-					| SWT.ICON_INFORMATION);
-
-		}
-
-		if (!ballonTip.isDisposed()) {
-			// ballonTip.setMessage("Status: " + status);
-			ballonTip.setMessage(status);
-			ballonTip.setText("Status Change Notification");
-			EventRecorder.getTrayItem().setToolTip(ballonTip);
-			ballonTip.setVisible(true);
-		}
+		difficultyStatusDisplayer.showStatusInBallonTip(status);
+//		if (ballonTip == null) {
+//			ballonTip = new ToolTip(PlatformUI.getWorkbench()
+//					.getActiveWorkbenchWindow().getShell(), SWT.BALLOON
+//					| SWT.ICON_INFORMATION);
+//
+//		}
+//
+//		if (!ballonTip.isDisposed()) {
+//			// ballonTip.setMessage("Status: " + status);
+//			ballonTip.setMessage(status);
+//			ballonTip.setText("Status Change Notification");
+//			EventRecorder.getTrayItem().setToolTip(ballonTip);
+//			ballonTip.setVisible(true);
+//		}
 
 	}
 
 	@Override
 	public void asyncShowStatusInBallonTip(String status) {
-		final String currentStatus = status;
-		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
-			@Override
-			public void run() {
-				// changeStatusInHelpView(predictionCommand);
-				showStatusInBallonTip(currentStatus);
-			}
-		});
+		difficultyStatusDisplayer.asyncShowStatusInBallonTip(status);
+//		final String currentStatus = status;
+//		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
+//			@Override
+//			public void run() {
+//				// changeStatusInHelpView(predictionCommand);
+//				showStatusInBallonTip(currentStatus);
+//			}
+//		});
 
 	}
 
@@ -274,7 +286,8 @@ public class ADifficultyPredictionRunnable implements
 	}
 
 	public ToolTip getBallonTip() {
-		return ballonTip;
+		return difficultyStatusDisplayer.getBalloonTip();
+//		return ballonTip;
 	}
 
 	boolean full;

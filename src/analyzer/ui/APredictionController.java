@@ -62,7 +62,9 @@ public class APredictionController implements PredictionController {
 //		SarosAccessorFactory.createSingleton();
 	}
 	
-	public static void createUI() {
+	static boolean uiCreated;
+	
+	public static void createUI() {		
 		OEFrame oeFrame = ObjectEditor.edit(PredictionControllerFactory.getSingleton());
 		oeFrame.setSize(800, 150);
 		oeFrame.getFrame().setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
