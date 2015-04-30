@@ -14,6 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.ViewPart;
 
 import config.LiveModePredictionConfigurer;
+import context.saros.SarosAccessorFactory;
 import analyzer.ui.APredictionController;
 import bus.uigen.ObjectEditor;
 import trace.view.help.HelpViewCreated;
@@ -121,8 +122,40 @@ public class HelpViewPart extends ViewPart {
 //		HelpViewCreated.newCase(parent, this);
 		btnTestbed.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
+				APredictionController.createUI();
+//				LiveModePredictionConfigurer.visualizePrediction();
+			}
+		});
+		
+		Button btnExportWorkspace = new Button(parent, SWT.NONE);
+		FormData fd_btnExportWorkspace = new FormData();
+		fd_btnExportWorkspace.top = new FormAttachment(0, 124);
+		fd_btnExportWorkspace.left = new FormAttachment(0, 159);
+		btnExportWorkspace.setLayoutData(fd_btnExportWorkspace);
+		btnExportWorkspace.setText("Export Workspace");
+//		HelpViewCreated.newCase(parent, this);
+		btnExportWorkspace.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				SarosAccessorFactory.getSingleton().resetIncomingHandler();
+
 //				APredictionController.createUI();
-				LiveModePredictionConfigurer.visualizePrediction();
+//				LiveModePredictionConfigurer.visualizePrediction();
+			}
+		});
+		
+		Button btnGetWorkspace = new Button(parent, SWT.NONE);
+		FormData fd_btnGetWorkspace = new FormData();
+		fd_btnGetWorkspace.top = new FormAttachment(0, 124);
+		fd_btnGetWorkspace.left = new FormAttachment(0, 394);
+		btnGetWorkspace.setLayoutData(fd_btnGetWorkspace);
+		btnGetWorkspace.setText("GetWorkspace");
+//		HelpViewCreated.newCase(parent, this);
+		btnGetWorkspace.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				SarosAccessorFactory.getSingleton().shareFixedProjectWithFixedUser();
+
+//				APredictionController.createUI();
+//				LiveModePredictionConfigurer.visualizePrediction();
 			}
 		});
 	}
