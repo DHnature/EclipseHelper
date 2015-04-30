@@ -28,7 +28,7 @@ public class ADifficultyPredictionRunnable implements
 
 	protected Mediator mediator = null;
 	ICommand newCommand;
-	protected ToolTip ballonTip;
+//	protected ToolTip ballonTip;
 	// protected TrayItem trayItem;
 	static DifficultyPredictionRunnable instance;
 	DifficultyStatusDisplayer difficultyStatusDisplayer;

@@ -7,6 +7,7 @@ import trace.difficultyPrediction.NewCommand;
 import trace.difficultyPrediction.NewExtractedStatusInformation;
 import trace.difficultyPrediction.PredictionValueToStatus;
 import trace.difficultyPrediction.StatusAggregationStarted;
+import util.GlobalAsyncExecutor;
 import util.trace.Tracer;
 import analyzer.AnAnalyzer;
 import analyzer.WebLink;
@@ -34,6 +35,7 @@ import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
 import edu.cmu.scs.fluorite.model.EventRecorder;
+
 
 
 
@@ -372,7 +374,11 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 	@Override
 	public void notifyNewCommand(ICommand aCommand) {
 		for (PluginEventListener aListener:listeners) {
-			aListener.newCommand(aCommand);
+			// let us not block the prediction runnable on vagaries of the listeners
+			GlobalAsyncExecutor.getSingleton().asyncExecute(
+					new ANewCommandNotifier(aListener, aCommand));
+		
+			
 		}
 	}
 
