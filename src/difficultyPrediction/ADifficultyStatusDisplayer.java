@@ -21,7 +21,8 @@ public class ADifficultyStatusDisplayer implements DifficultyStatusDisplayer {
 	@Override
 	public void changeStatusInHelpView(String status) {
 		lastStatus = HelpViewPart.getStatusInformation();
-		 if (status.equals(lastStatus)) return;
+		 if (status.equals(lastStatus)) 
+			 return;
 		System.out.println("Changing status sync");
 		showStatusInBallonTip(status);
 		HelpViewPart.displayStatusInformation(status);
