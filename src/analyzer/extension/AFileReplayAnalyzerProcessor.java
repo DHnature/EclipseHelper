@@ -10,7 +10,7 @@ import edu.cmu.scs.fluorite.commands.ICommand;
 
 public class AFileReplayAnalyzerProcessor extends ALiveAnalyzerProcessor{
 	public AFileReplayAnalyzerProcessor() {
-		RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);
+		RatioFilePlayerFactory.getSingleton().addPluginEventListener(this);
 		RatioFilePlayerFactory.getSingleton().addRatioFeaturesListener(this);
 	}
 	// do nothing, the new Ratios has everything needed

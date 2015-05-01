@@ -340,7 +340,7 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 	}
 	
 	@Override
-	public void addPluginEventEventListener(PluginEventListener aListener){
+	public void addPluginEventListener(PluginEventListener aListener){
 		listeners.add(aListener);
 	}
 	/* (non-Javadoc)

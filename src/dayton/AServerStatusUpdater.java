@@ -9,7 +9,7 @@ import edu.cmu.scs.fluorite.commands.PredictionCommand;
 
 public class AServerStatusUpdater implements ServerStatusUpdater {
 	public AServerStatusUpdater() {
-		DifficultyRobot.getInstance().addPluginEventEventListener(this);
+		DifficultyRobot.getInstance().addPluginEventListener(this);
 
 	}
 

@@ -64,7 +64,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener i
 		
 		if(aFolder!= null) {
 			// should this not be in the constructor?
-			DifficultyRobot.getInstance().addPluginEventEventListener(this);
+			DifficultyRobot.getInstance().addPluginEventListener(this);
 			DifficultyRobot.getInstance().addRatioFeaturesListener(this);
 //			
 //			RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);

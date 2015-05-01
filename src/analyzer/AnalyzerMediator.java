@@ -235,7 +235,7 @@ public class AnalyzerMediator implements Mediator {
 	}
 
 	@Override
-	public void addPluginEventEventListener(PluginEventListener aListener) {
+	public void addPluginEventListener(PluginEventListener aListener) {
 		// TODO Auto-generated method stub
 		
 	}

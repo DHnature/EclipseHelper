@@ -80,7 +80,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 
 		//register the event listeners
 		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
-		DifficultyRobot.getInstance().addPluginEventEventListener(this);
+		DifficultyRobot.getInstance().addPluginEventListener(this);
 	}
 
 

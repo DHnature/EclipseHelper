@@ -30,7 +30,7 @@ public interface MediatorRegistrar {
 	public void  notifyNewRatios(RatioFeatures aRatios) ;
 	
 	public void  notifyNewStatus(String aStatus) ;
-	public abstract void addPluginEventEventListener(
+	public abstract void addPluginEventListener(
 			PluginEventListener aListener);
 
 	public abstract void removePluginEventListener(

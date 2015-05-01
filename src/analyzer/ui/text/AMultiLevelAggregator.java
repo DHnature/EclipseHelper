@@ -70,14 +70,14 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		
 		// for live or replayed prediction events
 		DifficultyRobot.getInstance().addStatusListener(this);
-		DifficultyRobot.getInstance().addPluginEventEventListener(this);
+		DifficultyRobot.getInstance().addPluginEventListener(this);
 		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
 		DifficultyRobot.getInstance().addWebLinkListener(this);
 		DifficultyRobot.getInstance().addBarrierListener(this);
 		
 		// for rati file relay
 		RatioFilePlayerFactory.getSingleton().addStatusListener(this);
-		RatioFilePlayerFactory.getSingleton().addPluginEventEventListener(this);
+		RatioFilePlayerFactory.getSingleton().addPluginEventListener(this);
 		RatioFilePlayerFactory.getSingleton().addRatioFeaturesListener(this);
 		RatioFilePlayerFactory.getSingleton().addWebLinkListener(this);
 		RatioFilePlayerFactory.getSingleton().addBarrierListener(this);
