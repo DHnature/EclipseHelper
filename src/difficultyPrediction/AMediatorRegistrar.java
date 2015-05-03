@@ -7,7 +7,7 @@ import trace.difficultyPrediction.NewCommand;
 import trace.difficultyPrediction.NewExtractedStatusInformation;
 import trace.difficultyPrediction.PredictionValueToStatus;
 import trace.difficultyPrediction.StatusAggregationStarted;
-import util.GlobalAsyncExecutor;
+import util.GlobalRunnableExecutor;
 import util.trace.Tracer;
 import analyzer.AnAnalyzer;
 import analyzer.WebLink;
@@ -375,7 +375,10 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 	public void notifyNewCommand(ICommand aCommand) {
 		for (PluginEventListener aListener:listeners) {
 			// let us not block the prediction runnable on vagaries of the listeners
-			GlobalAsyncExecutor.getSingleton().asyncExecute(
+//			GlobalRunnableExecutor.getSingleton().asyncExecute(
+//					new ANewCommandNotifier(aListener, aCommand));
+			// for some  reason OE cannot keep up
+			GlobalRunnableExecutor.getSingleton().syncExecute(
 					new ANewCommandNotifier(aListener, aCommand));
 		
 			

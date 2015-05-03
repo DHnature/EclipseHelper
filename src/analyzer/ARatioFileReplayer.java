@@ -43,6 +43,7 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 		flattenCommandsList(aNestedCommandsList);
 		ratioFileName = aRatioFileName;
 		nextStartCommandIndex = 0;
+		System.out.println("New ratio file:" + aRatioFileName);
 	
 	}
 	
@@ -59,7 +60,8 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 					startTimeStamp = commands.get(i).getTimestamp2();
 				}
 			}
-		}		
+		}
+		System.out.println("Flattend command list size:" + flattenedCommandsList.size());
 	}
 	
 	/* (non-Javadoc)
@@ -109,7 +111,7 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 //					nextCommand.getTimestamp2() <= aTimeStamp)
 			if (aComputedTimeStamp <= aTimeStamp) {
 				
-			
+				System.out.println ("Firing command at index:" + anIndex);
 				notifyNewCommand(flattenedCommandsList.get(anIndex));
 			
 			} else {
