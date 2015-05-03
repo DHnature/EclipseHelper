@@ -21,6 +21,7 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 	TimeStampComputer timeStampComputer;
 	long startTimeStamp;
 	int nextStartCommandIndex = 0;
+	int segmentNumber = 0;
 
 	public ARatioFileReplayer() {
 		super("");
@@ -43,6 +44,7 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 		flattenCommandsList(aNestedCommandsList);
 		ratioFileName = aRatioFileName;
 		nextStartCommandIndex = 0;
+		segmentNumber = 0;
 		System.out.println("New ratio file:" + aRatioFileName);
 	
 	}
@@ -94,9 +96,11 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 //	}
 	
 	void fireCommands(long aTimeStamp) {
+		
 
 		String aTimeStampString = ATimeStampComputer.toDateString(aTimeStamp);
-		System.out.println("ratio time stamp" + aTimeStampString);
+		System.out.println("ratio time stamp" + aTimeStampString + " segment number:" + segmentNumber);
+		segmentNumber++;
 		for (int anIndex = nextStartCommandIndex; anIndex < flattenedCommandsList.size(); anIndex++) {
 			ICommand nextCommand = flattenedCommandsList.get(anIndex);
 			long aComputedTimeStamp = timeStampComputer.computeTimestamp(nextCommand);

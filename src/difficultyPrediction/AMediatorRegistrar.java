@@ -377,7 +377,7 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 			// let us not block the prediction runnable on vagaries of the listeners
 //			GlobalRunnableExecutor.getSingleton().asyncExecute(
 //					new ANewCommandNotifier(aListener, aCommand));
-			// for some  reason OE cannot keep up
+			// for some  reason OE cannot keep up with async execution
 			GlobalRunnableExecutor.getSingleton().syncExecute(
 					new ANewCommandNotifier(aListener, aCommand));
 		
