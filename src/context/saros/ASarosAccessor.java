@@ -18,13 +18,15 @@ import de.fu_berlin.inf.dpp.project.SarosSessionManager;
 import de.fu_berlin.inf.dpp.session.ISarosSession;
 import de.fu_berlin.inf.dpp.session.ISarosSessionListener;
 import de.fu_berlin.inf.dpp.session.User;
-import de.fu_berlin.inf.dpp.stf.server.rmi.superbot.component.view.saros.impl.SarosView;
 import de.fu_berlin.inf.dpp.ui.util.CollaborationUtils;
+import de.fu_berlin.inf.dpp.ui.views.SarosView;
 
 public class ASarosAccessor implements ISarosSessionListener, SarosAccessor {
 	@Inject
 	private static SarosSessionManager sessionManager;
 	SarosView sarosView;
+	
+
 	SarosContext sarosContext;
 //	Object sarosPluginContext;
 
@@ -198,6 +200,14 @@ public class ASarosAccessor implements ISarosSessionListener, SarosAccessor {
 	public void projectAdded(String projectID) {
 		// TODO Auto-generated method stub
 
+	}
+	@Override
+	public SarosView getSarosView() {
+		return sarosView;
+	}
+	@Override
+	public void setSarosView(SarosView sarosView) {
+		this.sarosView = sarosView;
 	}
 
 }

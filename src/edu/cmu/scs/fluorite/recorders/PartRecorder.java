@@ -5,6 +5,8 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 
+import context.saros.SarosAccessorFactory;
+//import de.fu_berlin.inf.dpp.ui.views.SarosView;
 import trace.workbench.PartActivated;
 import trace.workbench.PartOpened;
 import edu.cmu.scs.fluorite.commands.FileOpenCommand;
@@ -85,6 +87,9 @@ public class PartRecorder extends BaseRecorder implements IPartListener {
 	}
 
 	public void partOpened(IWorkbenchPart part) {
+//		if (part instanceof SarosView  ) {
+//			SarosAccessorFactory.getSingleton().setSarosView((SarosView) part); 
+//		}
 		PartOpened.newCase(part, this);
 
 	}
