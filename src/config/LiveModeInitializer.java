@@ -11,6 +11,8 @@ import difficultyPrediction.featureExtraction.ARatioFeaturesFactory;
 import difficultyPrediction.featureExtraction.RatioFeaturesFactorySelector;
 import difficultyPrediction.metrics.ATestRatioCalculatorFactory;
 import difficultyPrediction.metrics.RatioCalculatorSelector;
+import difficultyPrediction.web.WebBrowserAccessor;
+import difficultyPrediction.web.WebBrowserAccessorFactory;
 
 public class LiveModeInitializer {
 	public static void configure() {
@@ -23,6 +25,7 @@ public class LiveModeInitializer {
 		LocalScreenPlayerFactory.getSingleton(); // does not subsume RecorderFactory
 		ServerStatusUpdaterFactory.getOrCreateSingleton();
 //		SarosAccessorFactory.createSingleton();
+		WebBrowserAccessorFactory.getSingleton();
 //		(new ADisplayBoundsFileWriter()).start();;
 	}
 }

@@ -8,6 +8,7 @@ import java.util.List;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IResource;
 import org.eclipse.core.resources.ResourcesPlugin;
+import org.eclipse.ui.IWorkbenchPart;
 import org.picocontainer.annotations.Inject;
 
 import de.fu_berlin.inf.dpp.SarosContext;
@@ -20,6 +21,7 @@ import de.fu_berlin.inf.dpp.session.ISarosSessionListener;
 import de.fu_berlin.inf.dpp.session.User;
 import de.fu_berlin.inf.dpp.ui.util.CollaborationUtils;
 import de.fu_berlin.inf.dpp.ui.views.SarosView;
+import edu.cmu.scs.fluorite.recorders.PartRecorder;
 
 public class ASarosAccessor implements ISarosSessionListener, SarosAccessor {
 	@Inject
@@ -42,6 +44,7 @@ public class ASarosAccessor implements ISarosSessionListener, SarosAccessor {
 		Field aSessionManagerField;
 		Field aSarosContextField;
 		try {
+			PartRecorder.getInstance().addPartListener(this);
 			aSessionManagerField = CollaborationUtils.class
 					.getDeclaredField("sessionManager");
 			aSessionManagerField.setAccessible(true);
@@ -208,6 +211,36 @@ public class ASarosAccessor implements ISarosSessionListener, SarosAccessor {
 	@Override
 	public void setSarosView(SarosView sarosView) {
 		this.sarosView = sarosView;
+	}
+
+	@Override
+	public void partActivated(IWorkbenchPart part) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void partBroughtToTop(IWorkbenchPart part) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void partClosed(IWorkbenchPart part) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void partDeactivated(IWorkbenchPart part) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void partOpened(IWorkbenchPart part) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -1,5 +1,8 @@
 package edu.cmu.scs.fluorite.recorders;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
@@ -16,6 +19,9 @@ import edu.cmu.scs.fluorite.util.Utilities;
 public class PartRecorder extends BaseRecorder implements IPartListener {
 
 	private static PartRecorder instance = null;
+	List<IWorkbenchPart> opendedParts = new ArrayList();
+	List<IWorkbenchPart> activeParts = new ArrayList();
+	List<IPartListener> partListeners = new ArrayList();
 
 	public static PartRecorder getInstance() {
 		if (instance == null) {
@@ -27,6 +33,12 @@ public class PartRecorder extends BaseRecorder implements IPartListener {
 
 	private PartRecorder() {
 		super();
+	}
+	
+	public void addPartListener(IPartListener newVal) {
+		if (!partListeners.contains(newVal))
+			partListeners.add(newVal);
+		
 	}
 
 	@Override
@@ -41,6 +53,11 @@ public class PartRecorder extends BaseRecorder implements IPartListener {
 
 	public void partActivated(IWorkbenchPart part) {
 		PartActivated.newCase(part, this);
+		if (!activeParts.contains(part))
+			activeParts.add(part);
+		for (IPartListener aListener:partListeners) {
+			aListener.partActivated(part);
+		}
 		if (part instanceof IEditorPart) {
 			if (getRecorder().getEditor() == part) {
 				return;
@@ -70,23 +87,41 @@ public class PartRecorder extends BaseRecorder implements IPartListener {
 	}
 
 	public void partBroughtToTop(IWorkbenchPart part) {
+		for (IPartListener aListener:partListeners) {
+			aListener.partBroughtToTop(part);
+		}
 		// TODO Auto-generated method stub
 
 	}
 
 	public void partClosed(IWorkbenchPart part) {
+		if (opendedParts.contains(part))
+			opendedParts.remove(part);
+		for (IPartListener aListener:partListeners) {
+			aListener.partClosed(part);
+		}
 		if (part instanceof IEditorPart) {
 			getRecorder().removeListeners();
 		}
 	}
 
 	public void partDeactivated(IWorkbenchPart part) {
+		if (activeParts.contains(part))
+			activeParts.remove(part);
+		for (IPartListener aListener:partListeners) {
+			aListener.partDeactivated(part);
+		}
 		// if (part instanceof IEditorPart) {
 		// removeListeners();
 		// }
 	}
 
 	public void partOpened(IWorkbenchPart part) {
+		if (!opendedParts.contains(part))
+			opendedParts.add(part);
+		for (IPartListener aListener:partListeners) {
+			aListener.partOpened(part);
+		}
 //		if (part instanceof SarosView  ) {
 //			SarosAccessorFactory.getSingleton().setSarosView((SarosView) part); 
 //		}
