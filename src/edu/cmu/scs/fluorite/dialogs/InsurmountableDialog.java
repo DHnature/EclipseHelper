@@ -16,6 +16,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
 import context.saros.SarosAccessorFactory;
+import dayton.ServerConnection;
 
 public class InsurmountableDialog extends
 org.eclipse.jface.dialogs.TitleAreaDialog {
@@ -102,6 +103,14 @@ org.eclipse.jface.dialogs.TitleAreaDialog {
 	protected void okPressed() {
 		saveInput();
 		super.okPressed();
+		String[] helpRequest = {getTryingToDo(),
+				getCausedDifficulty(),getOtherCausedDifficulty(),getOvercomeDifficultyDropDown(),
+				getOtherOverComeDifficultySaveText(),getOtherMinutes()};
+		try {
+		ServerConnection.getServerConnection().sendHelpRequest(helpRequest);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
