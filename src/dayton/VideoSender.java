@@ -7,32 +7,27 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class VideoSender {
 
 	public static void sendVideo() throws IOException {
-		//Scanner scanner = new Scanner(System.in);
-		//System.out.print("File name: ");
-		//String fileName = scanner.next();
-		String fileName = "C:/Users/Dayton Ellwanger/Desktop/test.txt";
-		File sendFile = new File(fileName);
-		System.out.println();
-		//scanner.close();
-		
-		byte[] byteArray = new byte[(int) sendFile.length()];
-		BufferedInputStream inputStream = new BufferedInputStream(
-				new FileInputStream(sendFile));
-		inputStream.read(byteArray,0,byteArray.length);
-		inputStream.close();
-		
+		String baseName = VideoSender.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		baseName = baseName.replace("%20", " ");
+		String fileName = baseName + "/../screencaptures/screencap-vid.mp4";
 		System.out.println("Connecting to Server...");
-		Socket socket = new Socket("127.0.0.1",12345);
-		OutputStream outputStream = socket.getOutputStream();
+		Socket socket = new Socket("152.2.129.144",26503);
 		System.out.println("Connected to Server.");
-		outputStream.write(byteArray,0,byteArray.length);
-		outputStream.flush();
+		int count;
+		byte[] buffer = new byte[1024];
+		OutputStream os = socket.getOutputStream();
+		BufferedInputStream is = new BufferedInputStream(new FileInputStream(fileName));
+		while((count = is.read(buffer)) >= 0) {
+			os.write(buffer,0,count);
+			os.flush();
+		}
+		is.close();
 		socket.close();
-		
 		System.out.println("Sent file.");
 	}
 }

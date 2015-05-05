@@ -187,7 +187,9 @@ public class Account implements RosterListener, MessageListener,
 		//config.setSASLAuthenticationEnabled(true);
 		config.setRosterLoadedAtLogin(true);
 		
-		connection = new XMPPTCPConnection(config);
+//		connection = new XMPPTCPConnection(config);
+		connection = new XMPPConnection(config);
+
 		try {
 			connection.connect(); /* Connect to the XMPP server  */
 			connection.login(username, password);
