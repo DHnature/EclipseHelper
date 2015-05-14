@@ -4,16 +4,26 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import util.annotations.Row;
-import util.annotations.Visible;
+import util.models.PropertyListenerRegistrar;
 import analyzer.extension.StuckInterval;
 import analyzer.extension.StuckPoint;
 import bus.uigen.models.FileSetterModel;
 import difficultyPrediction.DifficultyPredictionPluginEventProcessor;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
-public interface Analyzer {
+public interface Analyzer extends PropertyListenerRegistrar{
 
+	/**Set the output subdirectory.<p>
+	 * The output subdirectory is the directory inside of the output directory<br>
+	 * I.E.:<br>
+	 * data/OutputData/Subdirectory/<br>
+	 * Subdirectory is the one we are setting
+	 * @param outputDir
+	 */
+	public void setOutputSubDirectory(String outputDir);
+	
+	public AnAnalyzerParameters getParameterSelector();
+	
 	public abstract FileSetterModel getParticipantsFolder();
 
 	public abstract String getParticipantsFolderName();
@@ -26,14 +36,14 @@ public interface Analyzer {
 
 	public abstract boolean preLoadLogs();
 
-	public abstract void loadLogs();
+	public abstract void loadLogs(boolean createNewThread);
 
-	public abstract void processParticipant(String aParticipantId);
+	public abstract void processParticipant(String aParticipantId,String outPath,String dataPath, boolean generateRatioFiles);
 
 	public abstract List<List<ICommand>> convertXMLLogToObjects(
 			String aFolderName);
 
-	public abstract AnAnalyzerParametersSelector getAnalyzerParameters();
+	public abstract AnalyzerParameters getAnalyzerParameters();
 
 	public abstract DifficultyPredictionPluginEventProcessor getDifficultyEventProcessor();
 
@@ -55,6 +65,8 @@ public interface Analyzer {
 	Map<String,Queue<StuckPoint>> getStuckPointMap();
 	
 	Map<String, Queue<StuckInterval>> getStuckIntervalMap();
+	
+	public String getOutputDirectory();
 
 //	boolean isNewRatioFiles();
 //

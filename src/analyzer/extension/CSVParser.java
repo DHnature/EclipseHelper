@@ -1,8 +1,10 @@
 package analyzer.extension;
 
+import java.io.FileNotFoundException;
+
 public interface CSVParser {
 
-	public void start(String filename);
+	public void start(String filename) throws FileNotFoundException;
 
 	public void stop();
 

@@ -2,6 +2,7 @@ package analyzer.extension;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.text.ParseException;
@@ -17,13 +18,10 @@ public class ACSVParser implements CSVParser{
 
 	}
 
-	public void start(String filename) {
-		try {
-			stream=new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	public void start(String filename) throws FileNotFoundException {
+
+		stream=new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
+
 
 	}
 
@@ -63,15 +61,15 @@ public class ACSVParser implements CSVParser{
 		StringBuilder read=new StringBuilder();
 
 		int next=read();
-		
+
 		//read 1st char and if it is a ','. Then, ignore it
 		if(next != this.delimiter)
 			read.append((char) next);
-		
+
 		while ((next= read()) != -1 && next != this.delimiter) {
 			//first the next char is a , ignore it if it is the first one
 			read.append((char) next);
-			
+
 		} 
 
 		return (next==-1 || (read.length()==2 && next==44))? null:read.toString();
@@ -82,25 +80,25 @@ public class ACSVParser implements CSVParser{
 		this.delimiter=newDelimiter;
 
 	}
-	
+
 	public static void main(String[] args) {
-//		CSVParser p=new ACSVParser();
-//		
-//		p.start("data/GroundTruth/Stuckpoints.csv");
-//		
-//		String r;
-//		while((r=p.readTillNextDelimiter()) != null) {
-//			System.out.println(r);
-//			
-//		}
-		
+		//		CSVParser p=new ACSVParser();
+		//		
+		//		p.start("data/GroundTruth/Stuckpoints.csv");
+		//		
+		//		String r;
+		//		while((r=p.readTillNextDelimiter()) != null) {
+		//			System.out.println(r);
+		//			
+		//		}
+
 		try {
 			System.out.println(new SimpleDateFormat("hh:mm a").parse("10:24 PM"));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
 
 }

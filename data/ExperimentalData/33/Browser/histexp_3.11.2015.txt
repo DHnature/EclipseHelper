@@ -1,0 +1,2 @@
+3/9/2015 20:19:12	How to make ellipse	http://docs.oracle.com/javase/7/docs/api/java/awt/geom/Ellipse2D.Double.html
+3/9/2015 20:38:32	Clear graphics before drawing	http://stackoverflow.com/questions/6902771/jpanel-graphics-clearing-and-repainting

@@ -1,0 +1,24 @@
+**Results for scheme A3**
+
+Training dir: data/OutputData/leaveoneouta3/All ignore 
+Testing: J48 Filter: SMOTE Boost: 524.1176470588235
+True Positive: 28 | False Negative: 40
+False Positive: 67 |True Negative: 1236
+Total Accuracy: 92.19547775346463
+True Positive %: 41.17647058823529
+True Negative %: 94.85801995395242
+Analysis completed
+Testing: ADABOOST Filter: SMOTE Boost: 524.1176470588235
+True Positive: 20 | False Negative: 48
+False Positive: 135 |True Negative: 1168
+Total Accuracy: 86.65207877461707
+True Positive %: 29.411764705882355
+True Negative %: 89.6392939370683
+Analysis completed
+Testing: BAGGING Filter: SMOTE Boost: 524.1176470588235
+True Positive: 9 | False Negative: 59
+False Positive: 76 |True Negative: 1227
+Total Accuracy: 90.15317286652079
+True Positive %: 13.23529411764706
+True Negative %: 94.16730621642364
+Analysis completed
