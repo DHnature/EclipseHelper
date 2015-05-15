@@ -13,11 +13,10 @@ import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.part.ViewPart;
 
-import edu.cmu.scs.fluorite.plugin.Activator;
-
 import buddylist.chat.Buddy_1;
 import buddylist.chat.ChatViewController;
 import buddylist.chat.ChatsView;
+import edu.cmu.scs.fluorite.plugin.Activator;
 
 public class ChatView extends ViewPart implements ChatsView{
 

@@ -1,9 +1,5 @@
 package difficultyPrediction.metrics;
 
-import difficultyPrediction.featureExtraction.ARatioFeaturesFactory;
-import difficultyPrediction.featureExtraction.RatioFeatures;
-import difficultyPrediction.featureExtraction.RatioFeaturesFactory;
-import difficultyPrediction.featureExtraction.RatioFeaturesFactorySelector;
 
 public class RatioCalculatorSelector {
 	static RatioCalculatorFactory factory = new ARatioCalculatorFactory();

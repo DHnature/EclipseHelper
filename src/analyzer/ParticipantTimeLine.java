@@ -6,6 +6,16 @@ import analyzer.extension.StuckInterval;
 import analyzer.extension.StuckPoint;
 
 public interface ParticipantTimeLine {
+	int INDTERMINATE_INT = -1;
+	int PROGRESS_INT = 0;
+	int DIFFICULTY_INT = 1;
+	int SURMOUNTABLE_INT = 1;
+	int INSURMOUNTABLE_INT = 2;
+	String INDTERMINATE_STRING = "Indeterminate";
+	String PROGRESS_STRING = "Progress";
+	String DIFFICULTY_STRING = "YES";
+	String SURMOUNTABLE_STRING  = "Surmountable";
+	String INSURMOUNTABLE_STRING = "Insurmountable";
 	
 	public List<Double> getEditList();
 	
@@ -60,6 +70,22 @@ public interface ParticipantTimeLine {
 	public void setStuckPoint(List<StuckPoint> stuckPoint);
 
 	StringBuffer toText();
+	
+	public int getDifficultyPredictionBefore(int aCurrentIndex) ;
+	
+	public int getDifficultyPredictionAfter(int aCurrentIndex) ;
+
+	int getDifficultyCorrectionBefore(int aCurrentIndex);
+
+	int getActualDifficultyAfter(int aCurrentIndex);
+
+	int getBarrierBefore(int aCurrentIndex);
+
+	int getBarrierAfter(int aCurrentIndex);
+
+	int getWebLinksBefore(int aCurrentIndex);
+
+	int getWebLinksAfter(int aCurrentIndex);
 
 	
 }

@@ -1,11 +1,8 @@
 package trace.plugin;
 
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
-import trace.recorder.MacroRecordingStarted;
-import trace.recorder.NewMacroCommand;
-import util.trace.Traceable;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
 
 
 public class PluginStarted extends TraceableInfo {

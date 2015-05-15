@@ -7,7 +7,6 @@ import org.eclipse.debug.core.model.IBreakpoint;
 import org.eclipse.ui.IEditorPart;
 
 import edu.cmu.scs.fluorite.commands.BreakPointCommand;
-import edu.cmu.scs.fluorite.commands.ExceptionCommand;
 
 public class BreakPointRecorder extends BaseRecorder implements IBreakpointListener{
 

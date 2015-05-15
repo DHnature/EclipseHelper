@@ -11,12 +11,13 @@ import bus.uigen.ObjectEditor;
 
 public class APlayAndRewindCounter implements PlayAndRewindCounter {
 
-	private PropertyChangeSupport propertyChangeSupport;
+	protected PropertyChangeSupport propertyChangeSupport;
 	private boolean running = false;
 	private int start = 0;
 	private int currentTime = 0;
 	private int displaySize = 10;// default
 	private RatioFileReader ratioFileReader;
+	private int counter = 0;
 
 	public APlayAndRewindCounter(RatioFileReader reader) {
 		ratioFileReader = reader;
@@ -24,23 +25,7 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 		propertyChangeSupport = new PropertyChangeSupport(this);
 	}
 
-	public boolean preBack() {
-		if (running) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
 	public boolean preRewind() {
-		if (running) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	public boolean preForward() {
 		if (running) {
 			return false;
 		} else {
@@ -64,11 +49,15 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 		}
 	}
 
+	protected void propagatePre() {
+		propertyChangeSupport.firePropertyChange("this", null, this);
+	}
+
 	@Row(0)
 	@Column(0)
 	@ComponentWidth(100)
 	public void back() {
-		setCurrentTime(currentTime - 1);
+		setCurrentFeatureIndex(currentTime - 1);
 		setStart(start - 1);
 	}
 
@@ -77,6 +66,7 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@ComponentWidth(100)
 	public void rewind() {
 		running = true;
+		propagatePre();
 		new Thread(new Runnable() {
 			public void run() {
 				while (running) {
@@ -92,7 +82,6 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 				}
 			}
 		}).start();
-
 	}
 
 	@Row(0)
@@ -100,6 +89,7 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@ComponentWidth(100)
 	public void pause() {
 		running = false;
+		propagatePre();
 	}
 
 	@Row(0)
@@ -107,6 +97,7 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@ComponentWidth(100)
 	public void play() {
 		running = true;
+		propagatePre();
 		new Thread(new Runnable() {
 			public void run() {
 				while (running) {
@@ -128,8 +119,16 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	@Column(4)
 	@ComponentWidth(100)
 	public void forward() {
-		setCurrentTime(currentTime + 1);
+		setCurrentFeatureIndex(currentTime + 1);
 		setStart(start + 1);
+	}
+
+	@Row(0)
+	@Column(5)
+	@ComponentWidth(100)
+	public void live() {
+		setCurrentFeatureIndex(counter - 1);
+		setStart(counter - 1);
 	}
 
 	public int getStart() {
@@ -147,13 +146,13 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 	}
 
 	@Row(0)
-	@Column(6)
+	@Column(7)
 	@ComponentWidth(50)
 	public int getCurrentTime() {
 		return currentTime;
 	}
 
-	public void setCurrentTime(int newVal) {
+	public void setCurrentFeatureIndex(int newVal) {
 		int oldTime = currentTime;
 		currentTime = newVal;
 		propertyChangeSupport
@@ -172,10 +171,13 @@ public class APlayAndRewindCounter implements PlayAndRewindCounter {
 
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt.getPropertyName().equalsIgnoreCase("newRatioFeatures")) {
+			counter = counter + 1;
+		}
 	}
 
 	@Row(0)
-	@Column(5)
+	@Column(6)
 	@ComponentWidth(50)
 	public int getSize() {
 		return displaySize;

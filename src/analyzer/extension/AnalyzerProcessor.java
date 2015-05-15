@@ -1,9 +1,11 @@
 package analyzer.extension;
 
-import difficultyPrediction.DifficultyPredictionEventListener;
 import analyzer.AnalyzerListener;
+import analyzer.ParticipantTimeLine;
+import difficultyPrediction.DifficultyPredictionEventListener;
 
 public interface AnalyzerProcessor extends AnalyzerListener, DifficultyPredictionEventListener {
+	ParticipantTimeLine getParticipantTimeLine();
 
 
 }

@@ -4,7 +4,6 @@ import java.util.List;
 
 import analyzer.FeatureExtractorAnalyzer;
 import analyzer.TimeandEventBasedPercentage;
-import difficultyPrediction.metrics.APercentageCalculator;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 public class ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime implements

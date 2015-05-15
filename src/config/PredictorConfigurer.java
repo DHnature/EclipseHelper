@@ -1,13 +1,10 @@
 package config;
 
-import difficultyPrediction.AMultiLevelAggregator;
-import difficultyPrediction.APredictionParameters;
-import difficultyPrediction.DifficultyPredictionSettings;
-import edu.cmu.scs.fluorite.model.EventRecorder;
 import analyzer.ui.balloons.ABalloonCreator;
 import analyzer.ui.graphics.LineGraphComposer;
-import bus.uigen.OEFrame;
-import bus.uigen.ObjectEditor;
+import analyzer.ui.text.AMultiLevelAggregator;
+import difficultyPrediction.APredictionParameters;
+import difficultyPrediction.DifficultyPredictionSettings;
 
 public class PredictorConfigurer {
 	// add listeners here also

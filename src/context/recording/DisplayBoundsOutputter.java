@@ -1,18 +1,19 @@
 package context.recording;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import org.eclipse.swt.events.ControlListener;
 import org.eclipse.swt.widgets.Event;
 import org.eclipse.swt.widgets.Listener;
 import org.eclipse.swt.widgets.Shell;
+
+import bus.uigen.models.FileSetterModel;
 
 public interface DisplayBoundsOutputter extends Listener,  ControlListener {
 
 //	public abstract void startRecorder(String aCommand[]);
 
 //	public abstract void listenToRecorderIOEvents();
+	public void connectToDisplay();
+
 
 	public abstract String boundsToString();
 
@@ -22,14 +23,24 @@ public interface DisplayBoundsOutputter extends Listener,  ControlListener {
 
 //	public abstract void propertyChange(PropertyChangeEvent evt);
 
-	void connectToDisplayAndRecorder();
+	void start();
+	
+	String[] launchCommand();
+	String configuredJavaPath();
 
-	void connectToRecorder();
+	void connectToExternalProgram();
 
 	void listenToDisplayEvents();
 
 	void updateRecorder(Shell aShell);
 
 	String boundsToString(Shell aShell);
+	
+	void createUI();
+
+	boolean isStarted();
+
+
+	FileSetterModel getJavaLocationSetter();
 
 }

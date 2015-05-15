@@ -1,9 +1,7 @@
 package difficultyPrediction.eventAggregation;
 
 import difficultyPrediction.APredictionParameters;
-import difficultyPrediction.PredictionParametersSetterSelector;
 import edu.cmu.scs.fluorite.commands.ICommand;
-import difficultyPrediction.APredictionParametersSetter;
 
 public class ADisjointDiscreteChunks implements EventAggregationStrategy {
 

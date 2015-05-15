@@ -10,12 +10,11 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.concurrent.BlockingQueue;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -29,20 +28,17 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.eclipse.core.runtime.ListenerList;
-import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.VariablesPlugin;
 import org.eclipse.debug.core.DebugPlugin;
-import org.eclipse.swt.events.FocusListener;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.jface.text.source.ISourceViewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.custom.StyledText;
+import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Listener;
-import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.swt.widgets.Tray;
 import org.eclipse.swt.widgets.TrayItem;
 import org.eclipse.ui.IEditorPart;
@@ -58,27 +54,19 @@ import org.eclipse.ui.texteditor.ITextEditorActionConstants;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import config.FactorySingletonInitializer;
 import trace.logger.LogFileCreated;
 import trace.logger.LogHandlerBound;
 import trace.logger.MacroCommandsLogBegin;
 import trace.logger.MacroCommandsLogEnd;
-import trace.plugin.PluginThreadCreated;
 import trace.plugin.PluginStopped;
 import trace.recorder.MacroRecordingStarted;
 import trace.recorder.NewMacroCommand;
 import trace.recorder.RecordedCommandsCleared;
 import trace.workbench.PartListenerAdded;
-import util.trace.session.ThreadCreated;
-import buddylist.database.DatabaseConnection;
-import buddylist.database.DatabaseUtils;
-import difficultyPrediction.ADifficultyPredictionRunnable;
 import difficultyPrediction.ADifficultyPredictionPluginEventProcessor;
-import difficultyPrediction.AnEndOfQueueCommand;
-import difficultyPrediction.DifficultyPredictionRunnable;
-import difficultyPrediction.DifficultyRobot;
 import edu.cmu.scs.fluorite.actions.FindAction;
 import edu.cmu.scs.fluorite.commands.BaseDocumentChangeEvent;
+import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.FileOpenCommand;
 import edu.cmu.scs.fluorite.commands.FindCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -96,9 +84,7 @@ import edu.cmu.scs.fluorite.recorders.PartRecorder;
 import edu.cmu.scs.fluorite.recorders.ShellRecorder;
 import edu.cmu.scs.fluorite.recorders.StyledTextEventRecorder;
 import edu.cmu.scs.fluorite.recorders.VariableValueRecorder;
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
 import edu.cmu.scs.fluorite.util.Utilities;
-import edu.cmu.scs.fluorite.viewpart.HelpViewPart;
 
 public class EventRecorder {
 
@@ -128,7 +114,7 @@ public class EventRecorder {
 	private LinkedList<ICommand> mNormalCommands;
 	private LinkedList<ICommand> mDocumentChangeCommands;
 	private boolean mCurrentlyExecutingCommand;
-	private boolean mRecordCommands;
+	private boolean mRecordCommands = false;
 	private IAction mSavedFindAction;
 
 	private int mLastCaretOffset;
@@ -451,6 +437,7 @@ public class EventRecorder {
 		mNormalCommands = new LinkedList<ICommand>();
 		mDocumentChangeCommands = new LinkedList<ICommand>();
 		mCurrentlyExecutingCommand = false;
+		System.out.println (" Recording started");
 		mRecordCommands = true;
 		mStartTimestamp = Calendar.getInstance().getTime().getTime();
 		ADifficultyPredictionPluginEventProcessor.getInstance().commandProcessingStarted();
@@ -706,9 +693,18 @@ public class EventRecorder {
 	public void resumeRecording() {
 		mRecordCommands = true;
 	}
+	
+	boolean isPredictionRelatedCommand(final ICommand newCommand) {
+		return newCommand instanceof PredictionCommand ||
+				newCommand instanceof DifficulyStatusCommand;
+	}
 
 	public void recordCommand(final ICommand newCommand) {
+		System.out.println("Recording command:" + newCommand);
+		
 		if (!mRecordCommands) {
+			System.out.println("Ignoring command:" + newCommand);
+
 			return;
 		}
 
@@ -725,19 +721,22 @@ public class EventRecorder {
 		final boolean isDocChange = (newCommand instanceof BaseDocumentChangeEvent);
 		final LinkedList<ICommand> commands = isDocChange ? mDocumentChangeCommands
 				: mNormalCommands;
+		System.out.println( " isDocChange" + isDocChange + " commandslist:" + commands);
+
 
 		boolean combined = false;
 		final ICommand lastCommand = commands.size() > 0 ? commands
 				.get(commands.size() - 1) : null;
 
 		// See if combining with previous command is possible .
-		if (lastCommand != null
+		if (!isPredictionRelatedCommand(newCommand) && lastCommand != null
 				&& isCombineEnabled(newCommand, lastCommand, isDocChange)) {
 			combined = lastCommand.combineWith(newCommand);
 		}
-
+		System.out.println ("Combining command:" + combined + " newCommand" + newCommand + " lastCommand " + lastCommand);
 		// If combining is failed, just add it.
 		if (!combined) {
+			System.out.println ("Adding command:" + newCommand + " to both commands and mCommands");
 			commands.add(newCommand);
 			mCommands.add(newCommand);
 
@@ -754,7 +753,9 @@ public class EventRecorder {
 		}
 
 
-		
+		if (mCommands.getFirst() != commands.getFirst() ) {
+			System.err.println("Commands and mcommands have diverged");
+		}
 		
 		
 		
@@ -772,6 +773,7 @@ public class EventRecorder {
 			// Remove the first item from the list
 			commands.removeFirst();
 			mCommands.removeFirst();
+			System.out.println ("Giving command to pluginevent processor" + firstCmd);
 			ADifficultyPredictionPluginEventProcessor.getInstance().newCommand(firstCmd);
 
 		}

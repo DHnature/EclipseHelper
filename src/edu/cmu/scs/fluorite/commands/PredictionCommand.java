@@ -8,6 +8,7 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
 
 import edu.cmu.scs.fluorite.model.EventRecorder;
+import edu.cmu.scs.fluorite.model.StatusConsts;
 
 public class PredictionCommand extends AbstractCommand{
 	
@@ -53,7 +54,9 @@ public class PredictionCommand extends AbstractCommand{
 			{
 				mPredictionType = PredictionType.MakingProgress;
 			}
-			if(attr.getValue().equals("Indeterminate"))
+//			if(attr.getValue().equals("Indeterminate"))
+			if(attr.getValue().equals(StatusConsts.INDETERMINATE))
+
 			{
 				mPredictionType = PredictionType.Indeterminate;
 			}

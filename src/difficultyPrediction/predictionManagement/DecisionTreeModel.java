@@ -6,10 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
-import org.eclipse.ui.part.PluginDropAdapter;
-
+import weka.classifiers.trees.J48;
 import difficultyPrediction.DifficultyPredictionSettings;
-import weka.classifiers.trees.*;
 
 public class DecisionTreeModel implements PredictionManagerStrategy {
 	public PredictionManager predictionManager;
@@ -57,7 +55,8 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 
 	public void predictSituation(double editRatio, double debugRatio,
 			double navigationRatio, double focusRatio, double removeRatio) {
-		String predictedValue = "NO";
+//		String predictedValue = "NO";
+		String predictedValue = PROGRESS_PREDICTION;
 		try {
 			// Declare five numeric attributes
 			weka.core.Attribute searchPercentageAttribute = new weka.core.Attribute(
@@ -73,8 +72,10 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 
 			// Declare the class attribute along with its values
 			weka.core.FastVector fvClassVal = new weka.core.FastVector(2);
-			fvClassVal.addElement("YES");
-			fvClassVal.addElement("NO");
+//			fvClassVal.addElement("YES");
+//			fvClassVal.addElement("NO");
+			fvClassVal.addElement(DIFFICULTY_PREDICTION);
+			fvClassVal.addElement(PROGRESS_PREDICTION);
 			weka.core.Attribute ClassAttribute = new weka.core.Attribute(
 					"STUCK", fvClassVal);
 

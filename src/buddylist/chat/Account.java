@@ -12,17 +12,13 @@ import org.jivesoftware.smack.ChatManagerListener;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.ConnectionListener;
 import org.jivesoftware.smack.MessageListener;
-import org.jivesoftware.smack.PacketListener;
 import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.filter.AndFilter;
-import org.jivesoftware.smack.filter.PacketTypeFilter;
 import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.packet.Packet;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 
@@ -191,7 +187,9 @@ public class Account implements RosterListener, MessageListener,
 		//config.setSASLAuthenticationEnabled(true);
 		config.setRosterLoadedAtLogin(true);
 		
-		connection = new XMPPTCPConnection(config);
+//		connection = new XMPPTCPConnection(config);
+		connection = new XMPPConnection(config);
+
 		try {
 			connection.connect(); /* Connect to the XMPP server  */
 			connection.login(username, password);

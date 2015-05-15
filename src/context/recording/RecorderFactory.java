@@ -1,15 +1,21 @@
 package context.recording;
 
-public class RecorderFactory {
-	static DisplayBoundsOutputter boundsOutputter;
-	public static void createSingleton() {
-//		boundsOutputter = new ADisplayBoundsPiper();
-		boundsOutputter = new ADisplayBoundsFileWriter();
+import analyzer.ui.video.ALocalScreenRecorderAndPlayer;
 
-		boundsOutputter.connectToDisplayAndRecorder();
+public class RecorderFactory {
+	static DisplayBoundsOutputter singleton;
+	public static void createSingleton() {
+//		boundsOutputter = new ALocalScreenRecorderAndPlayer();
+//		singleton = new ADisplayBoundsFileWriter();
+		singleton = new ADisplayBoundsPiper();
+		
+		// do not connect by default
+//		boundsOutputter.connectToDisplayAndRecorder();
 	}
 	public static DisplayBoundsOutputter getSingleton() {
-		return boundsOutputter;
+		if (singleton == null)
+			createSingleton();
+		return singleton;
 	}
 
 }

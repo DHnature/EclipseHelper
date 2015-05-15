@@ -8,6 +8,8 @@ public class SarosAccessorFactory {
 
 	}
 	public static SarosAccessor getSingleton() {
+		if (sarosAccessor == null)
+			createSingleton();
 		return sarosAccessor;
 	}
 

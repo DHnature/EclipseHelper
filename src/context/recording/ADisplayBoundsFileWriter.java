@@ -1,135 +1,117 @@
 package context.recording;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.io.IOException;
 
-import org.eclipse.swt.SWT;
-import org.eclipse.swt.events.ControlEvent;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.widgets.Event;
-import org.eclipse.swt.widgets.Listener;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+
 import org.eclipse.swt.widgets.Shell;
 
+import config.HelperConfigurationManagerFactory;
+import bus.uigen.attributes.AttributeNames;
 import bus.uigen.misc.OEMisc;
+import bus.uigen.models.AFileSetterModel;
+import bus.uigen.models.FileSetterModel;
+import util.annotations.LayoutName;
+import util.annotations.Row;
+import util.annotations.Visible;
 import util.misc.Common;
 import util.pipe.ConsoleModel;
 import util.remote.ProcessExecer;
-
-
+@LayoutName(AttributeNames.GRID_BAG_LAYOUT)
 public class ADisplayBoundsFileWriter extends AnAbstractDisplayBoundsOutputter implements  DisplayBoundsOutputter {
-	// should really be specified in a config file
-	public static final String RECORDER_FILE_PATH = "D:/EcliseBounds.txt";
-//	public static final String RECORDER_LAUNCHING_COMMAND = RECORDER_JAVA_PATH + 
-//									" " + "-cp" + " " + RECORDER_CLASS_PATH +
-//									" " + RECORDER_MAIN_CLASS;
 	
-//	public ADisplayBoundsFileWriter() {
-//		
-//		
-//	}	
+	public static final String WORKSPACE_PATH = "/Users/nicholasdillon/Documents/UNC/Research/WorkspaceIUI/Record20secs/";
+	public static final String RECORDER_JAVA_PATH = "/Library/Java/JavaVirtualMachines/jdk1.7.0_10.jdk/Contents/Home/bin/java";
+	public static final String RECORDER_CLASS_PATH = WORKSPACE_PATH + "bin:"
+			+ WORKSPACE_PATH + "slf4j-api-1.7.7.jar:"
+			+ WORKSPACE_PATH + "slf4j-simple-1.7.7.jar:" 
+			+ WORKSPACE_PATH + "xuggle-xuggler-5.4.jar";
+	public static final String RECORDER_MAIN_CLASS = "Record20secs";
+	
+	public static final String[] RECORDER_LAUNCHING_COMMAND = 
+		{RECORDER_JAVA_PATH, "-cp" ,  RECORDER_CLASS_PATH, RECORDER_MAIN_CLASS};
+	
+//	ProcessExecer processExecer;
+//	ConsoleModel consoleModel;
+//	FileSetterModel recorderJava = new AFileSetterModel(JFileChooser.FILES_ONLY);
+	public ADisplayBoundsFileWriter() {		
+//		String aRecorderJavaPath = HelperConfigurationManagerFactory.getSingleton().getRecorderJavaPath();
+//		if (aRecorderJavaPath != null && !aRecorderJavaPath.isEmpty())
+//			recorderJava.setText(aRecorderJavaPath);
+			
+			
+	}
+	public String configuredJavaPath() {
+		return HelperConfigurationManagerFactory.getSingleton().getRecorderJavaPath();
+	}
 	@Override
-	public void connectToRecorder() {
-//		startRecorder(RECORDER_LAUNCHING_COMMAND);		
-//		listenToRecorderIOEvents();
+	@Visible(false)
+	public String[] launchCommand() {
+		return new String[] {getJavaPath(), "-cp",RECORDER_CLASS_PATH, RECORDER_MAIN_CLASS}; 
 	}
+//	@Row(0)
+//	public FileSetterModel getJavaLocation() {
+//		return recorderJava;		
+//	}
+//	@Visible(false)
+//	public void setJavaLocation() {
+//		System.out.println("Java 7 Location");
+//	}
+//	@Row(1)
+//	public void start() {
+//		super.start();
+//	}
 	
-
-	/* (non-Javadoc)
-	 * @see context.recording.DisplayBoundsOutputter#startRecorder(java.lang.String)
-	 */
-	public void startRecorder() {
+	@Visible(false)
+	public void connectToExternalProgram() {
+		// commenting out code added probably by Nick
+		System.err.println("Calling connect to recorder");
+		launch();
 //		startRecorder(RECORDER_LAUNCHING_COMMAND);
-
+		// Doesnt matter; just launch recorder and continuously write to file
+		//listenToRecorderIOEvents();
 	}
-//	@Override
-//	public void startRecorder(String[] aCommand) {		
-//		processExecer = OEMisc.runWithProcessExecer(aCommand);
-//		consoleModel = processExecer.getConsoleModel();
+//	@Visible(false)
+//	public void launch() {
+//		launch(RECORDER_LAUNCHING_COMMAND);
+//
+//	}
+//	@Visible(false)
+//	public void launch(String[] aCommand) {	
+//		// do not need this
+////		processExecer = OEMisc.runWithProcessExecer(aCommand);
+////		consoleModel = processExecer.getConsoleModel();
 //		
 //	}
-	
-	/* (non-Javadoc)
-	 * @see context.recording.DisplayBoundsOutputter#listenToRecorderIOEvents()
-	 */
-//	@Override
-//	public void listenToRecorderIOEvents() {
-//		processExecer.consoleModel().addPropertyChangeListener(this);
-//	}
-	
-	/* (non-Javadoc)
-	 * @see context.recording.DisplayBoundsOutputter#boundsToString()
-	 */
-//	@Override
-//	public String boundsToString() {
-//		if (display == null) return "";
-//		Shell aShell = display.getActiveShell(); // can be null, dangerous!
-//		if (aShell == null) return "";
-//		return aShell.getBounds().toString();
-//	}
-//	
-//	@Override
-//	public String boundsToString(Shell aShell) {
-//		
-//		return aShell.getBounds().toString();
-//	}
-	
-	/* (non-Javadoc)
-	 * @see context.recording.DisplayBoundsOutputter#updateRecorder()
-	 */
-//	@Override
-//	public void updateRecorder() {
-//		System.out.println("Active shell:" + boundsToString());
-//		if (processExecer != null)
-//		processExecer.consoleModel().setInput(boundsToString());
-//	}
+	@Visible(false)
 	@Override
 	public void updateRecorder(Shell aShell) {
-		System.out.println("Updated shell:" + boundsToString(aShell));
-		   try {
-			Common.writeText(RECORDER_FILE_PATH, boundsToString(aShell));
+		String baseName = ADisplayBoundsFileWriter.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+		baseName = baseName.replace("%20", " "); // Replace %20's with spaces
+		String outputFilename = baseName + "../../WorkspaceIUI/screencaptures/frame.txt";
+		File screencaps = new File(baseName + "/../../WorkspaceIUI/screencaptures");
+		if(!screencaps.exists()) {
+			System.err.println("screencaptures directory does not exist... creating...");
+			screencaps.mkdir();
+		}
+		String bounds = boundsToString(aShell);
+		bounds = bounds.substring(bounds.indexOf('{')+1, bounds.length()-1);
+		bounds = bounds.replace(',', ' ');
+		System.out.println("Updated shell: " + bounds);
+		try {
+			Common.writeText(outputFilename, bounds);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
-//	/* (non-Javadoc)
-//	 * @see context.recording.DisplayBoundsOutputter#handleEvent(org.eclipse.swt.widgets.Event)
-//	 */
-//	@Override
-//	public void handleEvent(Event event) {
-//	
-//		updateRecorder((Shell) event.widget);
-//		
-//	}
-//	/* (non-Javadoc)
-//	 * @see context.recording.DisplayBoundsOutputter#propertyChange(java.beans.PropertyChangeEvent)
-//	 */
-//	@Override
-//	public void propertyChange(PropertyChangeEvent evt) {
-//		
-//	}
-//	@Override
-//	public void controlMoved(ControlEvent e) {
-//		Shell aShell = (Shell)e.getSource();
-////		System.out.println ("Changed shell " + boundsToString ((Shell)e.getSource()));
-//		updateRecorder(aShell);
-//		// TODO Auto-generated method stub
-//		
-//	}
-//	@Override
-//	public void controlResized(ControlEvent e) {
-//		Shell aShell = (Shell)e.getSource();
-//
-//		System.out.println ("Changed shell " + aShell);
-//		updateRecorder(aShell);
-//
-//
-//		// TODO Auto-generated method stub
-//		
-//	}
+	@Visible(false)
+	public void createUI() {
+		super.createUI();	
+		oeFrame.setSize(500, 150);
+		recorderJava.initFrame((JFrame) (oeFrame.getFrame().getPhysicalComponent()));		
+	}
 
 	
-
 }

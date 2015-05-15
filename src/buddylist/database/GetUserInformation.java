@@ -8,8 +8,6 @@ import java.util.Vector;
 
 import org.eclipse.jface.viewers.TableViewer;
 
-import edu.cmu.scs.fluorite.util.LogReader;
-
 import buddylist.chat.Buddy;
 
 public class GetUserInformation extends TimerTask {

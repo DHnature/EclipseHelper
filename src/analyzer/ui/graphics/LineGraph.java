@@ -8,7 +8,6 @@ import java.util.List;
 
 import analyzer.Resettable;
 import difficultyPrediction.featureExtraction.RatioFeaturesListener;
-import difficultyPrediction.statusManager.StatusListener;
 
 public interface LineGraph extends MouseListener, PropertyChangeListener,
 		RatioFeaturesListener, Resettable {

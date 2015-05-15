@@ -2,8 +2,8 @@ package analyzer.ui.graphics;
 
 import java.beans.PropertyChangeListener;
 
-import analyzer.Resettable;
 import util.models.PropertyListenerRegistrar;
+import analyzer.Resettable;
 
 public interface PlayAndRewindCounter extends PropertyListenerRegistrar,
 		PropertyChangeListener, Resettable {
@@ -29,13 +29,9 @@ public interface PlayAndRewindCounter extends PropertyListenerRegistrar,
 
 	public int getCurrentTime();
 
-	public void setCurrentTime(int newVal);
-
-	public boolean preBack();
+	public void setCurrentFeatureIndex(int newVal);
 
 	public boolean preRewind();
-
-	public boolean preForward();
 
 	public boolean prePause();
 

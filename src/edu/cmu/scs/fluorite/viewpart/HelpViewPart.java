@@ -1,30 +1,29 @@
 package edu.cmu.scs.fluorite.viewpart;
 
 import org.eclipse.jface.window.Window;
-import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Shell;
-import org.eclipse.ui.part.ViewPart;
+import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.widgets.Label;
-import org.eclipse.swt.SWT;
+import org.eclipse.swt.layout.FormAttachment;
+import org.eclipse.swt.layout.FormData;
+import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.Composite;
+import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Shell;
+import org.eclipse.ui.part.ViewPart;
 
+import config.LiveModePredictionConfigurer;
+import context.saros.SarosAccessorFactory;
+import analyzer.ui.APredictionController;
+import bus.uigen.ObjectEditor;
+import trace.view.help.HelpViewCreated;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand.Status;
 import edu.cmu.scs.fluorite.dialogs.InsurmountableDialog;
 import edu.cmu.scs.fluorite.dialogs.SurmountableDialog;
 import edu.cmu.scs.fluorite.model.EventRecorder;
 import edu.cmu.scs.fluorite.model.StatusConsts;
-
-import org.eclipse.swt.layout.FormLayout;
-import org.eclipse.swt.layout.FormData;
-import org.eclipse.swt.layout.FormAttachment;
-import org.eclipse.swt.custom.CTabFolder;
-import org.eclipse.swt.widgets.Display;
-import org.eclipse.swt.custom.CTabItem;
-
-import trace.view.help.HelpViewCreated;
 
 public class HelpViewPart extends ViewPart {
 	public HelpViewPart() {
@@ -72,6 +71,9 @@ public class HelpViewPart extends ViewPart {
 		Button btnSurmountable = new Button(parent, SWT.NONE);
 		FormData fd_btnSurmountable = new FormData();
 		fd_btnSurmountable.top = new FormAttachment(0, 62);
+		int width = fd_btnMakingProgress.width;
+//		int width = btnSurmountable.getS
+//		Point size = fd_btnMakingProgress.
 		fd_btnSurmountable.left = new FormAttachment(0, 159);
 		btnSurmountable.setLayoutData(fd_btnSurmountable);
 		btnSurmountable.setText(StatusConsts.SURMOUNTABLE_TEXT);
@@ -109,6 +111,51 @@ public class HelpViewPart extends ViewPart {
 					EventRecorder.getInstance().recordCommand(command);
 					lblStatusValue.setText(StatusConsts.INSURMOUNTABLE_TEXT);
 				}
+			}
+		});
+		Button btnTestbed = new Button(parent, SWT.NONE);
+		FormData fd_btnTestbed = new FormData();
+		fd_btnTestbed.top = new FormAttachment(0, 124);
+		fd_btnTestbed.left = new FormAttachment(0, 5);
+		btnTestbed.setLayoutData(fd_btnTestbed);
+		btnTestbed.setText("Analytics");
+//		HelpViewCreated.newCase(parent, this);
+		btnTestbed.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				APredictionController.createUI();
+//				LiveModePredictionConfigurer.visualizePrediction();
+			}
+		});
+		
+		Button btnExportWorkspace = new Button(parent, SWT.NONE);
+		FormData fd_btnExportWorkspace = new FormData();
+		fd_btnExportWorkspace.top = new FormAttachment(0, 124);
+		fd_btnExportWorkspace.left = new FormAttachment(0, 159);
+		btnExportWorkspace.setLayoutData(fd_btnExportWorkspace);
+		btnExportWorkspace.setText("Export Workspace");
+//		HelpViewCreated.newCase(parent, this);
+		btnExportWorkspace.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				SarosAccessorFactory.getSingleton().resetIncomingHandler();
+
+//				APredictionController.createUI();
+//				LiveModePredictionConfigurer.visualizePrediction();
+			}
+		});
+		
+		Button btnGetWorkspace = new Button(parent, SWT.NONE);
+		FormData fd_btnGetWorkspace = new FormData();
+		fd_btnGetWorkspace.top = new FormAttachment(0, 124);
+		fd_btnGetWorkspace.left = new FormAttachment(0, 394);
+		btnGetWorkspace.setLayoutData(fd_btnGetWorkspace);
+		btnGetWorkspace.setText("GetWorkspace");
+//		HelpViewCreated.newCase(parent, this);
+		btnGetWorkspace.addSelectionListener(new SelectionAdapter() {
+			public void widgetSelected(SelectionEvent e) {
+				SarosAccessorFactory.getSingleton().shareFixedProjectWithFixedUser();
+
+//				APredictionController.createUI();
+//				LiveModePredictionConfigurer.visualizePrediction();
 			}
 		});
 	}

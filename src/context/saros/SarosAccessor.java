@@ -1,10 +1,14 @@
 package context.saros;
 
+import org.eclipse.ui.IPartListener;
+
 import de.fu_berlin.inf.dpp.monitoring.IProgressMonitor;
 import de.fu_berlin.inf.dpp.session.ISarosSession;
+import de.fu_berlin.inf.dpp.session.ISarosSessionListener;
 import de.fu_berlin.inf.dpp.session.User;
+import de.fu_berlin.inf.dpp.ui.views.SarosView;
 
-public interface SarosAccessor {
+public interface SarosAccessor extends ISarosSessionListener, IPartListener {
 
 	public static final String TEACHER_ID = "pd@saros-con.imp.fu-berlin.de";
 
@@ -31,5 +35,9 @@ public interface SarosAccessor {
 	public abstract void sessionEnded(ISarosSession session);
 
 	public abstract void projectAdded(String projectID);
+
+	SarosView getSarosView();
+
+	void setSarosView(SarosView sarosView);
 
 }

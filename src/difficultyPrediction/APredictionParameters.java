@@ -3,11 +3,11 @@ package difficultyPrediction;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-import bus.uigen.OEFrame;
-import bus.uigen.ObjectEditor;
 import util.annotations.Column;
 import util.annotations.ComponentWidth;
 import util.annotations.Row;
+import bus.uigen.OEFrame;
+import bus.uigen.ObjectEditor;
 
 public class APredictionParameters implements PredictionParameters{
 	static PredictionParameters instance;
@@ -18,18 +18,6 @@ public class APredictionParameters implements PredictionParameters{
 	PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 	
 //	@Row(1)
-	@Row(0)
-	@Column(1)
-	@ComponentWidth(30)
-	public int getSegmentLength() {
-		return segmentLength;
-	}
-	public void setSegmentLength(int newVal) {
-		int oldValue = segmentLength;
-		this.segmentLength = newVal;
-		propertyChangeSupport.firePropertyChange("SegmentLength", oldValue, newVal);
-		
-	}
 	@Row(0)
 	@Column(0)
 	@ComponentWidth(30)
@@ -42,6 +30,18 @@ public class APredictionParameters implements PredictionParameters{
 		propertyChangeSupport.firePropertyChange("StartupLag", oldValue, newValue);
 
 	}
+	@Row(0)
+	@Column(1)
+	@ComponentWidth(30)
+	public int getSegmentLength() {
+		return segmentLength;
+	}
+	public void setSegmentLength(int newVal) {
+		int oldValue = segmentLength;
+		this.segmentLength = newVal;
+		propertyChangeSupport.firePropertyChange("SegmentLength", oldValue, newVal);
+		
+	}	
 	@Row(0)
 	@Column(2)
 	@ComponentWidth(30)

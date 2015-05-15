@@ -1,10 +1,7 @@
 package buddylist.views;
 
-import org.eclipse.swt.custom.CTabItem;
 import org.eclipse.swt.events.DisposeEvent;
 import org.eclipse.swt.events.DisposeListener;
-
-import buddylist.chat.Buddy_1;
 
 
 

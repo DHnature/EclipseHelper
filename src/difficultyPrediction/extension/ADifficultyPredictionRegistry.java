@@ -1,6 +1,5 @@
 package difficultyPrediction.extension;
 
-import difficultyPrediction.ADifficultyPredictionPluginEventProcessor;
 import difficultyPrediction.DifficultyPredictionPluginEventProcessor;
 
 public class ADifficultyPredictionRegistry implements DifficultyPredictionRegistry {

@@ -95,7 +95,7 @@ public class ADifficultyTypeDisplay extends JPanel implements
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equalsIgnoreCase("newRatioFeatures")) {
-			newRatios((DuriRatioFeatures) evt.getNewValue());
+			newRatios((RatioFileComponents) evt.getNewValue());
 			repaint();
 		} else if (evt.getPropertyName().equalsIgnoreCase("start")
 				|| evt.getPropertyName().equalsIgnoreCase("size")) {
@@ -105,7 +105,7 @@ public class ADifficultyTypeDisplay extends JPanel implements
 	}
 
 	@Override
-	public void newRatios(DuriRatioFeatures ratioFeatures) {
+	public void newRatios(RatioFileComponents ratioFeatures) {
 		difficultyTypeList.add(ratioFeatures.getDifficultyType());
 
 	}

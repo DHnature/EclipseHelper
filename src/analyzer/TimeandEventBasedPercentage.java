@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 
 import difficultyPrediction.metrics.APercentageCalculator;
 import difficultyPrediction.metrics.RatioCalculator;
-import edu.cmu.scs.fluorite.commands.CompilationCommand;
 import edu.cmu.scs.fluorite.commands.EclipseCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 

@@ -210,6 +210,71 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 		return timeStampList.size() -1; 
 	}
 	
+	public int getDifficultyPredictionBefore(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex -1; aDifficultyIndex >= 0; aDifficultyIndex--) {
+			if (predictionList.get(aDifficultyIndex) == DIFFICULTY_INT) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	
+	public int getDifficultyPredictionAfter(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex + 1; aDifficultyIndex < predictionList.size(); aDifficultyIndex++) {
+			if (predictionList.get(aDifficultyIndex) == DIFFICULTY_INT) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	@Override
+	public int getDifficultyCorrectionBefore(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex -1; aDifficultyIndex >= 0; aDifficultyIndex--) {
+			if (predictionCorrections.get(aDifficultyIndex) != INDTERMINATE_INT) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	@Override
+	public int getActualDifficultyAfter(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex + 1; aDifficultyIndex < predictionList.size(); aDifficultyIndex++) {
+//			if (predictionCorrections.get(aDifficultyIndex) == DIFFICULTY_INT) 
+			if (predictionCorrections.get(aDifficultyIndex) != INDTERMINATE_INT) 
+
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	@Override
+	public int getBarrierBefore(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex -1; aDifficultyIndex >= 0; aDifficultyIndex--) {
+			if (stuckPoint.get(aDifficultyIndex).getType() != null && !stuckPoint.get(aDifficultyIndex).getType().isEmpty()) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	@Override
+	public int getBarrierAfter(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex + 1; aDifficultyIndex < stuckPoint.size(); aDifficultyIndex++) {
+			if (stuckPoint.get(aDifficultyIndex).getType() != null && !stuckPoint.get(aDifficultyIndex).getType().isEmpty()) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	@Override
+	public int getWebLinksBefore(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex -1; aDifficultyIndex >= 0; aDifficultyIndex--) {
+			if (webLinks.get(aDifficultyIndex) != null && !webLinks.get(aDifficultyIndex).isEmpty()) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
+	@Override
+	public int getWebLinksAfter(int aCurrentIndex) {
+		for (int aDifficultyIndex = aCurrentIndex + 1; aDifficultyIndex < webLinks.size(); aDifficultyIndex++) {
+			if (webLinks.get(aDifficultyIndex) != null && !webLinks.get(aDifficultyIndex).isEmpty()) 
+				return aDifficultyIndex;
+		}
+		return -1;
+	}
 	public List<StuckInterval> getStuckInterval() {
 		return stuckInterval;
 	}
@@ -222,7 +287,6 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 	public void setStuckPoint(List<StuckPoint> stuckPoint) {
 		this.stuckPoint = stuckPoint;
 	}
-	
 	@Override
 	public StringBuffer toText() {
 		StringBuffer aStringBuffer = new StringBuffer(4096);
@@ -242,14 +306,34 @@ public class AParticipantTimeLine implements ParticipantTimeLine {
 			aStringBuffer.append(predictionCorrections.get(index) + ", ");
 			aStringBuffer.append((stuckInterval.get(index)==null? ", ":stuckInterval.get(index).toText())+", ");
 			aStringBuffer.append((stuckPoint.get(index)==null? "":stuckPoint.get(index).toText())+", ");
-			aStringBuffer.append(webLinks.get(index) + "\n"); 
-			
-	
-			
-			//test if null first
-			
+			aStringBuffer.append(webLinks.get(index) + "\n"); 			
+			//test if null first			
 		}
 		return aStringBuffer;
+		
+	}
+	
+
+	public static String statusIntToString(int anIntStatus) {
+		switch (anIntStatus) {
+		case ParticipantTimeLine.INSURMOUNTABLE_INT: return ParticipantTimeLine.INSURMOUNTABLE_STRING;
+		case	ParticipantTimeLine.SURMOUNTABLE_INT: return ParticipantTimeLine.SURMOUNTABLE_STRING;
+		case ParticipantTimeLine.PROGRESS_INT: return ParticipantTimeLine.PROGRESS_STRING;
+		case ParticipantTimeLine.INDTERMINATE_INT: return ParticipantTimeLine.INDTERMINATE_STRING;
+		default: return ParticipantTimeLine.INDTERMINATE_STRING;
+
+		
+		}
+		
+	}
+	
+	public static String manualStatusIntToString(int anIntStatus) {
+		if (anIntStatus == INDTERMINATE_INT)
+			return "";
+		else return statusIntToString(anIntStatus);
+
+		
+		
 		
 	}
 

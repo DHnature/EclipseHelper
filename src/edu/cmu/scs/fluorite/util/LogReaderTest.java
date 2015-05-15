@@ -1,13 +1,10 @@
 package edu.cmu.scs.fluorite.util;
 
-import static org.junit.Assert.*;
-
 import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.cmu.scs.fluorite.commands.FileOpenCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 public class LogReaderTest {

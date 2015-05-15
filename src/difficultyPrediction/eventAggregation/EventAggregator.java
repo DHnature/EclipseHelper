@@ -2,8 +2,6 @@ package difficultyPrediction.eventAggregation;
 
 import java.util.List;
 
-import trace.difficultyPrediction.NewEventSegmentAggregation;
-import difficultyPrediction.Mediator;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 public interface EventAggregator {

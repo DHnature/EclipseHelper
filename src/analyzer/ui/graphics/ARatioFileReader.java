@@ -14,17 +14,22 @@ import java.util.List;
 
 import javax.swing.JFileChooser;
 
-import difficultyPrediction.featureExtraction.ARatioFeatures;
-import difficultyPrediction.featureExtraction.RatioFeatures;
+import analyzer.AWebLink;
+import analyzer.WebLink;
 import util.annotations.Column;
 import util.annotations.ComponentWidth;
 import util.annotations.Row;
+import difficultyPrediction.featureExtraction.ARatioFeatures;
+import difficultyPrediction.featureExtraction.RatioFeatures;
 
 public class ARatioFileReader implements RatioFileReader {
 
 	private PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(
 			this);
-	private DuriRatioFeatures ratioFeatures = new ADuriRatioFeatures();
+	private RatioFileComponents ratioFeatures = new ARatioFileComponents();
+	List<RatioFileComponents> ratioFeaturesList;
+	
+
 	private String path = "";
 	private JFileChooser fileChooser;
 
@@ -54,14 +59,19 @@ public class ARatioFileReader implements RatioFileReader {
 	}
 
 	public void readFile(String fileName) {
+		ratioFeaturesList = new ArrayList();
 		BufferedReader br = null;
 		String row = "";
 
 		try {
 			br = new BufferedReader(new FileReader(fileName));
+			propertyChangeSupport.firePropertyChange(START_RATIOS,
+					null, "marker");
 			while ((row = br.readLine()) != null) {
 				readRow(row);
 			}
+			propertyChangeSupport.firePropertyChange(END_RATIOS,
+					null, "marker");
 
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -82,6 +92,7 @@ public class ARatioFileReader implements RatioFileReader {
 	private void readRow(String row) {
 		// TODO: fix oldRatioFeatures
 		RatioFeatures oldRatioFeatures = new ARatioFeatures();
+		ratioFeatures = new ARatioFileComponents(); // creating a new feature each time for text UI
 		String[] parts = row.split(",");
 		SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy H:mm:ss");
 		ratioFeatures.setEditRatio(Double.parseDouble(parts[1].trim()));
@@ -97,7 +108,7 @@ public class ARatioFileReader implements RatioFileReader {
 		if (parts[11].equalsIgnoreCase(" null")) {
 			ratioFeatures.setWebLinkList(null);
 		} else {
-			List<WebLink> list = new ArrayList<WebLink>();
+			List <WebLink> list = new ArrayList<WebLink>();
 			for (int i = 10; i < parts.length; i++) {
 				String[] searchAndUrl = parts[i].split("\t");
 				if (searchAndUrl.length > 1) {
@@ -113,9 +124,15 @@ public class ARatioFileReader implements RatioFileReader {
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
-		propertyChangeSupport.firePropertyChange("newRatioFeatures",
+//		ratioFeaturesList.add(ratioFeatures);
+		propertyChangeSupport.firePropertyChange(NEW_RATIO,
+//		propertyChangeSupport.firePropertyChange("newRatioFeatures",
 				oldRatioFeatures, ratioFeatures);
 	}
+	
+//	public List<RatioFileComponents> getRatioFeaturesList() {
+//		return ratioFeaturesList;
+//	}
 
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener aListener) {

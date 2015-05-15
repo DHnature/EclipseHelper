@@ -127,7 +127,7 @@ public class AStatusBar extends JPanel implements StatusBar {
 	@Override
 	public void propertyChange(PropertyChangeEvent evt) {
 		if (evt.getPropertyName().equalsIgnoreCase("newRatioFeatures")) {
-			newRatios((DuriRatioFeatures) evt.getNewValue());
+			newRatios((RatioFileComponents) evt.getNewValue());
 			repaint();
 		} else if (evt.getPropertyName().equalsIgnoreCase("start")
 				|| evt.getPropertyName().equalsIgnoreCase("size"))
@@ -157,7 +157,7 @@ public class AStatusBar extends JPanel implements StatusBar {
 	}
 
 	@Override
-	public void newRatios(DuriRatioFeatures ratioFeatures) {
+	public void newRatios(RatioFileComponents ratioFeatures) {
 		predictedList.add(ratioFeatures.getPredictedStatus());
 		actualList.add(ratioFeatures.getActualStatus());
 	}
@@ -211,5 +211,11 @@ public class AStatusBar extends JPanel implements StatusBar {
 		}
 		predictedList.set(predictedList.size() - 1, aStatus);
 
+	}
+
+	@Override
+	public void newManualStatus(String aStatus) {
+		// TODO Auto-generated method stub
+		
 	}
 }

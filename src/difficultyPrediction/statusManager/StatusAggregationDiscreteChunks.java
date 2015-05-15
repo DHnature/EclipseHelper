@@ -1,16 +1,18 @@
 package difficultyPrediction.statusManager;
 
-import analyzer.ui.graphics.LineGraphComposer;
 import difficultyPrediction.APredictionParameters;
 import difficultyPrediction.metrics.APredictionHolder;
+import difficultyPrediction.predictionManagement.PredictionManagerStrategy;
 
 public class StatusAggregationDiscreteChunks implements StatusManagerStrategy{
 	public StatusManager manager;
 	private static final int NO_STATUS_INT = -1;
 	private static final int STUCK_INT = 1;
 	private static final int PROGRESS_INT = 0;
-	private static final String STUCK = "YES";
-	private static final String PROGRESS = "NO";
+//	public static final String STUCK = "YES";
+//	public static final String PROGRESS = "NO";
+	public static final String STUCK = PredictionManagerStrategy.DIFFICULTY_PREDICTION;
+	public static final String PROGRESS = PredictionManagerStrategy.PROGRESS_PREDICTION;
 	private static final int MAX_PERCENTAGE = 60;
 	private static final int WHOLE_PERCENTAGE = 100; //Uhh? haha
 	private APredictionHolder holdPredictions = new APredictionHolder();

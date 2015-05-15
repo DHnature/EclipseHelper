@@ -7,23 +7,18 @@ import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.KeyEvent;
 import org.eclipse.swt.events.KeyListener;
-import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Text;
-
-import edu.cmu.scs.fluorite.plugin.Activator;
-//import org.jivesoftware.smack.XMPPException;
-
 //import chat.Activator;
-
 import buddylist.chat.AccountType;
-import buddylist.chat.AccountsManager;
+
 import buddylist.database.DatabaseConnection;
 import buddylist.database.DatabaseUtils;
 import buddylist.database.Users;
+//import org.jivesoftware.smack.XMPPException;
 
 /**
  * This program is free software: you can redistribute it and/or modify it under

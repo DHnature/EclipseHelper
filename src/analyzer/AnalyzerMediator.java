@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.Calendar;
 
 import org.joda.time.DateTime;
-import org.joda.time.format.ISODateTimeFormat;
 
 import difficultyPrediction.Mediator;
 import difficultyPrediction.PluginEventListener;
@@ -14,11 +13,12 @@ import difficultyPrediction.StatusInformation;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
 import difficultyPrediction.eventAggregation.EventAggregator;
+import difficultyPrediction.featureExtraction.BarrierListener;
 import difficultyPrediction.featureExtraction.ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime;
-import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioBasedFeatureExtractor;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeaturesListener;
+import difficultyPrediction.featureExtraction.WebLinkListener;
 import difficultyPrediction.predictionManagement.APredictionManagerDetails;
 import difficultyPrediction.predictionManagement.PredictionManager;
 import difficultyPrediction.statusManager.StatusListener;
@@ -235,7 +235,7 @@ public class AnalyzerMediator implements Mediator {
 	}
 
 	@Override
-	public void addPluginEventEventListener(PluginEventListener aListener) {
+	public void addPluginEventListener(PluginEventListener aListener) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -260,6 +260,30 @@ public class AnalyzerMediator implements Mediator {
 
 	@Override
 	public void notifyNewCommand(ICommand aCommand) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addWebLinkListener(WebLinkListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeWebLinkListener(WebLinkListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addBarrierListener(BarrierListener aListener) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeBarrierListener(BarrierListener aListener) {
 		// TODO Auto-generated method stub
 		
 	}

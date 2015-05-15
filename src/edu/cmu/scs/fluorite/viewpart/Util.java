@@ -4,8 +4,7 @@
 ///*     */ import com.gtalk.views.GTalkChatView;
 
 
-/*     */ import java.io.PrintStream;
-/*     */ import java.util.ArrayList;
+/*     */ /*     */ import java.util.ArrayList;
 /*     */ import java.util.Collection;
 /*     */ import java.util.HashMap;
 /*     */ import java.util.Iterator;
@@ -16,7 +15,6 @@
 /*     */ import org.eclipse.swt.custom.StyleRange;
 /*     */ import org.eclipse.swt.graphics.Font;
 /*     */ import org.eclipse.swt.widgets.Display;
-/*     */ import org.eclipse.ui.IWorkbench;
 /*     */ import org.eclipse.ui.PlatformUI;
 /*     */ import org.jivesoftware.smack.Chat;
 /*     */ import org.jivesoftware.smack.ChatManager;
@@ -25,16 +23,17 @@
 /*     */ import org.jivesoftware.smack.Roster;
 /*     */ import org.jivesoftware.smack.RosterEntry;
 /*     */ import org.jivesoftware.smack.XMPPConnection;
-/*     */ import org.jivesoftware.smack.XMPPException;
 /*     */ import org.jivesoftware.smack.packet.Message;
-/*     */ import org.jivesoftware.smack.packet.Message.Type;
 /*     */ import org.jivesoftware.smack.packet.Presence;
-/*     */ import org.jivesoftware.smack.packet.Presence.Mode;
 ///*     */ import org.jivesoftware.smack.packet.Presence.Type;
 /*     */ import org.jivesoftware.smack.proxy.ProxyInfo;
-/*     */ import org.jivesoftware.smack.proxy.ProxyInfo.ProxyType;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 /*     */ import org.jivesoftware.smack.util.StringUtils;
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
+/*     */ 
 /*     */ 
 /*     */ public class Util
 /*     */ {

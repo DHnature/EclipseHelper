@@ -8,11 +8,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Vector;
-import java.util.regex.Pattern;
 
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.preference.IPreferenceStore;
 import org.eclipse.jface.preference.PreferenceDialog;
@@ -49,18 +47,12 @@ import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.dialogs.PreferencesUtil;
-import org.eclipse.ui.internal.dialogs.ViewContentProvider;
 import org.eclipse.ui.part.ViewPart;
 
-import buddylist.chat.Buddy_1;
 import buddylist.database.Chat;
 import buddylist.database.DatabaseConnection;
 import buddylist.database.DatabaseUtils;
-import buddylist.database.Users;
 import buddylist.views.AddAccountWizard;
-import buddylist.views.ChatWindow;
-
-import edu.cmu.scs.fluorite.commands.PredictionCommand;
 import edu.cmu.scs.fluorite.plugin.Activator;
 import edu.cmu.scs.fluorite.util.StringUtil;
 

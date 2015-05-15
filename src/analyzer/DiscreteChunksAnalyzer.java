@@ -1,10 +1,8 @@
 package analyzer;
 
-import difficultyPrediction.APredictionParameters;
 import difficultyPrediction.PredictionParametersSetterSelector;
-import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.eventAggregation.EventAggregationStrategy;
-import difficultyPrediction.eventAggregation.AnEventAggregator;
+import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.eventAggregation.EventAggregatorArray;
 import edu.cmu.scs.fluorite.commands.ICommand;
 

@@ -2,10 +2,9 @@ package trace.logger;
 
 import java.util.logging.FileHandler;
 
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
-import trace.plugin.PluginEarlyStarted;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
 
 public class LogHandlerBound extends TraceableInfo{
 	FileHandler fileHandler;

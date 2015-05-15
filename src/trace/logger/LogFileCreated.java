@@ -1,9 +1,8 @@
 package trace.logger;
 
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
-import trace.plugin.PluginEarlyStarted;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
+import edu.cmu.scs.fluorite.util.EventLoggerConsole;
 
 public class LogFileCreated extends TraceableInfo{
 	String fileName;

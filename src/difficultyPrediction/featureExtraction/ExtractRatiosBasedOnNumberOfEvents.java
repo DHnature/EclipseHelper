@@ -3,8 +3,8 @@ package difficultyPrediction.featureExtraction;
 import java.util.List;
 
 import difficultyPrediction.metrics.RatioCalculator;
-import edu.cmu.scs.fluorite.commands.ICommand;
 import difficultyPrediction.metrics.RatioCalculatorSelector;
+import edu.cmu.scs.fluorite.commands.ICommand;
 
 public class ExtractRatiosBasedOnNumberOfEvents implements
 		FeatureExtractionStrategy {
