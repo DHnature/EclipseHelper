@@ -19,5 +19,6 @@
 	<classpathentry kind="lib" path="D:/dewan_backup/Java/EclipseHelper/lib/smack-3.4.1-0cec571.jar"/>
 	<classpathentry kind="lib" path="D:/dewan_backup/Java/EclipseHelper/lib/smackx-3.4.1-0cec571.jar"/>
 	<classpathentry kind="lib" path="D:/dewan_backup/Java/EclipseHelper/lib/smackx-debug-3.4.1-0cec571.jar"/>
+	<classpathentry kind="lib" path="lib/weka3_6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

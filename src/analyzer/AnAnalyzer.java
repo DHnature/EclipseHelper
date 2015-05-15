@@ -240,12 +240,12 @@ public class AnAnalyzer implements Analyzer  {
 	 */
 	public void loadStuckPoint() {
 		CSVParser parser = new ACSVParser();
-		try {
+//		try {
 			parser.start(STUCKPOINT_FILE);
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+//		} catch (FileNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
 
 		parser.getNextLine();
 		String line;
@@ -299,13 +299,13 @@ public class AnAnalyzer implements Analyzer  {
 	 */
 	public synchronized void loadStuckInterval() {
 		CSVParser parser = new ACSVParser();
-		try {
+//		try {
 			parser.start(STUCKINTERVAL_FILE);
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			return;
-		}
+//		} catch (FileNotFoundException e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//			return;
+//		}
 
 		parser.getNextLine();
 		String line;
@@ -344,20 +344,14 @@ public class AnAnalyzer implements Analyzer  {
 		parser.stop();
 
 	}
-
-	/**
-	 * This allows the tester and auto arff generator to input parameters<br>
-	 * middleFolder is a folder that comes between output/ and participantName,
-	 * used to differentiate the different output types
-	 * 
-	 * @param participantSelection
-	 */
-	public synchronized void doLoadLogs() {
+	
+	public void doLoadLogs() {
 		FactorySingletonInitializer.configure();
 
 		String participantId = parameters.getParticipants().getValue();
 		String numberOfSegments = ""
 				+ parameters.getPredictionParameters().getSegmentLength();
+//		String numberOfSegments = "" + parameters.getPredictionParameters().getSegmentLength();
 //		String numberOfSegments = "" + parameters.getPredictionParameters().getSegmentLength();
 
 		// Queue q=this.stuckPoint.get("19");
@@ -451,10 +445,12 @@ public class AnAnalyzer implements Analyzer  {
 			notifyFinishParticipant(ALL_PARTICIPANTS, null);
 
 		} else {
-			String aParticipanttFolder = participants.get(participantId);
+//			String aParticipanttFolder = participants.get(participantId);
 			this.outputSubdirectory=outPath ;
 			processParticipant(participantId,this.outputSubdirectory,participantsFolder.getText()
-					+ EXPERIMENTAL_DATA + aParticipanttFolder + "/" + ECLIPSE_FOLDER,true);
+					+ EXPERIMENTAL_DATA 
+//					+ aParticipanttFolder + "/" + ECLIPSE_FOLDER
+					, true);
 
 		}
 		// old stuff, in case we need to revert 12/20/2014
@@ -575,7 +571,7 @@ public class AnAnalyzer implements Analyzer  {
 		String aParticipantFolder = participants.get(aParticipantId);
 		// notifyNewParticipant(aParticipantId);
 		String aFullParticipantOutputFolderName = outPath+(isIndividualPart? aParticipantFolder+"/":"");
-		String aFullParticipantDataFolderName = dataPath;
+		String aFullParticipantDataFolderName = dataPath + aParticipantFolder + "/" + ECLIPSE_FOLDER;
 		File anOutputFolder = new File(aFullParticipantOutputFolderName);
 		if (!anOutputFolder.exists() )
 			anOutputFolder.mkdirs();
@@ -607,7 +603,7 @@ public class AnAnalyzer implements Analyzer  {
 				try {
 					FileOutputStream writer = new FileOutputStream(aRatiosFile);
 					writer.close();
-0
+
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				} catch (IOException e) {
@@ -875,6 +871,7 @@ public class AnAnalyzer implements Analyzer  {
 	 * 
 	 */
 	@Override
+	@Visible(false)
 	public String getOutputDirectory() {
 		return this.outputSubdirectory;
 
@@ -882,7 +879,7 @@ public class AnAnalyzer implements Analyzer  {
 
 	@Override
 	@Visible(false)
-	public AnAnalyzerParameters getParameterSelector() {
+	public AnalyzerParameters getParameterSelector() {
 		return this.parameters;
 
 	}
