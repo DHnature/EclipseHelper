@@ -67,8 +67,6 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener
 		currentParticipant = anId;
 		this.isStuckPointFileGenerated=false;
 		
-		
-		
 		if(aFolder!= null) {
 			// should this not be in the constructor?
 			DifficultyRobot.getInstance().addPluginEventListener(this);
@@ -453,7 +451,6 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener
 		// TODO Auto-generated method stub
 
 	}
-	
 	@Override
 	public ParticipantTimeLine getParticipantTimeLine() {
 		return participantTimeLine;

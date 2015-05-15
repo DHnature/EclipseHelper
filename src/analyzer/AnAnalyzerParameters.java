@@ -130,7 +130,7 @@ public class AnAnalyzerParameters implements AnalyzerParameters  {
 	@ComponentHeight(25)
     public void replayLogs() {
 		if (analyzer != null)
-			analyzer.loadLogs(true);
+			analyzer.loadLogs();
 		
 	}
 	/* (non-Javadoc)
@@ -172,7 +172,6 @@ public class AnAnalyzerParameters implements AnalyzerParameters  {
 	@Column(1)
 //	@Row(2)
 //	@Column(3)
-	@Explanation("Replay ratio files rather than generating them from experimental data")
 	public boolean isReplayOutputFiles() {
 		
 		
@@ -257,9 +256,7 @@ public class AnAnalyzerParameters implements AnalyzerParameters  {
 		final Runnable aRunnable = 
 				new Runnable() {
 			public void run() {
-				analyzer.processParticipant(participants.getChoices().get(1 + currentParticipantIndex()), 
-						AnAnalyzer.PARTICIPANT_DIRECTORY + AnAnalyzer.OUTPUT_DATA, 
-						AnAnalyzer.PARTICIPANT_DIRECTORY + AnAnalyzer.EXPERIMENTAL_DATA, true);
+				analyzer.processParticipant(participants.getChoices().get(1 + currentParticipantIndex()));
 
 			}};
 			Thread aThread = (new Thread(aRunnable));

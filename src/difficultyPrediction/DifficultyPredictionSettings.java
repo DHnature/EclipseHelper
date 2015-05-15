@@ -6,8 +6,9 @@ public class DifficultyPredictionSettings {
 	static boolean replayMode;
 	static boolean newRatioFiles;
 	static boolean replayRatioFiles;
+
 	//boolean that turns on/off ratio files creation
-		static boolean createRatioFiles;
+	static boolean createRatioFiles;
 
 	static int segmentLength = 50;
 

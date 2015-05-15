@@ -22,7 +22,7 @@ public interface Analyzer extends PropertyListenerRegistrar{
 	 */
 	public void setOutputSubDirectory(String outputDir);
 	
-	public AnalyzerParameters getParameterSelector();
+	public AnAnalyzerParameters getParameterSelector();
 	
 	public abstract FileSetterModel getParticipantsFolder();
 
