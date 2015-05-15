@@ -1,6 +1,7 @@
 package analyzer.extension;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -9,7 +10,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
 import java.util.Map;
+
 import java.util.Queue;
+
 
 import analyzer.AParticipantTimeLine;
 import analyzer.AnAnalyzer;
@@ -25,7 +28,7 @@ import difficultyPrediction.predictionManagement.PredictionManagerStrategy;
  * new predictions.
  * <p>
  * Instructions:<br>
- * 1. To ins
+ *
  * 
  * @author wangk1
  *
@@ -58,9 +61,6 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 	//Buffered writer for writing out to the arff file
 	private ArffWriter arffWriter;
 
-	//Queue of ratios, when a new prediction is made. Print all the ratios from the queue.
-	private Queue<RatioFeatures> ratios;
-
 
 	//set to keep
 	//Is the user currently stuck
@@ -68,15 +68,13 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 	
 	private boolean all;
 
-	private Analyzer analyzer;
-
 	//set the path of the arff file
 	public AnArffGenerator(Analyzer analyzer) {
-		this.analyzer=analyzer;
-		this.started=false;
-		this.ratios=new LinkedList<RatioFeatures>();
+		super(analyzer);
 
-		arffWriter=new AnArffGenerator.ArffWriter();
+		this.started=false;
+		
+		this.arffWriter=new AnArffGenerator.ArffWriter();
 
 		//register the event listeners
 		DifficultyRobot.getInstance().addRatioFeaturesListener(this);
@@ -105,12 +103,12 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 		if(!all) {
 			if(anId.equals("All") && aFolder==null ) {
 				//set path
-				path=AnAnalyzer.PARTICIPANT_OUTPUT_DIRECTORY+"/all.arff";
+				this.path=((AnAnalyzer) this.analyzer).getOutputDirectory()+"/all.arff";
 				this.all=true;
 
 				//else it is individual filess
 			} else {
-				path=AnAnalyzer.PARTICIPANT_OUTPUT_DIRECTORY+"/"+aFolder+"/"+aFolder+".arff";
+				this.path=((AnAnalyzer) this.analyzer).getOutputDirectory()+"/"+aFolder+"/"+aFolder+".arff";
 
 			}
 
@@ -170,9 +168,13 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 		//create file if not exists
 		if(!Files.exists(p) && Files.notExists(p)) {
 			try {
-				Files.createFile(p);
+				File f=new File(p.toString());
+				f.getParentFile().mkdirs();
+				f.createNewFile();
+				f.setWritable(true);
+				f.setReadable(true);
+			
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -270,6 +272,14 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 			
 		}
 	}
+	
+	/**Set the output path
+	 * 
+	 */
+	public void setOutputPath(String p) {
+		this.path=p;
+		
+	}
 
 
 	/**Inner static class that encapsulate a buffered stream<br>*/
@@ -306,7 +316,6 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 				}
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -317,7 +326,6 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 			try {
 				writer=Files.newBufferedWriter(Paths.get(path), Charset.defaultCharset(), StandardOpenOption.APPEND);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -334,7 +342,6 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 			try {
 				writer.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 
@@ -416,7 +423,6 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 	
 	public static void main(String[] args) {
 		Analyzer analyzer = new AnAnalyzer();
-		AnAnalyzerProcessor.analyzer=analyzer;
 		ArffGenerator arffGenerator = new AnArffGenerator(analyzer);
 		analyzer.addAnalyzerListener(arffGenerator);
 		OEFrame frame = ObjectEditor.edit(analyzer);
