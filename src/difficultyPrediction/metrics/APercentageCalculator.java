@@ -109,10 +109,7 @@ public class APercentageCalculator implements RatioCalculator {
 			isNavigationEvent = true;
 		}
 
-		
-		return isNavigationEvent;
-	}
-// switch(event.getEventKind())
+		// switch(event.getEventKind())
 		// {
 		// case COMMAND:
 		// if (event.getCommandId() != null)
@@ -139,6 +136,9 @@ public class APercentageCalculator implements RatioCalculator {
 		// }
 		// break;
 		// }
+		return isNavigationEvent;
+	}
+
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isFocusEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
@@ -149,17 +149,17 @@ public class APercentageCalculator implements RatioCalculator {
 		if (event.getCommandType().equals("ShellCommand")) {
 			isFocusEvent = true;
 		}
-		
-
-		return isFocusEvent;
-	}
-// switch(event.getEventKind())
+		// switch(event.getEventKind())
 		// {
 		// case WINDOW:
 		// if (event.getWindowEventKind() == WindowEventKind.ECLIPSE_LOST_FOCUS)
 		// isFocusEvent = true;
 		// break;
 		// }
+
+		return isFocusEvent;
+	}
+
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isAddRemoveEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
@@ -296,24 +296,24 @@ public class APercentageCalculator implements RatioCalculator {
 
 			if (isEditEvent(myEvent)) {
 				numberOfEditEvents++;
-				//System.out.println ("Edit command:" + myEvent);
+				System.out.println ("Edit command:" + myEvent);
 			} else if (isDebugEvent(myEvent)) {
 				numberOfDebugEvents++;
-				//System.out.println ("Debug command:" + myEvent);
+				System.out.println ("Debug command:" + myEvent);
 
 			} else if (isNavigationEvent(myEvent)) {
 				numberOfSearchEvents++;
-				//System.out.println ("navigation command:" + myEvent);
+				System.out.println ("navigation command:" + myEvent);
 
 			} else if (isFocusEvent(myEvent)) {
 				numberOfFocusEvents++;
-				//System.out.println ("Focus command:" + myEvent);
+				System.out.println ("Focus command:" + myEvent);
 
 			} else if (isAddRemoveEvent(myEvent)) {
 				numberOfRemoveEvents++;
-				//System.out.println ("remove command:" + myEvent);
+				System.out.println ("remove command:" + myEvent);
 			} else {
-				//System.out.println("Unclassified command: " + myEvent);
+				System.out.println("Unclassified command: " + myEvent);
 			}
 
 		}

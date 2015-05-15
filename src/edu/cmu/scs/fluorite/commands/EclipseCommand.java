@@ -14,9 +14,9 @@ import org.eclipse.ui.commands.ICommandService;
 import org.eclipse.ui.handlers.IHandlerService;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import difficultyPrediction.DifficultyPredictionSettings;
-import analyzer.AnalyzerFactory;
 import edu.cmu.scs.fluorite.util.EventLoggerConsole;
 
 public class EclipseCommand extends AbstractCommand {
@@ -111,8 +111,6 @@ public class EclipseCommand extends AbstractCommand {
 	}
 
 	public String getDescription() {
-		if (DifficultyPredictionSettings.isReplayMode()) // workbench is not initialized in replay mode
-			return "";
 		ICommandService cs = (ICommandService) PlatformUI.getWorkbench()
 				.getAdapter(ICommandService.class);
 		Command command = cs.getCommand(mCommandId);
@@ -126,9 +124,6 @@ public class EclipseCommand extends AbstractCommand {
 	}
 
 	public String getName() {
-		if (DifficultyPredictionSettings.isReplayMode()) // workbench is not initialized in replay mode
-			return mCommandId;
-		
 		ICommandService cs = (ICommandService) PlatformUI.getWorkbench()
 				.getAdapter(ICommandService.class);
 		Command command = cs.getCommand(mCommandId);
@@ -137,14 +132,11 @@ public class EclipseCommand extends AbstractCommand {
 		} catch (NotDefinedException e) {
 			// e.printStackTrace();
 		}
-		
 
 		return mCommandId;
 	}
 
 	public String getCategory() {
-		if (DifficultyPredictionSettings.isReplayMode()) // workbench is not initialized in replay mode
-			return "";
 		ICommandService cs = (ICommandService) PlatformUI.getWorkbench()
 				.getAdapter(ICommandService.class);
 		Command command = cs.getCommand(mCommandId);

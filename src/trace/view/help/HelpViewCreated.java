@@ -2,9 +2,12 @@ package trace.view.help;
 
 import org.eclipse.swt.widgets.Composite;
 
-import trace.view.ViewCreated;
-import util.trace.Tracer;
 import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import trace.plugin.PluginStopped;
+import trace.view.ViewCreated;
+import util.trace.Traceable;
+import util.trace.TraceableInfo;
+import util.trace.Tracer;
 
 
 public class HelpViewCreated extends ViewCreated {

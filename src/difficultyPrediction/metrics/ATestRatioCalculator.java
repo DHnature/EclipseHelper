@@ -3,44 +3,18 @@ package difficultyPrediction.metrics;
 import java.util.ArrayList;
 import java.util.List;
 
-import difficultyPrediction.ATimeandEventBasedPercentage;
 import edu.cmu.scs.fluorite.commands.CompilationCommand;
 import edu.cmu.scs.fluorite.commands.EclipseCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 
 public class ATestRatioCalculator implements RatioCalculator {
-	public enum Scheme{
-		A0("leaveoneouta0/"),
-		A1("leaveoneouta1/"),
-		A2("leaveoneouta2/"),
-		A3("leaveoneouta3/");
-		
-		private String dir;
-		
-		private Scheme(String dir) {
-			this.dir=dir;
-			
-		}
-
-		public String getSubDir() {
-			return this.dir;
-			
-		}
-		
-	}
-
-	public static Scheme CURRENT_SCHEME=Scheme.A1;
 	public final static int DEBUG_EVENT_INDEX = 0;
 	public final static int SEARCH_EVENT_INDEX = 1;
 	public final static int EDIT_EVENT_INDEX = 2;
 	public final static int FOCUS_EVENT_INDEX = 3;
 	public final static int REMOVE_EVENT_INDEX = 4;
 	static RatioCalculator instance;
-
-	//jason's calculator, used to calculate the percentage with his calculator
-	private ATimeandEventBasedPercentage jasonCalculator=new ATimeandEventBasedPercentage();
-	private RatioCalculator r=new APercentageCalculator();
 
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isDebugEvent(edu.cmu.scs.fluorite.commands.ICommand)
@@ -64,16 +38,17 @@ public class ATestRatioCalculator implements RatioCalculator {
 			}
 		}
 
+		// switch(event.getEventKind()) {
+		// case DEBUG:
+		// isDebugEvent = true;
+		// break;
+		// /*case BUILD:
+		// isDebugEvent = true;
+		// break;*/
+		// }
 		return isDebugEvent;
 	}
-	// switch(event.getEventKind()) {
-	// case DEBUG:
-	// isDebugEvent = true;
-	// break;
-	// /*case BUILD:
-	// isDebugEvent = true;
-	// break;*/
-	// }
+
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isEditEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
@@ -88,9 +63,9 @@ public class ATestRatioCalculator implements RatioCalculator {
 				|| (event.getCommandType().equals("RedoCommand"))
 				|| (event.getCommandType().equals("SelectTextCommand"))
 				|| (event.getCommandType().equals("CutCommand"))
-
+				
 				|| (event.getCommandType().equals("Replace"))
-
+				
 
 
 				) {
@@ -103,21 +78,21 @@ public class ATestRatioCalculator implements RatioCalculator {
 				isEditEvent = true;
 			}
 		}
-
+		// switch(event.getEventKind()) {
+		// case EDIT:
+		// isEditEvent=true;
+		// break;
+		// case COMMAND:
+		// if (event.getCommandId() != null) {
+		// if(event.getCommandId().toLowerCase().contains("edit")) {
+		// isEditEvent = true;
+		// }
+		// }
+		// break;
+		// }
 		return isEditEvent;
 	}
-	// switch(event.getEventKind()) {
-	// case EDIT:
-	// isEditEvent=true;
-	// break;
-	// case COMMAND:
-	// if (event.getCommandId() != null) {
-	// if(event.getCommandId().toLowerCase().contains("edit")) {
-	// isEditEvent = true;
-	// }
-	// }
-	// break;
-	// }
+
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isNavigationEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
@@ -326,112 +301,26 @@ public class ATestRatioCalculator implements RatioCalculator {
 		for (int i = 0; i < userActions.size(); i++) {
 			ICommand myEvent = userActions.get(i);
 
+			if (isEditEvent(myEvent)) {
+				numberOfEditEvents++;
+				System.out.println ("Edit command:" + myEvent);
+			} else if (isDebugEvent(myEvent)) {
+				numberOfDebugEvents++;
+				System.out.println ("Debug command:" + myEvent);
 
-			switch(CURRENT_SCHEME) {
-			case A0:
+			} else if (isNavigationEvent(myEvent)) {
+				numberOfSearchEvents++;
+				System.out.println ("navigation command:" + myEvent);
 
-				//jason's edit scheme
-				//System.out.println ("remove command:" + myEvent);
-				if (jasonCalculator.isEditEvent(myEvent)) {
-					numberOfEditEvents++;
-					//System.out.println ("Edit command:" + myEvent);
-				} else if (jasonCalculator.isDebugEvent(myEvent)) {
-					numberOfDebugEvents++;
-					//System.out.println ("Debug command:" + myEvent);
+			} else if (isFocusEvent(myEvent)) {
+				numberOfFocusEvents++;
+				System.out.println ("Focus command:" + myEvent);
 
-				} else if (r.isNavigationEvent(myEvent)) {
-					numberOfSearchEvents++;
-					//System.out.println ("navigation command:" + myEvent);
-
-				} else if (r.isFocusEvent(myEvent)) {
-					numberOfFocusEvents++;
-					//System.out.println ("Focus command:" + myEvent);
-
-				} else  if(jasonCalculator.isDeletionEvent(myEvent)){
-					//numberOfRemoveEvents++;
-					//System.out.println("Unclassified command: " + myEvent);
-				}
-
-				break;
-
-			case A1:
-
-				//jason's scheme with web
-				//System.out.println ("remove command:" + myEvent);
-				if (jasonCalculator.isInsertionEvent(myEvent)) {
-					numberOfEditEvents++;
-					//System.out.println ("Edit command:" + myEvent);
-				} else if (jasonCalculator.isDebugEvent(myEvent)) {
-					numberOfDebugEvents++;
-					//System.out.println ("Debug command:" + myEvent);
-
-				} else if (r.isNavigationEvent(myEvent)) {
-					numberOfSearchEvents++;
-					//System.out.println ("navigation command:" + myEvent);
-
-				} else if (r.isFocusEvent(myEvent)) {
-					numberOfFocusEvents++;
-					//System.out.println ("Focus command:" + myEvent);
-
-				} else  if(jasonCalculator.isDeletionEvent(myEvent)){
-					numberOfRemoveEvents++;
-					//System.out.println("Unclassified command: " + myEvent);
-				}
-
-				break;
-
-			case A2:
-				//kevin's scheme,mixed
-
-
-				if (jasonCalculator.isInsertionEvent(myEvent)) {
-					numberOfEditEvents++;
-					//System.out.println ("Edit command:" + myEvent);
-				} else if (isDebugEvent(myEvent)) {
-					numberOfDebugEvents++;
-					//System.out.println ("Debug command:" + myEvent);
-
-				} else if (isNavigationEvent(myEvent)) {
-					numberOfSearchEvents++;
-					//System.out.println ("navigation command:" + myEvent);
-
-				} else if (isFocusEvent(myEvent)) {
-					numberOfFocusEvents++;
-					//System.out.println ("Focus command:" + myEvent);
-
-				} else if(jasonCalculator.isDeletionEvent(myEvent)){
-					numberOfRemoveEvents++;
-
-				} else  {
-					//System.out.println("Unclassified command: " + myEvent);
-				}
-				break;
-
-			case A3:
-
-				//third ratios, original scheme
-				if (isEditEvent(myEvent)) {
-					numberOfEditEvents++;
-					//System.out.println ("Edit command:" + myEvent);
-				} else if (isDebugEvent(myEvent)) {
-					numberOfDebugEvents++;
-					//System.out.println ("Debug command:" + myEvent);
-
-				} else if (isNavigationEvent(myEvent)) {
-					numberOfSearchEvents++;
-					//System.out.println ("navigation command:" + myEvent);
-
-				} else if (isFocusEvent(myEvent)) {
-					numberOfFocusEvents++;
-					//System.out.println ("Focus command:" + myEvent);
-
-				} else if(isAddRemoveEvent(myEvent)){
-					numberOfRemoveEvents++;
-
-				} else  {
-					//System.out.println("Unclassified command: " + myEvent);
-				}
-
+			} else if (isAddRemoveEvent(myEvent)) {
+				numberOfRemoveEvents++;
+				System.out.println ("remove command:" + myEvent);
+			} else {
+				System.out.println("Unclassified command: " + myEvent);
 			}
 
 		}
