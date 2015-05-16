@@ -76,7 +76,7 @@ public class AnAnalyzer implements Analyzer  {
 	public static final String ALL_PARTICIPANTS = "All";
 	public static final String IGNORE_KEYWORD = "IGNORE";
 	static final Hashtable<String, String> participants = new Hashtable<String, String>();
-
+	
 	//do not make public, we only need to fill these maps once, must uphold that they are unmodifiable via getter methods
 	private static Map<String, Queue<StuckPoint>> stuckPoint = new HashMap<>();
 	private static Map<String, Queue<StuckInterval>> stuckInterval = new HashMap<>();
@@ -103,7 +103,7 @@ public class AnAnalyzer implements Analyzer  {
 	// different for each instance of analyzer
 	private String outputSubdirectory = "";
 
-
+	//random comment to make sure things can commit
 	public AnAnalyzer() {
 		propertyChangeSupport = new PropertyChangeSupport(this);
 		// whoever invokes the analyzer should set the replay mode
