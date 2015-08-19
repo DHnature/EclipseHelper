@@ -10,8 +10,8 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.LinkedList;
 import java.util.Map;
-
 import java.util.Queue;
+
 
 
 import analyzer.AParticipantTimeLine;
@@ -20,6 +20,7 @@ import analyzer.Analyzer;
 import analyzer.ParticipantTimeLine;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
+import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.DifficultyRobot;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.predictionManagement.PredictionManagerStrategy;
@@ -422,6 +423,7 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 	Object b;
 	
 	public static void main(String[] args) {
+		DifficultyPredictionSettings.setReplayMode(true);
 		Analyzer analyzer = new AnAnalyzer();
 		ArffGenerator arffGenerator = new AnArffGenerator(analyzer);
 		analyzer.addAnalyzerListener(arffGenerator);

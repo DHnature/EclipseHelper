@@ -101,6 +101,11 @@ public abstract class AnAbstractDisplayBoundsOutputter implements  DisplayBounds
 		if (display != null)
 			return;
 		display = Display.getCurrent();
+		if (display == null)
+			return;
+//			display = Display.getDefault();
+//		if (display == null)
+//			return;
 		display.addListener(SWT.RESIZE, this);
 		listenToDisplayEvents();
 		
