@@ -148,9 +148,12 @@ public class DifficultyRobot extends AMediatorRegistrar implements Mediator {
          statusPrediction.userId = this.id;
          statusPrediction.userName = this.id;
          statusPrediction.statusKind = StatusKind.PREDICTION_MADE;
+         // save to log below also results in a notification
          notifyNewAggregateStatus(details.predictionValue);
        
-       
+         // this is where a new command representing the changed status is recorded,
+         // which in turn is intercepted by the runnable and results in an asynchronous notification
+         // in the help view and a balloon tip
          saveToLog(details);
          
          

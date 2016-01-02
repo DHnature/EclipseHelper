@@ -115,6 +115,10 @@ public class EclipseCommand extends AbstractCommand {
 			return "";
 		ICommandService cs = (ICommandService) PlatformUI.getWorkbench()
 				.getAdapter(ICommandService.class);
+		if (cs == null) {
+			System.err.println("Null command service:" );
+			return "";
+		}
 		Command command = cs.getCommand(mCommandId);
 		try {
 			return command.getDescription();
@@ -131,6 +135,10 @@ public class EclipseCommand extends AbstractCommand {
 		
 		ICommandService cs = (ICommandService) PlatformUI.getWorkbench()
 				.getAdapter(ICommandService.class);
+		if (cs == null) {
+			System.err.println("Null command service:" );
+			return mCommandId;
+		}
 		Command command = cs.getCommand(mCommandId);
 		try {
 			return command.getName();
@@ -147,6 +155,10 @@ public class EclipseCommand extends AbstractCommand {
 			return "";
 		ICommandService cs = (ICommandService) PlatformUI.getWorkbench()
 				.getAdapter(ICommandService.class);
+		if (cs == null) {
+			System.err.println("Null command service:" );
+			return "";
+		}
 		Command command = cs.getCommand(mCommandId);
 		try {
 			Category cat = command.getCategory();
