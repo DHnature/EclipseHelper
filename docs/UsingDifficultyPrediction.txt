@@ -1,0 +1,55 @@
+Here is a quick doc on how to use the dfiiculty prediction modules of EclipseHelper without the rest of the code.
+
+To understand this properly, you should look at the Carter and Dewan group paper on the architecture of prediction softwrae.
+
+As the paper indicates, the modules all communicate through a central module called the mediator.
+
+The mediator interface is implemented by the class DifficultyRobot, which is the main class with which you interact to use the modules.
+
+If you run the ANAnaylizer main, and put breakpoints on each method in this class, you see the algorithm in action.
+
+AnAnalyzer  has a UI that allows replay of logs of previous participants. When the window comes up, execute loadlogs, which whould populate the pariticpants combobox menu. Select one of the pariticpants (say 16) and then execute replay.
+ 
+We do not want the predictions to refer to the plugin windows, so youy need to execute:
+		DifficultyPredictionSettings.setReplayMode(true);
+to indicate that the plugin is not involved.
+
+You also need to set the prediction parameters. This is done by the code:
+	FactorySingletonInitializer.configure();
+Because are in replay mode, this calls:
+	ReplayModeInitializer.configure();
+
+This in turn calls:
+		RatioFeaturesFactorySelector.setFactory(new ARatioFeaturesFactory());
+		RatioCalculatorSelector.setFactory(new ATestRatioCalculatorFactory());
+		PredictionParametersSetterSelector.setSingleton(new ATestPredictionParametersSetter());
+You can play around with the parameters setter and maybe even rationc alculator an dfeatyres factory by calling this code directly rather than through the configure methods.
+
+If you want the predictions to be displayed interactively, run:
+	APredictionController.createUI();
+Look at the menu, APredictionController, it will give you an option to display the multi-level aggregator and line graph. These should be updated as the algorithm	proceeds.
+
+This is all setup. The main task is to feed commands to the prediction module and get predictions.
+
+To feed commands, you need the following object:
+	DifficultyPredictionPluginEventProcessor.getInstance();
+Once you have this object, you need some more setup perhaps (I am not sure if you do not do this, the defaullt is ADIsjointChunksAnalyzer, Kevin seems to have implemented this one, Jason the default one. You may try your code with and without this code):
+        Mediator mediator = difficultyEventProcessor.getDifficultyPredictionRunnable().getMediator();
+		EventAggregator eventAggregator = mediator.getEventAggregator();
+		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer("" + PredictionParametersSetterSelector.getSingleton().getSegmentLength()));
+	
+To get notifications of difficulty predictions, some more setup:
+			DifficultyRobot.getInstance().addStatusListener(this);
+StatusListener has the method:
+	void newAggregatedStatus(String aStatus);
+which is called when a new status is predicted.
+
+Finally to feed new commands to the prediction code,you need to execute:
+
+DifficultyPredictionPluginEventProcessor.getInstance().newCommmand().
+
+The argument to it is an ICommand.
+
+You need to construct appropriate instances of this interface. See the various classes that implement this interface)
+
+
