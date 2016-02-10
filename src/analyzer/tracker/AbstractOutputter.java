@@ -78,7 +78,7 @@ public abstract class AbstractOutputter implements PredictionOutputter{
 	
 	//Notify/add children outputters
 	
-	
+	// not called (PD)
 	public final void notifyChildren(PredictedInstance i) {
 		for(PredictionOutputter c:this.children) {
 			c.output(i);
@@ -86,7 +86,7 @@ public abstract class AbstractOutputter implements PredictionOutputter{
 		}
 		
 	}
-	
+	// not called (PD)
 	public final void addChildren(PredictionOutputter c) {
 		this.children.add(c);
 		

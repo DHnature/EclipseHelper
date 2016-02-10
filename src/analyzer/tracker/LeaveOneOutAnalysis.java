@@ -40,29 +40,29 @@ public class LeaveOneOutAnalysis {
 
 	}
 
-	enum Classifier{
-		J48,
-		ADABOOST,
-		BAGGING
-
-	}
-
-	enum Oversample{
-		SMOTE(new double[] {500,1000,2000,3000}),
-		RESAMPLE(new double[] {0.25,0.5,0.75,1.0});
-
-		private double[] levels;
-
-		private Oversample(double[]  levels) {
-			this.levels=levels;
-
-		}
-
-		public double[] getFilterLevels() {
-			return this.levels;
-
-		}
-	}
+//	enum ClassifierSpecification{
+//		J48,
+//		ADABOOST,
+//		BAGGING
+//
+//	}
+//
+//	enum Oversample{
+//		SMOTE(new double[] {500,1000,2000,3000}),
+//		RESAMPLE(new double[] {0.25,0.5,0.75,1.0});
+//
+//		private double[] levels;
+//
+//		private Oversample(double[]  levels) {
+//			this.levels=levels;
+//
+//		}
+//
+//		public double[] getFilterLevels() {
+//			return this.levels;
+//
+//		}
+//	}
 
 	private static String trainingDir;
 	private static String testingDir;
@@ -106,19 +106,19 @@ public class LeaveOneOutAnalysis {
 
 	}
 
-	public static void leaveOneOutAnalysis(Classifier c, Oversample s,double percentage,boolean ignoreWeblinks) throws Exception {
+	public static void leaveOneOutAnalysis(ClassifierSpecification aClassifierSpecification, OversampleSpecification anOversample,double percentage,boolean ignoreWeblinks) throws Exception {
 		//the tracker
-		PredictionTracker t=new APredictionTracker();
+		PredictionTracker aPredictionTracker=new APredictionTracker();
 
 		//filter
-		weka.filters.Filter f=null;
+		weka.filters.Filter aFilter=null;
 
-		if(s==Oversample.SMOTE)
-			f=new SMOTE();
+		if(anOversample==OversampleSpecification.SMOTE)
+			aFilter=new SMOTE();
 		else {
-			Resample r=new Resample();
-			r.setBiasToUniformClass(percentage==Double.MIN_VALUE? 0.0:percentage);
-			f=r;
+			Resample aResample=new Resample();
+			aResample.setBiasToUniformClass(percentage==Double.MIN_VALUE? 0.0:percentage);
+			aFilter=aResample;
 		}
 
 		//outputter we want, wrong predictions that is either predicted as stuck or not stuck
@@ -133,9 +133,9 @@ public class LeaveOneOutAnalysis {
 
 		double p=0;
 		int offSet=0;
-		for(int i=16;i<33;i++) {
+		for(int aParticipant=16;aParticipant<33;aParticipant++) {
 			//don't delete, just used to compensate for the fact there is no participant 25
-			if(i==25) {
+			if(aParticipant==25) {
 				offSet++;
 
 			}
@@ -146,62 +146,62 @@ public class LeaveOneOutAnalysis {
 			//
 			//			}
 
-			String training=trainingDir+(i-15)+"/all.arff";
-			String testing=testingDir+(i+offSet)+"/"+(i+offSet)+".arff";
+			String training=trainingDir+(aParticipant-15)+"/all.arff";
+			String testing=testingDir+(aParticipant+offSet)+"/"+(aParticipant+offSet)+".arff";
 
 			//			out("Training: "+training);
 			//			out("Testing: "+testing);
 
-			t.setTrainingFile(training);
-			t.setTestingFile(testing);
+			aPredictionTracker.setTrainingFile(training);
+			aPredictionTracker.setTestingFile(testing);
 
-			t.loadInstances();
+			aPredictionTracker.loadInstances();
 
 			if(ignoreWeblinks) {
 				//out("Ignoring weblink");
-				Instances train=t.getTrainingInstances();
+				Instances train=aPredictionTracker.getTrainingInstances();
 				int index=train.attribute("webLinkTimes").index()+1;
 				//out(index);
-				Remove r=new Remove();
-				r.setAttributeIndices(index+"");
-				r.setInputFormat(train);
-				t.setTrainingInstance(weka.filters.Filter.useFilter(train, r));
+				Remove aRemove=new Remove();
+				aRemove.setAttributeIndices(index+"");
+				aRemove.setInputFormat(train);
+				aPredictionTracker.setTrainingInstance(weka.filters.Filter.useFilter(train, aRemove));
 
 			}
 
 
 			//try to smote training to 30% of testing
-			Instances t_instance=t.getTrainingInstances();
+			Instances t_instance=aPredictionTracker.getTrainingInstances();
 			p=smote30Percent(t_instance);
-			if(s==Oversample.SMOTE)
-				((SMOTE) f).setPercentage(percentage==Double.MIN_VALUE? p:percentage);
+			if(anOversample==OversampleSpecification.SMOTE)
+				((SMOTE) aFilter).setPercentage(percentage==Double.MIN_VALUE? p:percentage);
 
 
-			t.filterTraining(f);
+			aPredictionTracker.filterTraining(aFilter);
 
 
-			weka.classifiers.Classifier b=null;
+			weka.classifiers.Classifier aWekaClassifier=null;
 
-			if(c==Classifier.ADABOOST) {
-				b=new AdaBoostM1();
-				((AdaBoostM1) b).setClassifier(new DecisionStump());
-			} else if(c==Classifier.BAGGING) {
-				b=new Bagging();
-				((Bagging) b).setClassifier(new DecisionStump());
+			if(aClassifierSpecification==ClassifierSpecification.ADABOOST) {
+				aWekaClassifier=new AdaBoostM1();
+				((AdaBoostM1) aWekaClassifier).setClassifier(new DecisionStump());
+			} else if(aClassifierSpecification==ClassifierSpecification.BAGGING) {
+				aWekaClassifier=new Bagging();
+				((Bagging) aWekaClassifier).setClassifier(new DecisionStump());
 			} else {
-				b=new J48();
+				aWekaClassifier=new J48();
 
 			}
 
-			t.buildClassifier(b);
+			aPredictionTracker.buildClassifier(aWekaClassifier);
 
-			t.evaluateTesting();
+			aPredictionTracker.evaluateTesting();
 
-			t.outputResults(combinedOutputter, true);
+			aPredictionTracker.outputResults(combinedOutputter, true);
 		}
 
 		try {
-			out.write("Testing: "+c+" Filter: "+s+" Boost: "+p);
+			out.write("Testing: "+aClassifierSpecification+" Filter: "+anOversample+" Boost: "+p);
 			out.newLine();
 			out.flush();
 		} catch (IOException e1) {
@@ -302,17 +302,17 @@ public class LeaveOneOutAnalysis {
 			double[] filteringAmount=new double[] {Double.MIN_VALUE};
 
 			//classifier
-			for (Classifier c: Classifier.values()) {
+			for (ClassifierSpecification c: ClassifierSpecification.values()) {
 
 				//for (Oversample p:Oversample.values()) {
-				Oversample p=Oversample.SMOTE;
+				OversampleSpecification anOversampleSpecification=OversampleSpecification.SMOTE;
 				//different levels
 				for (double l:filteringAmount) {
 
 
 					//args: classifier, filter, and filter %(only for smote)
 					try {
-						leaveOneOutAnalysis(c, p, l,outputAndTestSubDir.equalsIgnoreCase("leaveoneoutjason/"));
+						leaveOneOutAnalysis(c, anOversampleSpecification, l,outputAndTestSubDir.equalsIgnoreCase("leaveoneoutjason/"));
 					} catch (Exception e) {
 						e.printStackTrace();
 					}

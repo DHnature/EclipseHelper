@@ -19,12 +19,12 @@ public class ClassFilterOutputter extends AbstractOutputter implements Predictio
 
 	
 	@Override
-	public void output(PredictedInstance i) {
+	public void output(PredictedInstance aPredictionInstance) {
 		
 		//delegate
-		if(i.getInstance().classAttribute().value((int)i.getInstance().classValue()).equalsIgnoreCase(this.outputClass)) {
-			for(PredictionOutputter p:this.getChildren())
-				p.output(i);
+		if(aPredictionInstance.getInstance().classAttribute().value((int)aPredictionInstance.getInstance().classValue()).equalsIgnoreCase(this.outputClass)) {
+			for(PredictionOutputter aPredictionOuputter:this.getChildren())
+				aPredictionOuputter.output(aPredictionInstance);
 			
 		}
 		
