@@ -23,7 +23,7 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
     public static final String PLAYER_JAVA = "player.javalocation";
     public static final String ARFF_FILE= "predictor.arffLocation";
     public static final String CLASSIFIER= "predictor.classifier";
-    public static final String OVERSAMPLE= "predictor.oversampling";
+    public static final String OVERSAMPLE= "predictor.oversample";
 
     protected static PropertiesConfiguration staticConfiguration;
     static File userPropsFile;

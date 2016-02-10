@@ -232,7 +232,7 @@ public class LeaveOneOutAnalysis {
 	 * @param i
 	 * @return
 	 */
-	private static double smoteEven(Instances i) {
+	private static double smoteEvent(Instances i) {
 		double c1count=0;
 		double c2count=0;
 

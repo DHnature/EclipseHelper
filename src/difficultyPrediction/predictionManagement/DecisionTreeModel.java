@@ -14,7 +14,7 @@ import difficultyPrediction.DifficultyPredictionSettings;
 public class DecisionTreeModel implements PredictionManagerStrategy {
 	public PredictionManager predictionManager;
 
-	private J48 j48Model = new J48();
+//	private J48 j48Model = new J48();
 
 	private boolean isClassifierModelBuilt = false;
 
@@ -65,8 +65,8 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 
 	}
 
-	public void predictSituation(double editRatio, double debugRatio,
-			double navigationRatio, double focusRatio, double removeRatio) {
+	public void predictSituation(double editOrInsertRatio, double debugRatio,
+			double navigationRatio, double focusRatio, double deleteRatio) {
 //		String predictedValue = "NO";
 		String predictedValue = PROGRESS_PREDICTION;
 		try {
@@ -122,10 +122,10 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 					focusRatio);
 			iExample.setValue(
 					(weka.core.Attribute) fvWekaAttributes.elementAt(3),
-					editRatio);
+					editOrInsertRatio);
 			iExample.setValue(
 					(weka.core.Attribute) fvWekaAttributes.elementAt(4),
-					removeRatio);
+					deleteRatio);
 
 			// add the instance
 			testingSet.add(iExample);
@@ -139,7 +139,7 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 				
 			}
 
-			double predictedClass = j48Model.classifyInstance(testingSet
+			double predictedClass = getClassifier().classifyInstance(testingSet
 					.instance(0));
 			predictedValue = testingSet.classAttribute().value(
 					(int) predictedClass);
