@@ -8,12 +8,14 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
 public class AHelperConfigurationManager implements HelperConfigurationManager {
+	public static final String DEFAULT_ARFF_FILE_LOCATION = "data/userStudy2010.arff";
 
     public static final String CONFIG_DIR = "config";
     public static final String CONFIG_FILE = "config.properties";
     public static final String STATIC_CONFIGURATION_FILE_NAME = "helper-config/helper-config.properties";
     public static final String RECORDER_JAVA = "recorder.javalocation";
     public static final String PLAYER_JAVA = "player.javalocation";
+    public static final String ARFF_FILE= "predictor.arffLocation";
 
     protected static PropertiesConfiguration staticConfiguration;
     static File userPropsFile;
@@ -36,6 +38,10 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
        return staticConfiguration == null?null:staticConfiguration.getString(PLAYER_JAVA, "java");
 
     }
+    @Override
+	public String getARFFFile() {
+		return staticConfiguration == null?DEFAULT_ARFF_FILE_LOCATION:staticConfiguration.getString(PLAYER_JAVA, "java");
+	}
 
     public PropertiesConfiguration getDynamicConfiguration() {
         return dynamicConfiguration;
@@ -119,6 +125,7 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
 			System.err.println("Could not getproperties configuration");
 			return null;
 		}
-    }        
+    }
+	        
    
 }

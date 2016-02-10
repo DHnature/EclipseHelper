@@ -12,5 +12,6 @@ public interface HelperConfigurationManager {
 	void init();
 	String getRecorderJavaPath();
 	String getPlayerJavaPath();
+	String getARFFFile();
 
 }

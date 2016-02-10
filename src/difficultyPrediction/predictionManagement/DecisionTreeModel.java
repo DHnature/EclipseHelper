@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+import config.HelperConfigurationManagerFactory;
 import weka.classifiers.trees.J48;
 import difficultyPrediction.DifficultyPredictionSettings;
 
@@ -16,11 +17,16 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 
 	private boolean isj48ModelBuilt = false;
 
-	private String WEKA_DATA_FILE_LOCATION = "data/userStudy2010.arff";
+	private String wekaDataFileLocation = "data/userStudy2010.arff";
 
 
 	public DecisionTreeModel(PredictionManager predictionManager) {
 		this.predictionManager = predictionManager;
+	}
+	
+	protected String wekaDataFileLocation() {
+		String aSpecifiedLocation = HelperConfigurationManagerFactory.getSingleton().getARFFFile();
+		return aSpecifiedLocation == null?wekaDataFileLocation:aSpecifiedLocation;
 	}
 
 	private void buildJ48Model() {
@@ -31,10 +37,10 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 			//platform:/plugin/
 			InputStream inputStream;
 			if (DifficultyPredictionSettings.isReplayMode()) {
-				inputStream = new FileInputStream( WEKA_DATA_FILE_LOCATION);
+				inputStream = new FileInputStream( wekaDataFileLocation());
 			} else {
 			url = new URL(edu.cmu.scs.fluorite.plugin.Activator.getDefault()
-					.getDescriptor().getInstallURL(), WEKA_DATA_FILE_LOCATION);
+					.getDescriptor().getInstallURL(), wekaDataFileLocation());
 			
 
 //			InputStream inputStream = url.openConnection().getInputStream();
