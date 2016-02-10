@@ -1,4 +1,4 @@
-package analyzer.tracker;
+package difficultyPrediction.predictionManagement;
 
 public enum OversampleSpecification {
 	SMOTE(new double[] {500,1000,2000,3000}),

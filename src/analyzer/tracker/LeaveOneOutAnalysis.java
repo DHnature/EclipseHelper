@@ -20,6 +20,8 @@ import analyzer.extension.ArffFileGeneratorFactory;
 import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.metrics.ATestRatioCalculator;
 import difficultyPrediction.metrics.ATestRatioCalculator.Scheme;
+import difficultyPrediction.predictionManagement.ClassifierSpecification;
+import difficultyPrediction.predictionManagement.OversampleSpecification;
 
 /**For leave one out analysis
  * 

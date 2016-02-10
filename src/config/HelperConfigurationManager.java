@@ -2,6 +2,9 @@ package config;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 
+import difficultyPrediction.predictionManagement.ClassifierSpecification;
+import difficultyPrediction.predictionManagement.OversampleSpecification;
+
 public interface HelperConfigurationManager {
 	public  PropertiesConfiguration getStaticConfiguration() ;
 	public  void setStaticConfiguration(
@@ -12,6 +15,12 @@ public interface HelperConfigurationManager {
 	void init();
 	String getRecorderJavaPath();
 	String getPlayerJavaPath();
-	String getARFFFile();
+	String getARFFFileName();
+	ClassifierSpecification getClassifierSpecification();
+	OversampleSpecification getOversampleSpecification();
+	void setClassifierSpecification(
+			ClassifierSpecification classifierSpecification);
+	void setOversampleSpecification(
+			OversampleSpecification oversampleSpecification);
 
 }

@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 
 import config.HelperConfigurationManagerFactory;
+import weka.classifiers.Classifier;
 import weka.classifiers.trees.J48;
 import difficultyPrediction.DifficultyPredictionSettings;
 
@@ -15,7 +16,7 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 
 	private J48 j48Model = new J48();
 
-	private boolean isj48ModelBuilt = false;
+	private boolean isClassifierModelBuilt = false;
 
 	private String wekaDataFileLocation = "data/userStudy2010.arff";
 
@@ -25,11 +26,16 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 	}
 	
 	protected String wekaDataFileLocation() {
-		String aSpecifiedLocation = HelperConfigurationManagerFactory.getSingleton().getARFFFile();
+		String aSpecifiedLocation = HelperConfigurationManagerFactory.getSingleton().getARFFFileName();
 		return aSpecifiedLocation == null?wekaDataFileLocation:aSpecifiedLocation;
 	}
+	
+	protected Classifier getClassifier() {
+//		return HelperConfigurationManagerFactory.getSingleton().getClassifierSpecification()
+		return j48Model;
+	}
 
-	private void buildJ48Model() {
+	private void buildClassifierModel() {
 		weka.core.Instances trainingSet;
 		URL url;
 
@@ -51,7 +57,7 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 			trainingSet = new weka.core.Instances(new BufferedReader(
 					new InputStreamReader(inputStream)));
 			trainingSet.setClassIndex(trainingSet.numAttributes() - 1);
-			j48Model.buildClassifier(trainingSet);
+			getClassifier().buildClassifier(trainingSet);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,10 +130,10 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 			// add the instance
 			testingSet.add(iExample);
 
-			if (!isj48ModelBuilt) {
+			if (!isClassifierModelBuilt) {
 				long startTime = System.currentTimeMillis();
-				buildJ48Model();
-				isj48ModelBuilt = true;
+				buildClassifierModel();
+				isClassifierModelBuilt = true;
 				System.out.println(" Built J48 model in m:" + (System.currentTimeMillis() - startTime));
 
 				

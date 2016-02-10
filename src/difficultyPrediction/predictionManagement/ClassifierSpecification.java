@@ -1,4 +1,4 @@
-package analyzer.tracker;
+package difficultyPrediction.predictionManagement;
 
 public enum ClassifierSpecification {
 	J48,

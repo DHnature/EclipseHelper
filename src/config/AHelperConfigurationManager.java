@@ -7,8 +7,14 @@ import java.io.IOException;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
+import difficultyPrediction.predictionManagement.ClassifierSpecification;
+import difficultyPrediction.predictionManagement.OversampleSpecification;
+
 public class AHelperConfigurationManager implements HelperConfigurationManager {
 	public static final String DEFAULT_ARFF_FILE_LOCATION = "data/userStudy2010.arff";
+	public static final ClassifierSpecification DEFAULT_CLASSIFIER_SPECIFICATION = ClassifierSpecification.J48;
+	public static final OversampleSpecification DEFAULT_OVERSAMPLE_SPECIFICATION = OversampleSpecification.SMOTE;
+
 
     public static final String CONFIG_DIR = "config";
     public static final String CONFIG_FILE = "config.properties";
@@ -16,9 +22,15 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
     public static final String RECORDER_JAVA = "recorder.javalocation";
     public static final String PLAYER_JAVA = "player.javalocation";
     public static final String ARFF_FILE= "predictor.arffLocation";
+    public static final String CLASSIFIER= "predictor.classifier";
+    public static final String OVERSAMPLE= "predictor.oversampling";
 
     protected static PropertiesConfiguration staticConfiguration;
     static File userPropsFile;
+    protected ClassifierSpecification classifierSpecification;
+    
+
+	protected OversampleSpecification oversampleSpecification;
 
     PropertiesConfiguration dynamicConfiguration;
 
@@ -39,9 +51,55 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
 
     }
     @Override
-	public String getARFFFile() {
-		return staticConfiguration == null?DEFAULT_ARFF_FILE_LOCATION:staticConfiguration.getString(PLAYER_JAVA, "java");
+	public String getARFFFileName() {
+		return staticConfiguration == null?DEFAULT_ARFF_FILE_LOCATION:staticConfiguration.getString(ARFF_FILE, DEFAULT_ARFF_FILE_LOCATION);
 	}
+    @Override
+	public ClassifierSpecification getClassifierSpecification() {
+		if (classifierSpecification == null) {
+			classifierSpecification = getStaticClassifierSpecification();
+		}
+		return classifierSpecification;
+	}
+    protected ClassifierSpecification getStaticClassifierSpecification() {
+		try {
+			return staticConfiguration == null?
+					DEFAULT_CLASSIFIER_SPECIFICATION:
+					ClassifierSpecification.valueOf(
+						staticConfiguration.getString(CLASSIFIER, DEFAULT_CLASSIFIER_SPECIFICATION.toString()));
+		} catch (Exception e) {
+			return DEFAULT_CLASSIFIER_SPECIFICATION; // in case valueOf fails
+		}
+	}
+    @Override
+   	public OversampleSpecification getOversampleSpecification() {
+   		if (oversampleSpecification == null) {
+   			oversampleSpecification = getStaticOversampleSpecification();
+   		}
+   		return oversampleSpecification;
+   	}
+    @Override
+    public void setClassifierSpecification(
+			ClassifierSpecification classifierSpecification) {
+		this.classifierSpecification = classifierSpecification;
+	}
+    @Override
+	public void setOversampleSpecification(
+			OversampleSpecification oversampleSpecification) {
+		this.oversampleSpecification = oversampleSpecification;
+	}
+    
+	protected OversampleSpecification getStaticOversampleSpecification() {
+   		try {
+   			return staticConfiguration == null?
+   					DEFAULT_OVERSAMPLE_SPECIFICATION:
+   					OversampleSpecification.valueOf(
+   						staticConfiguration.getString(OVERSAMPLE, DEFAULT_OVERSAMPLE_SPECIFICATION.toString()));
+   		} catch (Exception e) {
+   			return DEFAULT_OVERSAMPLE_SPECIFICATION; // in case valueOf fails
+   		}
+   	}
+	
 
     public PropertiesConfiguration getDynamicConfiguration() {
         return dynamicConfiguration;
@@ -59,6 +117,7 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
     public void setStaticConfiguration(PropertiesConfiguration staticConfiguration) {
         this.staticConfiguration = staticConfiguration;
     }
+    
 
     public void init() {
         try {
@@ -126,6 +185,7 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
 			return null;
 		}
     }
+	
 	        
    
 }
