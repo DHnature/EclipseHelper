@@ -571,7 +571,9 @@ public class AnAnalyzer implements Analyzer  {
 		parameters.getParticipants().setValue(aParticipantId);
 		String aParticipantFolder = participants.get(aParticipantId);
 		// notifyNewParticipant(aParticipantId);
-		String aFullParticipantOutputFolderName = outPath+(isIndividualPart? aParticipantFolder+"/":"");
+		// we now get the correct outpath with individual folder
+		String aFullParticipantOutputFolderName = outPath;
+//		String aFullParticipantOutputFolderName = outPath+(isIndividualPart? aParticipantFolder+"/":"");
 		String aFullParticipantDataFolderName = dataPath + aParticipantFolder + "/" + ECLIPSE_FOLDER;
 		File anOutputFolder = new File(aFullParticipantOutputFolderName);
 		if (!anOutputFolder.exists() )
