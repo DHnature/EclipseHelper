@@ -16,5 +16,7 @@ public interface PredictionParameters extends Resettable, PropertyListenerRegist
 	void setClassifierSpecification(ClassifierSpecification newVal);
 	OversampleSpecification getOversampleSpecification();
 	ClassifierSpecification getClassifierSpecification();
-	FileSetterModel getARFFFileName();
+//	FileSetterModel getARFFFileName();
+	String getARFFFileName();
+
 }

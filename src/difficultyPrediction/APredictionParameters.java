@@ -25,13 +25,14 @@ public class APredictionParameters implements PredictionParameters{
 	int statusAggregated = 5;
 	ClassifierSpecification classifierSpecification;
 	OversampleSpecification oversampleSpecification;
-//	static String arffFileName;
+    String arffFileName;
 	static OEFrame predictionFrame;
 	PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-	FileSetterModel arffFileName;
+//	FileSetterModel arffFileName;
 	public APredictionParameters() {
-		arffFileName = new AFileSetterModel(JFileChooser.FILES_ONLY);
-		arffFileName.setText(HelperConfigurationManagerFactory.getSingleton().getARFFFileName());
+//		arffFileName = new AFileSetterModel(JFileChooser.FILES_ONLY);
+//		arffFileName.setText(HelperConfigurationManagerFactory.getSingleton().getARFFFileName());
+		arffFileName = HelperConfigurationManagerFactory.getSingleton().getARFFFileName();
 	}
 
 	
@@ -105,8 +106,15 @@ public class APredictionParameters implements PredictionParameters{
 	@Column(0)
 	@ComponentWidth(250)
 	@Label("Model:")
+//	@Override
+//	public  FileSetterModel getARFFFileName() {
+////		if (arffFileName == null) {
+////			arffFileName = HelperConfigurationManagerFactory.getSingleton().getARFFFileName();
+////		}
+//		return arffFileName;
+//	}
 	@Override
-	public  FileSetterModel getARFFFileName() {
+	public  String getARFFFileName() {
 //		if (arffFileName == null) {
 //			arffFileName = HelperConfigurationManagerFactory.getSingleton().getARFFFileName();
 //		}
