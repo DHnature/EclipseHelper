@@ -427,12 +427,9 @@ public class EventRecorder {
 //			PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
 //			}
 //	}
-
-	public void start() {
-//		FactoriesSelector.configureFactories();
+	
+	public void initCommands() {
 		MacroRecordingStarted.newCase(this);
-//		EventLoggerConsole.getConsole().writeln("***Started macro recording",
-//				EventLoggerConsole.Type_RecordingCommand);
 		mCommands = new LinkedList<ICommand>();
 		mNormalCommands = new LinkedList<ICommand>();
 		mDocumentChangeCommands = new LinkedList<ICommand>();
@@ -440,6 +437,23 @@ public class EventRecorder {
 		System.out.println (" Recording started");
 		mRecordCommands = true;
 		mStartTimestamp = Calendar.getInstance().getTime().getTime();
+		ADifficultyPredictionPluginEventProcessor.getInstance().commandProcessingStarted();
+
+	}
+
+	public void start() {
+		initCommands();
+//		FactoriesSelector.configureFactories();
+		MacroRecordingStarted.newCase(this);
+//		EventLoggerConsole.getConsole().writeln("***Started macro recording",
+//				EventLoggerConsole.Type_RecordingCommand);
+//		mCommands = new LinkedList<ICommand>();
+//		mNormalCommands = new LinkedList<ICommand>();
+//		mDocumentChangeCommands = new LinkedList<ICommand>();
+//		mCurrentlyExecutingCommand = false;
+//		System.out.println (" Recording started");
+//		mRecordCommands = true;
+//		mStartTimestamp = Calendar.getInstance().getTime().getTime();
 		ADifficultyPredictionPluginEventProcessor.getInstance().commandProcessingStarted();
 //		maybeCreateDifficultyPredictionThread();
 
