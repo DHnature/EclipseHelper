@@ -429,6 +429,7 @@ public class EventRecorder {
 //	}
 	
 	public void initCommands() {
+		setPlugInMode(false);
 		MacroRecordingStarted.newCase(this);
 		mCommands = new LinkedList<ICommand>();
 		mNormalCommands = new LinkedList<ICommand>();
@@ -440,9 +441,20 @@ public class EventRecorder {
 		ADifficultyPredictionPluginEventProcessor.getInstance().commandProcessingStarted();
 
 	}
+	
+	protected boolean plugInMode = false;
+	
+	public boolean isPlugInMode() {
+		return plugInMode;
+	}
+
+	public void setPlugInMode(boolean plugInMode) {
+		this.plugInMode = plugInMode;
+	}
 
 	public void start() {
 		initCommands();
+		setPlugInMode(true);
 //		FactoriesSelector.configureFactories();
 //		MacroRecordingStarted.newCase(this);
 //		EventLoggerConsole.getConsole().writeln("***Started macro recording",
@@ -798,13 +810,14 @@ public class EventRecorder {
 		// perhaps this is screwing performance
 
 		// WHY do we need all of the stuff below
-
+		if (isPlugInMode()) {
 		StyledText styledText = Utilities.getStyledText(Utilities
 				.getActiveEditor());
 		if (styledText != null) {
 			this.mLastCaretOffset = styledText.getCaretOffset();
 			this.mLastSelectionStart = styledText.getSelection().x;
 			this.mLastSelectionEnd = styledText.getSelection().y;
+		}
 		}
 
 		// Deal with timer.
