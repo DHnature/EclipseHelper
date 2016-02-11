@@ -25,6 +25,7 @@ import java.util.Vector;
 
 import javax.swing.JFileChooser;
 
+import util.annotations.ComponentHeight;
 import util.annotations.ComponentWidth;
 import util.annotations.LayoutName;
 import util.annotations.Row;
@@ -87,7 +88,7 @@ public class AnAnalyzer implements Analyzer  {
 	static long startTimeStamp;
 	List<List<ICommand>> nestedCommandsList;
 
-	FileSetterModel participantsFolder, ouputFolder, experimentalData;
+	FileSetterModel participantsFolder, outputFolder, experimentalData;
 	AnalyzerParameters parameters;
 	LogReader reader;
 	// protected Thread difficultyPredictionThread;
@@ -752,7 +753,7 @@ public class AnAnalyzer implements Analyzer  {
 	 */
 	@Override
 	@Row(1)
-//	@ComponentWidth(100)
+
 //	@Visible(false)
 	public AnalyzerParameters getAnalyzerParameters() {
 		return parameters;
@@ -894,7 +895,7 @@ public class AnAnalyzer implements Analyzer  {
 		DifficultyPredictionSettings.setReplayMode(true);
 
 		OEFrame frame = ObjectEditor.edit(AnAnalyzer.getInstance());
-		frame.setSize(500, 250);
+		frame.setSize(500, 335);
 
 	}
 

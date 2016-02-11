@@ -9,6 +9,7 @@ import java.net.URL;
 import config.HelperConfigurationManagerFactory;
 import weka.classifiers.Classifier;
 import weka.classifiers.trees.J48;
+import difficultyPrediction.APredictionParameters;
 import difficultyPrediction.DifficultyPredictionSettings;
 
 public class DecisionTreeModel implements PredictionManagerStrategy {
@@ -27,11 +28,13 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 	
 	protected String wekaDataFileLocation() {
 		String aSpecifiedLocation = HelperConfigurationManagerFactory.getSingleton().getARFFFileName();
-		return aSpecifiedLocation == null?wekaDataFileLocation:aSpecifiedLocation;
+//		return aSpecifiedLocation == null?wekaDataFileLocation:aSpecifiedLocation;
+		return APredictionParameters.getInstance().getARFFFileName().getText();
 	}
 	
 	protected Classifier getClassifier() {
-		return DifficultyPredictionSettings.getClassifierSpecification().toClassifier();
+		return APredictionParameters.getInstance().getClassifierSpecification().toClassifier();
+//		return DifficultyPredictionSettings.getClassifierSpecification().toClassifier();
 //		return j48Model;
 	}
 

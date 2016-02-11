@@ -12,8 +12,11 @@ public class AnAnalyzerAR implements ExecutableCommand{
 		ObjectEditor.setAttribute(AnAnalyzer.class,  AttributeNames.LAYOUT, AttributeNames.GRID_BAG_LAYOUT);
 		// controlling container size as component width and height are controlled
 		// and automatic computation fails
-		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "AnalyzerParameters", AttributeNames.CONTAINER_WIDTH, 250);
-		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "AnalyzerParameters", AttributeNames.CONTAINER_HEIGHT, 100);
+//		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "AnalyzerParameters", AttributeNames.STRETCHABLE_BY_PARENT, true);
+
+//		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "AnalyzerParameters", AttributeNames.CONTAINER_WIDTH, 250);
+//		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "AnalyzerParameters", AttributeNames.CONTAINER_HEIGHT, 100);
+		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "AnalyzerParameters", AttributeNames.CONTAINER_HEIGHT, 168);
 
 //		ObjectEditor.setPropertyAttribute(AnAnalyzer.class, "SegmentLength", AttributeNames.STRETCHABLE_BY_PARENT, false);
 

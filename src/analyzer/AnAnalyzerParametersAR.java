@@ -7,6 +7,8 @@ import bus.uigen.undo.ExecutableCommand;
 public class AnAnalyzerParametersAR implements ExecutableCommand{
 	public Object execute(Object theFrame) {
 
+//		ObjectEditor.setAttribute(AnAnalyzerParameters.class,  AttributeNames.LAYOUT, AttributeNames.GRID_BAG_LAYOUT);
+//		ObjectEditor.setPropertyAttribute(AnAnalyzerParameters.class, "PredictionParameters", AttributeNames.STRETCHABLE_BY_PARENT, true);
 
 //		ObjectEditor.setAttribute(AnAnalyzer.class,  AttributeNames.STRETCHABLE_BY_PARENT, true);
 //		ObjectEditor.setAttribute(AnAnalyzerParameters.class,  "Participants", AttributeNames.GRID_BAG_LAYOUT);

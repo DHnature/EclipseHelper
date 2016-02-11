@@ -11,8 +11,8 @@ public class DifficultyPredictionSettings {
 	static boolean newRatioFiles;
 	static boolean replayRatioFiles;
 	static ClassifierSpecification classifierSpecification;
-	static OversampleSpecification oversampleSpecification;
-	static String arffFileName;
+//	static OversampleSpecification oversampleSpecification;
+//	static String arffFileName;
 
 	
 	//boolean that turns on/off ratio files creation
@@ -77,36 +77,36 @@ public class DifficultyPredictionSettings {
 		createRatioFiles=b;
 
 	}
-	public static String getARFFFileName() {
-		if (arffFileName == null) {
-			arffFileName = HelperConfigurationManagerFactory.getSingleton().getARFFFileName();
-		}
-		return arffFileName;
-	}
-    
-	public static ClassifierSpecification getClassifierSpecification() {
-		if (classifierSpecification == null) {
-			classifierSpecification = HelperConfigurationManagerFactory.getSingleton().getClassifierSpecification();
-		}
-		return classifierSpecification;
-	}
-   
-    
-   	public static OversampleSpecification getOversampleSpecification() {
-   		if (oversampleSpecification == null) {
-   			oversampleSpecification = HelperConfigurationManagerFactory.getSingleton().getOversampleSpecification();
-   		}
-   		return oversampleSpecification;
-   	}
-    public static void setClassifierSpecification(
-			ClassifierSpecification newVal) {
-		classifierSpecification = newVal;
-	}
-    
-	public static void setOversampleSpecification(
-			OversampleSpecification newVal) {
-		oversampleSpecification = newVal;
-	}
+//	public static String getARFFFileName() {
+//		if (arffFileName == null) {
+//			arffFileName = HelperConfigurationManagerFactory.getSingleton().getARFFFileName();
+//		}
+//		return arffFileName;
+//	}
+//    
+//	public static ClassifierSpecification getClassifierSpecification() {
+//		if (classifierSpecification == null) {
+//			classifierSpecification = HelperConfigurationManagerFactory.getSingleton().getClassifierSpecification();
+//		}
+//		return classifierSpecification;
+//	}
+//   
+//    
+//   	public static OversampleSpecification getOversampleSpecification() {
+//   		if (oversampleSpecification == null) {
+//   			oversampleSpecification = HelperConfigurationManagerFactory.getSingleton().getOversampleSpecification();
+//   		}
+//   		return oversampleSpecification;
+//   	}
+//    public static void setClassifierSpecification(
+//			ClassifierSpecification newVal) {
+//		classifierSpecification = newVal;
+//	}
+//    
+//	public static void setOversampleSpecification(
+//			OversampleSpecification newVal) {
+//		oversampleSpecification = newVal;
+//	}
     
 	
 	

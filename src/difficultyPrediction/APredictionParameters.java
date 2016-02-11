@@ -3,19 +3,37 @@ package difficultyPrediction;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
+import javax.swing.JFileChooser;
+
+import config.HelperConfigurationManagerFactory;
+import difficultyPrediction.predictionManagement.ClassifierSpecification;
+import difficultyPrediction.predictionManagement.OversampleSpecification;
 import util.annotations.Column;
 import util.annotations.ComponentWidth;
+import util.annotations.Label;
 import util.annotations.Row;
+import util.annotations.Visible;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
+import bus.uigen.models.AFileSetterModel;
+import bus.uigen.models.FileSetterModel;
 
 public class APredictionParameters implements PredictionParameters{
 	static PredictionParameters instance;
 	int segmentLength = 25;
 	int startupLag = 50;
 	int statusAggregated = 5;
+	ClassifierSpecification classifierSpecification;
+	OversampleSpecification oversampleSpecification;
+//	static String arffFileName;
 	static OEFrame predictionFrame;
 	PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+	FileSetterModel arffFileName;
+	public APredictionParameters() {
+		arffFileName = new AFileSetterModel(JFileChooser.FILES_ONLY);
+		arffFileName.setText(HelperConfigurationManagerFactory.getSingleton().getARFFFileName());
+	}
+
 	
 //	@Row(1)
 	@Row(0)
@@ -53,6 +71,7 @@ public class APredictionParameters implements PredictionParameters{
 		this.statusAggregated = newValue;
 		propertyChangeSupport.firePropertyChange("StatusAggregated", oldValue, newValue);
 	}
+	@Visible(false)
 	public static PredictionParameters getInstance() {
 		if (instance == null) {
 			instance = new APredictionParameters();
@@ -80,6 +99,52 @@ public class APredictionParameters implements PredictionParameters{
 	@Override
 	public void addPropertyChangeListener(PropertyChangeListener arg0) {
 		propertyChangeSupport.addPropertyChangeListener(arg0);
+	}
+//	@Visible(false)
+	@Row(2)
+	@Column(0)
+	@ComponentWidth(250)
+	@Label("Model:")
+	@Override
+	public  FileSetterModel getARFFFileName() {
+//		if (arffFileName == null) {
+//			arffFileName = HelperConfigurationManagerFactory.getSingleton().getARFFFileName();
+//		}
+		return arffFileName;
+	}
+//	@Visible(false)
+	@Row(1)
+	@Column(0)
+	@ComponentWidth(100)
+	@Label("Classifier:")
+	@Override
+	public ClassifierSpecification getClassifierSpecification() {
+		if (classifierSpecification == null) {
+			classifierSpecification = HelperConfigurationManagerFactory.getSingleton().getClassifierSpecification();
+		}
+		return classifierSpecification;
+	}
+//	@Visible(false)
+	@Row(1)
+	@Column(1)
+	@ComponentWidth(100)
+	@Label("Oversampling:")
+	@Override	
+   	public OversampleSpecification getOversampleSpecification() {
+   		if (oversampleSpecification == null) {
+   			oversampleSpecification = HelperConfigurationManagerFactory.getSingleton().getOversampleSpecification();
+   		}
+   		return oversampleSpecification;
+   	}
+	@Override
+    public void setClassifierSpecification(
+			ClassifierSpecification newVal) {
+		classifierSpecification = newVal;
+	}
+    
+	public void setOversampleSpecification(
+			OversampleSpecification newVal) {
+		oversampleSpecification = newVal;
 	}
 
 }
