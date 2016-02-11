@@ -192,12 +192,12 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 //    }
 
 
-	public String getId() {
+	public synchronized String getId() {
 		return id;
 	}
 
 
-	public void setId(String id) {
+	public synchronized void setId(String id) {
 		this.id = id;
 	}
 
@@ -251,15 +251,15 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 //		this.statusInformation = statusInformation;
 //	}
 	
-	public void addRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) {
+	public synchronized void addRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) {
 		ratioFeaturesListeners.add(aRatioFeaturesListener);
 	}
 	
-	public void removeRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) {
+	public synchronized void removeRatioFeaturesListener(RatioFeaturesListener aRatioFeaturesListener) {
 		ratioFeaturesListeners.remove(aRatioFeaturesListener);
 	}
 	
-	public void addStatusListener(StatusListener aListener) {
+	public synchronized void addStatusListener(StatusListener aListener) {
 		statusListeners.add(aListener);
 	}	
 	public void removeStatusListener(StatusListener aListener) {
@@ -326,13 +326,13 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 //		}
 //	}
 	
-	public void  notifyNewAggregateStatus(int aStatus) {
+	public synchronized void  notifyNewAggregateStatus(int aStatus) {
 		for (StatusListener aListener:statusListeners) {
 			aListener.newAggregatedStatus(aStatus);
 		}
 	}
 	
-	public void  notifyNewAggregateStatus(String aStatus) {
+	public synchronized void  notifyNewAggregateStatus(String aStatus) {
 		for (StatusListener aListener:statusListeners) {
 			aListener.newAggregatedStatus(aStatus);
 			aListener.newAggregatedStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
@@ -340,21 +340,21 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 	}
 	
 	@Override
-	public void addPluginEventListener(PluginEventListener aListener){
+	public synchronized void addPluginEventListener(PluginEventListener aListener){
 		listeners.add(aListener);
 	}
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#addRemovePredictionEventListener(difficultyPrediction.DifficultyPredictionEventListener)
 	 */
 	@Override
-	public void removePluginEventListener(PluginEventListener aListener){
+	public synchronized void removePluginEventListener(PluginEventListener aListener){
 		listeners.remove(aListener);
 	}
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStart()
 	 */
 	@Override
-	public void notifyStartCommand() {
+	public synchronized void notifyStartCommand() {
 		for (PluginEventListener aListener:listeners) {
 			aListener.commandProcessingStarted();
 		}
@@ -363,7 +363,7 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyStop()
 	 */
 	@Override
-	public void notifyStopCommand() {
+	public synchronized void notifyStopCommand() {
 		for (PluginEventListener aListener:listeners) {
 			aListener.commandProcessingStopped();
 		}
@@ -372,7 +372,7 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyRecordCommand(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public void notifyNewCommand(ICommand aCommand) {
+	public synchronized void notifyNewCommand(ICommand aCommand) {
 		for (PluginEventListener aListener:listeners) {
 			// let us not block the prediction runnable on vagaries of the listeners
 //			GlobalRunnableExecutor.getSingleton().asyncExecute(
