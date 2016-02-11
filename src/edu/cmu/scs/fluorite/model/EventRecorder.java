@@ -439,6 +439,20 @@ public class EventRecorder {
 		mRecordCommands = true;
 		mStartTimestamp = Calendar.getInstance().getTime().getTime();
 		ADifficultyPredictionPluginEventProcessor.getInstance().commandProcessingStarted();
+		
+		// later commands
+		initializeLogger();
+
+		// Set the combine time threshold.
+		IPreferenceStore prefStore = edu.cmu.scs.fluorite.plugin.Activator
+				.getDefault().getPreferenceStore();
+
+		setCombineCommands(prefStore
+				.getBoolean(Initializer.Pref_CombineCommands));
+		setCombineTimeThreshold(prefStore
+				.getInt(Initializer.Pref_CombineTimeThreshold));
+
+		mStarted = true;
 
 	}
 	
@@ -514,18 +528,18 @@ public class EventRecorder {
 //		}
 		
 
-		initializeLogger();
-
-		// Set the combine time threshold.
-		IPreferenceStore prefStore = edu.cmu.scs.fluorite.plugin.Activator
-				.getDefault().getPreferenceStore();
-
-		setCombineCommands(prefStore
-				.getBoolean(Initializer.Pref_CombineCommands));
-		setCombineTimeThreshold(prefStore
-				.getInt(Initializer.Pref_CombineTimeThreshold));
-
-		mStarted = true;
+//		initializeLogger();
+//
+//		// Set the combine time threshold.
+//		IPreferenceStore prefStore = edu.cmu.scs.fluorite.plugin.Activator
+//				.getDefault().getPreferenceStore();
+//
+//		setCombineCommands(prefStore
+//				.getBoolean(Initializer.Pref_CombineCommands));
+//		setCombineTimeThreshold(prefStore
+//				.getInt(Initializer.Pref_CombineTimeThreshold));
+//
+//		mStarted = true;
 
 		// Execute all the scheduled tasks.
 		for (Runnable runnable : mScheduledTasks) {
