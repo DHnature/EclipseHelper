@@ -444,7 +444,7 @@ public class EventRecorder {
 	public void start() {
 		initCommands();
 //		FactoriesSelector.configureFactories();
-		MacroRecordingStarted.newCase(this);
+//		MacroRecordingStarted.newCase(this);
 //		EventLoggerConsole.getConsole().writeln("***Started macro recording",
 //				EventLoggerConsole.Type_RecordingCommand);
 //		mCommands = new LinkedList<ICommand>();
