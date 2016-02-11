@@ -395,7 +395,8 @@ public class AnAnalyzer implements Analyzer  {
 //		}
 		//the main subdirectory we are putting files in
 		String outPath=participantsFolder.getText()
-				+ OUTPUT_DATA + this.outputSubdirectory;
+				+ OUTPUT_DATA ;
+//				+ this.outputSubdirectory;
 		if (participantList.get(0).equals(ALL_PARTICIPANTS)) {
 			// remove all from the participants
 			participantIds.remove(ALL_PARTICIPANTS);
@@ -446,7 +447,7 @@ public class AnAnalyzer implements Analyzer  {
 
 		} else {
 //			String aParticipanttFolder = participants.get(participantId);
-			this.outputSubdirectory=outPath ;
+			this.outputSubdirectory=outPath + participantId+"/";
 			processParticipant(participantId,this.outputSubdirectory,participantsFolder.getText()
 					+ EXPERIMENTAL_DATA 
 //					+ aParticipanttFolder + "/" + ECLIPSE_FOLDER
