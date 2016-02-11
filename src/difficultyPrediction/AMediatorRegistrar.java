@@ -281,37 +281,37 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 		
 	}
 	@Override
-	public void removeBarrierListener(BarrierListener aListener) {
+	public synchronized void removeBarrierListener(BarrierListener aListener) {
 		barrierListeners.remove(aListener);
 		
 	}
 		
-	public void  notifyNewRatios(RatioFeatures aRatios) {
+	public synchronized void  notifyNewRatios(RatioFeatures aRatios) {
 		for (RatioFeaturesListener aListener:ratioFeaturesListeners) {
 			aListener.newRatios(aRatios);
 		}
 	}
 	
-	public void  notifyNewBarrier(String newVal) {
+	public synchronized void  notifyNewBarrier(String newVal) {
 		for (BarrierListener aListener:barrierListeners) {
 			aListener.newBarrier(newVal);
 		}
 	}
 	
 	
-	public void  notifyNewStatus(String aStatus) {
+	public synchronized void  notifyNewStatus(String aStatus) {
 		for (StatusListener aListener:statusListeners) {
 			aListener.newStatus(aStatus);
 			aListener.newStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
 		}
 	}
 	
-	public void  notifyNewManualStatus(String aStatus) {
+	public synchronized void  notifyNewManualStatus(String aStatus) {
 		for (StatusListener aListener:statusListeners) {
 			aListener.newManualStatus(aStatus);
 		}
 	}
-	public void  notifyNewWebLinks(List<WebLink> aWebLinks) {
+	public synchronized void  notifyNewWebLinks(List<WebLink> aWebLinks) {
 		for (WebLinkListener aListener:webLinkListeners) {
 //			for (WebLink aWebLink:aWebLinks) {
 //				aListener.newWebLink(aWebLink);
