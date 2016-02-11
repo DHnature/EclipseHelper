@@ -18,9 +18,9 @@ public interface HelperConfigurationManager {
 	String getARFFFileName();
 	ClassifierSpecification getClassifierSpecification();
 	OversampleSpecification getOversampleSpecification();
-	void setClassifierSpecification(
-			ClassifierSpecification classifierSpecification);
-	void setOversampleSpecification(
-			OversampleSpecification oversampleSpecification);
+//	void setClassifierSpecification(
+//			ClassifierSpecification classifierSpecification);
+//	void setOversampleSpecification(
+//			OversampleSpecification oversampleSpecification);
 
 }

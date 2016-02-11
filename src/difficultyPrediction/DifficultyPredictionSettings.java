@@ -1,11 +1,20 @@
 package difficultyPrediction;
 
+import config.HelperConfigurationManagerFactory;
+import difficultyPrediction.predictionManagement.ClassifierSpecification;
+import difficultyPrediction.predictionManagement.OversampleSpecification;
+
 public class DifficultyPredictionSettings {
 	static String ratiosFileName;
 	static boolean ratioFileExists;
 	static boolean replayMode;
 	static boolean newRatioFiles;
 	static boolean replayRatioFiles;
+	static ClassifierSpecification classifierSpecification;
+	static OversampleSpecification oversampleSpecification;
+	static String arffFileName;
+
+	
 	//boolean that turns on/off ratio files creation
 		static boolean createRatioFiles;
 
@@ -68,6 +77,38 @@ public class DifficultyPredictionSettings {
 		createRatioFiles=b;
 
 	}
+	public static String getARFFFileName() {
+		if (arffFileName == null) {
+			arffFileName = HelperConfigurationManagerFactory.getSingleton().getARFFFileName();
+		}
+		return arffFileName;
+	}
+    
+	public static ClassifierSpecification getClassifierSpecification() {
+		if (classifierSpecification == null) {
+			classifierSpecification = HelperConfigurationManagerFactory.getSingleton().getClassifierSpecification();
+		}
+		return classifierSpecification;
+	}
+   
+    
+   	public static OversampleSpecification getOversampleSpecification() {
+   		if (oversampleSpecification == null) {
+   			oversampleSpecification = HelperConfigurationManagerFactory.getSingleton().getOversampleSpecification();
+   		}
+   		return oversampleSpecification;
+   	}
+    public static void setClassifierSpecification(
+			ClassifierSpecification newVal) {
+		classifierSpecification = newVal;
+	}
+    
+	public static void setOversampleSpecification(
+			OversampleSpecification newVal) {
+		oversampleSpecification = newVal;
+	}
+    
+	
 	
 
 }

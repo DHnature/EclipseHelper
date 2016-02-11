@@ -31,7 +31,7 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 	}
 	
 	protected Classifier getClassifier() {
-		return HelperConfigurationManagerFactory.getSingleton().getClassifierSpecification().toClassifier();
+		return DifficultyPredictionSettings.getClassifierSpecification().toClassifier();
 //		return j48Model;
 	}
 

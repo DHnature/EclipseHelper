@@ -27,10 +27,8 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
 
     protected static PropertiesConfiguration staticConfiguration;
     static File userPropsFile;
-    protected ClassifierSpecification classifierSpecification;
-    
-
-	protected OversampleSpecification oversampleSpecification;
+//    protected ClassifierSpecification classifierSpecification;
+//	protected OversampleSpecification oversampleSpecification;
 
     PropertiesConfiguration dynamicConfiguration;
 
@@ -56,10 +54,11 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
 	}
     @Override
 	public ClassifierSpecification getClassifierSpecification() {
-		if (classifierSpecification == null) {
-			classifierSpecification = getStaticClassifierSpecification();
-		}
-		return classifierSpecification;
+//		if (classifierSpecification == null) {
+//			classifierSpecification = getStaticClassifierSpecification();
+//		}
+//		return classifierSpecification;
+    	return getStaticClassifierSpecification();
 	}
     protected ClassifierSpecification getStaticClassifierSpecification() {
 		try {
@@ -73,21 +72,22 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
 	}
     @Override
    	public OversampleSpecification getOversampleSpecification() {
-   		if (oversampleSpecification == null) {
-   			oversampleSpecification = getStaticOversampleSpecification();
-   		}
-   		return oversampleSpecification;
+//   		if (oversampleSpecification == null) {
+//   			oversampleSpecification = getStaticOversampleSpecification();
+//   		}
+//   		return oversampleSpecification;
+    	return getStaticOversampleSpecification();
    	}
-    @Override
-    public void setClassifierSpecification(
-			ClassifierSpecification classifierSpecification) {
-		this.classifierSpecification = classifierSpecification;
-	}
-    @Override
-	public void setOversampleSpecification(
-			OversampleSpecification oversampleSpecification) {
-		this.oversampleSpecification = oversampleSpecification;
-	}
+//    @Override
+//    public void setClassifierSpecification(
+//			ClassifierSpecification classifierSpecification) {
+//		this.classifierSpecification = classifierSpecification;
+//	}
+//    @Override
+//	public void setOversampleSpecification(
+//			OversampleSpecification oversampleSpecification) {
+//		this.oversampleSpecification = oversampleSpecification;
+//	}
     
 	protected OversampleSpecification getStaticOversampleSpecification() {
    		try {
