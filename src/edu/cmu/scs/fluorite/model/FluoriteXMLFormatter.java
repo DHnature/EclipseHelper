@@ -29,9 +29,11 @@ public class FluoriteXMLFormatter extends Formatter {
 		try {
 			versionStr = Platform.getBundle("edu.cmu.scs.fluorite").getVersion().toString();
 		} catch (Exception e) {
+			System.out.println ("not running in plug-in mode, returning for versuionString 0.5.3.qualifier");
+			return "0.5.3.qualifier";
 			// Do nothing but just print out the stack trace.
 			// There might be some null pointer exception or such.
-			e.printStackTrace();
+//			e.printStackTrace();
 		}
 
 		return versionStr;
