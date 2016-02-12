@@ -661,6 +661,7 @@ public class EventRecorder {
 	}
 
 	private File getLogLocation() throws Exception {
+		try {
 		File logLocation = edu.cmu.scs.fluorite.plugin.Activator.getDefault()
 				.getStateLocation().append("Logs").toFile();
 		if (!logLocation.exists()) {
@@ -669,6 +670,9 @@ public class EventRecorder {
 			}
 		}
 		return logLocation;
+		} catch (Exception e) {
+			return new File("Logs");
+		}
 	}
 
 	private boolean mIncrementalFindMode = false;
