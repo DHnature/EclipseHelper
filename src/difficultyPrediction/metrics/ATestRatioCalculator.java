@@ -78,7 +78,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isEditEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public boolean isEditEvent(ICommand event) {
+	public boolean isInsertOrEditEvent(ICommand event) {
 		boolean isEditEvent = false;
 		if ((event.getCommandType().equals("CopyCommand"))
 
@@ -319,7 +319,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 	public  ArrayList<Integer> getPercentageData(List<ICommand> userActions) {
 		int numberOfDebugEvents = 0;
 		int numberOfSearchEvents = 0;
-		int numberOfEditEvents = 0;
+		int numberOfEditOrInsertEvents = 0;
 		int numberOfFocusEvents = 0;
 		int numberOfRemoveEvents = 0;
 
@@ -333,7 +333,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 				//jason's edit scheme
 				//System.out.println ("remove command:" + myEvent);
 				if (jasonCalculator.isEditEvent(myEvent)) {
-					numberOfEditEvents++;
+					numberOfEditOrInsertEvents++;
 					//System.out.println ("Edit command:" + myEvent);
 				} else if (jasonCalculator.isDebugEvent(myEvent)) {
 					numberOfDebugEvents++;
@@ -359,7 +359,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 				//jason's scheme with web
 				//System.out.println ("remove command:" + myEvent);
 				if (jasonCalculator.isInsertionEvent(myEvent)) {
-					numberOfEditEvents++;
+					numberOfEditOrInsertEvents++;
 					//System.out.println ("Edit command:" + myEvent);
 				} else if (jasonCalculator.isDebugEvent(myEvent)) {
 					numberOfDebugEvents++;
@@ -385,7 +385,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 
 
 				if (jasonCalculator.isInsertionEvent(myEvent)) {
-					numberOfEditEvents++;
+					numberOfEditOrInsertEvents++;
 					//System.out.println ("Edit command:" + myEvent);
 				} else if (isDebugEvent(myEvent)) {
 					numberOfDebugEvents++;
@@ -410,8 +410,8 @@ public class ATestRatioCalculator implements RatioCalculator {
 			case A3:
 
 				//third ratios, original scheme
-				if (isEditEvent(myEvent)) {
-					numberOfEditEvents++;
+				if (isInsertOrEditEvent(myEvent)) {
+					numberOfEditOrInsertEvents++;
 					//System.out.println ("Edit command:" + myEvent);
 				} else if (isDebugEvent(myEvent)) {
 					numberOfDebugEvents++;
@@ -439,7 +439,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 		ArrayList<Integer> eventData = new ArrayList<Integer>();
 		eventData.add(numberOfDebugEvents);
 		eventData.add(numberOfSearchEvents);
-		eventData.add(numberOfEditEvents);
+		eventData.add(numberOfEditOrInsertEvents);
 		eventData.add(numberOfFocusEvents);
 		eventData.add(numberOfRemoveEvents);
 
@@ -451,7 +451,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 	@Override
 	public  String getFeatureName(ICommand myEvent) {
 
-		if (isEditEvent(myEvent)) {
+		if (isInsertOrEditEvent(myEvent)) {
 			return "Edit";
 
 		} else if (isDebugEvent(myEvent)) {

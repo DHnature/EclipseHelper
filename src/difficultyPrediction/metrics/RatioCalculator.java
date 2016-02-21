@@ -9,7 +9,7 @@ public interface RatioCalculator {
 
 	public abstract boolean isDebugEvent(ICommand event);
 
-	public abstract boolean isEditEvent(ICommand event);
+	public abstract boolean isInsertOrEditEvent(ICommand event);
 
 	public abstract boolean isNavigationEvent(ICommand event);
 

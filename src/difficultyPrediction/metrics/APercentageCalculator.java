@@ -53,7 +53,7 @@ public class APercentageCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isEditEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public boolean isEditEvent(ICommand event) {
+	public boolean isInsertOrEditEvent(ICommand event) {
 		boolean isEditEvent = false;
 		if ((event.getCommandType().equals("CopyCommand"))
 				|| (event.getCommandType().equals("CutCommand"))
@@ -294,7 +294,7 @@ public class APercentageCalculator implements RatioCalculator {
 		for (int i = 0; i < userActions.size(); i++) {
 			ICommand myEvent = userActions.get(i);
 
-			if (isEditEvent(myEvent)) {
+			if (isInsertOrEditEvent(myEvent)) {
 				numberOfEditEvents++;
 				System.out.println ("Edit command:" + myEvent);
 			} else if (isDebugEvent(myEvent)) {
@@ -333,7 +333,7 @@ public class APercentageCalculator implements RatioCalculator {
 	@Override
 	public  String getFeatureName(ICommand myEvent) {
 		
-			if (isEditEvent(myEvent)) {
+			if (isInsertOrEditEvent(myEvent)) {
 				return "Edit";
 				
 			} else if (isDebugEvent(myEvent)) {
