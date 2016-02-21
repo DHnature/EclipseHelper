@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 import difficultyPrediction.metrics.ATestRatioCalculator;
-import difficultyPrediction.metrics.ATestRatioCalculator.Scheme;
+import difficultyPrediction.metrics.RatioScheme;
 import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.CSVSaver;
@@ -16,7 +16,7 @@ import analyzer.extension.ArffFileGeneratorFactory;
 
 public class AllArffAnalysis {
 	//assuming the output csv and input all.arff is in same dir
-	public static void generateAllArff(Scheme scheme) {
+	public static void generateAllArff(RatioScheme scheme) {
 		String outputSubdir=scheme.getSubDir();
 		ATestRatioCalculator.CURRENT_SCHEME=scheme;
 		
@@ -76,7 +76,7 @@ public class AllArffAnalysis {
 		//generate all.arff
 		
 		
-		generateAllArff(Scheme.A1);
+		generateAllArff(RatioScheme.A1);
 		
 		//createCSV("data/OutputData/"+outputSubDir);
 		System.exit(0);

@@ -7,6 +7,7 @@ import java.io.IOException;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
+import difficultyPrediction.metrics.RatioScheme;
 import difficultyPrediction.predictionManagement.ClassifierSpecification;
 import difficultyPrediction.predictionManagement.OversampleSpecification;
 
@@ -14,6 +15,7 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
 	public static final String DEFAULT_ARFF_FILE_LOCATION = "data/userStudy2010.arff";
 	public static final ClassifierSpecification DEFAULT_CLASSIFIER_SPECIFICATION = ClassifierSpecification.J48;
 	public static final OversampleSpecification DEFAULT_OVERSAMPLE_SPECIFICATION = OversampleSpecification.SMOTE;
+	public static final RatioScheme DEFAULT_RATIO_SCHEME = RatioScheme.A1;
 
 
     public static final String CONFIG_DIR = "config";
@@ -24,6 +26,8 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
     public static final String ARFF_FILE= "predictor.arffLocation";
     public static final String CLASSIFIER= "predictor.classifier";
     public static final String OVERSAMPLE= "predictor.oversample";
+    public static final String RATIO_SCHEME= "predictor.ratioScheme";
+
 
     protected static PropertiesConfiguration staticConfiguration;
     static File userPropsFile;
@@ -78,6 +82,10 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
 //   		return oversampleSpecification;
     	return getStaticOversampleSpecification();
    	}
+    @Override
+    public RatioScheme getRatioScheme() {
+    	return getStaticRatioScheme();
+    }
 //    @Override
 //    public void setClassifierSpecification(
 //			ClassifierSpecification classifierSpecification) {
@@ -97,6 +105,17 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
    						staticConfiguration.getString(OVERSAMPLE, DEFAULT_OVERSAMPLE_SPECIFICATION.toString()));
    		} catch (Exception e) {
    			return DEFAULT_OVERSAMPLE_SPECIFICATION; // in case valueOf fails
+   		}
+   	}
+	
+	protected RatioScheme getStaticRatioScheme() {
+   		try {
+   			return staticConfiguration == null?
+   					DEFAULT_RATIO_SCHEME:
+   					RatioScheme.valueOf(
+   						staticConfiguration.getString(RATIO_SCHEME, DEFAULT_RATIO_SCHEME.toString()));
+   		} catch (Exception e) {
+   			return DEFAULT_RATIO_SCHEME; // in case valueOf fails
    		}
    	}
 	

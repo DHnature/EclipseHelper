@@ -6,10 +6,10 @@ import util.annotations.ComponentWidth;
 import util.annotations.Explanation;
 import util.annotations.Row;
 import util.models.DynamicEnum;
-import util.models.PropertyListenerRegistrar;
+import util.models.PropertyListenerRegisterer;
 import difficultyPrediction.PredictionParameters;
 
-public interface AnalyzerParameters extends PropertyListenerRegistrar {
+public interface AnalyzerParameters extends PropertyListenerRegisterer {
 
 	public abstract PredictionParameters getPredictionParameters();
 

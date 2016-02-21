@@ -1,9 +1,9 @@
 package analyzer;
 
 import util.models.LabelBeanModel;
-import util.models.PropertyListenerRegistrar;
+import util.models.PropertyListenerRegisterer;
 
-public interface WebLink extends PropertyListenerRegistrar{
+public interface WebLink extends PropertyListenerRegisterer{
 
 	public abstract String getSearchString();
 

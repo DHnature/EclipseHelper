@@ -19,7 +19,7 @@ import weka.filters.unsupervised.attribute.Remove;
 import analyzer.extension.ArffFileGeneratorFactory;
 import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.metrics.ATestRatioCalculator;
-import difficultyPrediction.metrics.ATestRatioCalculator.Scheme;
+import difficultyPrediction.metrics.RatioScheme;
 import difficultyPrediction.predictionManagement.ClassifierSpecification;
 import difficultyPrediction.predictionManagement.OversampleSpecification;
 
@@ -279,10 +279,10 @@ public class LeaveOneOutAnalysis {
 
 
 	public static void main(String[] args) {
-		Scheme[] vals=new Scheme[] {Scheme.A3};
+		RatioScheme[] vals=new RatioScheme[] {RatioScheme.A3};
 
 		//go through each scheme, can't do this for now because of memory leak preventing entire run
-		for(Scheme s:vals) {
+		for(RatioScheme s:vals) {
 			ATestRatioCalculator.CURRENT_SCHEME=s;
 
 			String outputAndTestSubDir=s.getSubDir();

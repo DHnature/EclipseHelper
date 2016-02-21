@@ -10,27 +10,27 @@ import edu.cmu.scs.fluorite.commands.ICommand;
 
 
 public class ATestRatioCalculator implements RatioCalculator {
-	public enum Scheme{
-		A0("leaveoneouta0/"),
-		A1("leaveoneouta1/"),
-		A2("leaveoneouta2/"),
-		A3("leaveoneouta3/");
-		
-		private String dir;
-		
-		private Scheme(String dir) {
-			this.dir=dir;
-			
-		}
+//	public enum Features{
+//		A0("leaveoneouta0/"),
+//		A1("leaveoneouta1/"),
+//		A2("leaveoneouta2/"),
+//		A3("leaveoneouta3/");
+//		
+//		private String dir;
+//		
+//		private Features(String dir) {
+//			this.dir=dir;
+//			
+//		}
+//
+//		public String getSubDir() {
+//			return this.dir;
+//			
+//		}
+//		
+//	}
 
-		public String getSubDir() {
-			return this.dir;
-			
-		}
-		
-	}
-
-	public static Scheme CURRENT_SCHEME=Scheme.A1;
+	public static RatioScheme CURRENT_SCHEME=RatioScheme.A1;
 	public final static int DEBUG_EVENT_INDEX = 0;
 	public final static int SEARCH_EVENT_INDEX = 1;
 	public final static int EDIT_EVENT_INDEX = 2;

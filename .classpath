@@ -17,9 +17,9 @@
 	<classpathentry kind="lib" path="lib/oeall22.jar" sourcepath="/uigen/src"/>
 	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
 	<classpathentry kind="lib" path="lib/weka3_6.jar"/>
-	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
 	<classpathentry kind="lib" path="lib/smack-3.4.1-0cec571.jar"/>
 	<classpathentry kind="lib" path="lib/smackx-3.4.1-0cec571.jar"/>
 	<classpathentry kind="lib" path="lib/smackx-debug-3.4.1-0cec571.jar"/>
+	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

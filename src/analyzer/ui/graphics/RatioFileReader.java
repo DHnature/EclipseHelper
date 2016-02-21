@@ -2,9 +2,9 @@ package analyzer.ui.graphics;
 
 import java.util.List;
 
-import util.models.PropertyListenerRegistrar;
+import util.models.PropertyListenerRegisterer;
 
-public interface RatioFileReader extends PropertyListenerRegistrar {
+public interface RatioFileReader extends PropertyListenerRegisterer {
 	public static final String START_RATIOS = "startRatioFeatures";
 	public static final String END_RATIOS = "endRatioFeatures";
 	public static final String NEW_RATIO = "newRatioFeatures";

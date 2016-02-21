@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Queue;
 
-import util.models.PropertyListenerRegistrar;
+import util.models.PropertyListenerRegisterer;
 import analyzer.extension.StuckInterval;
 import analyzer.extension.StuckPoint;
 import bus.uigen.models.FileSetterModel;
 import difficultyPrediction.DifficultyPredictionPluginEventProcessor;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
-public interface Analyzer extends PropertyListenerRegistrar{
+public interface Analyzer extends PropertyListenerRegisterer{
 
 	/**Set the output subdirectory.<p>
 	 * The output subdirectory is the directory inside of the output directory<br>

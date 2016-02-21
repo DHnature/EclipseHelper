@@ -6,10 +6,10 @@ import java.beans.PropertyChangeSupport;
 import util.annotations.Column;
 import util.annotations.ComponentWidth;
 import util.annotations.Row;
-import util.models.PropertyListenerRegistrar;
+import util.models.PropertyListenerRegisterer;
 import bus.uigen.ObjectEditor;
 
-public class SquaringCounterWithButtons implements PropertyListenerRegistrar {
+public class SquaringCounterWithButtons implements PropertyListenerRegisterer {
 	
 	PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
