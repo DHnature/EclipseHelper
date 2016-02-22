@@ -7,10 +7,10 @@ import util.annotations.Position;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 
-public class ACommandClassification implements CommandToFeatureDescriptor {
+public class ACommandClassification implements CommandClassification {
 	CommandName command = null;
-	FeatureName feature = FeatureName.OTHER;
-	public ACommandClassification(CommandName command, FeatureName feature) {
+	CommandCategoryName feature = CommandCategoryName.OTHER;
+	public ACommandClassification(CommandName command, CommandCategoryName feature) {
 		this.command = command;
 		this.feature = feature;
 	}
@@ -26,11 +26,11 @@ public class ACommandClassification implements CommandToFeatureDescriptor {
 	
 	@Override
 	@Position(1)
-	public FeatureName getFeature() {
+	public CommandCategoryName getFeature() {
 		return feature;
 	}
 	@Override
-	public void setFeature(FeatureName feature) {
+	public void setFeature(CommandCategoryName feature) {
 		this.feature = feature;
 	}
 	

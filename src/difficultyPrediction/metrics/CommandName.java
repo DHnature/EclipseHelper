@@ -21,6 +21,7 @@ public enum CommandName {
 	Delete,
 	UndoCommand,
 	MoveCaretCommand,
-	delete
+	delete,
+	Exception
 
 }

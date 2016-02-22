@@ -1,6 +1,6 @@
 package difficultyPrediction.metrics;
 
-public interface FeatureDescriptors {
+public interface CommandCategories {
 
 	public abstract String getSearchCommands();
 
@@ -27,13 +27,17 @@ public interface FeatureDescriptors {
 	//	public void setRemoveCommands(String removeCommands) {
 	//		this.removeCommands = removeCommands;
 	//	}
-	public abstract CommandToFeatureDescriptor[] getCommandsToFeatureDesciptor();
+	public abstract CommandClassification[] getCommandsToFeatureDesciptor();
 
 	public abstract void setCommandsToFeatureDesciptor(
-			CommandToFeatureDescriptor[] commandsToFeatureDesciptor);
+			CommandClassification[] commandsToFeatureDesciptor);
 
-	void map(CommandName aCommand, FeatureName aFeatureName);
+	void map(CommandName aCommand, CommandCategoryName aFeatureName);
 
 	String getUnclassifiedCommands();
+
+	void map(CommandName[] aCommandNames, CommandCategoryName aFeatureName);
+
+	String getNavigationCommands();
 
 }
