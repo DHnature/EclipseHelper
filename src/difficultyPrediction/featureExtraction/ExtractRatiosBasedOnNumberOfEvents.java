@@ -2,6 +2,7 @@ package difficultyPrediction.featureExtraction;
 
 import java.util.List;
 
+import difficultyPrediction.metrics.AGenericRatioCalculator;
 import difficultyPrediction.metrics.RatioCalculator;
 import difficultyPrediction.metrics.RatioCalculatorSelector;
 import edu.cmu.scs.fluorite.commands.ICommand;
@@ -13,8 +14,8 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
 		
 	}
 	
-	private RatioCalculator metrics = RatioCalculatorSelector.getRatioFeatures();
-	
+	private RatioCalculator ratioCalculator = RatioCalculatorSelector.getRatioCalculator();
+	RatioCalculator genericRatioCalculator = new AGenericRatioCalculator();
 	 private static final int NAVIGATION_PERCENTAGE = 0;
      private static final int DEBUG_PERCENTAGE = 1;
      private static final int FOCUS_PERCENTAGE = 2;
@@ -23,7 +24,11 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
 	
 	public void performFeatureExtraction(List<ICommand> actions, RatioBasedFeatureExtractor featureExtractor) {
 			List<Double> percentages = null;
-			percentages = metrics.computeMetrics(actions);
+			percentages = ratioCalculator.computeMetrics(actions);
+			List<Double> genericPercentages = genericRatioCalculator.computeMetrics(actions);
+			if (!(percentages.equals(genericPercentages))) {
+				System.err.println ("Generic and specific percentages diverge:" + percentages + " " + genericPercentages);
+			}
 			ICommand lastCommand = actions.get(actions.size() - 1);
 			long timeStamp = lastCommand.getTimestamp();
 			

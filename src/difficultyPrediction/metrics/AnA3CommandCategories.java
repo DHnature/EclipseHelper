@@ -2,7 +2,7 @@ package difficultyPrediction.metrics;
 
 import bus.uigen.ObjectEditor;
 
-public class AnA0CommandCategories extends ACommandCategories{
+public class AnA3CommandCategories extends AnA0CommandCategories{
 	CommandName[] editOrInsertCommands = {
 			CommandName.CopyCommand,
 			CommandName.CutCommand,
@@ -54,7 +54,7 @@ public class AnA0CommandCategories extends ACommandCategories{
 	};
 	
 	
-	public AnA0CommandCategories() {
+	public AnA3CommandCategories() {
 		map (insertCommands, CommandCategory.EDIT_OR_INSERT);
 		map (removeCommands, CommandCategory.REMOVE);
 		map (debugCommands, CommandCategory.DEBUG);
@@ -65,7 +65,7 @@ public class AnA0CommandCategories extends ACommandCategories{
 		
 	}
 	public static void main (String[] args) {
-		CommandCategories commandsToFeatures = new AnA0CommandCategories();
+		CommandCategories commandsToFeatures = new AnA3CommandCategories();
 		ObjectEditor.edit(commandsToFeatures);
 	}
 }

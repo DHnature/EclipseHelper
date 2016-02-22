@@ -6,7 +6,7 @@ import bus.uigen.ObjectEditor;
 import bus.uigen.attributes.AttributeNames;
 import bus.uigen.undo.ExecutableCommand;
 
-public class ACommandClassificationAR implements ExecutableCommand{
+public class ACategorizedCommandAR implements ExecutableCommand{
 	public Object execute(Object theFrame) {
 //		ObjectEditor.setPropertyAttribute(ACommandToFeatureDescriptor.class, "Command", AttributeNames.DISPLAY_TO_STRING, true);
 

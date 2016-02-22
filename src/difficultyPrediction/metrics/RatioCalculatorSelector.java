@@ -12,7 +12,7 @@ public class RatioCalculatorSelector {
 	public static void setFactory(RatioCalculatorFactory newVal) {
 		factory = newVal;
 	}
-	public static  RatioCalculator getRatioFeatures() {
+	public static  RatioCalculator getRatioCalculator() {
 		if (ratioCalculator == null) {
 			ratioCalculator = factory.createRatioCalculator();
 		}

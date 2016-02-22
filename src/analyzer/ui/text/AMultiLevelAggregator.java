@@ -84,7 +84,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 
 		
 //		ratioCalculator = APercentageCalculator.getInstance();
-		ratioCalculator = RatioCalculatorSelector.getRatioFeatures();
+		ratioCalculator = RatioCalculatorSelector.getRatioCalculator();
 //		webLinks.add(new ALabelBeanModel(Common.toBlueColoredUnderlinedHrefHTML("https://www.google.com", "google")));
 		webLinks.add(new ALabelBeanModel(""));
 

@@ -20,8 +20,8 @@ public class ACommandCategories implements CommandCategories {
 	String removeCommands = "";
 	String navigationCommands = "";
 	String unclassifiedCommands = "";
-	CommandClassification[] commandsToFeatureDesciptor =
-			new CommandClassification[CommandName.values().length] ;
+	CategorizedCommand[] commandsToCategories =
+			new CategorizedCommand[CommandName.values().length] ;
 	public ACommandCategories() {
 		initializeCommands();
 		computeCommands();
@@ -29,8 +29,8 @@ public class ACommandCategories implements CommandCategories {
 	protected void initializeCommands() {
 		CommandName[] aCommandNames = CommandName.values();
 		for (CommandName aCommandName: aCommandNames) {
-			commandsToFeatureDesciptor[aCommandName.ordinal()] =
-					new ACommandClassification(aCommandName);
+			commandsToCategories[aCommandName.ordinal()] =
+					new ACategorizedCommand(aCommandName);
 		}
 	}
 	
@@ -78,8 +78,8 @@ public class ACommandCategories implements CommandCategories {
 //		this.removeFeatures = removeFeatures;
 //	}
 	@Override
-	public CommandClassification[] getCommandsToFeatureDesciptor() {
-		return commandsToFeatureDesciptor;
+	public CategorizedCommand[] getCommandsToCategories() {
+		return commandsToCategories;
 	}
 	public void computeCommands () {
 		searchCommands = "";
@@ -89,13 +89,13 @@ public class ACommandCategories implements CommandCategories {
 		removeCommands = "";
 		navigationCommands = "";
 		unclassifiedCommands = "";
-		for (CommandClassification aCommand:commandsToFeatureDesciptor) {
+		for (CategorizedCommand aCommand:commandsToCategories) {
 			computeCommands(aCommand);
 		}
 		
 	}
-	public void computeCommands (CommandClassification aCommand) {
-			switch (aCommand.getFeature()) {
+	public void computeCommands (CategorizedCommand aCommand) {
+			switch (aCommand.getCategory()) {
 			case SEARCH: 
 				searchCommands += " " + aCommand.getCommand();
 				break;
@@ -122,20 +122,45 @@ public class ACommandCategories implements CommandCategories {
 	}
 	@Override
 	public void setCommandsToFeatureDesciptor(
-			CommandClassification[] commandsToFeatureDesciptor) {
-		this.commandsToFeatureDesciptor = commandsToFeatureDesciptor;
+			CategorizedCommand[] commandsToFeatureDesciptor) {
+		this.commandsToCategories = commandsToFeatureDesciptor;
 		
 	}
-	protected void mapButDoNotCompute (CommandName aCommand, CommandCategoryName aFeatureName) {		
-		commandsToFeatureDesciptor[aCommand.ordinal()].setFeature(aFeatureName);
+	protected void mapButDoNotCompute (CommandName aCommand, CommandCategory aFeatureName) {		
+		commandsToCategories[aCommand.ordinal()].setFeature(aFeatureName);
 	}
 	@Override
-	public void map (CommandName aCommand, CommandCategoryName aFeatureName) {		
-		commandsToFeatureDesciptor[aCommand.ordinal()].setFeature(aFeatureName);
+	public CommandCategory getCommandCategory(CommandName aCommandName) {
+		return commandsToCategories[aCommandName.ordinal()].getCategory();
+	}
+	@Override
+	public CommandName searchCommandName(String anID) {
+		String aLowerCaseID = anID.toLowerCase();
+		CommandName[] aCommandNames = CommandName.values();
+		for (CommandName aCommandName:aCommandNames) {
+			String aCommandNameString = aCommandName.toString();
+			if (Character.isUpperCase(aCommandNameString.charAt(0)))
+				continue;
+			if (aLowerCaseID.contains(aCommandNameString))
+				return aCommandName;
+		}
+		return null;
+	}
+	@Override
+	public CommandCategory searchCommandCategory(String anID) {
+		CommandName aCommandName = searchCommandName(anID);
+		if (aCommandName == null) {
+			return CommandCategory.OTHER;
+		}
+		return getCommandCategory(aCommandName);
+	}
+	@Override
+	public void map (CommandName aCommand, CommandCategory aFeatureName) {		
+		commandsToCategories[aCommand.ordinal()].setFeature(aFeatureName);
 		computeCommands();
 	}
 	@Override
-	public void map (CommandName[] aCommandNames, CommandCategoryName aFeatureName) {		
+	public void map (CommandName[] aCommandNames, CommandCategory aFeatureName) {		
 		for (CommandName aCommandName:aCommandNames) {
 			mapButDoNotCompute (aCommandName, aFeatureName);
 		}
@@ -143,7 +168,7 @@ public class ACommandCategories implements CommandCategories {
 	}
 	public static void main (String[] args) {
 		CommandCategories commandsToFeatures = new ACommandCategories();
-		commandsToFeatures.map(CommandName.BreakPointCommand, CommandCategoryName.DEBUG);
+		commandsToFeatures.map(CommandName.BreakPointCommand, CommandCategory.DEBUG);
 		ObjectEditor.edit(commandsToFeatures);
 	}
 	

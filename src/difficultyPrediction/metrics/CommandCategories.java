@@ -27,17 +27,23 @@ public interface CommandCategories {
 	//	public void setRemoveCommands(String removeCommands) {
 	//		this.removeCommands = removeCommands;
 	//	}
-	public abstract CommandClassification[] getCommandsToFeatureDesciptor();
+	public abstract CategorizedCommand[] getCommandsToCategories();
 
 	public abstract void setCommandsToFeatureDesciptor(
-			CommandClassification[] commandsToFeatureDesciptor);
+			CategorizedCommand[] commandsToFeatureDesciptor);
 
-	void map(CommandName aCommand, CommandCategoryName aFeatureName);
+	void map(CommandName aCommand, CommandCategory aFeatureName);
 
 	String getUnclassifiedCommands();
 
-	void map(CommandName[] aCommandNames, CommandCategoryName aFeatureName);
+	void map(CommandName[] aCommandNames, CommandCategory aFeatureName);
 
 	String getNavigationCommands();
+
+	CommandCategory getCommandCategory(CommandName aCommandName);
+
+	CommandName searchCommandName(String anID);
+
+	CommandCategory searchCommandCategory(String anID);
 
 }
