@@ -1,7 +1,7 @@
 package difficultyPrediction;
 
 import bus.uigen.models.FileSetterModel;
-import difficultyPrediction.metrics.RatioScheme;
+import difficultyPrediction.metrics.CommandClassificationScheme;
 import difficultyPrediction.predictionManagement.ClassifierSpecification;
 import difficultyPrediction.predictionManagement.OversampleSpecification;
 import util.models.PropertyListenerRegisterer;
@@ -17,8 +17,9 @@ public interface PredictionParameters extends Resettable, PropertyListenerRegist
 	void setClassifierSpecification(ClassifierSpecification newVal);
 	OversampleSpecification getOversampleSpecification();
 	ClassifierSpecification getClassifierSpecification();
-	RatioScheme getRatioScheme();
+	CommandClassificationScheme getCommandClassificationScheme();
 //	FileSetterModel getARFFFileName();
 	String getARFFFileName();
+	void setCommandClassificationScheme(CommandClassificationScheme ratioScheme);
 
 }

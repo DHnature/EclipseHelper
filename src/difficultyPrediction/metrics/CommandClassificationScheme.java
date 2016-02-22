@@ -1,6 +1,6 @@
 package difficultyPrediction.metrics;
 
-public enum RatioScheme {
+public enum CommandClassificationScheme {
 	A0("leaveoneouta0/"),
 	A1("leaveoneouta1/"),
 	A2("leaveoneouta2/"),
@@ -8,7 +8,7 @@ public enum RatioScheme {
 	
 	private String dir;
 	
-	private RatioScheme(String dir) {
+	private CommandClassificationScheme(String dir) {
 		this.dir=dir;
 		
 	}

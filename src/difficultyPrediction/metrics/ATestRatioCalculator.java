@@ -327,7 +327,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 		for (int i = 0; i < userActions.size(); i++) {
 			ICommand myEvent = userActions.get(i);
 
-			switch(APredictionParameters.getInstance().getRatioScheme()) {
+			switch(APredictionParameters.getInstance().getCommandClassificationScheme()) {
 
 //			switch(CURRENT_SCHEME) {
 			case A0:

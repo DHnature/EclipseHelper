@@ -17,9 +17,10 @@ import weka.filters.supervised.instance.Resample;
 import weka.filters.supervised.instance.SMOTE;
 import weka.filters.unsupervised.attribute.Remove;
 import analyzer.extension.ArffFileGeneratorFactory;
+import difficultyPrediction.APredictionParameters;
 import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.metrics.ATestRatioCalculator;
-import difficultyPrediction.metrics.RatioScheme;
+import difficultyPrediction.metrics.CommandClassificationScheme;
 import difficultyPrediction.predictionManagement.ClassifierSpecification;
 import difficultyPrediction.predictionManagement.OversampleSpecification;
 
@@ -279,11 +280,12 @@ public class LeaveOneOutAnalysis {
 
 
 	public static void main(String[] args) {
-		RatioScheme[] vals=new RatioScheme[] {RatioScheme.A3};
+		CommandClassificationScheme[] vals=new CommandClassificationScheme[] {CommandClassificationScheme.A3};
 
 		//go through each scheme, can't do this for now because of memory leak preventing entire run
-		for(RatioScheme s:vals) {
-			ATestRatioCalculator.CURRENT_SCHEME=s;
+		for(CommandClassificationScheme s:vals) {
+//			ATestRatioCalculator.CURRENT_SCHEME=s;
+			APredictionParameters.getInstance().setCommandClassificationScheme(s);
 
 			String outputAndTestSubDir=s.getSubDir();
 
@@ -292,7 +294,9 @@ public class LeaveOneOutAnalysis {
 			generateNeccessaryArffFiles(outputAndTestSubDir);
 
 			try {
-				out.write(String.format("**Results for scheme %s**%n",ATestRatioCalculator.CURRENT_SCHEME));
+//				out.write(String.format("**Results for scheme %s**%n",ATestRatioCalculator.CURRENT_SCHEME));
+				out.write(String.format("**Results for scheme %s**%n",APredictionParameters.getInstance().getCommandClassificationScheme()));
+
 				out.newLine();
 				out.write("Training dir: "+trainingDir);
 				out.newLine();
