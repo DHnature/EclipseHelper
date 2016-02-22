@@ -3,7 +3,7 @@ package difficultyPrediction.metrics;
 import bus.uigen.ObjectEditor;
 
 public class AnA0CommandCategories extends ACommandCategories{
-	CommandName[] editOrInsertCommands = {
+	private CommandName[] editCatgory = {
 			CommandName.CopyCommand,
 			CommandName.CutCommand,
 			CommandName.Delete,
@@ -17,52 +17,73 @@ public class AnA0CommandCategories extends ACommandCategories{
 			CommandName.MoveCaretCommand,
 			CommandName.edit,			
 	};
-	CommandName[] exceptionCommands = {
+	private CommandName[] exceptionCategory = {
 			CommandName.Exception
 	};
 	
-	CommandName[] insertCommands = {
-			CommandName.CopyCommand,			
-			CommandName.Insert,
-			CommandName.InsertStringCommand,
-			CommandName.PasteCommand,
-			CommandName.Replace,
-			CommandName.MoveCaretCommand,
-			CommandName.SelectTextCommand,
-	};
+//	CommandName[] insertCommands = {
+//			CommandName.CopyCommand,			
+//			CommandName.Insert,
+//			CommandName.InsertStringCommand,
+//			CommandName.PasteCommand,
+//			CommandName.Replace,
+//			CommandName.MoveCaretCommand,
+//			CommandName.SelectTextCommand,
+//	};
 	
-	CommandName[] removeCommands = {
-			CommandName.CutCommand,			
-			CommandName.Delete,
-			CommandName.delete,
-	};
+//	CommandName[] removeCommands = {
+////			CommandName.CutCommand,			
+////			CommandName.Delete,
+////			CommandName.delete,
+//	};
 	
-	CommandName[] debugCommands = {
+	private CommandName[] debugCategory = {
 			CommandName.BreakPointCommand,			
 			CommandName.ExceptionCommand,
 			CommandName.RunCommand,			
 	};
 	
-	CommandName[] navigationCommands = {
+	private CommandName[] navigationCategory = {
 			CommandName.FileOpenCommand,			
 			CommandName.FindCommand,
 			CommandName.view,			
 	};
-	CommandName[] focusCommands = {
+	private CommandName[] focusCategory = {
 			CommandName.ShellCommand,			
 					
 	};
 	
-	
 	public AnA0CommandCategories() {
-		map (insertCommands, CommandCategory.EDIT_OR_INSERT);
-		map (removeCommands, CommandCategory.REMOVE);
-		map (debugCommands, CommandCategory.DEBUG);
-		map (focusCommands, CommandCategory.FOCUS);
-		map (navigationCommands, CommandCategory.NAVIGATION);
+		
+		this (true);
 		
 		
+	}
+     public AnA0CommandCategories(boolean aMapCategories) {
+		if (aMapCategories)
+		mapCategories();
 		
+		
+	}
+	private void mapCategories() {
+		map (editCategory(), CommandCategory.EDIT_OR_INSERT);
+//		map (removeCommands, CommandCategory.REMOVE);
+		map (debugCategory(), CommandCategory.DEBUG);
+		map (focusCategory(), CommandCategory.FOCUS);
+		map (navigationCategory(), CommandCategory.NAVIGATION);
+	}
+
+	protected CommandName[] editCategory() {
+		return editCatgory;
+	}
+	protected CommandName[] debugCategory() {
+		return debugCategory;
+	}
+	protected CommandName[] navigationCategory() {
+		return navigationCategory;
+	}
+	protected CommandName[] focusCategory() {
+		return focusCategory;
 	}
 	public static void main (String[] args) {
 		CommandCategories commandsToFeatures = new AnA0CommandCategories();

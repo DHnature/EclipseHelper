@@ -127,7 +127,7 @@ public class ACommandCategories implements CommandCategories {
 		
 	}
 	protected void mapButDoNotCompute (CommandName aCommand, CommandCategory aFeatureName) {		
-		commandsToCategories[aCommand.ordinal()].setFeature(aFeatureName);
+		commandsToCategories[aCommand.ordinal()].setCategory(aFeatureName);
 	}
 	@Override
 	public CommandCategory getCommandCategory(CommandName aCommandName) {
@@ -156,7 +156,7 @@ public class ACommandCategories implements CommandCategories {
 	}
 	@Override
 	public void map (CommandName aCommand, CommandCategory aFeatureName) {		
-		commandsToCategories[aCommand.ordinal()].setFeature(aFeatureName);
+		commandsToCategories[aCommand.ordinal()].setCategory(aFeatureName);
 		computeCommands();
 	}
 	@Override

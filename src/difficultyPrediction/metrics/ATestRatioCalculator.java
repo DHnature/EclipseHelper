@@ -362,22 +362,22 @@ public class ATestRatioCalculator implements RatioCalculator {
 				//System.out.println ("remove command:" + myEvent);
 				if (jasonCalculator.isInsertionEvent(myEvent)) {
 					numberOfEditOrInsertEvents++;
-					//System.out.println ("Edit command:" + myEvent);
+					System.out.println ("Insert command:" + myEvent);
 				} else if (jasonCalculator.isDebugEvent(myEvent)) {
 					numberOfDebugEvents++;
-					//System.out.println ("Debug command:" + myEvent);
+					System.out.println ("Debug command:" + myEvent);
 
 				} else if (r.isNavigationEvent(myEvent)) {
 					numberOfSearchEvents++;
-					//System.out.println ("navigation command:" + myEvent);
+					System.out.println ("navigation command:" + myEvent);
 
 				} else if (r.isFocusEvent(myEvent)) {
 					numberOfFocusEvents++;
-					//System.out.println ("Focus command:" + myEvent);
+					System.out.println ("Focus command:" + myEvent);
 
 				} else  if(jasonCalculator.isDeletionEvent(myEvent)){
 					numberOfRemoveEvents++;
-					//System.out.println("Unclassified command: " + myEvent);
+					System.out.println("Deletion command: " + myEvent);
 				}
 
 				break;

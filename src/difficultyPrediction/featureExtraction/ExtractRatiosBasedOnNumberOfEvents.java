@@ -24,6 +24,7 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
 	
 	public void performFeatureExtraction(List<ICommand> actions, RatioBasedFeatureExtractor featureExtractor) {
 			List<Double> percentages = null;
+			int i = 0;
 			percentages = ratioCalculator.computeMetrics(actions);
 			List<Double> genericPercentages = genericRatioCalculator.computeMetrics(actions);
 			if (!(percentages.equals(genericPercentages))) {

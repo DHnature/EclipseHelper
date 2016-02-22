@@ -4,7 +4,8 @@ public enum CommandName {
 	BreakPointCommand,
 	ExceptionCommand,
 	RunCommand,
-	CompilationCommand,
+	CompileWarning,
+	CompileError,
 	CopyCommand,
 	Insert,
 	InsertStringCommand,
@@ -13,15 +14,16 @@ public enum CommandName {
 	SelectTextCommand,
 	CutCommand,
 	Replace,
-	edit,
-	view,
+	
 	FileOpenCommand,
 	FindCommand,
 	ShellCommand,
 	Delete,
 	UndoCommand,
 	MoveCaretCommand,
+	Exception,
+	edit,// this must be after delete and maybe even view, but Jason's scheme has it wrong
 	delete,
-	Exception
+	view,
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 import bus.uigen.visitors.IsEditedAdapterVisitor;
 import difficultyPrediction.APredictionParameters;
+import edu.cmu.scs.fluorite.commands.CompilationCommand;
 import edu.cmu.scs.fluorite.commands.EclipseCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
@@ -21,6 +22,12 @@ public class AGenericRatioCalculator implements RatioCalculator {
 						getCommandClassificationScheme().
 							getCommandCategories();
 		String aCommandString = aCommand.getCommandType();
+		if (aCommand instanceof CompilationCommand) {
+			CompilationCommand command = (CompilationCommand)aCommand;
+			if (!command.getIsWarning()) {
+				return aCommandCategories.getCommandCategory(CommandName.CompileError);
+			}
+		}
 		if (aCommand instanceof EclipseCommand) {
 			aCommandString = ((EclipseCommand) aCommand).getCommandID();
 			return aCommandCategories.searchCommandCategory(aCommandString);
@@ -181,27 +188,55 @@ public class AGenericRatioCalculator implements RatioCalculator {
 
 		for (int i = 0; i < userActions.size(); i++) {
 			ICommand myEvent = userActions.get(i);
-
 			
-				if (isInsertOrEditEvent(myEvent)) {
-					numberOfEditOrInsertEvents++;
-					//System.out.println ("Edit command:" + myEvent);
-				} else if (isDebugEvent(myEvent)) {
-					numberOfDebugEvents++;
-					//System.out.println ("Debug command:" + myEvent);
+			CommandCategory aCommandCategory = toCommandCategory(myEvent);
+			if (aCommandCategory == null) {
+				System.err.println ("Unclassified command:" + myEvent);
+				continue;
+			}
+			System.out.println(myEvent + " -->" + aCommandCategory);
+			switch (aCommandCategory) {
+			case EDIT_OR_INSERT:
+				numberOfEditOrInsertEvents++;
+				break;
+			case DEBUG:
+				numberOfDebugEvents++;
+				break;
 
-				} else if (isNavigationEvent(myEvent)) {
-					numberOfSearchEvents++;
-					//System.out.println ("navigation command:" + myEvent);
-
-				} else if (isFocusEvent(myEvent)) {
-					numberOfFocusEvents++;
-					//System.out.println ("Focus command:" + myEvent);
-
-				} else  if(isAddRemoveEvent(myEvent)){
-					//numberOfRemoveEvents++;
-					//System.out.println("Unclassified command: " + myEvent);
-				}
+			case NAVIGATION:
+				numberOfSearchEvents++;
+				break;
+			case FOCUS:
+				numberOfFocusEvents++;
+				break;
+			case REMOVE:
+				numberOfRemoveEvents++;
+				break;
+			case OTHER:
+					
+			}
+//				if (isInsertOrEditEvent(myEvent)) {
+//					numberOfEditOrInsertEvents++;
+//					System.out.println ("Edit command:" + myEvent);
+//				} else if (isDebugEvent(myEvent)) {
+//					numberOfDebugEvents++;
+//					//System.out.println ("Debug command:" + myEvent);
+//
+//				} else if (isNavigationEvent(myEvent)) {
+//					numberOfSearchEvents++;
+//					//System.out.println ("navigation command:" + myEvent);
+//
+//				} else if (isFocusEvent(myEvent)) {
+//					numberOfFocusEvents++;
+//					//System.out.println ("Focus command:" + myEvent);
+//
+//				} else  if(isAddRemoveEvent(myEvent)){
+//					numberOfRemoveEvents++;
+//					System.out.println("Removecommand: " + myEvent);
+//				} else {
+//					System.out.println("Unclassifiedcommand: " + myEvent);
+//
+//				}
 
 				
 

@@ -30,7 +30,7 @@ public class ACategorizedCommand implements CategorizedCommand {
 		return feature;
 	}
 	@Override
-	public void setFeature(CommandCategory feature) {
+	public void setCategory(CommandCategory feature) {
 		this.feature = feature;
 	}
 	

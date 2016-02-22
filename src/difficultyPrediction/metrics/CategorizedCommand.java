@@ -7,6 +7,6 @@ public interface CategorizedCommand {
 
 	public abstract CommandCategory getCategory();
 
-	public abstract void setFeature(CommandCategory feature);
+	public abstract void setCategory(CommandCategory feature);
 
 }
