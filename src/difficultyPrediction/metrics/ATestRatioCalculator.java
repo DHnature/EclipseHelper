@@ -3,6 +3,7 @@ package difficultyPrediction.metrics;
 import java.util.ArrayList;
 import java.util.List;
 
+import difficultyPrediction.APredictionParameters;
 import analyzer.TimeandEventBasedPercentage;
 import edu.cmu.scs.fluorite.commands.CompilationCommand;
 import edu.cmu.scs.fluorite.commands.EclipseCommand;
@@ -30,7 +31,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 //		
 //	}
 
-	public static RatioScheme CURRENT_SCHEME=RatioScheme.A1;
+//	public static RatioScheme CURRENT_SCHEME=RatioScheme.A1;
 	public final static int DEBUG_EVENT_INDEX = 0;
 	public final static int SEARCH_EVENT_INDEX = 1;
 	public final static int EDIT_EVENT_INDEX = 2;
@@ -326,8 +327,9 @@ public class ATestRatioCalculator implements RatioCalculator {
 		for (int i = 0; i < userActions.size(); i++) {
 			ICommand myEvent = userActions.get(i);
 
+			switch(APredictionParameters.getInstance().getRatioScheme()) {
 
-			switch(CURRENT_SCHEME) {
+//			switch(CURRENT_SCHEME) {
 			case A0:
 
 				//jason's edit scheme

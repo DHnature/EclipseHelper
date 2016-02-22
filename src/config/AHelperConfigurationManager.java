@@ -25,6 +25,8 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
     public static final String PLAYER_JAVA = "player.javalocation";
     public static final String ARFF_FILE= "predictor.arffLocation";
     public static final String CLASSIFIER= "predictor.classifier";
+//    public static final String CLASSIFIER= "classifier";
+
     public static final String OVERSAMPLE= "predictor.oversample";
     public static final String RATIO_SCHEME= "predictor.ratioScheme";
 
@@ -66,6 +68,7 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
 	}
     protected ClassifierSpecification getStaticClassifierSpecification() {
 		try {
+		
 			return staticConfiguration == null?
 					DEFAULT_CLASSIFIER_SPECIFICATION:
 					ClassifierSpecification.valueOf(
