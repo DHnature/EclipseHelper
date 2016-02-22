@@ -20,6 +20,13 @@ public class AFeatureDescriptors implements FeatureDescriptors {
 	String removeFeature = "";
 	CommandToFeatureDescriptor[] commandsToFeatureDesciptor =
 			new CommandToFeatureDescriptor[CommandName.values().length] ;
+	public AFeatureDescriptors() {
+		CommandName[] aCommandNames = CommandName.values();
+		for (CommandName aCommandName: aCommandNames) {
+			commandsToFeatureDesciptor[aCommandName.ordinal()] =
+					new ACommandToFeatureDescriptor(aCommandName);
+		}
+	}
 	
 	@Override
 	public String getSearchFeature() {
@@ -91,10 +98,8 @@ public class AFeatureDescriptors implements FeatureDescriptors {
 		
 	}
 	@Override
-	public void map (CommandName aCommand, FeatureName aFeatureName) {
-		CommandToFeatureDescriptor aCommandToFeatureDescriptor = 
-				new ACommandToFeatureDescriptor(aCommand, aFeatureName);
-		commandsToFeatureDesciptor[aCommand.ordinal()] = aCommandToFeatureDescriptor;
+	public void map (CommandName aCommand, FeatureName aFeatureName) {		
+		commandsToFeatureDesciptor[aCommand.ordinal()].setFeature(aFeatureName);
 	}
 	public static void main (String[] args) {
 		FeatureDescriptors commandsToFeatures = new AFeatureDescriptors();
