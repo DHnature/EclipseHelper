@@ -2,30 +2,30 @@ package difficultyPrediction.metrics;
 
 public interface FeatureDescriptors {
 
-	public abstract String getSearchFeature();
+	public abstract String getSearchCommands();
 
-	//	public void setSearchFeature(String searchFeature) {
-	//		this.searchFeature = searchFeature;
+	//	public void setSearchCommands(String searchCommands) {
+	//		this.searchCommands = searchCommands;
 	//	}
-	public abstract String getDebugFeature();
+	public abstract String getDebugCommands();
 
-	//	public void setDebugFeature(String debugFeature) {
-	//		this.debugFeature = debugFeature;
+	//	public void setDebugCommands(String debugCommands) {
+	//		this.debugCommands = debugCommands;
 	//	}
-	public abstract String getEditOrInsertFeature();
+	public abstract String getEditOrInsertCommands();
 
-	//	public void setEditOrInsertFeature(String editOrInsertFeature) {
-	//		this.editOrInsertFeature = editOrInsertFeature;
+	//	public void setEditOrInsertCommands(String editOrInsertCommands) {
+	//		this.editOrInsertCommands = editOrInsertCommands;
 	//	}
-	public abstract String getFocusFeature();
+	public abstract String getFocusCommands();
 
-	//	public void setFocusFeature(String focusFeature) {
-	//		this.focusFeature = focusFeature;
+	//	public void setFocusCommands(String focusCommands) {
+	//		this.focusCommands = focusCommands;
 	//	}
-	public abstract String getRemoveFeature();
+	public abstract String getRemoveCommands();
 
-	//	public void setRemoveFeature(String removeFeature) {
-	//		this.removeFeature = removeFeature;
+	//	public void setRemoveCommands(String removeCommands) {
+	//		this.removeCommands = removeCommands;
 	//	}
 	public abstract CommandToFeatureDescriptor[] getCommandsToFeatureDesciptor();
 
@@ -33,5 +33,7 @@ public interface FeatureDescriptors {
 			CommandToFeatureDescriptor[] commandsToFeatureDesciptor);
 
 	void map(CommandName aCommand, FeatureName aFeatureName);
+
+	String getUnclassifiedCommands();
 
 }

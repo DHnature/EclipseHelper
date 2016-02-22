@@ -5,7 +5,7 @@ import java.util.List;
 
 import bus.uigen.ObjectEditor;
 
-public class AFeatureDescriptors implements FeatureDescriptors {
+public class ACommandCategories implements FeatureDescriptors {
 //	String searchFeature = new AString(FeatureName.SEARCH.toString());
 //	String debugFeature = new AString(FeatureName.EDIT_OR_INSERT.toString());
 //
@@ -13,54 +13,60 @@ public class AFeatureDescriptors implements FeatureDescriptors {
 //	String focusFeature = new AString(FeatureName.FOCUS.toString());
 //	String removeFeature = new AString(FeatureName.REMOVE.toString());
 	
-	String searchFeature = "";
-	String debugFeature = "";
-	String editOrInsertFeature = "";
-	String focusFeature = "";
-	String removeFeature = "";
+	String searchCommands = "";
+	String debugCommands = "";
+	String editOrInsertCommands = "";
+	String focusCommands = "";
+	String removeCommands = "";
+	String unclassifiedCommands = "";
 	CommandToFeatureDescriptor[] commandsToFeatureDesciptor =
 			new CommandToFeatureDescriptor[CommandName.values().length] ;
-	public AFeatureDescriptors() {
+	public ACommandCategories() {
 		CommandName[] aCommandNames = CommandName.values();
 		for (CommandName aCommandName: aCommandNames) {
 			commandsToFeatureDesciptor[aCommandName.ordinal()] =
-					new ACommandToFeatureDescriptor(aCommandName);
+					new ACommandClassification(aCommandName);
 		}
+		computeCommands();
 	}
 	
 	@Override
-	public String getSearchFeature() {
-		return searchFeature;
+	public String getSearchCommands() {
+		return searchCommands;
 	}
-//	public void setSearchFeature(String searchFeature) {
-//		this.searchFeature = searchFeature;
+//	public void setSearchCommands(String searchCommands) {
+//		this.searchCommands = searchCommands;
 //	}
 	@Override
-	public String getDebugFeature() {
-		return debugFeature;
+	public String getDebugCommands() {
+		return debugCommands;
 	}
-//	public void setDebugFeature(String debugFeature) {
-//		this.debugFeature = debugFeature;
+//	public void setDebugCommands(String debugCommands) {
+//		this.debugCommands = debugCommands;
 //	}
 	@Override
-	public String getEditOrInsertFeature() {
-		return editOrInsertFeature;
+	public String getEditOrInsertCommands() {
+		return editOrInsertCommands;
 	}
-//	public void setEditOrInsertFeature(String editOrInsertFeature) {
-//		this.editOrInsertFeature = editOrInsertFeature;
+//	public void setEditOrInsertCommands(String editOrInsertCommands) {
+//		this.editOrInsertCommands = editOrInsertCommands;
 //	}
 	@Override
-	public String getFocusFeature() {
-		return focusFeature;
+	public String getFocusCommands() {
+		return focusCommands;
 	}
 //	public void setFocusFeature(String focusFeature) {
-//		this.focusFeature = focusFeature;
+//		this.focusCommands = focusCommands;
 //	}
 	@Override
-	public String getRemoveFeature() {
-		return removeFeature;
+	public String getRemoveCommands() {
+		return removeCommands;
 	}
-//	public void setRemoveFeature(String removeFeature) {
+	@Override
+	public String getUnclassifiedCommands() {
+		return unclassifiedCommands;
+	}
+//	public void setRemoveCommands(String removeFeature) {
 //		this.removeFeatures = removeFeatures;
 //	}
 	@Override
@@ -71,21 +77,22 @@ public class AFeatureDescriptors implements FeatureDescriptors {
 		for (CommandToFeatureDescriptor aCommand:commandsToFeatureDesciptor) {
 			switch (aCommand.getFeature()) {
 			case SEARCH: 
-				searchFeature += " " + aCommand.getCommand();
+				searchCommands += " " + aCommand.getCommand();
 				break;
 			case DEBUG:
-				debugFeature += " " + aCommand.getCommand();
+				debugCommands += " " + aCommand.getCommand();
 				break;
 			case EDIT_OR_INSERT:
-				editOrInsertFeature += " " + aCommand.getCommand();
+				editOrInsertCommands += " " + aCommand.getCommand();
 				break;	
 			case FOCUS:
-				focusFeature += " " + aCommand.getCommand();
+				focusCommands += " " + aCommand.getCommand();
 				break;
 			case REMOVE:
-				removeFeature += " " + aCommand.getCommand();
+				removeCommands += " " + aCommand.getCommand();
 				break;	
 			case OTHER:
+				unclassifiedCommands += " " + aCommand.getCommand();
 				break;
 			}
 		}
@@ -102,7 +109,7 @@ public class AFeatureDescriptors implements FeatureDescriptors {
 		commandsToFeatureDesciptor[aCommand.ordinal()].setFeature(aFeatureName);
 	}
 	public static void main (String[] args) {
-		FeatureDescriptors commandsToFeatures = new AFeatureDescriptors();
+		FeatureDescriptors commandsToFeatures = new ACommandCategories();
 		commandsToFeatures.map(CommandName.BreakPointCommand, FeatureName.DEBUG);
 		ObjectEditor.edit(commandsToFeatures);
 	}

@@ -6,12 +6,12 @@ import bus.uigen.ObjectEditor;
 import bus.uigen.attributes.AttributeNames;
 import bus.uigen.undo.ExecutableCommand;
 
-public class AFeatureDescriptorsAR implements ExecutableCommand{
+public class ACommandCategoriesAR implements ExecutableCommand{
 	public Object execute(Object theFrame) {
 //		ObjectEditor.setPropertyAttribute(ACommandToFeatureDescriptor.class, "Command", AttributeNames.DISPLAY_TO_STRING, true);
 
-		ObjectEditor.setPropertyAttribute(AFeatureDescriptors.class, "*", AttributeNames.LABEL_WIDTH, 120);
-		ObjectEditor.setPropertyAttribute(AFeatureDescriptors.class, "*", AttributeNames.COMPONENT_WIDTH, 400);
+		ObjectEditor.setPropertyAttribute(ACommandCategories.class, "*", AttributeNames.LABEL_WIDTH, 120);
+		ObjectEditor.setPropertyAttribute(ACommandCategories.class, "*", AttributeNames.COMPONENT_WIDTH, 600);
 
 //		ObjectEditor.setAttribute(APredictionParameters.class,  AttributeNames.LAYOUT, AttributeNames.GRID_BAG_LAYOUT);
 //		ObjectEditor.setPropertyAttribute(APredictionParameters.class, "ARFFFileName", AttributeNames.STRETCHABLE_BY_PARENT, true);
