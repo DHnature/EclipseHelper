@@ -1,15 +1,15 @@
 package difficultyPrediction.metrics;
 
-public enum CommandClassificationScheme {
+public enum CommandClassificationSchemeName {
 	A0("leaveoneouta0/", new AnA0CommandCategories()),
 	A1("leaveoneouta1/", new AnA1CommandCategories()),
 	A2("leaveoneouta2/", new AnA2CommandCategories()),
-	A3("leaveoneouta3/", new AnA2CommandCategories() );
+	A3("leaveoneouta3/", new AnA3CommandCategories() );
 	
 	private String dir;
-	protected CommandCategories commandCategories;
+	protected CommandCategoryMapping commandCategories;
 	
-	private CommandClassificationScheme(String dir, CommandCategories aCommandCategories) {
+	private CommandClassificationSchemeName(String dir, CommandCategoryMapping aCommandCategories) {
 		this.dir=dir;
 		commandCategories = aCommandCategories;
 		
@@ -19,7 +19,7 @@ public enum CommandClassificationScheme {
 		return this.dir;
 		
 	}
-	public CommandCategories getCommandCategories() {
+	public CommandCategoryMapping getCommandCategories() {
 		return commandCategories;
 		
 	}

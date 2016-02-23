@@ -1,7 +1,9 @@
 package difficultyPrediction.metrics;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import bus.uigen.visitors.IsEditedAdapterVisitor;
 import difficultyPrediction.APredictionParameters;
@@ -16,9 +18,16 @@ public class AGenericRatioCalculator implements RatioCalculator {
 	public final static int EDIT_EVENT_INDEX = 2;
 	public final static int FOCUS_EVENT_INDEX = 3;
 	public final static int REMOVE_EVENT_INDEX = 4;
+	static RatioCalculator instance = new AGenericRatioCalculator();
+	protected Map<CommandCategory, String> commandCategoryToFetaureName = new HashMap();
+	
+	public AGenericRatioCalculator() {
+		mapCommandCategoryToFeatureName();
+	}
+	
 
 	public static CommandCategory toCommandCategory(ICommand aCommand) {
-		CommandCategories aCommandCategories = APredictionParameters.getInstance().
+		CommandCategoryMapping aCommandCategories = APredictionParameters.getInstance().
 						getCommandClassificationScheme().
 							getCommandCategories();
 		String aCommandString = aCommand.getCommandType();
@@ -254,24 +263,43 @@ public class AGenericRatioCalculator implements RatioCalculator {
 
 	@Override
 	public  String getFeatureName(ICommand myEvent) {
+		CommandCategory aCommandCategory = toCommandCategory(myEvent);
+		return commandCategoryToFetaureName.get(aCommandCategory);
+		
+//		if (isInsertOrEditEvent(myEvent)) {
+//			return "Edit";
+//
+//		} else if (isDebugEvent(myEvent)) {
+//			return "Debug";
+//
+//		} else if (isNavigationEvent(myEvent)) {
+//			return "Navigation";
+//
+//		} else if (isFocusEvent(myEvent)) {
+//			return "Focus";
+//
+//		} else if (isAddRemoveEvent(myEvent)) {
+//			return "RemoveClass";
+//		} else {
+//			return "Unclassified";
+//		}
+	}
+	
+	protected void mapCommandCategoryToFeatureName() {
+		commandCategoryToFetaureName.put(CommandCategory.EDIT_OR_INSERT, "Edit");
+		commandCategoryToFetaureName.put(CommandCategory.DEBUG, "Debug");
+		commandCategoryToFetaureName.put(CommandCategory.NAVIGATION, "Navigation");
+		commandCategoryToFetaureName.put(CommandCategory.FOCUS, "Focus");
+		commandCategoryToFetaureName.put(CommandCategory.REMOVE, "RemoveClass");
+		commandCategoryToFetaureName.put(CommandCategory.OTHER, "Unclassified");
+		commandCategoryToFetaureName.put(CommandCategory.SEARCH, "Navigation");
 
-		if (isInsertOrEditEvent(myEvent)) {
-			return "Edit";
 
-		} else if (isDebugEvent(myEvent)) {
-			return "Debug";
 
-		} else if (isNavigationEvent(myEvent)) {
-			return "Navigation";
-
-		} else if (isFocusEvent(myEvent)) {
-			return "Focus";
-
-		} else if (isAddRemoveEvent(myEvent)) {
-			return "RemoveClass";
-		} else {
-			return "Unclassified";
-		}
+	}
+	
+	public static RatioCalculator getInstance() {
+		return instance;
 	}
 
 }

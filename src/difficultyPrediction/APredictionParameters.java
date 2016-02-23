@@ -6,7 +6,7 @@ import java.beans.PropertyChangeSupport;
 import javax.swing.JFileChooser;
 
 import config.HelperConfigurationManagerFactory;
-import difficultyPrediction.metrics.CommandClassificationScheme;
+import difficultyPrediction.metrics.CommandClassificationSchemeName;
 import difficultyPrediction.predictionManagement.ClassifierSpecification;
 import difficultyPrediction.predictionManagement.OversampleSpecification;
 import util.annotations.Column;
@@ -26,7 +26,7 @@ public class APredictionParameters implements PredictionParameters {
 	int statusAggregated = 5;
 	ClassifierSpecification classifierSpecification;
 	OversampleSpecification oversampleSpecification;
-	CommandClassificationScheme ratioScheme;
+	CommandClassificationSchemeName ratioScheme;
 
 	String arffFileName;
 	static OEFrame predictionFrame;
@@ -180,7 +180,7 @@ public class APredictionParameters implements PredictionParameters {
 	@Column(3)
 	@ComponentWidth(40)
 	@Label("Ratios:")
-	public CommandClassificationScheme getCommandClassificationScheme() {
+	public CommandClassificationSchemeName getCommandClassificationScheme() {
 		if (ratioScheme == null) {
 			ratioScheme = HelperConfigurationManagerFactory
 					.getSingleton().getCommandClassificationScheme();
@@ -189,7 +189,7 @@ public class APredictionParameters implements PredictionParameters {
 //		return ratioScheme;
 	}
 	@Override
-	public void setCommandClassificationScheme(CommandClassificationScheme ratioScheme) {
+	public void setCommandClassificationScheme(CommandClassificationSchemeName ratioScheme) {
 		this.ratioScheme = ratioScheme;
 	}
 

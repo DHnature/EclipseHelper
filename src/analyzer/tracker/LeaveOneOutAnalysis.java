@@ -20,7 +20,7 @@ import analyzer.extension.ArffFileGeneratorFactory;
 import difficultyPrediction.APredictionParameters;
 import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.metrics.ATestRatioCalculator;
-import difficultyPrediction.metrics.CommandClassificationScheme;
+import difficultyPrediction.metrics.CommandClassificationSchemeName;
 import difficultyPrediction.predictionManagement.ClassifierSpecification;
 import difficultyPrediction.predictionManagement.OversampleSpecification;
 
@@ -280,10 +280,10 @@ public class LeaveOneOutAnalysis {
 
 
 	public static void main(String[] args) {
-		CommandClassificationScheme[] vals=new CommandClassificationScheme[] {CommandClassificationScheme.A3};
+		CommandClassificationSchemeName[] vals=new CommandClassificationSchemeName[] {CommandClassificationSchemeName.A3};
 
 		//go through each scheme, can't do this for now because of memory leak preventing entire run
-		for(CommandClassificationScheme s:vals) {
+		for(CommandClassificationSchemeName s:vals) {
 //			ATestRatioCalculator.CURRENT_SCHEME=s;
 			APredictionParameters.getInstance().setCommandClassificationScheme(s);
 

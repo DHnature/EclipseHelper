@@ -7,7 +7,7 @@ public enum CommandCategory {
 	NAVIGATION,
 	FOCUS,
 	REMOVE,
-	OTHER
+	OTHER	
 	
 
 }

@@ -7,7 +7,7 @@ import java.io.IOException;
 import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import difficultyPrediction.metrics.CommandClassificationScheme;
+import difficultyPrediction.metrics.CommandClassificationSchemeName;
 import difficultyPrediction.predictionManagement.ClassifierSpecification;
 import difficultyPrediction.predictionManagement.OversampleSpecification;
 
@@ -15,7 +15,7 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
 	public static final String DEFAULT_ARFF_FILE_LOCATION = "data/userStudy2010.arff";
 	public static final ClassifierSpecification DEFAULT_CLASSIFIER_SPECIFICATION = ClassifierSpecification.J48;
 	public static final OversampleSpecification DEFAULT_OVERSAMPLE_SPECIFICATION = OversampleSpecification.SMOTE;
-	public static final CommandClassificationScheme DEFAULT_RATIO_SCHEME = CommandClassificationScheme.A1;
+	public static final CommandClassificationSchemeName DEFAULT_RATIO_SCHEME = CommandClassificationSchemeName.A1;
 
 
     public static final String CONFIG_DIR = "config";
@@ -86,7 +86,7 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
     	return getStaticOversampleSpecification();
    	}
     @Override
-    public CommandClassificationScheme getCommandClassificationScheme() {
+    public CommandClassificationSchemeName getCommandClassificationScheme() {
     	return getStaticCommandClassificationScheme();
     }
 //    @Override
@@ -111,11 +111,11 @@ public class AHelperConfigurationManager implements HelperConfigurationManager {
    		}
    	}
 	
-	protected CommandClassificationScheme getStaticCommandClassificationScheme() {
+	protected CommandClassificationSchemeName getStaticCommandClassificationScheme() {
    		try {
    			return staticConfiguration == null?
    					DEFAULT_RATIO_SCHEME:
-   					CommandClassificationScheme.valueOf(
+   					CommandClassificationSchemeName.valueOf(
    						staticConfiguration.getString(COMMAND_CLASIFICATION_SCHEME, DEFAULT_RATIO_SCHEME.toString()));
    		} catch (Exception e) {
    			return DEFAULT_RATIO_SCHEME; // in case valueOf fails

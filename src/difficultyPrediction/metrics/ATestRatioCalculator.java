@@ -86,12 +86,12 @@ public class ATestRatioCalculator implements RatioCalculator {
 				|| (event.getCommandType().equals("Insert"))
 				|| (event.getCommandType().equals("InsertStringCommand"))
 				|| (event.getCommandType().equals("PasteCommand"))
-				|| (event.getCommandType().equals("RedoCommand"))
+				|| (event.getCommandType().equals("RedoCommand")) // addition to A1
 				|| (event.getCommandType().equals("SelectTextCommand"))
-				|| (event.getCommandType().equals("CutCommand"))
+				|| (event.getCommandType().equals("CutCommand")) // addition to A1, this is not insert
 
 				|| (event.getCommandType().equals("Replace"))
-
+				// no move caret
 
 
 				) {
@@ -312,6 +312,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 
 		return percentages;
 	}
+//	RatioCalculator genericRatioCalculator = AGenericRatioCalculator.getInstance();
 
 	/* (non-Javadoc)
 	 * @see difficultyPrediction.metrics.FeatureCalculator#getPercentageData(java.util.List)
@@ -323,9 +324,12 @@ public class ATestRatioCalculator implements RatioCalculator {
 		int numberOfEditOrInsertEvents = 0;
 		int numberOfFocusEvents = 0;
 		int numberOfRemoveEvents = 0;
+		
 
 		for (int i = 0; i < userActions.size(); i++) {
+			int foo = 1;
 			ICommand myEvent = userActions.get(i);
+			CommandCategory aCommandCategory = AGenericRatioCalculator.toCommandCategory(myEvent);
 
 			switch(APredictionParameters.getInstance().getCommandClassificationScheme()) {
 
@@ -363,21 +367,46 @@ public class ATestRatioCalculator implements RatioCalculator {
 				if (jasonCalculator.isInsertionEvent(myEvent)) {
 					numberOfEditOrInsertEvents++;
 					System.out.println ("Insert command:" + myEvent);
+					if (aCommandCategory != CommandCategory.EDIT_OR_INSERT) {
+						System.out.println ("Policies diverge");
+
+					}
 				} else if (jasonCalculator.isDebugEvent(myEvent)) {
 					numberOfDebugEvents++;
 					System.out.println ("Debug command:" + myEvent);
+					if (aCommandCategory != CommandCategory.DEBUG) {
+						System.out.println ("Policies diverge");
+
+					}
 
 				} else if (r.isNavigationEvent(myEvent)) {
 					numberOfSearchEvents++;
 					System.out.println ("navigation command:" + myEvent);
+					if (aCommandCategory != CommandCategory.NAVIGATION) {
+						System.out.println ("Policies diverge");
+
+					}
 
 				} else if (r.isFocusEvent(myEvent)) {
 					numberOfFocusEvents++;
 					System.out.println ("Focus command:" + myEvent);
+					if (aCommandCategory != CommandCategory.FOCUS) {
+						System.out.println ("Policies diverge");
+
+					}
 
 				} else  if(jasonCalculator.isDeletionEvent(myEvent)){
 					numberOfRemoveEvents++;
 					System.out.println("Deletion command: " + myEvent);
+					if (aCommandCategory != CommandCategory.REMOVE) {
+						System.out.println ("Policies diverge");
+
+					}
+				} else {
+					if (aCommandCategory != CommandCategory.OTHER && aCommandCategory != CommandCategory.SEARCH) {
+						System.out.println ("Policies diverge");
+
+					}
 				}
 
 				break;
@@ -389,23 +418,47 @@ public class ATestRatioCalculator implements RatioCalculator {
 				if (jasonCalculator.isInsertionEvent(myEvent)) {
 					numberOfEditOrInsertEvents++;
 					//System.out.println ("Edit command:" + myEvent);
+					if (aCommandCategory != CommandCategory.EDIT_OR_INSERT) {
+						System.out.println ("Policies diverge");
+
+					}
 				} else if (isDebugEvent(myEvent)) {
 					numberOfDebugEvents++;
 					//System.out.println ("Debug command:" + myEvent);
+					if (aCommandCategory != CommandCategory.DEBUG) {
+						System.out.println ("Policies diverge");
 
-				} else if (isNavigationEvent(myEvent)) {
+					}
+
+				} else if (isNavigationEvent(myEvent)) { // same as jason calculator
 					numberOfSearchEvents++;
 					//System.out.println ("navigation command:" + myEvent);
+					if (aCommandCategory != CommandCategory.NAVIGATION) {
+						System.out.println ("Policies diverge");
 
-				} else if (isFocusEvent(myEvent)) {
+					}
+
+				} else if (isFocusEvent(myEvent)) { // same as jason calculator
 					numberOfFocusEvents++;
 					//System.out.println ("Focus command:" + myEvent);
+					if (aCommandCategory != CommandCategory.FOCUS) {
+						System.out.println ("Policies diverge");
 
-				} else if(jasonCalculator.isDeletionEvent(myEvent)){
+					}
+
+				} else if(jasonCalculator.isDeletionEvent(myEvent)){					
 					numberOfRemoveEvents++;
+					if (aCommandCategory != CommandCategory.REMOVE) {
+						System.out.println ("Policies diverge");
+
+					}
 
 				} else  {
 					//System.out.println("Unclassified command: " + myEvent);
+					if (aCommandCategory != CommandCategory.OTHER && aCommandCategory != CommandCategory.SEARCH) {
+						System.out.println ("Policies diverge");
+
+					}
 				}
 				break;
 
@@ -415,23 +468,47 @@ public class ATestRatioCalculator implements RatioCalculator {
 				if (isInsertOrEditEvent(myEvent)) {
 					numberOfEditOrInsertEvents++;
 					//System.out.println ("Edit command:" + myEvent);
+					if (aCommandCategory != CommandCategory.EDIT_OR_INSERT) {
+						System.out.println ("Policies diverge");
+
+					}
 				} else if (isDebugEvent(myEvent)) {
 					numberOfDebugEvents++;
 					//System.out.println ("Debug command:" + myEvent);
+					if (aCommandCategory != CommandCategory.DEBUG) {
+						System.out.println ("Policies diverge");
+
+					}
 
 				} else if (isNavigationEvent(myEvent)) {
 					numberOfSearchEvents++;
 					//System.out.println ("navigation command:" + myEvent);
+					if (aCommandCategory != CommandCategory.NAVIGATION) {
+						System.out.println ("Policies diverge");
+
+					}
 
 				} else if (isFocusEvent(myEvent)) {
 					numberOfFocusEvents++;
 					//System.out.println ("Focus command:" + myEvent);
+					if (aCommandCategory != CommandCategory.FOCUS) {
+						System.out.println ("Policies diverge");
+
+					}
 
 				} else if(isAddRemoveEvent(myEvent)){
 					numberOfRemoveEvents++;
+					if (aCommandCategory != CommandCategory.REMOVE) {
+						System.out.println ("Policies diverge");
+
+					}
 
 				} else  {
 					//System.out.println("Unclassified command: " + myEvent);
+					if (aCommandCategory != CommandCategory.OTHER && aCommandCategory != CommandCategory.SEARCH) {
+						System.out.println ("Policies diverge");
+
+					}
 				}
 
 			}

@@ -1,6 +1,6 @@
 package difficultyPrediction.metrics;
 
-public interface CommandCategories {
+public interface CommandCategoryMapping {
 
 	public abstract String getSearchCommands();
 

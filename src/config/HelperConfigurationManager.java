@@ -2,7 +2,7 @@ package config;
 
 import org.apache.commons.configuration.PropertiesConfiguration;
 
-import difficultyPrediction.metrics.CommandClassificationScheme;
+import difficultyPrediction.metrics.CommandClassificationSchemeName;
 import difficultyPrediction.predictionManagement.ClassifierSpecification;
 import difficultyPrediction.predictionManagement.OversampleSpecification;
 
@@ -23,6 +23,6 @@ public interface HelperConfigurationManager {
 //			ClassifierSpecification classifierSpecification);
 //	void setOversampleSpecification(
 //			OversampleSpecification oversampleSpecification);
-	CommandClassificationScheme getCommandClassificationScheme();
+	CommandClassificationSchemeName getCommandClassificationScheme();
 
 }

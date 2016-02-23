@@ -15,7 +15,7 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
 	}
 	
 	private RatioCalculator ratioCalculator = RatioCalculatorSelector.getRatioCalculator();
-	RatioCalculator genericRatioCalculator = new AGenericRatioCalculator();
+	RatioCalculator genericRatioCalculator = AGenericRatioCalculator.getInstance();
 	 private static final int NAVIGATION_PERCENTAGE = 0;
      private static final int DEBUG_PERCENTAGE = 1;
      private static final int FOCUS_PERCENTAGE = 2;

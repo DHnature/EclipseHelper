@@ -5,7 +5,7 @@ import java.util.List;
 
 import bus.uigen.ObjectEditor;
 
-public class ACommandCategories implements CommandCategories {
+public class ACommandCategoryMapping implements CommandCategoryMapping {
 //	String searchFeature = new AString(FeatureName.SEARCH.toString());
 //	String debugFeature = new AString(FeatureName.EDIT_OR_INSERT.toString());
 //
@@ -22,7 +22,7 @@ public class ACommandCategories implements CommandCategories {
 	String unclassifiedCommands = "";
 	CategorizedCommand[] commandsToCategories =
 			new CategorizedCommand[CommandName.values().length] ;
-	public ACommandCategories() {
+	public ACommandCategoryMapping() {
 		initializeCommands();
 		computeCommands();
 	}
@@ -131,7 +131,8 @@ public class ACommandCategories implements CommandCategories {
 	}
 	@Override
 	public CommandCategory getCommandCategory(CommandName aCommandName) {
-		return commandsToCategories[aCommandName.ordinal()].getCategory();
+		int anIndex = aCommandName.ordinal();
+		return commandsToCategories[anIndex].getCategory();
 	}
 	@Override
 	public CommandName searchCommandName(String anID) {
@@ -167,7 +168,7 @@ public class ACommandCategories implements CommandCategories {
 		computeCommands();
 	}
 	public static void main (String[] args) {
-		CommandCategories commandsToFeatures = new ACommandCategories();
+		CommandCategoryMapping commandsToFeatures = new ACommandCategoryMapping();
 		commandsToFeatures.map(CommandName.BreakPointCommand, CommandCategory.DEBUG);
 		ObjectEditor.edit(commandsToFeatures);
 	}

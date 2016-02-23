@@ -2,7 +2,7 @@ package difficultyPrediction.metrics;
 
 import bus.uigen.ObjectEditor;
 
-public class AnA0CommandCategories extends ACommandCategories{
+public class AnA0CommandCategories extends ACommandCategoryMapping{
 	private CommandName[] editCatgory = {
 			CommandName.CopyCommand,
 			CommandName.CutCommand,
@@ -36,7 +36,10 @@ public class AnA0CommandCategories extends ACommandCategories{
 ////			CommandName.Delete,
 ////			CommandName.delete,
 //	};
-	
+//	private CommandName [] removeCommands = {
+//			
+//	};
+//	
 	private CommandName[] debugCategory = {
 			CommandName.BreakPointCommand,			
 			CommandName.ExceptionCommand,
@@ -65,15 +68,19 @@ public class AnA0CommandCategories extends ACommandCategories{
 		
 		
 	}
-	private void mapCategories() {
-		map (editCategory(), CommandCategory.EDIT_OR_INSERT);
-//		map (removeCommands, CommandCategory.REMOVE);
+	protected void mapCategories() {
+		map (editOrInsertCategory(), CommandCategory.EDIT_OR_INSERT);
+		map (removeCategory(), CommandCategory.REMOVE);
 		map (debugCategory(), CommandCategory.DEBUG);
 		map (focusCategory(), CommandCategory.FOCUS);
 		map (navigationCategory(), CommandCategory.NAVIGATION);
 	}
+	
+	protected CommandName[] removeCategory() {
+		return new CommandName[]{};
+	}
 
-	protected CommandName[] editCategory() {
+	protected CommandName[] editOrInsertCategory() {
 		return editCatgory;
 	}
 	protected CommandName[] debugCategory() {
@@ -86,7 +93,7 @@ public class AnA0CommandCategories extends ACommandCategories{
 		return focusCategory;
 	}
 	public static void main (String[] args) {
-		CommandCategories commandsToFeatures = new AnA0CommandCategories();
+		CommandCategoryMapping commandsToFeatures = new AnA0CommandCategories();
 		ObjectEditor.edit(commandsToFeatures);
 	}
 }

@@ -42,9 +42,9 @@ public class AnA1CommandCategories extends AnA0CommandCategories{
 			CommandName.delete,
 	};
 	
-	private CommandName[] additionsToDebugCategory = {
-			CommandName.CompileError
-	};
+//	private CommandName[] additionsToDebugCategory = {
+//			CommandName.CompileError
+//	};
 	
 	
 //	CommandName[] debugCommands = {
@@ -75,26 +75,28 @@ public class AnA1CommandCategories extends AnA0CommandCategories{
 	public AnA1CommandCategories() {
 		this(true);
 	}
-	protected CommandName[]insertCategory() {
+	@Override
+	protected CommandName[] editOrInsertCategory() {
 		return insertCategory;
 	}
+	@Override
 	protected CommandName[] removeCategory() {
 		return removeCategory;
 	}
-	private void mapCategories() {
-		map (insertCategory(), CommandCategory.EDIT_OR_INSERT);
-		map (removeCategory, CommandCategory.REMOVE);
-		map (debugCategory(), CommandCategory.DEBUG);
-		map (focusCategory(), CommandCategory.FOCUS);
-		map (navigationCategory(), CommandCategory.NAVIGATION);
-	}
-	protected CommandName[] debugCategory() {
-		List<CommandName> resultList = new ArrayList();
-		resultList.addAll(Arrays.asList(super.debugCategory()));
-		resultList.addAll(Arrays.asList(additionsToDebugCategory));
-		return resultList.toArray(new CommandName[]{});
-		
-	}
+//	protected void mapCategories() {
+//		map (insertCategory(), CommandCategory.EDIT_OR_INSERT);
+//		map (removeCategory(), CommandCategory.REMOVE);
+//		map (debugCategory(), CommandCategory.DEBUG);
+//		map (focusCategory(), CommandCategory.FOCUS);
+//		map (navigationCategory(), CommandCategory.NAVIGATION);
+//	}
+//	protected CommandName[] debugCategory() {
+//		List<CommandName> resultList = new ArrayList();
+//		resultList.addAll(Arrays.asList(super.debugCategory()));
+////		resultList.addAll(Arrays.asList(additionsToDebugCategory));
+//		return resultList.toArray(new CommandName[]{});
+//		
+//	}
 //	private void mapCategories() {
 //		map (insertCommands, CommandCategory.EDIT_OR_INSERT);
 //		map (removeCommands, CommandCategory.REMOVE);
@@ -103,7 +105,7 @@ public class AnA1CommandCategories extends AnA0CommandCategories{
 //		map (navigationCommands, CommandCategory.NAVIGATION);
 //	}
 	public static void main (String[] args) {
-		CommandCategories commandsToFeatures = new AnA1CommandCategories();
+		CommandCategoryMapping commandsToFeatures = new AnA1CommandCategories();
 		ObjectEditor.edit(commandsToFeatures);
 	}
 }
