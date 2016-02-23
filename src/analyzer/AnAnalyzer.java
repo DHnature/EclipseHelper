@@ -439,8 +439,12 @@ public class AnAnalyzer implements Analyzer  {
 			// all if first on the list
 
 			for (String aParticipantId : participantIds) {
-				processParticipant(aParticipantId,outPath,participantsFolder.getText()
-						+ EXPERIMENTAL_DATA + AnAnalyzer.participants.get(aParticipantId) + "/" + ECLIPSE_FOLDER,false);
+//				processParticipant(aParticipantId,outPath,participantsFolder.getText()
+//						+ EXPERIMENTAL_DATA + AnAnalyzer.participants.get(aParticipantId) + "/" + ECLIPSE_FOLDER,false);
+				processParticipant(aParticipantId,this.outputSubdirectory,participantsFolder.getText()
+						+ EXPERIMENTAL_DATA, 
+//						+ AnAnalyzer.participants.get(aParticipantId) + "/" + ECLIPSE_FOLDER,
+						false);
 
 			}
 
