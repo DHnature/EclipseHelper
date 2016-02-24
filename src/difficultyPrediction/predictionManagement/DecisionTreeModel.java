@@ -30,12 +30,12 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 		String aSpecifiedLocation = HelperConfigurationManagerFactory.getSingleton().getARFFFileName();
 //		return aSpecifiedLocation == null?wekaDataFileLocation:aSpecifiedLocation;
 //		return APredictionParameters.getInstance().getARFFFileName().getText();
-		return APredictionParameters.getInstance().getARFFFileName();
+		return APredictionParameters.getInstance().getClassificationParameters().getARFFFileName();
 
 	}
 	
 	protected Classifier getClassifier() {
-		return APredictionParameters.getInstance().getClassifierSpecification().toClassifier();
+		return APredictionParameters.getInstance().getClassificationParameters().getClassifierSpecification().toClassifier();
 //		return DifficultyPredictionSettings.getClassifierSpecification().toClassifier();
 //		return j48Model;
 	}

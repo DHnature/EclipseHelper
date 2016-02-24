@@ -27,6 +27,7 @@ public class APredictionParameters implements PredictionParameters {
 	ClassifierSpecification classifierSpecification;
 	OversampleSpecification oversampleSpecification;
 	CommandClassificationSchemeName ratioScheme;
+	ClassificationParameters classificationParameters;
 
 	String arffFileName;
 	static OEFrame predictionFrame;
@@ -39,10 +40,11 @@ public class APredictionParameters implements PredictionParameters {
 		// arffFileName.setText(HelperConfigurationManagerFactory.getSingleton().getARFFFileName());
 		arffFileName = HelperConfigurationManagerFactory.getSingleton()
 				.getARFFFileName();
+		classificationParameters = AClassificationParameters.getInstance();
 	}
 
 	// @Row(1)
-	@Row(0)
+	@Row(1)
 	@Column(0)
 	@ComponentWidth(30)
 	public int getStartupLag() {
@@ -57,7 +59,7 @@ public class APredictionParameters implements PredictionParameters {
 
 	}
 
-	@Row(0)
+	@Row(1)
 	@Column(1)
 	@ComponentWidth(30)
 	public int getSegmentLength() {
@@ -72,7 +74,7 @@ public class APredictionParameters implements PredictionParameters {
 
 	}
 
-	@Row(0)
+	@Row(1)
 	@Column(2)
 	@ComponentWidth(30)
 	public int getStatusAggregated() {
@@ -119,10 +121,10 @@ public class APredictionParameters implements PredictionParameters {
 	}
 
 	// @Visible(false)
-	@Row(2)
-	@Column(0)
-	@ComponentWidth(250)
-	@Label("Model:")
+//	@Row(2)
+//	@Column(0)
+//	@ComponentWidth(250)
+//	@Label("Model:")
 	// @Override
 	// public FileSetterModel getARFFFileName() {
 	// // if (arffFileName == null) {
@@ -131,55 +133,55 @@ public class APredictionParameters implements PredictionParameters {
 	// // }
 	// return arffFileName;
 	// }
-	@Override
-	public String getARFFFileName() {
-		// if (arffFileName == null) {
-		// arffFileName =
-		// HelperConfigurationManagerFactory.getSingleton().getARFFFileName();
-		// }
-		return arffFileName;
-	}
+//	@Override
+//	public String getARFFFileName() {
+//		// if (arffFileName == null) {
+//		// arffFileName =
+//		// HelperConfigurationManagerFactory.getSingleton().getARFFFileName();
+//		// }
+//		return arffFileName;
+//	}
 
-	// @Visible(false)
-	@Row(1)
+//	// @Visible(false)
+//	@Row(1)
+//	@Column(0)
+//	@ComponentWidth(100)
+//	@Label("Classifier:")
+//	@Override
+//	public ClassifierSpecification getClassifierSpecification() {
+//		if (classifierSpecification == null) {
+//			classifierSpecification = HelperConfigurationManagerFactory
+//					.getSingleton().getClassifierSpecification();
+//		}
+//		return classifierSpecification;
+//	}
+
+//	// @Visible(false)
+//	@Row(1)
+//	@Column(1)
+//	@ComponentWidth(100)
+//	@Label("Oversampling:")
+//	@Override
+//	public OversampleSpecification getOversampleSpecification() {
+//		if (oversampleSpecification == null) {
+//			oversampleSpecification = HelperConfigurationManagerFactory
+//					.getSingleton().getOversampleSpecification();
+//		}
+//		return oversampleSpecification;
+//	}
+
+//	@Override
+//	public void setClassifierSpecification(ClassifierSpecification newVal) {
+//		classifierSpecification = newVal;
+//	}
+//
+//	public void setOversampleSpecification(OversampleSpecification newVal) {
+//		oversampleSpecification = newVal;
+//	}
+	@Row(0)
 	@Column(0)
-	@ComponentWidth(100)
-	@Label("Classifier:")
-	@Override
-	public ClassifierSpecification getClassifierSpecification() {
-		if (classifierSpecification == null) {
-			classifierSpecification = HelperConfigurationManagerFactory
-					.getSingleton().getClassifierSpecification();
-		}
-		return classifierSpecification;
-	}
-
-	// @Visible(false)
-	@Row(1)
-	@Column(1)
-	@ComponentWidth(100)
-	@Label("Oversampling:")
-	@Override
-	public OversampleSpecification getOversampleSpecification() {
-		if (oversampleSpecification == null) {
-			oversampleSpecification = HelperConfigurationManagerFactory
-					.getSingleton().getOversampleSpecification();
-		}
-		return oversampleSpecification;
-	}
-
-	@Override
-	public void setClassifierSpecification(ClassifierSpecification newVal) {
-		classifierSpecification = newVal;
-	}
-
-	public void setOversampleSpecification(OversampleSpecification newVal) {
-		oversampleSpecification = newVal;
-	}
-	@Row(1)
-	@Column(3)
 	@ComponentWidth(40)
-	@Label("Ratios:")
+	@Label("Command Classification:")
 	public CommandClassificationSchemeName getCommandClassificationScheme() {
 		if (ratioScheme == null) {
 			ratioScheme = HelperConfigurationManagerFactory
@@ -189,8 +191,19 @@ public class APredictionParameters implements PredictionParameters {
 //		return ratioScheme;
 	}
 	@Override
+	@Row(2)
+	public ClassificationParameters getClassificationParameters() {
+		// TODO Auto-generated method stub
+		return classificationParameters;
+	}
+	@Override
 	public void setCommandClassificationScheme(CommandClassificationSchemeName ratioScheme) {
 		this.ratioScheme = ratioScheme;
 	}
+	public static void main (String[] anArgs) {
+		createUI();
+	}
+
+	
 
 }

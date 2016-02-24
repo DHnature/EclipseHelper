@@ -1,25 +1,20 @@
 package difficultyPrediction;
 
-import difficultyPrediction.metrics.CommandClassificationSchemeName;
 import analyzer.AnAnalyzer;
 import analyzer.AnAnalyzerParameters;
 import bus.uigen.ObjectEditor;
 import bus.uigen.attributes.AttributeNames;
 import bus.uigen.undo.ExecutableCommand;
 
-public class APredictionParametersAR implements ExecutableCommand{
+public class AClassificationParametersAR implements ExecutableCommand{
 	public Object execute(Object theFrame) {
 //		ObjectEditor.setAttribute(APredictionParameters.class,  AttributeNames.LAYOUT, AttributeNames.GRID_BAG_LAYOUT);
 //		ObjectEditor.setPropertyAttribute(APredictionParameters.class, "ARFFFileName", AttributeNames.STRETCHABLE_BY_PARENT, true);
-		ObjectEditor.setPropertyAttribute(APredictionParameters.class, "StartupLag", AttributeNames.LABEL_WIDTH, 100);
-		ObjectEditor.setPropertyAttribute(APredictionParameters.class, "SegmentLength", AttributeNames.LABEL_WIDTH, 150);
-		ObjectEditor.setPropertyAttribute(APredictionParameters.class, "StatusAggregated", AttributeNames.LABEL_WIDTH, 125);
+		
+		ObjectEditor.setPropertyAttribute(AClassificationParameters.class, "ClassifierSpecification", AttributeNames.LABEL_WIDTH, 100);
+		ObjectEditor.setPropertyAttribute(AClassificationParameters.class, "OversampleSpecification", AttributeNames.LABEL_WIDTH, 100);
 
-//		ObjectEditor.setPropertyAttribute(APredictionParameters.class, "ClassifierSpecification", AttributeNames.LABEL_WIDTH, 100);
-//		ObjectEditor.setPropertyAttribute(APredictionParameters.class, "OversampleSpecification", AttributeNames.LABEL_WIDTH, 100);
-		ObjectEditor.setPropertyAttribute(APredictionParameters.class, "CommandClassificationSchemeName", AttributeNames.LABEL_WIDTH, 50);
-
-		ObjectEditor.setPropertyAttribute(APredictionParameters.class, "ARFFFileName", AttributeNames.LABEL_WIDTH, 100);
+		ObjectEditor.setPropertyAttribute(AClassificationParameters.class, "ARFFFileName", AttributeNames.LABEL_WIDTH, 100);
 
 		ObjectEditor.setPropertyAttribute(APredictionParameters.class, "ARFFFileName", AttributeNames.CONTAINER_WIDTH, 425);
 		ObjectEditor.setPropertyAttribute(APredictionParameters.class, "ARFFFileName", AttributeNames.CONTAINER_HEIGHT, 25);

@@ -14,12 +14,15 @@ public interface PredictionParameters extends Resettable, PropertyListenerRegist
 	public void setStartupLag(int startupLag) ;
 	public int getStatusAggregated() ;
 	public void setStatusAggregated(int statusesAggregated);
-	void setClassifierSpecification(ClassifierSpecification newVal);
-	OversampleSpecification getOversampleSpecification();
-	ClassifierSpecification getClassifierSpecification();
+//	void setClassifierSpecification(ClassifierSpecification newVal);
+//	OversampleSpecification getOversampleSpecification();
+//	ClassifierSpecification getClassifierSpecification();
 	CommandClassificationSchemeName getCommandClassificationScheme();
-//	FileSetterModel getARFFFileName();
-	String getARFFFileName();
 	void setCommandClassificationScheme(CommandClassificationSchemeName ratioScheme);
+
+//	FileSetterModel getARFFFileName();
+//	String getARFFFileName();
+	ClassificationParameters getClassificationParameters();
+//	void setClassificationParameters(ClassificationParameters newVal);
 
 }
