@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Random;
 
+import difficultyPrediction.predictionManagement.ClassifierSpecification;
 import analyzer.extension.ArffFileGeneratorFactory;
 import weka.classifiers.Classifier;
 import weka.classifiers.meta.AdaBoostM1;
@@ -20,12 +21,7 @@ import weka.filters.supervised.instance.SMOTE;
 
 //note that resample should not be tested with cross validation
 public class CrossValidationAnalysis {
-	enum Classifier{
-		J48,
-		ADABOOST,
-		BAGGING
-
-	}
+	
 
 	public static final int SMOTE=3;
 
@@ -45,7 +41,7 @@ public class CrossValidationAnalysis {
 	}
 
 
-	public static void crossValidation(String outputSubDir,Classifier classifier,double percentage) throws Exception {
+	public static void crossValidation(String outputSubDir,ClassifierSpecification classifier,double percentage) throws Exception {
 
 		//filter
 		SMOTE smote=new SMOTE();
@@ -71,10 +67,10 @@ public class CrossValidationAnalysis {
 		Instances copy_data=new Instances(data);
 		copy_data.setClassIndex(copy_data.numAttributes()-1);
 		weka.classifiers.Classifier b=null;
-		if(classifier==Classifier.ADABOOST) {
+		if(classifier==ClassifierSpecification.ADABOOST) {
 			b=new AdaBoostM1();
 			((AdaBoostM1) b).setClassifier(new DecisionStump());
-		} else if(classifier==Classifier.BAGGING) {
+		} else if(classifier==ClassifierSpecification.BAGGING) {
 			b=new Bagging();
 			((Bagging) b).setClassifier(new DecisionStump());
 		} else {
@@ -114,7 +110,7 @@ public class CrossValidationAnalysis {
 		generateAllArff(outputAndTestSubDir);
 
 		//classifier
-		for (Classifier c: Classifier.values()) {
+		for (ClassifierSpecification c: ClassifierSpecification.values()) {
 
 			//different levels
 			for (int l:smoteLevels) {
