@@ -3,6 +3,7 @@ package difficultyPrediction.metrics;
 import java.util.ArrayList;
 import java.util.List;
 
+import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 
 public class ACommandCategoryMapping implements CommandCategoryMapping {
@@ -167,10 +168,17 @@ public class ACommandCategoryMapping implements CommandCategoryMapping {
 		}
 		computeCommands();
 	}
+	public static OEFrame createUI(CommandCategoryMapping aMapping) {
+		OEFrame aFrame = ObjectEditor.edit(aMapping);
+		aFrame.setSize(500, 800);
+		return aFrame;
+		
+	}
 	public static void main (String[] args) {
 		CommandCategoryMapping commandsToFeatures = new ACommandCategoryMapping();
-		commandsToFeatures.map(CommandName.BreakPointCommand, CommandCategory.DEBUG);
-		ObjectEditor.edit(commandsToFeatures);
+//		commandsToFeatures.map(CommandName.BreakPointCommand, CommandCategory.DEBUG);
+//		ObjectEditor.edit(commandsToFeatures);
+		createUI(new ACommandCategoryMapping());
 	}
 	
 

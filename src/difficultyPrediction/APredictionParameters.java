@@ -6,6 +6,7 @@ import java.beans.PropertyChangeSupport;
 import javax.swing.JFileChooser;
 
 import config.HelperConfigurationManagerFactory;
+import difficultyPrediction.metrics.ACommandCategoryMapping;
 import difficultyPrediction.metrics.CommandClassificationSchemeName;
 import difficultyPrediction.predictionManagement.ClassifierSpecification;
 import difficultyPrediction.predictionManagement.OversampleSpecification;
@@ -189,6 +190,12 @@ public class APredictionParameters implements PredictionParameters {
 		}
 		return ratioScheme;
 //		return ratioScheme;
+	}
+	@Override
+	@Row(0)
+	@Column(1)
+	public void commandMapping() {
+		ACommandCategoryMapping.createUI(getCommandClassificationScheme().getCommandCategoryMapping());
 	}
 	@Override
 	@Row(2)

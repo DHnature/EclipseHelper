@@ -19,7 +19,7 @@ public enum CommandClassificationSchemeName {
 		return this.dir;
 		
 	}
-	public CommandCategoryMapping getCommandCategories() {
+	public CommandCategoryMapping getCommandCategoryMapping() {
 		return commandCategories;
 		
 	}

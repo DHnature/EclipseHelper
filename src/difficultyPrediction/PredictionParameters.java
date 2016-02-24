@@ -24,5 +24,6 @@ public interface PredictionParameters extends Resettable, PropertyListenerRegist
 //	String getARFFFileName();
 	ClassificationParameters getClassificationParameters();
 //	void setClassificationParameters(ClassificationParameters newVal);
+	void commandMapping();
 
 }

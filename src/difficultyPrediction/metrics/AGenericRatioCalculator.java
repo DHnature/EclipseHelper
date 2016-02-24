@@ -29,7 +29,7 @@ public class AGenericRatioCalculator implements RatioCalculator {
 	public static CommandCategory toCommandCategory(ICommand aCommand) {
 		CommandCategoryMapping aCommandCategories = APredictionParameters.getInstance().
 						getCommandClassificationScheme().
-							getCommandCategories();
+							getCommandCategoryMapping();
 		String aCommandString = aCommand.getCommandType();
 		if (aCommand instanceof CompilationCommand) {
 			CompilationCommand command = (CompilationCommand)aCommand;
