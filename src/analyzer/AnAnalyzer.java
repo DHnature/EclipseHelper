@@ -568,23 +568,26 @@ public class AnAnalyzer implements Analyzer  {
 	 */
 	@Override
 	// modularize this method
-	public void processParticipant(String aParticipantId,String outPath, String dataPath,boolean isIndividualPart) {
-		
-//		if (parameters.isVisualizePrediction()) {
-//			PredictorConfigurer.visualizePrediction();
-//		}
+	public void processParticipant(String aParticipantId, String outPath,
+			String dataPath, boolean isIndividualPart) {
+
+		// if (parameters.isVisualizePrediction()) {
+		// PredictorConfigurer.visualizePrediction();
+		// }
 		parameters.getParticipants().setValue(aParticipantId);
 		String aParticipantFolder = participants.get(aParticipantId);
 		// notifyNewParticipant(aParticipantId);
 		// we now get the correct outpath with individual folder
 		String aFullParticipantOutputFolderName = outPath;
-//		String aFullParticipantOutputFolderName = outPath+(isIndividualPart? aParticipantFolder+"/":"");
-		String aFullParticipantDataFolderName = dataPath + aParticipantFolder + "/" + ECLIPSE_FOLDER;
+		// String aFullParticipantOutputFolderName = outPath+(isIndividualPart?
+		// aParticipantFolder+"/":"");
+		String aFullParticipantDataFolderName = dataPath + aParticipantFolder
+				+ "/" + ECLIPSE_FOLDER;
 		File anOutputFolder = new File(aFullParticipantOutputFolderName);
-		if (!anOutputFolder.exists() )
+		if (!anOutputFolder.exists())
 			anOutputFolder.mkdirs();
-			
-		if(isIndividualPart) {
+
+		if (isIndividualPart) {
 
 			String aFullRatiosFileName = aFullParticipantOutputFolderName
 					+ "ratios.csv";
@@ -598,16 +601,17 @@ public class AnAnalyzer implements Analyzer  {
 					DifficultyPredictionSettings.setRatioFileExists(false);
 					aRatiosFile.createNewFile();
 				} catch (IOException e1) {
-			
+
 					e1.printStackTrace();
 				}
 			}
-			
-			
+
 			// erase file if it exists
-//			if (aRatiosFile.exists() && DifficultyPredictionSettings.isNewRatioFiles())	{
-			if (DifficultyPredictionSettings.isRatioFileExists() && DifficultyPredictionSettings.isNewRatioFiles())	{
-				
+			// if (aRatiosFile.exists() &&
+			// DifficultyPredictionSettings.isNewRatioFiles()) {
+			if (DifficultyPredictionSettings.isRatioFileExists()
+					&& DifficultyPredictionSettings.isNewRatioFiles()) {
+
 				try {
 					FileOutputStream writer = new FileOutputStream(aRatiosFile);
 					writer.close();
@@ -615,89 +619,114 @@ public class AnAnalyzer implements Analyzer  {
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				} catch (IOException e) {
-		}
-				
-			DifficultyPredictionSettings.setCreateRatioFile(isIndividualPart);
-		}
-		// we will replay commands in both cases
-		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
-
-		
-		if (DifficultyPredictionSettings.isRatioFileExists() && DifficultyPredictionSettings.isReplayRatioFiles()) {
-//			 System.out.println ("Need to read ratio file and replay logs");
-			AnalyzerProcessorFactory.setSingleton(FileReplayAnalyzerProcessorFactory.getSingleton());
-			notifyNewParticipant(aParticipantId, aParticipantFolder); // should probably factor this out
-			 RatioFilePlayerFactory.getSingleton().setReplayedData(nestedCommandsList, aRatiosFile.getAbsolutePath());
-				RatioFilePlayerFactory.getSingleton().replay();
-//			 ratioFileReader = new ARatioFileReader();
-//			 ratioFileReader.readFile(aRatiosFile.getAbsolutePath());
-		} else {
-
-//		nestedCommandsList =  convertXMLLogToObjects(aFullParticipantDataFolderName);
-		DifficultyPredictionSettings.setRatiosFileName(aFullRatiosFileName);
-		difficultyEventProcessor = new ADifficultyPredictionPluginEventProcessor();
-		ADifficultyPredictionPluginEventProcessor.setInstance(difficultyEventProcessor);
-		difficultyEventProcessor.commandProcessingStarted();
-		Mediator mediator = difficultyEventProcessor.getDifficultyPredictionRunnable().getMediator();
-
-		EventAggregator eventAggregator = mediator.getEventAggregator();
-		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer("" + PredictionParametersSetterSelector.getSingleton().getSegmentLength()));
-		notifyNewParticipant(aParticipantId, aParticipantFolder);
-
-		startTimeStamp = 0;
-		for (int index = 0; index < nestedCommandsList.size(); index++) {
-			List<ICommand> commands = nestedCommandsList.get(index);
-			for (int i = 0; i < commands.size(); i++) {
-				ICommand aCommand = commands.get(i);
-
-				if ((aCommand.getTimestamp() == 0)
-						&& (aCommand.getTimestamp2() > 0)) {
-					startTimeStamp = commands.get(i).getTimestamp2();
-					difficultyEventProcessor.newCommand(aCommand);
-
-					notifyStartTimeStamp(startTimeStamp);
-
-				} else {
-					eventAggregator.setStartTimeStamp(startTimeStamp); // not sure this is ever useful
-					try {
-						// pendingPredictionCommands.put(commands.get(i));
-						// System.out.println("Put command:" + commands.get(i));
-						// difficultyEventProcessor.recordCommand(commands.get(i));
-						difficultyEventProcessor.newCommand(aCommand);
-
-						// } catch (InterruptedException e) {
-					} catch (Exception e) {
-
-						e.printStackTrace();
-					}
-
-					// eventAggregator.getEventAggregationStrategy().performAggregation(commands.get(i),
-					// eventAggregator);
-
 				}
 
+				DifficultyPredictionSettings
+						.setCreateRatioFile(isIndividualPart);
 			}
-		}
+			// we will replay commands in both cases
+			nestedCommandsList = convertXMLLogToObjects(aFullParticipantDataFolderName);
 
-		difficultyEventProcessor.commandProcessingStopped();
-		waitForParticipantLogsToBeProcessed();
+			if (DifficultyPredictionSettings.isRatioFileExists()
+					&& DifficultyPredictionSettings.isReplayRatioFiles()) {
+				// System.out.println
+				// ("Need to read ratio file and replay logs");
+				AnalyzerProcessorFactory
+						.setSingleton(FileReplayAnalyzerProcessorFactory
+								.getSingleton());
+				notifyNewParticipant(aParticipantId, aParticipantFolder); // should
+																			// probably
+																			// factor
+																			// this
+																			// out
+				RatioFilePlayerFactory.getSingleton().setReplayedData(
+						nestedCommandsList, aRatiosFile.getAbsolutePath());
+				RatioFilePlayerFactory.getSingleton().replay();
+				// ratioFileReader = new ARatioFileReader();
+				// ratioFileReader.readFile(aRatiosFile.getAbsolutePath());
+			} else {
 
-		// pendingPredictionCommands.add(new AnEndOfQueueCommand());
-		// try {
-		// // difficultyPredictionThread.join();
-		// difficultyEventProcessor.getDifficultyPredictionThread().join();
-		// } catch (InterruptedException e) {
-		//
-		// e.printStackTrace();
-		// }
-		processBrowserHistoryOfFolder(participantsFolder.getText()
-				+ EXPERIMENTAL_DATA + aParticipantFolder + "/" + BROWSER_FOLDER);
+				// nestedCommandsList =
+				// convertXMLLogToObjects(aFullParticipantDataFolderName);
+				DifficultyPredictionSettings
+						.setRatiosFileName(aFullRatiosFileName);
+				difficultyEventProcessor = new ADifficultyPredictionPluginEventProcessor();
+				ADifficultyPredictionPluginEventProcessor
+						.setInstance(difficultyEventProcessor);
+				difficultyEventProcessor.commandProcessingStarted();
+				Mediator mediator = difficultyEventProcessor
+						.getDifficultyPredictionRunnable().getMediator();
 
-		notifyFinishParticipant(aParticipantId, aParticipantFolder);
-		// for (ICommand aCommand: commandsList) {
-		//
-		// }
-		}
+				EventAggregator eventAggregator = mediator.getEventAggregator();
+				eventAggregator
+						.setEventAggregationStrategy(new DiscreteChunksAnalyzer(
+								""
+										+ PredictionParametersSetterSelector
+												.getSingleton()
+												.getSegmentLength()));
+				notifyNewParticipant(aParticipantId, aParticipantFolder);
+
+				startTimeStamp = 0;
+				for (int index = 0; index < nestedCommandsList.size(); index++) {
+					List<ICommand> commands = nestedCommandsList.get(index);
+					for (int i = 0; i < commands.size(); i++) {
+						ICommand aCommand = commands.get(i);
+
+						if ((aCommand.getTimestamp() == 0)
+								&& (aCommand.getTimestamp2() > 0)) {
+							startTimeStamp = commands.get(i).getTimestamp2();
+							difficultyEventProcessor.newCommand(aCommand);
+
+							notifyStartTimeStamp(startTimeStamp);
+
+						} else {
+							eventAggregator.setStartTimeStamp(startTimeStamp); // not
+																				// sure
+																				// this
+																				// is
+																				// ever
+																				// useful
+							try {
+								// pendingPredictionCommands.put(commands.get(i));
+								// System.out.println("Put command:" +
+								// commands.get(i));
+								// difficultyEventProcessor.recordCommand(commands.get(i));
+								difficultyEventProcessor.newCommand(aCommand);
+
+								// } catch (InterruptedException e) {
+							} catch (Exception e) {
+
+								e.printStackTrace();
+							}
+
+							// eventAggregator.getEventAggregationStrategy().performAggregation(commands.get(i),
+							// eventAggregator);
+
+						}
+
+					}
+				}
+
+				difficultyEventProcessor.commandProcessingStopped();
+				waitForParticipantLogsToBeProcessed();
+
+				// pendingPredictionCommands.add(new AnEndOfQueueCommand());
+				// try {
+				// // difficultyPredictionThread.join();
+				// difficultyEventProcessor.getDifficultyPredictionThread().join();
+				// } catch (InterruptedException e) {
+				//
+				// e.printStackTrace();
+				// }
+				processBrowserHistoryOfFolder(participantsFolder.getText()
+						+ EXPERIMENTAL_DATA + aParticipantFolder + "/"
+						+ BROWSER_FOLDER);
+
+				notifyFinishParticipant(aParticipantId, aParticipantFolder);
+				// for (ICommand aCommand: commandsList) {
+				//
+				// }
+			}
 		}
 
 	}
