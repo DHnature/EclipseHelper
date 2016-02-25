@@ -15,14 +15,14 @@ public class AnA2CommandCategories extends AnA1CommandCategories{
 	
 	
 	
-	CommandName[] navigationCommands = {
-			CommandName.FileOpenCommand,			
-			CommandName.FindCommand,
-			CommandName.view,			
-	};
-	CommandName[] focusCommands = {
-			CommandName.ShellCommand,			
-					
+//	CommandName[] navigationCommands = {
+//			CommandName.FileOpenCommand,			
+//			CommandName.FindCommand,
+//			CommandName.view,			
+//	};
+//	CommandName[] focusCommands = {
+//			CommandName.ShellCommand,			
+//					
 	};
 	public AnA2CommandCategories(boolean aMapCategories) {
 		

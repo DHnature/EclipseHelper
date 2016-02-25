@@ -16,10 +16,10 @@ public enum ClassifierSpecification {
 	static Map<ClassifierSpecification, Classifier> specificationToClassifier = new HashMap();
 	static {
 		specificationToClassifier.put(J48, new J48());
-		Classifier anAdaBoost = new AdaBoostM1();
-		((Bagging) anAdaBoost).setClassifier(new DecisionStump());
+		AdaBoostM1 anAdaBoost = new AdaBoostM1();
+		((AdaBoostM1) anAdaBoost).setClassifier(new DecisionStump());
 		specificationToClassifier.put(ADABOOST, anAdaBoost);
-		Classifier aBagging = new Bagging();
+		Bagging aBagging = new Bagging();
 		((Bagging) aBagging).setClassifier(new DecisionStump());
 		specificationToClassifier.put(BAGGING, aBagging);		
 	}

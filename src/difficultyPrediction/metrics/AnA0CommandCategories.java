@@ -17,9 +17,9 @@ public class AnA0CommandCategories extends ACommandCategoryMapping{
 			CommandName.MoveCaretCommand,
 			CommandName.edit,			
 	};
-	private CommandName[] exceptionCategory = {
-			CommandName.Exception
-	};
+//	private CommandName[] exceptionCategory = {
+//			CommandName.Exception
+//	};
 	
 //	CommandName[] insertCommands = {
 //			CommandName.CopyCommand,			
