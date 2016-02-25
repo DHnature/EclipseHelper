@@ -15,26 +15,22 @@ import weka.filters.Filter;
 public interface PredictionTracker {
 	
 	/**Reload or load the instances again from the specified training set arff and testing set arff files.
-	 * 
-	 * @return
 	 */
-	PredictionTracker loadInstances();
+	void loadInstances();
 	
 	
 	/**Set new testing instance file
 	 * 
 	 * @param testingInstance
-	 * @return
 	 */
-	PredictionTracker setTestingFile(String testingInstanceFile);
+	void setTestingFile(String testingInstanceFile);
 	
 	
 	/**Load the training set from the specified file
 	 * 
 	 * @param trainingInstanceFile
-	 * @return
 	 */
-	PredictionTracker setTrainingFile(String trainingInstanceFile);
+	void setTrainingFile(String trainingInstanceFile);
 	
 	PredictionTracker setTrainingInstance(Instances i);
 

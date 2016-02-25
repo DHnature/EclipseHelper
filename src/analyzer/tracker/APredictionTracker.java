@@ -57,7 +57,7 @@ public class APredictionTracker implements PredictionTracker{
 
 	//Reload/load instances from the training  arff file and testing arff file
 	@Override
-	public PredictionTracker loadInstances() {
+	public void loadInstances() {
 		try(BufferedReader trainStream=new BufferedReader(new InputStreamReader(new FileInputStream(this.trainFile)));
 				BufferedReader testStream=new BufferedReader(new InputStreamReader(new FileInputStream(this.testFile)))
 				) {
@@ -74,23 +74,23 @@ public class APredictionTracker implements PredictionTracker{
 
 		}
 
-		return this;
+//		return this;
 	}
 	
 	@Override
-	public PredictionTracker setTestingFile(String testingInstanceFile) {
+	public void setTestingFile(String testingInstanceFile) {
 		this.testFile=testingInstanceFile;
 		this.testing=null;
 		
-		return this;
+//		return this;
 	}
 	
 	@Override
-	public PredictionTracker setTrainingFile(String trainingInstanceFile) {
+	public void setTrainingFile(String trainingInstanceFile) {
 		this.trainFile=trainingInstanceFile;
 		this.training=null;
 		
-		return this;
+//		return this;
 	}
 
 	

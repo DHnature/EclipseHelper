@@ -66,28 +66,29 @@ public class CrossValidationAnalysis {
 		
 		Instances copy_data=new Instances(data);
 		copy_data.setClassIndex(copy_data.numAttributes()-1);
-		weka.classifiers.Classifier b=null;
-		if(classifier==ClassifierSpecification.ADABOOST) {
-			b=new AdaBoostM1();
-			((AdaBoostM1) b).setClassifier(new DecisionStump());
-		} else if(classifier==ClassifierSpecification.BAGGING) {
-			b=new Bagging();
-			((Bagging) b).setClassifier(new DecisionStump());
-		} else {
-			b=new J48();
-
-		}
+		weka.classifiers.Classifier wekaClassifier=null;
+		wekaClassifier = classifier.toClassifier();
+//		if(classifier==ClassifierSpecification.ADABOOST) {
+//			b=new AdaBoostM1();
+//			((AdaBoostM1) b).setClassifier(new DecisionStump());
+//		} else if(classifier==ClassifierSpecification.BAGGING) {
+//			b=new Bagging();
+//			((Bagging) b).setClassifier(new DecisionStump());
+//		} else {
+//			b=new J48();
+//
+//		}
 
 		for(int i=0;i<fold;i++) {
 
 			Instances train=copy_data.trainCV(fold, i);
 			Instances testing=copy_data.testCV(fold, i);
 
-			b.buildClassifier(train);
+			wekaClassifier.buildClassifier(train);
 
 
 			for(int j=0;j<testing.numInstances();j++) {
-				double result=b.classifyInstance(testing.instance(j));
+				double result=wekaClassifier.classifyInstance(testing.instance(j));
 
 				matrixOutputter.output(new PredictedInstance(testing.instance(j),result));
 			}

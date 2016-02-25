@@ -115,14 +115,15 @@ public class LeaveOneOutAnalysis {
 
 		//filter
 		weka.filters.Filter aFilter=null;
+		aFilter = anOversample.toWekaFilter(percentage);
 
-		if(anOversample==OversampleSpecification.SMOTE)
-			aFilter=new SMOTE();
-		else {
-			Resample aResample=new Resample();
-			aResample.setBiasToUniformClass(percentage==Double.MIN_VALUE? 0.0:percentage);
-			aFilter=aResample;
-		}
+//		if(anOversample==OversampleSpecification.SMOTE)
+//			aFilter=new SMOTE();
+//		else {
+//			Resample aResample=new Resample();
+//			aResample.setBiasToUniformClass(percentage==Double.MIN_VALUE? 0.0:percentage);
+//			aFilter=aResample;
+//		}
 
 		//outputter we want, wrong predictions that is either predicted as stuck or not stuck
 		//PredictionOutputter wrongStuckOutputter=new ClassFilterOutputter(new WrongPredictionOutputter("data/wrongpredictstuck.csv"),"NO");
@@ -184,17 +185,17 @@ public class LeaveOneOutAnalysis {
 
 
 			weka.classifiers.Classifier aWekaClassifier=null;
-
-			if(aClassifierSpecification==ClassifierSpecification.ADABOOST) {
-				aWekaClassifier=new AdaBoostM1();
-				((AdaBoostM1) aWekaClassifier).setClassifier(new DecisionStump());
-			} else if(aClassifierSpecification==ClassifierSpecification.BAGGING) {
-				aWekaClassifier=new Bagging();
-				((Bagging) aWekaClassifier).setClassifier(new DecisionStump());
-			} else {
-				aWekaClassifier=new J48();
-
-			}
+			aWekaClassifier = aClassifierSpecification.toClassifier();
+//			if(aClassifierSpecification==ClassifierSpecification.ADABOOST) {
+//				aWekaClassifier=new AdaBoostM1();
+//				((AdaBoostM1) aWekaClassifier).setClassifier(new DecisionStump());
+//			} else if(aClassifierSpecification==ClassifierSpecification.BAGGING) {
+//				aWekaClassifier=new Bagging();
+//				((Bagging) aWekaClassifier).setClassifier(new DecisionStump());
+//			} else {
+//				aWekaClassifier=new J48();
+//
+//			}
 
 			aPredictionTracker.buildClassifier(aWekaClassifier);
 
