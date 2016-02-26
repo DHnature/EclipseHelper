@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 import config.HelperConfigurationManagerFactory;
 import weka.classifiers.Classifier;
@@ -17,7 +19,8 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 
 //	private J48 j48Model = new J48();
 
-	private boolean isClassifierModelBuilt = false;
+//	private boolean isClassifierModelBuilt = false;
+	protected Map<Classifier, Boolean> classifierBuilt = new HashMap();
 
 	private String wekaDataFileLocation = "data/userStudy2010.arff";
 
@@ -63,11 +66,18 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 					new InputStreamReader(inputStream)));
 			trainingSet.setClassIndex(trainingSet.numAttributes() - 1);
 			getClassifier().buildClassifier(trainingSet);
+			classifierBuilt.put(getClassifier(), true);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
+	}
+	
+	protected boolean isClassifierBuilt() {
+		Boolean isBuilt = classifierBuilt.get(getClassifier());
+		return isBuilt != null && isBuilt;
+//		return true == isBuilt; // can be null
 	}
 
 	public void predictSituation(double editOrInsertRatio, double debugRatio,
@@ -135,11 +145,11 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 			// add the instance
 			testingSet.add(iExample);
 
-			if (!isClassifierModelBuilt) {
+			if (!isClassifierBuilt()) {
 				long startTime = System.currentTimeMillis();
 				buildClassifierModel();
-				isClassifierModelBuilt = true;
-				System.out.println(" Built J48 model in m:" + (System.currentTimeMillis() - startTime));
+//				isClassifierModelBuilt = true;
+				System.out.println(" Built  model in m:" + (System.currentTimeMillis() - startTime));
 
 				
 			}

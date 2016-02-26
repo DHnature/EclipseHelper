@@ -26,6 +26,8 @@ public enum ClassifierSpecification {
 	public Classifier toClassifier() {
 		return specificationToClassifier.get(this);
 	}
-	
+	public static void associate (ClassifierSpecification aSpecification, Classifier aClassifier) {
+		specificationToClassifier.put(aSpecification, aClassifier);
+	}
 	
 }
