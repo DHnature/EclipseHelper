@@ -434,13 +434,18 @@ public class AnAnalyzer implements Analyzer  {
 			}
 
 			//calculate new outputdirectory
-			this.outputSubdirectory=outPath += participantId+"/";
+			// move this inside the loop so we create a separate output dir for each participant
+//			this.outputSubdirectory=outPath += participantId+"/";
+			// keep this for AnArffGenerator
+			this.outputSubdirectory = outPath + participantId;
 			notifyNewParticipant(ALL_PARTICIPANTS, null);
 			// all if first on the list
 
 			for (String aParticipantId : participantIds) {
 //				processParticipant(aParticipantId,outPath,participantsFolder.getText()
 //						+ EXPERIMENTAL_DATA + AnAnalyzer.participants.get(aParticipantId) + "/" + ECLIPSE_FOLDER,false);
+				this.outputSubdirectory=outPath + aParticipantId+"/";
+// should there be a notifyNewParticipant here also
 				processParticipant(aParticipantId,this.outputSubdirectory,participantsFolder.getText()
 						+ EXPERIMENTAL_DATA, 
 //						+ AnAnalyzer.participants.get(aParticipantId) + "/" + ECLIPSE_FOLDER,
@@ -587,7 +592,7 @@ public class AnAnalyzer implements Analyzer  {
 		if (!anOutputFolder.exists())
 			anOutputFolder.mkdirs();
 
-		if (isIndividualPart) {
+//		if (isIndividualPart) {
 
 			String aFullRatiosFileName = aFullParticipantOutputFolderName
 					+ "ratios.csv";
@@ -705,7 +710,7 @@ public class AnAnalyzer implements Analyzer  {
 						}
 
 					}
-				}
+//				}
 
 				difficultyEventProcessor.commandProcessingStopped();
 				waitForParticipantLogsToBeProcessed();
