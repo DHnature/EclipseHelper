@@ -109,7 +109,11 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 
 				//else it is individual filess
 			} else {
-				this.path=((AnAnalyzer) this.analyzer).getOutputDirectory()+"/"+aFolder+"/"+aFolder+".arff";
+				// this is a bad, output directory should be given as an argument, but let us keep it for now
+				String anOutputDirectory = ((AnAnalyzer) this.analyzer).getOutputDirectory();
+//				this.path=((AnAnalyzer) this.analyzer).getOutputDirectory()+"/"+aFolder+"/"+aFolder+".arff";
+
+				this.path= anOutputDirectory+aFolder+".arff";
 
 			}
 

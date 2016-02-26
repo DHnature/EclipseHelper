@@ -68,8 +68,8 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener
 		this.isStuckPointFileGenerated=false;
 		
 		
-		
-		if(aFolder!= null) {
+		// strange use of aFolder
+		if(aFolder!= null) { // live mode vs non libe mode it seems
 			// should this not be in the constructor?
 			DifficultyRobot.getInstance().addPluginEventListener(this);
 			DifficultyRobot.getInstance().addRatioFeaturesListener(this);
