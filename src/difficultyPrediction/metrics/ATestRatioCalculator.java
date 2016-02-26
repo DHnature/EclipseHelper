@@ -403,7 +403,9 @@ public class ATestRatioCalculator implements RatioCalculator {
 
 					}
 				} else {
-					if (aCommandCategory != CommandCategory.OTHER && aCommandCategory != CommandCategory.SEARCH) {
+					if (aCommandCategory != CommandCategory.OTHER 
+//							&& aCommandCategory != CommandCategory.SEARCH) 
+							){
 						System.out.println ("Policies diverge");
 
 					}
@@ -455,7 +457,9 @@ public class ATestRatioCalculator implements RatioCalculator {
 
 				} else  {
 					//System.out.println("Unclassified command: " + myEvent);
-					if (aCommandCategory != CommandCategory.OTHER && aCommandCategory != CommandCategory.SEARCH) {
+					if (aCommandCategory != CommandCategory.OTHER  
+//						&&	aCommandCategory != CommandCategory.SEARCH
+							) {
 						System.out.println ("Policies diverge");
 
 					}
@@ -505,11 +509,14 @@ public class ATestRatioCalculator implements RatioCalculator {
 
 				} else  {
 					//System.out.println("Unclassified command: " + myEvent);
-					if (aCommandCategory != CommandCategory.OTHER && aCommandCategory != CommandCategory.SEARCH) {
+					if (aCommandCategory != CommandCategory.OTHER 
+//							&& aCommandCategory != CommandCategory.SEARCH
+							) {
 						System.out.println ("Policies diverge");
 
 					}
 				}
+				default: System.out.println("Unknown policy:" + APredictionParameters.getInstance().getCommandClassificationScheme());
 
 			}
 

@@ -97,9 +97,9 @@ public class ACommandCategoryMapping implements CommandCategoryMapping {
 	}
 	public void computeCommands (CategorizedCommand aCommand) {
 			switch (aCommand.getCategory()) {
-			case SEARCH: 
-				searchCommands += " " + aCommand.getCommand();
-				break;
+//			case SEARCH: 
+//				searchCommands += " " + aCommand.getCommand();
+//				break;
 			case DEBUG:
 				debugCommands += " " + aCommand.getCommand();
 				break;

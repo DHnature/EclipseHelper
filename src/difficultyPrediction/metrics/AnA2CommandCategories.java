@@ -23,7 +23,7 @@ public class AnA2CommandCategories extends AnA1CommandCategories{
 //	CommandName[] focusCommands = {
 //			CommandName.ShellCommand,			
 //					
-	};
+//	};
 	public AnA2CommandCategories(boolean aMapCategories) {
 		
 		super(false); // do not call map commands from super as our variables are not initialized at that point

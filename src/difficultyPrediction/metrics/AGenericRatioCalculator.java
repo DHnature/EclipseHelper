@@ -292,7 +292,7 @@ public class AGenericRatioCalculator implements RatioCalculator {
 		commandCategoryToFetaureName.put(CommandCategory.FOCUS, "Focus");
 		commandCategoryToFetaureName.put(CommandCategory.REMOVE, "RemoveClass");
 		commandCategoryToFetaureName.put(CommandCategory.OTHER, "Unclassified");
-		commandCategoryToFetaureName.put(CommandCategory.SEARCH, "Navigation");
+//		commandCategoryToFetaureName.put(CommandCategory.SEARCH, "Navigation");
 
 
 
