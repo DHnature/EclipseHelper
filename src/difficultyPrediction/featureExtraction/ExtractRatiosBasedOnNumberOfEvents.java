@@ -15,7 +15,7 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
 	}
 	
 	private RatioCalculator ratioCalculator = RatioCalculatorSelector.getRatioCalculator();
-	RatioCalculator genericRatioCalculator = AGenericRatioCalculator.getInstance();
+//	RatioCalculator genericRatioCalculator = AGenericRatioCalculator.getInstance();
 	 private static final int NAVIGATION_PERCENTAGE = 0;
      private static final int DEBUG_PERCENTAGE = 1;
      private static final int FOCUS_PERCENTAGE = 2;
@@ -26,10 +26,10 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
 			List<Double> percentages = null;
 			int i = 0;
 			percentages = ratioCalculator.computeMetrics(actions);
-			List<Double> genericPercentages = genericRatioCalculator.computeMetrics(actions);
-			if (!(percentages.equals(genericPercentages))) {
-				System.err.println ("Generic and specific percentages diverge:" + percentages + " " + genericPercentages);
-			}
+//			List<Double> genericPercentages = genericRatioCalculator.computeMetrics(actions);
+//			if (!(percentages.equals(genericPercentages))) {
+//				System.err.println ("Generic and specific percentages diverge:" + percentages + " " + genericPercentages);
+//			}
 			ICommand lastCommand = actions.get(actions.size() - 1);
 			long timeStamp = lastCommand.getTimestamp();
 			
