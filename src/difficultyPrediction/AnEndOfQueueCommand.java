@@ -10,6 +10,9 @@ import edu.cmu.scs.fluorite.commands.ICommand;
 
 
 public class AnEndOfQueueCommand implements ICommand {
+	public AnEndOfQueueCommand() {
+		
+	}
 
 	@Override
 	public boolean execute(IEditorPart target) {

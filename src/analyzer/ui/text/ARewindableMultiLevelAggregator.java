@@ -27,6 +27,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	protected List<String> allManualStatuses = new ArrayList();
 	protected List<String> allBarriers = new ArrayList();
 	protected List<List<WebLink>> allWebLinks = new ArrayList();
+	protected List<Integer> allCorrectStatuses = new ArrayList();
 
 
 	protected int nextFeatureIndex; // does not change during replay
@@ -114,9 +115,26 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 			super.newManualStatus(aStatus); 
 //			propagatePre(); // to reset back and forward
 		}
-		propagatePre(); // to reset back and forward
-
-				
+		propagatePre(); // to reset back and forward				
+	}
+	@Override
+	@Visible(false)
+	public void newCorrectStatus(int aStatus) {
+//		if (!isPlayBack()) {
+		   if (nextFeatureIndex == 0)
+			   return; // before a ratio is receiced, we may have a notification
+		   allCorrectStatuses.set(nextFeatureIndex - 1, aStatus); // next feature index was bumpted by new feature
+//		   allAggregatedStatuses.add(null);
+//		   if (lastFeatureIndex == 0)
+//			  allAggregatedStatuses.add(StatusConsts.INDETERMINATE);
+//		   else
+//			allAggregatedStatuses.add(allAggregatedStatuses.get(lastFeatureIndex - 1));
+//		} else {
+		if (!isPlayBack()) {
+			super.newCorrectStatus(aStatus); 
+//			propagatePre(); // to reset back and forward
+		}
+		propagatePre(); // to reset back and forward				
 	}
 	@Override
 	@Visible(false)
@@ -153,6 +171,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 		allManualStatuses.add(null);
 		allBarriers.add(null);
 		allWebLinks.add(null);
+		allCorrectStatuses.add(null);
 	}
 	
 	@Override
@@ -249,6 +268,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 			super.newManualStatus(allManualStatuses.get(featureIndex));
 			super.newBarrier(allBarriers.get(featureIndex));
 			super.newWebLinks(allWebLinks.get(featureIndex));
+			super.newCorrectStatus(allCorrectStatuses.get(featureIndex));
 		}
 		unsuppressNotifications();
 	}

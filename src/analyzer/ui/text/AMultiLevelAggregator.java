@@ -174,6 +174,10 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	@Override
     @Visible(false)
 	public void newStatus(String aStatus) {
+		if (aStatus == null) {
+			System.out.println ("null status!");
+			return;
+		}
 		if (!aStatus.equals(oldStatus)) {
 			PredictionChanged.newCase(aStatus, getRatios(), this);
 			oldStatus = aStatus;
