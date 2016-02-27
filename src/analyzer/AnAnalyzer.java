@@ -229,6 +229,8 @@ public class AnAnalyzer implements Analyzer  {
 				doLoadLogs();
 			}};
 			Thread aThread = (new Thread(aRunnable));
+			aThread.setName("Replay thread for:" + parameters.getParticipants().getValue());
+
 			aThread.start();
 
 		} else
@@ -678,7 +680,7 @@ public class AnAnalyzer implements Analyzer  {
 						ICommand aCommand = commands.get(i);
 
 						if ((aCommand.getTimestamp() == 0)
-								&& (aCommand.getTimestamp2() > 0)) {
+								&& (aCommand.getTimestamp2() > 0)) { // this is always a difficulty status command
 							startTimeStamp = commands.get(i).getTimestamp2();
 							difficultyEventProcessor.newCommand(aCommand);
 

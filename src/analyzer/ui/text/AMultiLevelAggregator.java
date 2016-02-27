@@ -124,8 +124,10 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	public void newCommand(ICommand newCommand) {
 		if (newCommand instanceof DifficulyStatusCommand) {
 			if (!AnalyzerFactory.getSingleton().getAnalyzerParameters().isReplayOutputFiles()) {
-		
+//				DifficulyStatusCommand aDifficultyStatusCommand = (DifficulyStatusCommand) newCommand;
+				TimeStampComputerFactory.getSingleton().computeTimestamp(newCommand); // so that start time can be reset
 			setManualStatus(toString((DifficulyStatusCommand) newCommand));
+			
 //			String oldStatus = manualStatus;
 //			manualStatus = toString((DifficulyStatusCommand) newCommand);
 //			propertyChangeSupport.firePropertyChange("Corrected Status", oldStatus, manualStatus);
