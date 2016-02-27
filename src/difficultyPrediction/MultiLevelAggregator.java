@@ -33,4 +33,6 @@ public interface MultiLevelAggregator extends
 
 	List<LabelBeanModel> getWebLinks();
 
+	String getCorrectStatus();
+
 }

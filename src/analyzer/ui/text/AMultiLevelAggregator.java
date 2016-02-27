@@ -21,6 +21,7 @@ import util.misc.Common;
 import util.models.ALabelBeanModel;
 import util.models.AListenableVector;
 import util.models.LabelBeanModel;
+import analyzer.AParticipantTimeLine;
 import analyzer.ATimeStampComputer;
 import analyzer.AWebLink;
 import analyzer.AnalyzerFactory;
@@ -28,6 +29,7 @@ import analyzer.ParticipantTimeLine;
 import analyzer.RatioFilePlayerFactory;
 import analyzer.TimeStampComputerFactory;
 import analyzer.WebLink;
+import analyzer.extension.AnAnalyzerProcessor;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
 import difficultyPrediction.DifficultyRobot;
@@ -49,6 +51,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	protected String aggregatedStatus = "";
 	protected String manualStatus = "";
 	protected String manualBarrier = "";
+	protected String correctStatus = "";
 	
 	static RatioCalculator ratioCalculator;
 	static MultiLevelAggregator instance;
@@ -261,6 +264,11 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	public String getManualStatus() {
 		return manualStatus;
 	}
+	@Row(2)
+	@Override
+	public String getCorrectStatus() {
+		return correctStatus;
+	}
 //	@Override
 //	public void setManualStatus(String newVal) {
 //		this.manualStatus = newVal;
@@ -270,7 +278,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //	public void setBarrier(String newVal) {
 //		this.barrier = newVal;
 //	}
-	@Row(2)
+	@Row(3)
 	@Override
 	public String getAggregatedStatus() {
 		return aggregatedStatus;
@@ -282,21 +290,21 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 				featureName + " " + ATimeStampComputer.toDateString(TimeStampComputerFactory.getSingleton().computeTimestamp(aCommand)) + 
 				" (" + aCommand + " )";
 	}
-	@Row(3)
+	@Row(4)
 	@PreferredWidgetClass(JTextArea.class)
 	@ComponentHeight(80)
 	@Override
 	public String getPredictions() {
 		return predictionsBuffer.toString();
 	}
-	@Row(4)
+	@Row(5)
 	@PreferredWidgetClass(JTextArea.class)
 	@ComponentHeight(100)
 	@Override
 	public String getRatios() {
 		return ratiosBuffer.toString();
 	}
-	@Row(5)	
+	@Row(6)	
 	@Override
 	public List<LabelBeanModel> getWebLinks() {
 		return webLinks;
@@ -331,12 +339,13 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //	public void setWebURL(String webURL) {
 //		this.webURL = webURL;
 //	}
-	@Row(6)
+	@Row(7)
 	@PreferredWidgetClass(JTextArea.class)
 	@ComponentHeight(200)
 	public String getSegment() {
 		return commandsBuffer.toString();
 	}
+	
 	
 	
 	
@@ -444,6 +453,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	@Override
 	public void newCorrectStatus(int aStatus) {
 		System.out.println ("Status:" + aStatus);
+		correctStatus = AParticipantTimeLine.statusIntToString(aStatus);
 	}
 
 
