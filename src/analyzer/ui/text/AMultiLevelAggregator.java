@@ -4,6 +4,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JTextArea;
@@ -81,6 +82,9 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		RatioFilePlayerFactory.getSingleton().addRatioFeaturesListener(this);
 		RatioFilePlayerFactory.getSingleton().addWebLinkListener(this);
 		RatioFilePlayerFactory.getSingleton().addBarrierListener(this);
+		
+		// when ana analyzer is repredicting
+		AnalyzerFactory.getSingleton().addAnalyzerListener(this);
 
 		
 //		ratioCalculator = APercentageCalculator.getInstance();
@@ -413,12 +417,60 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //		
 //	}
 	
+	
+
+
+	@Override
+	public void newParticipant(String anId, String aFolder) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void startTimeStamp(long aStartTimeStamp) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void finishParticipant(String anId, String aFolder) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void newCorrectStatus(int aStatus) {
+		System.out.println ("Status:" + aStatus);
+	}
+
+
+	@Override
+	public void newBrowseLine(String aLine) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void newBrowseEntries(Date aDate, String aSearchString, String aURL) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void finishedBrowserLines() {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public static void main (String[] args) {
 //		ObjectEditor.edit(AMultiLevelAggregator.getInstance());
 		createUI();
 	}
-
-
 
 
 	

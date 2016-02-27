@@ -423,4 +423,10 @@ public class CopyOfAnAnalyzerProcessor extends APrintingDifficultyPredictionList
 		return participantTimeLine;
 	}
 
+	@Override
+	public void newCorrectStatus(int aStatus) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

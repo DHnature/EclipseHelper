@@ -68,6 +68,8 @@ public interface Analyzer extends PropertyListenerRegisterer{
 	
 	public String getOutputDirectory();
 
+	void notifyNewCorrectStatus(int aStatus);
+
 //	boolean isNewRatioFiles();
 //
 //	void setNewRatioFiles(boolean newRatioFiles);

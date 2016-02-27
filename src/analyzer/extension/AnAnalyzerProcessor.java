@@ -274,7 +274,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener
 		lastWebLink = null;
 	}
 
-	int toInt(PredictionCommand aCommand) {
+	public static int toInt(PredictionCommand aCommand) {
 		if (aCommand.getPredictionType() == null) {
 			return -1;
 		}
@@ -291,7 +291,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener
 		return -1;
 	}
 
-	int toInt(DifficulyStatusCommand aCommand) {
+	public static int toInt(DifficulyStatusCommand aCommand) {
 		if (aCommand.getStatus() == null)
 			return -1;
 		switch (aCommand.getStatus()) {
@@ -321,7 +321,7 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener
 	}
 
 	void maybeProcessCorrection(ICommand newCommand) {
-		if (newCommand instanceof DifficulyStatusCommand) {
+		if (newCommand instanceof DifficulyStatusCommand) { // what if status is null?
 			lastCorrection = toInt((DifficulyStatusCommand) newCommand);
 		}
 	}
@@ -457,6 +457,12 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener
 	@Override
 	public ParticipantTimeLine getParticipantTimeLine() {
 		return participantTimeLine;
+	}
+
+	@Override
+	public void newCorrectStatus(int aStatus) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

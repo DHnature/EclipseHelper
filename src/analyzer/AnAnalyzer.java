@@ -33,6 +33,7 @@ import util.annotations.Visible;
 import analyzer.extension.ACSVParser;
 import analyzer.extension.AStuckInterval;
 import analyzer.extension.AStuckPoint;
+import analyzer.extension.AnAnalyzerProcessor;
 import analyzer.extension.AnalyzerProcessorFactory;
 import analyzer.extension.CSVParser;
 import analyzer.extension.FileReplayAnalyzerProcessorFactory;
@@ -54,7 +55,9 @@ import difficultyPrediction.Mediator;
 import difficultyPrediction.PredictionParametersSetterSelector;
 import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.featureExtraction.RatioFeatures;
+import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
+import edu.cmu.scs.fluorite.commands.PredictionCommand;
 import edu.cmu.scs.fluorite.util.LogReader;
 @LayoutName(AttributeNames.GRID_BAG_LAYOUT)
 public class AnAnalyzer implements Analyzer  {
@@ -103,6 +106,8 @@ public class AnAnalyzer implements Analyzer  {
 	// subdirectory inside of OutputData to put outputs, note that it can be
 	// different for each instance of analyzer
 	private String outputSubdirectory = "";
+	int lastPrediction;
+	int lastCorrection;
 
 	//random comment to make sure things can commit
 	public AnAnalyzer() {
@@ -678,6 +683,8 @@ public class AnAnalyzer implements Analyzer  {
 					List<ICommand> commands = nestedCommandsList.get(index);
 					for (int i = 0; i < commands.size(); i++) {
 						ICommand aCommand = commands.get(i);
+						maybeProcessPrediction(aCommand);
+						maybeProcessCorrection(aCommand);
 
 						if ((aCommand.getTimestamp() == 0)
 								&& (aCommand.getTimestamp2() > 0)) { // this is always a difficulty status command
@@ -843,6 +850,12 @@ public class AnAnalyzer implements Analyzer  {
 	public void removeAnalyzerListener(AnalyzerListener aListener) {
 		listeners.remove(aListener);
 	}
+	@Override
+	public void notifyNewCorrectStatus(int aStatus) {
+		for (AnalyzerListener aListener : listeners) {
+			aListener.newCorrectStatus(aStatus);
+		}
+	}
 
 	@Override
 	public void notifyNewParticipant(String anId, String aFolder) {
@@ -937,6 +950,22 @@ public class AnAnalyzer implements Analyzer  {
 		OEFrame frame = ObjectEditor.edit(AnAnalyzer.getInstance());
 		frame.setSize(500, 335);
 
+	}
+	void maybeProcessPrediction(ICommand newCommand) {
+		if (newCommand instanceof PredictionCommand) {
+			lastPrediction = AnAnalyzerProcessor.toInt((PredictionCommand) newCommand);
+			notifyNewCorrectStatus(lastPrediction);
+		}
+	}
+
+	void maybeProcessCorrection(ICommand newCommand) {
+		if (newCommand instanceof DifficulyStatusCommand 
+//				&& ((DifficulyStatusCommand) newCommand).getStatus() != null
+				) {
+			lastCorrection = AnAnalyzerProcessor.toInt((DifficulyStatusCommand) newCommand);
+			notifyNewCorrectStatus(lastCorrection);
+
+		}
 	}
 
 	@Override

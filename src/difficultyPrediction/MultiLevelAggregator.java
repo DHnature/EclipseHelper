@@ -4,6 +4,7 @@ import java.util.List;
 
 import util.models.LabelBeanModel;
 import util.models.PropertyListenerRegisterer;
+import analyzer.AnalyzerListener;
 import analyzer.Resettable;
 import difficultyPrediction.featureExtraction.BarrierListener;
 import difficultyPrediction.featureExtraction.RatioFeaturesListener;
@@ -12,7 +13,9 @@ import difficultyPrediction.statusManager.StatusListener;
 
 public interface MultiLevelAggregator extends
 	RatioFeaturesListener, WebLinkListener, StatusListener, 
-	DifficultyPredictionEventListener, PropertyListenerRegisterer, Resettable, BarrierListener{
+	DifficultyPredictionEventListener, 
+	PropertyListenerRegisterer, 
+	Resettable, BarrierListener, AnalyzerListener{
 
 	String getManualStatus();
 
