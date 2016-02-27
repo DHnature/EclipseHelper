@@ -16,7 +16,7 @@ to indicate that the plugin is not involved.
 
 You also need to set the prediction parameters. This is done by the code:
 	FactorySingletonInitializer.configure();
-Because are in replay mode, this calls:
+Because you are in replay mode, this calls:
 	ReplayModeInitializer.configure();
 
 This in turn calls:
@@ -52,4 +52,20 @@ The argument to it is an ICommand.
 
 You need to construct appropriate instances of this interface. See the various classes that implement this interface)
 
+I have added a new class called AGenericRatioCalculator, which takes a tabular description of the command to command-category mapping.
+The command names are in an enum class called: 
+CommandName (in difficultyprediction.metrics). To add more commands, edit this.
+The category names are in an enum class called:
+CommandCategory
+Each mapping from CommandName to CommandCategory has a name. The names of the mappings are in class:
+CommandClassificationSchemeName
+There are five names right now: A0-A4.
+Each of these names is associated with an actual mapping.
+There are five mappings right now:
+AnA0CommandCategories..AnA4CommandCategories
+The first four are used. The last one is a dummy policy that can be changed. 
+Thus, AnA4CommandCategories can be edited to create a new mapping.
+The current mapping is decided by calling APredictionParameters.getInstance().setCommandClassificationScheme();
+This call can be made in one of the two configure methods.
 
+To change one or more classses best to create the class in your project, which should supersede the one in the EclipseHelper project.
