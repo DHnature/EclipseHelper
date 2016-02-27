@@ -260,11 +260,14 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		return manualBarrier;
 	}
 	@Row(1)
+	@Column(0)
 	@Override
 	public String getManualStatus() {
 		return manualStatus;
 	}
 	@Row(2)
+//	@Row(1)
+//	@Column(1)
 	@Override
 	public String getCorrectStatus() {
 		return correctStatus;
@@ -279,6 +282,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //		this.barrier = newVal;
 //	}
 	@Row(3)
+//	@Row(1)
+//	@Column(2)
 	@Override
 	public String getAggregatedStatus() {
 		return aggregatedStatus;
