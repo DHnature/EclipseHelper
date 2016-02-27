@@ -68,4 +68,4 @@ Thus, AnA4CommandCategories can be edited to create a new mapping.
 The current mapping is decided by calling APredictionParameters.getInstance().setCommandClassificationScheme();
 This call can be made in one of the two configure methods.
 
-To change one or more classses best to create the class in your project, which should supersede the one in the EclipseHelper project.
+To change one or more classes best to create the class in your project, which should supersede the one in the EclipseHelper project.
