@@ -29,6 +29,7 @@ import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand;
+import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
 import edu.cmu.scs.fluorite.model.EventRecorder;
 
 public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener
@@ -273,12 +274,9 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener
 		// participantTimeLine.getWebLinks().add(lastWebLink);
 		lastWebLink = null;
 	}
-
-	public static int toInt(PredictionCommand aCommand) {
-		if (aCommand.getPredictionType() == null) {
-			return -1;
-		}
-		switch (aCommand.getPredictionType()) {
+	
+	public static int toInt(PredictionType aPredictionType) {
+		switch (aPredictionType) {
 		
 //		case Indeterminate: return -1;
 //		case MakingProgress: return 0;
@@ -287,8 +285,27 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener
 		case Indeterminate: return ParticipantTimeLine.INDTERMINATE_INT;
 		case MakingProgress: return ParticipantTimeLine.PROGRESS_INT;
 		case HavingDifficulty: return ParticipantTimeLine.DIFFICULTY_INT;
+		default: return ParticipantTimeLine.INDTERMINATE_INT;
 		}
-		return -1;
+		
+	}
+
+	public static int toInt(PredictionCommand aCommand) {
+		if (aCommand.getPredictionType() == null) {
+			return ParticipantTimeLine.INDTERMINATE_INT;
+		}
+		return toInt(aCommand.getPredictionType());
+//		switch (aCommand.getPredictionType()) {
+//		
+////		case Indeterminate: return -1;
+////		case MakingProgress: return 0;
+////		case HavingDifficulty: return 1;
+//		
+//		case Indeterminate: return ParticipantTimeLine.INDTERMINATE_INT;
+//		case MakingProgress: return ParticipantTimeLine.PROGRESS_INT;
+//		case HavingDifficulty: return ParticipantTimeLine.DIFFICULTY_INT;
+//		}
+//		return -1;
 	}
 
 	public static int toInt(DifficulyStatusCommand aCommand) {

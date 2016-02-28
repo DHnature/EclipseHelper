@@ -40,6 +40,7 @@ import difficultyPrediction.metrics.RatioCalculatorSelector;
 import difficultyPrediction.predictionManagement.PredictionManagerStrategy;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
+import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
 import edu.cmu.scs.fluorite.model.StatusConsts;
 
 public class AMultiLevelAggregator implements MultiLevelAggregator{
@@ -51,8 +52,10 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	protected String aggregatedStatus = "";
 	protected String manualStatus = "";
 	protected String manualBarrier = "";
-	protected String correctStatus = "";
-	
+	protected int correctStatus = AnAnalyzerProcessor.toInt(PredictionType.Indeterminate);
+	protected String correctStatusString = 	AParticipantTimeLine.statusIntToString(correctStatus);
+
+
 	static RatioCalculator ratioCalculator;
 	static MultiLevelAggregator instance;
 	protected StringBuffer commandsBuffer = new StringBuffer();
@@ -123,7 +126,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	protected void setManualStatus(String newValue) {
 		String oldStatus = manualStatus;
 		manualStatus = newValue;
-		propertyChangeSupport.firePropertyChange("Manual Status", oldStatus, manualStatus);
+		propertyChangeSupport.firePropertyChange("ManualStatus", oldStatus, manualStatus);
 	}
 
 	@Override
@@ -274,7 +277,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //	@Column(1)
 	@Override
 	public String getCorrectStatus() {
-		return correctStatus;
+		return correctStatusString;
 	}
 //	@Override
 //	public void setManualStatus(String newVal) {
@@ -461,8 +464,12 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 
 	@Override
 	public void newCorrectStatus(int aStatus) {
-		System.out.println ("Status:" + aStatus);
-		correctStatus = AParticipantTimeLine.statusIntToString(aStatus);
+		System.out.println ("New Status:" + aStatus);
+		correctStatus = aStatus;
+		String oldStatusString = correctStatusString;
+		correctStatusString = AParticipantTimeLine.statusIntToString(aStatus);
+		propertyChangeSupport.firePropertyChange("CorrectStatus", oldStatusString, correctStatusString);
+
 	}
 
 

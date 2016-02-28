@@ -7,12 +7,14 @@ import java.util.List;
 
 import util.annotations.Visible;
 import analyzer.WebLink;
+import analyzer.extension.AnAnalyzerProcessor;
 import analyzer.ui.GeneralizedPlayAndRewindCounter;
 import analyzer.ui.SessionPlayerFactory;
 import analyzer.ui.graphics.PlayAndRewindCounter;
 import bus.uigen.OEFrame;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
+import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
 import edu.cmu.scs.fluorite.model.StatusConsts;
 
 public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator implements PropertyChangeListener {
@@ -171,7 +173,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 		allManualStatuses.add(null);
 		allBarriers.add(null);
 		allWebLinks.add(null);
-		allCorrectStatuses.add(null);
+		allCorrectStatuses.add(correctStatus); // asume same as last segment as we only get chnages
 	}
 	
 	@Override
