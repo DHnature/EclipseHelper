@@ -218,4 +218,11 @@ public class AStatusBar extends JPanel implements StatusBar {
 		// TODO Auto-generated method stub
 		
 	}
+
+
+	@Override
+	public void newReplayedStatus(int aStatus) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -287,6 +287,13 @@ public class AnalyzerMediator implements Mediator {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void notifyNewReplayedStatus(int aStatus) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

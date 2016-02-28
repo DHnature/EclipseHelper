@@ -6,5 +6,7 @@ public interface StatusListener {
 	void newStatus(int aStatus);
 	void newAggregatedStatus(int aStatus);
 	void newManualStatus(String aStatus);
+//	void newReplayedStatus(String aStatus);
+	void newReplayedStatus(int aStatus);
 
 }

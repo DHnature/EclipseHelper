@@ -46,4 +46,6 @@ public interface MediatorRegistrar {
 
 	void removeBarrierListener(BarrierListener aListener);
 
+	void notifyNewReplayedStatus(int aStatus);
+
 }

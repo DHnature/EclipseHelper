@@ -7,6 +7,7 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.PlatformUI;
 
+import analyzer.extension.AnAnalyzerProcessor;
 import trace.difficultyPrediction.CommandIgnoredBecauseQueueFull;
 import config.PredictorConfigurer;
 import dayton.ServerConnection;
@@ -99,10 +100,11 @@ public class ADifficultyPredictionRunnable implements
 					final String currentStatus = getStatus((PredictionCommand) newCommand);
 					// if (!currentStatus.equals(lastStatus)) {
 					if (DifficultyPredictionSettings.isReplayMode()) {
+						DifficultyRobot.getInstance().notifyNewReplayedStatus(AnAnalyzerProcessor.toInt(((PredictionCommand) newCommand).getPredictionType()));;
 						// try {
 						System.out.println("Prediction: "
 								+ ((PredictionCommand) newCommand)
-										.getPredictionType());
+										.getPredictionType() + " comd " + newCommand + " " + newCommand.getTimestamp());
 						// } catch (ClassCastException e) {
 						// e.printStackTrace();
 						// System.out.println ("this shouldnot have happened");

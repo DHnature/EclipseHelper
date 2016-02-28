@@ -298,14 +298,20 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 		}
 	}
 	
-	
+	@Override
 	public synchronized void  notifyNewStatus(String aStatus) {
 		for (StatusListener aListener:statusListeners) {
 			aListener.newStatus(aStatus);
 			aListener.newStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
 		}
 	}
-	
+	@Override
+	public synchronized void  notifyNewReplayedStatus(int aStatus) {
+		for (StatusListener aListener:statusListeners) {
+			aListener.newReplayedStatus(aStatus);
+//			aListener.newReplayedStatus(StatusAggregationDiscreteChunks.statusStringToInt(aStatus));
+		}
+	}
 	public synchronized void  notifyNewManualStatus(String aStatus) {
 		for (StatusListener aListener:statusListeners) {
 			aListener.newManualStatus(aStatus);

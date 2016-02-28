@@ -32,12 +32,14 @@ import analyzer.WebLink;
 import analyzer.extension.AnAnalyzerProcessor;
 import bus.uigen.OEFrame;
 import bus.uigen.ObjectEditor;
+import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.DifficultyRobot;
 import difficultyPrediction.MultiLevelAggregator;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.metrics.RatioCalculator;
 import difficultyPrediction.metrics.RatioCalculatorSelector;
 import difficultyPrediction.predictionManagement.PredictionManagerStrategy;
+import difficultyPrediction.statusManager.StatusAggregationDiscreteChunks;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
@@ -52,8 +54,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	protected String aggregatedStatus = "";
 	protected String manualStatus = "";
 	protected String manualBarrier = "";
-	protected int correctStatus = AnAnalyzerProcessor.toInt(PredictionType.Indeterminate);
-	protected String correctStatusString = 	AParticipantTimeLine.statusIntToString(correctStatus);
+	protected int correctStatusInt = AnAnalyzerProcessor.toInt(PredictionType.Indeterminate);
+	protected String correctStatus = 	AParticipantTimeLine.statusIntToString(correctStatusInt);
 
 
 	static RatioCalculator ratioCalculator;
@@ -122,11 +124,26 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 			return "";
 		return aCommand.getStatus().toString();		
 	}
-	
+	// is called after each segment to reset previous value
 	protected void setManualStatus(String newValue) {
 		String oldStatus = manualStatus;
-		manualStatus = newValue;
+		manualStatus = newValue;		
 		propertyChangeSupport.firePropertyChange("ManualStatus", oldStatus, manualStatus);
+//		setCorrectStatus(newValue);
+	}
+	protected void setCorrectStatus(String newValue) {
+		int i = 0;
+		setCorrectStatus(StatusAggregationDiscreteChunks.statusStringToInt(newValue));
+	}
+
+	
+	protected void setCorrectStatus(int newValue) {
+		String newStringValue = AParticipantTimeLine.statusIntToString(newValue);
+		String oldCorrectStatus = correctStatus;
+		correctStatus = newStringValue;
+		correctStatusInt = newValue;
+		propertyChangeSupport.firePropertyChange("CorrectStatus", oldCorrectStatus, correctStatus);
+		
 	}
 
 	@Override
@@ -134,10 +151,10 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	public void newCommand(ICommand newCommand) {
 		if (newCommand instanceof DifficulyStatusCommand) {
 			if (!AnalyzerFactory.getSingleton().getAnalyzerParameters().isReplayOutputFiles()) {
-//				DifficulyStatusCommand aDifficultyStatusCommand = (DifficulyStatusCommand) newCommand;
+				DifficulyStatusCommand aDifficultyStatusCommand = (DifficulyStatusCommand) newCommand;
 				TimeStampComputerFactory.getSingleton().computeTimestamp(newCommand); // so that start time can be reset
-			setManualStatus(toString((DifficulyStatusCommand) newCommand));
-			
+			setManualStatus(toString((DifficulyStatusCommand) newCommand)); // should this not be done always regardless of replay output files
+			setCorrectStatus(AnAnalyzerProcessor.toInt(aDifficultyStatusCommand.getStatus()));
 //			String oldStatus = manualStatus;
 //			manualStatus = toString((DifficulyStatusCommand) newCommand);
 //			propertyChangeSupport.firePropertyChange("Corrected Status", oldStatus, manualStatus);
@@ -188,6 +205,9 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		predictions.add(aStatus);
 		predictionsBuffer.append(aStatus + "\n");
 		propertyChangeSupport.firePropertyChange("Predictions", "", predictionsBuffer.toString());
+		if (!DifficultyPredictionSettings.isReplayMode()) {
+			setCorrectStatus(aStatus);
+		}
 		
 	}
 	String oldAggregateStatus = "";
@@ -277,7 +297,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 //	@Column(1)
 	@Override
 	public String getCorrectStatus() {
-		return correctStatusString;
+		return correctStatus;
 	}
 //	@Override
 //	public void setManualStatus(String newVal) {
@@ -462,15 +482,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	}
 
 
-	@Override
-	public void newCorrectStatus(int aStatus) {
-		System.out.println ("New Status:" + aStatus);
-		correctStatus = aStatus;
-		String oldStatusString = correctStatusString;
-		correctStatusString = AParticipantTimeLine.statusIntToString(aStatus);
-		propertyChangeSupport.firePropertyChange("CorrectStatus", oldStatusString, correctStatusString);
-
-	}
+	
 
 
 	@Override
@@ -485,7 +497,23 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		// TODO Auto-generated method stub
 		
 	}
+	
 
+
+	@Override
+	public void newReplayedStatus(int aStatus) {
+		setCorrectStatus(aStatus);
+	}
+	@Override
+	// from analyzer thread,not very nteresting, need it from runnable thread
+	public void newCorrectStatus(int aStatus) {
+//		System.out.println ("New Status:" + aStatus);
+//		correctStatusInt = aStatus;
+//		String oldStatusString = correctStatus;
+//		correctStatus = AParticipantTimeLine.statusIntToString(aStatus);
+//		propertyChangeSupport.firePropertyChange("CorrectStatus", oldStatusString, correctStatus);
+
+	}
 
 	@Override
 	public void finishedBrowserLines() {
@@ -498,6 +526,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		createUI();
 	}
 
+
+	
 
 	
 

@@ -289,6 +289,23 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener
 		}
 		
 	}
+	public static int toInt(DifficulyStatusCommand.Status aStatus) {
+		if (aStatus == null) {
+			return ParticipantTimeLine.INDTERMINATE_INT;
+		}
+		switch (aStatus) {
+		
+//		case Indeterminate: return -1;
+//		case MakingProgress: return 0;
+//		case HavingDifficulty: return 1;
+		
+		case Making_Progress: return ParticipantTimeLine.PROGRESS_INT;
+		case Surmountable: return ParticipantTimeLine.SURMOUNTABLE_INT;
+		case Insurmountable: return ParticipantTimeLine.INSURMOUNTABLE_INT;
+		default: return ParticipantTimeLine.INDTERMINATE_INT;
+		}
+		
+	}
 
 	public static int toInt(PredictionCommand aCommand) {
 		if (aCommand.getPredictionType() == null) {

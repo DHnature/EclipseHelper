@@ -120,8 +120,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 		propagatePre(); // to reset back and forward				
 	}
 	@Override
-	@Visible(false)
-	public void newCorrectStatus(int aStatus) {
+	protected void setCorrectStatus(int aStatus) {
 //		if (!isPlayBack()) {
 		   if (nextFeatureIndex == 0)
 			   return; // before a ratio is receiced, we may have a notification
@@ -133,7 +132,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 //			allAggregatedStatuses.add(allAggregatedStatuses.get(lastFeatureIndex - 1));
 //		} else {
 		if (!isPlayBack()) {
-			super.newCorrectStatus(aStatus); 
+			super.setCorrectStatus(aStatus); 
 //			propagatePre(); // to reset back and forward
 		}
 		propagatePre(); // to reset back and forward				
@@ -173,7 +172,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 		allManualStatuses.add(null);
 		allBarriers.add(null);
 		allWebLinks.add(null);
-		allCorrectStatuses.add(correctStatus); // asume same as last segment as we only get chnages
+		allCorrectStatuses.add(correctStatusInt); // asume same as last segment as we only get chnages
 	}
 	
 	@Override
