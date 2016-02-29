@@ -42,6 +42,8 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 		statusPredictor = DifficultyRobot.getInstance();
 		if (!DifficultyPredictionSettings.isReplayMode()) 
 			ADifficultyPredictionRegistry.getInstance().registerDifficultyPredictionListeners(this);
+		FactorySingletonInitializer.configure();
+
 
 	}
 	/* (non-Javadoc)
@@ -270,7 +272,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	 */
 	@Override
 	public void commandProcessingStarted() {
-		FactorySingletonInitializer.configure();
+//		FactorySingletonInitializer.configure();
 		maybeCreateDifficultyPredictionThread();
 		difficultyPredictionRunnable.add(new AStartOfQueueCommand());
 

@@ -127,6 +127,10 @@ public class AnAnalyzer implements Analyzer {
 		parameters = new AnAnalyzerParameters(this);
 		parameters.getParticipants().addChoice(ALL_PARTICIPANTS);
 		parameters.getParticipants().setValue(ALL_PARTICIPANTS);
+//		difficultyEventProcessor = ADifficultyPredictionPluginEventProcessor.getInstance();
+
+		FactorySingletonInitializer.configure();
+
 
 	}
 
@@ -359,7 +363,7 @@ public class AnAnalyzer implements Analyzer {
 	}
 
 	public void doLoadLogs() {
-		FactorySingletonInitializer.configure();
+//		FactorySingletonInitializer.configure();
 
 		String participantId = parameters.getParticipants().getValue();
 		String numberOfSegments = ""
@@ -666,6 +670,7 @@ public class AnAnalyzer implements Analyzer {
 			// nestedCommandsList =
 			// convertXMLLogToObjects(aFullParticipantDataFolderName);
 			DifficultyPredictionSettings.setRatiosFileName(aFullRatiosFileName);
+			//moving this up in the constructor so we do not configure many times
 			difficultyEventProcessor = new ADifficultyPredictionPluginEventProcessor();
 			ADifficultyPredictionPluginEventProcessor
 					.setInstance(difficultyEventProcessor);
