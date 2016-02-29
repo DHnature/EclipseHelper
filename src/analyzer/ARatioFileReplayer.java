@@ -136,6 +136,7 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 		String newStatus = aRatioFileComponents.getPredictedStatus() == 0?
 				PredictionManagerStrategy.PROGRESS_PREDICTION:
 					PredictionManagerStrategy.DIFFICULTY_PREDICTION;
+		// this is not consistent with prediction commands,
 		notifyNewStatus(newStatus);
 		// we did not record incremental status
 		notifyNewAggregateStatus(newStatus);
@@ -156,6 +157,8 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 //			RatioFileComponents aRatioFileComponents = ratioFeaturesList.get(anIndex);
 			RatioFileComponents aRatioFileComponents = (RatioFileComponents) evt.getNewValue();
 			long aTimeStamp = aRatioFileComponents.getSavedTimeStamp();
+			// commands and ratios may not be in sync, which means ratio file is not correctly saved or fireCommands does not play right
+			// for every aggregated status there should be a prediction command
 			fireCommands(aTimeStamp);
 			fireRatioFileComponents(aRatioFileComponents);
 		}

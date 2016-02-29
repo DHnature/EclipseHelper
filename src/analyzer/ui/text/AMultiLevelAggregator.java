@@ -150,24 +150,28 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	@Override
     @Visible(false)
 	public void newCommand(ICommand newCommand) {
+		// we wil get this as aggregated status as
+		// prediction command does not seem to be in sync wuth aggregated status
 		if (newCommand instanceof PredictionCommand && 
 				DifficultyPredictionSettings.isReplayMode() &&  // implied by the latter
 				DifficultyPredictionSettings.isReplayRatioFiles() ) { // this implies the former
 			// this should happen in live mode
+			PredictionCommand aPredictionCommand = (PredictionCommand) newCommand;
 			System.out.println("received prediction command:" + newCommand);
+			if (aPredictionCommand.getPredictionType() != PredictionType.MakingProgress) {
+				System.out.println("Not making progress");
+			}
 			newReplayedStatus(AnAnalyzerProcessor.toInt(((PredictionCommand) newCommand).getPredictionType()));
 			
 		}
 		if (newCommand instanceof DifficulyStatusCommand) {
-			if (!AnalyzerFactory.getSingleton().getAnalyzerParameters().isReplayOutputFiles()) {
+//			if (!AnalyzerFactory.getSingleton().getAnalyzerParameters().isReplayOutputFiles()) {
 				DifficulyStatusCommand aDifficultyStatusCommand = (DifficulyStatusCommand) newCommand;
 				TimeStampComputerFactory.getSingleton().computeTimestamp(newCommand); // so that start time can be reset
 			setManualStatus(toString((DifficulyStatusCommand) newCommand)); // should this not be done always regardless of replay output files
 			setCorrectStatus(AnAnalyzerProcessor.toInt(aDifficultyStatusCommand.getStatus()));
-//			String oldStatus = manualStatus;
-//			manualStatus = toString((DifficulyStatusCommand) newCommand);
-//			propertyChangeSupport.firePropertyChange("Corrected Status", oldStatus, manualStatus);
-			}
+
+//			}
 
 		} else {
 		maybeClearNonAggregatedStatus();

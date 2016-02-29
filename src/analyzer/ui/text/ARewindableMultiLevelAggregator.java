@@ -269,7 +269,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 			super.newManualStatus(allManualStatuses.get(featureIndex));
 			super.newBarrier(allBarriers.get(featureIndex));
 			super.newWebLinks(allWebLinks.get(featureIndex));
-			super.newCorrectStatus(allCorrectStatuses.get(featureIndex));
+			super.setCorrectStatus(allCorrectStatuses.get(featureIndex));
 		}
 		unsuppressNotifications();
 	}
