@@ -2,6 +2,9 @@ package difficultyPrediction.featureExtraction;
 
 import java.util.List;
 
+import analyzer.ATimeStampComputer;
+import analyzer.TimeStampComputerFactory;
+import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.metrics.AGenericRatioCalculator;
 import difficultyPrediction.metrics.RatioCalculator;
 import difficultyPrediction.metrics.RatioCalculatorSelector;
@@ -32,6 +35,10 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
 //			}
 			ICommand lastCommand = actions.get(actions.size() - 1);
 			long timeStamp = lastCommand.getTimestamp();
+			if (DifficultyPredictionSettings.isReplayMode() && !DifficultyPredictionSettings.isReplayRatioFiles()) {
+				// we are playing store rations through mediator
+				timeStamp = TimeStampComputerFactory.getSingleton().computeTimestamp(lastCommand);
+			}
 			
 			
 			featureExtractor.onFeatureHandOff(percentages.get(EDIT_PERCENTAGE), percentages.get(DEBUG_PERCENTAGE), 
