@@ -744,6 +744,7 @@ public class AnAnalyzer implements Analyzer {
 				//
 				// e.printStackTrace();
 				// }
+				//maybe do this before notifying events so we can use the info in prediction
 				processBrowserHistoryOfFolder(participantsFolder.getText()
 						+ EXPERIMENTAL_DATA + aParticipantFolder + "/"
 						+ BROWSER_FOLDER);

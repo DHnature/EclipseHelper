@@ -42,6 +42,7 @@ import difficultyPrediction.predictionManagement.PredictionManagerStrategy;
 import difficultyPrediction.statusManager.StatusAggregationDiscreteChunks;
 import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
 import edu.cmu.scs.fluorite.commands.ICommand;
+import edu.cmu.scs.fluorite.commands.PredictionCommand;
 import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
 import edu.cmu.scs.fluorite.model.StatusConsts;
 
@@ -149,6 +150,14 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 	@Override
     @Visible(false)
 	public void newCommand(ICommand newCommand) {
+		if (newCommand instanceof PredictionCommand && 
+				DifficultyPredictionSettings.isReplayMode() &&  // implied by the latter
+				DifficultyPredictionSettings.isReplayRatioFiles() ) { // this implies the former
+			// this should happen in live mode
+			System.out.println("received prediction command:" + newCommand);
+			newReplayedStatus(AnAnalyzerProcessor.toInt(((PredictionCommand) newCommand).getPredictionType()));
+			
+		}
 		if (newCommand instanceof DifficulyStatusCommand) {
 			if (!AnalyzerFactory.getSingleton().getAnalyzerParameters().isReplayOutputFiles()) {
 				DifficulyStatusCommand aDifficultyStatusCommand = (DifficulyStatusCommand) newCommand;
