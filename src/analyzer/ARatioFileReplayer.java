@@ -12,6 +12,7 @@ import analyzer.ui.graphics.RatioFileReader;
 import difficultyPrediction.AMediatorRegistrar;
 import difficultyPrediction.predictionManagement.PredictionManagerStrategy;
 import edu.cmu.scs.fluorite.commands.ICommand;
+import edu.cmu.scs.fluorite.commands.PredictionCommand;
 
 public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFilePlayer  {
 //	List<List<ICommand>> nestedCommandsList;
@@ -116,6 +117,9 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 			if (aComputedTimeStamp <= aTimeStamp) {
 				
 				System.out.println ("Firing command at index:" + anIndex);
+				if (nextCommand instanceof PredictionCommand) { //it seems we create a prediction command for each ratio command
+					System.out.println ("prediction command");
+				}
 				notifyNewCommand(flattenedCommandsList.get(anIndex));
 			
 			} else {
@@ -125,7 +129,11 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 		}
 //		return flattenedCommandsList.size() - 1;
 	}
-	
+	public static String toStringStatus(int newStatus) {
+		return newStatus == 0?
+				PredictionManagerStrategy.PROGRESS_PREDICTION:
+					PredictionManagerStrategy.DIFFICULTY_PREDICTION;
+	}
 	
 	/* (non-Javadoc)
 	 * @see analyzer.RatioFilePlayer#fireRatioFileComponents(analyzer.ui.graphics.RatioFileComponents)
@@ -133,13 +141,16 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 	@Override
 	public void fireRatioFileComponents(RatioFileComponents aRatioFileComponents) {
 		notifyNewRatios(aRatioFileComponents);
-		String newStatus = aRatioFileComponents.getPredictedStatus() == 0?
-				PredictionManagerStrategy.PROGRESS_PREDICTION:
-					PredictionManagerStrategy.DIFFICULTY_PREDICTION;
+//		String newStatus = aRatioFileComponents.getPredictedStatus() == 0?
+//				PredictionManagerStrategy.PROGRESS_PREDICTION:
+//					PredictionManagerStrategy.DIFFICULTY_PREDICTION;
+		String newStatus = toStringStatus(aRatioFileComponents.getPredictedStatus());
 		// this is not consistent with prediction commands,
 		notifyNewStatus(newStatus);
 		// we did not record incremental status
-		notifyNewAggregateStatus(newStatus);
+		// actuall we did, Ratios are claculated for incremental not batch
+		// prediction commands are aggregated ones
+//		notifyNewAggregateStatus(newStatus);
 		notifyNewWebLinks(aRatioFileComponents.getWebLinkList()); // will be erased at next agrregated status, must be before ag
 		notifyNewBarrier(aRatioFileComponents.getDifficultyType());
 		notifyNewManualStatus(AParticipantTimeLine.

@@ -22,6 +22,7 @@ import util.models.ALabelBeanModel;
 import util.models.AListenableVector;
 import util.models.LabelBeanModel;
 import analyzer.AParticipantTimeLine;
+import analyzer.ARatioFileReplayer;
 import analyzer.ATimeStampComputer;
 import analyzer.AWebLink;
 import analyzer.AnalyzerFactory;
@@ -277,8 +278,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 
 	@Override
 	@Visible(false)
-	public void newAggregatedStatus(int aStatus) {
-		// TODO Auto-generated method stub
+	public void newAggregatedStatus(int newStatus) {
+		 newAggregatedStatus(ARatioFileReplayer.toStringStatus(newStatus));
 		
 	}
 	@Override
@@ -515,7 +516,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 
 	@Override
 	public void newReplayedStatus(int aStatus) {
-		setCorrectStatus(aStatus);
+//		setCorrectStatus(aStatus);
+		newAggregatedStatus(aStatus);
 	}
 	@Override
 	// from analyzer thread,not very nteresting, need it from runnable thread
