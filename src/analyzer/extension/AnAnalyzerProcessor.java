@@ -13,9 +13,12 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.TimeZone;
 
+import bus.uigen.OEFrame;
+import bus.uigen.ObjectEditor;
 import util.misc.Common;
 import analyzer.AParticipantTimeLine;
 import analyzer.AWebLink;
+import analyzer.AnAnalyzer;
 import analyzer.Analyzer;
 import analyzer.ParticipantTimeLine;
 import analyzer.RatioFilePlayerFactory;
@@ -450,12 +453,12 @@ public class AnAnalyzerProcessor extends APrintingDifficultyPredictionListener
 	}
 
 	public static void main(String[] args) {
-		// DifficultyPredictionSettings.setReplayMode(true);
+		 DifficultyPredictionSettings.setReplayMode(true);
 		//
-		// analyzer = new AnAnalyzer();
-		// analyzerProcessor = new AnAnalyzerProcessor();
-		// analyzer.addAnalyzerListener(analyzerProcessor);
-		// OEFrame frame = ObjectEditor.edit(analyzer);
+		 Analyzer analyzer = new AnAnalyzer();
+		 analyzerProcessor = new AnAnalyzerProcessor();
+		 analyzer.addAnalyzerListener(analyzerProcessor);
+		 OEFrame frame = ObjectEditor.edit(analyzer);
 		// frame.setSize(550, 275);
 		//
 		// JFrame qframe=new JFrame("Query V1.0");

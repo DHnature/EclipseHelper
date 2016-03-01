@@ -150,7 +150,9 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 		// we did not record incremental status
 		// actuall we did, Ratios are claculated for incremental not batch
 		// prediction commands are aggregated ones
-//		notifyNewAggregateStatus(newStatus);
+		// ratios are accuulated and each aggregatede status associated with previous commands
+		// by analuzer processor
+		notifyNewAggregateStatus(newStatus);
 		notifyNewWebLinks(aRatioFileComponents.getWebLinkList()); // will be erased at next agrregated status, must be before ag
 		notifyNewBarrier(aRatioFileComponents.getDifficultyType());
 		notifyNewManualStatus(AParticipantTimeLine.

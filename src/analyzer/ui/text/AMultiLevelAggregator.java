@@ -162,7 +162,8 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 			if (aPredictionCommand.getPredictionType() != PredictionType.MakingProgress) {
 				System.out.println("Not making progress");
 			}
-			newReplayedStatus(AnAnalyzerProcessor.toInt(((PredictionCommand) newCommand).getPredictionType()));
+			// new aggregate status should be enough, for some reason this is not in sync with ratio file generated
+//			newReplayedStatus(AnAnalyzerProcessor.toInt(((PredictionCommand) newCommand).getPredictionType()));
 			
 		}
 		if (newCommand instanceof DifficulyStatusCommand) {
@@ -237,6 +238,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 			oldAggregateStatus = aStatus;		
 
 		}
+		setCorrectStatus(aStatus);
 //		predictions.clear();
 //		predictionsBuffer.setLength(0);
 //		ratiosBuffer.setLength(0);
