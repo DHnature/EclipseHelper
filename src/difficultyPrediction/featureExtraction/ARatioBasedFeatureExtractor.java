@@ -57,6 +57,16 @@ public class ARatioBasedFeatureExtractor implements RatioBasedFeatureExtractor {
 		 
      }
 	@Override
+	public void onFeatureHandOff(RatioFeatures aRatioFeatures)
+     {
+		 if (mediator != null)                           //Any handlers attached to this event?  
+	        {
+//	            
+	            mediator.featureExtractor_HandOffFeatures(this, aRatioFeatures);                       //Raise the event  
+	        }
+		 
+     }
+	@Override
 	public FeatureExtractionStrategy getFeatureExtractionStrategy() {
 		return featureExtractionStrategy;
 	}

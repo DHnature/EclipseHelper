@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import difficultyPrediction.APredictionParameters;
+import difficultyPrediction.featureExtraction.RatioFeatures;
 import analyzer.TimeandEventBasedPercentage;
 import edu.cmu.scs.fluorite.commands.CompilationCommand;
 import edu.cmu.scs.fluorite.commands.EclipseCommand;
@@ -563,5 +564,15 @@ public class ATestRatioCalculator implements RatioCalculator {
 	//			instance = new APercentageCalculator();
 	//		return instance;
 	//	}
+	@Override
+	public RatioFeatures computeRatioFeatures(List<ICommand> userActions) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public RatioFeatures computeFeatures(List<ICommand> userActions) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

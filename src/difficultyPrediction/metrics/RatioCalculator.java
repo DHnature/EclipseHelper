@@ -3,6 +3,7 @@ package difficultyPrediction.metrics;
 import java.util.ArrayList;
 import java.util.List;
 
+import difficultyPrediction.featureExtraction.RatioFeatures;
 import edu.cmu.scs.fluorite.commands.ICommand;
 
 public interface RatioCalculator {
@@ -23,5 +24,9 @@ public interface RatioCalculator {
 			List<ICommand> userActions);
 
 	public abstract String getFeatureName(ICommand myEvent);
+
+	RatioFeatures computeRatioFeatures(List<ICommand> userActions);
+
+	RatioFeatures computeFeatures(List<ICommand> userActions);
 
 }
