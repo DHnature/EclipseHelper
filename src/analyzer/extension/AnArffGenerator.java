@@ -260,7 +260,6 @@ public class AnArffGenerator extends AnAnalyzerProcessor implements ArffGenerato
 			arffWriter.writeData(
 //					prediction==0? "NO":"YES", 
 							prediction==0? PredictionManagerStrategy.PROGRESS_PREDICTION: PredictionManagerStrategy.DIFFICULTY_PREDICTION, 
-	
 //							p.getInsertionList().get(i),
 //							p.getDeletionList().get(i),
 							Double.toString(p.getEditList().get(i)),

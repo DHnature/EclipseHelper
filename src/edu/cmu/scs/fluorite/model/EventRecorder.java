@@ -142,34 +142,32 @@ public class EventRecorder {
 	private List<Runnable> mScheduledTasks;
 
 	private static EventRecorder instance = null;
-//	private static DifficultyRobot statusPredictor = null;
+	// private static DifficultyRobot statusPredictor = null;
 
 	private static TrayItem trayItem;
 	static boolean asyncFireEvent = true;
-//	private static ToolTip balloonTip;
-	
-//	protected Thread difficultyPredictionThread;	
-//	protected DifficultyPredictionRunnable difficultyPredictionRunnable;
-//	protected BlockingQueue<ICommand> pendingPredictionCommands;
-//	
-//	enum PredictorThreadOption {
-//		USE_CURRENT_THREAD,
-//		NO_PROCESSING,
-//		THREAD_PER_ACTION,
-//		SINGLE_THREAD
-//	} ;
-////	PredictorThreadOption predictorThreadOption = PredictorThreadOption.THREAD_PER_ACTION;
-////	PredictorThreadOption predictorThreadOption = PredictorThreadOption.USE_CURRENT_THREAD;
-////	PredictorThreadOption predictorThreadOption = PredictorThreadOption.NO_PROCESSING;
-//	PredictorThreadOption predictorThreadOption = PredictorThreadOption.SINGLE_THREAD;
+	// private static ToolTip balloonTip;
 
+	// protected Thread difficultyPredictionThread;
+	// protected DifficultyPredictionRunnable difficultyPredictionRunnable;
+	// protected BlockingQueue<ICommand> pendingPredictionCommands;
+	//
+	// enum PredictorThreadOption {
+	// USE_CURRENT_THREAD,
+	// NO_PROCESSING,
+	// THREAD_PER_ACTION,
+	// SINGLE_THREAD
+	// } ;
+	//// PredictorThreadOption predictorThreadOption =
+	// PredictorThreadOption.THREAD_PER_ACTION;
+	//// PredictorThreadOption predictorThreadOption =
+	// PredictorThreadOption.USE_CURRENT_THREAD;
+	//// PredictorThreadOption predictorThreadOption =
+	// PredictorThreadOption.NO_PROCESSING;
+	// PredictorThreadOption predictorThreadOption =
+	// PredictorThreadOption.SINGLE_THREAD;
 
-
-
-	
-
-	private final static Logger LOGGER = Logger.getLogger(EventRecorder.class
-			.getName());
+	private final static Logger LOGGER = Logger.getLogger(EventRecorder.class.getName());
 
 	public static EventRecorder getInstance() {
 		if (instance == null) {
@@ -191,7 +189,7 @@ public class EventRecorder {
 
 		mScheduledTasks = new ArrayList<Runnable>();
 
-//		statusPredictor = new DifficultyRobot("");
+		// statusPredictor = new DifficultyRobot("");
 	}
 
 	public void setCurrentlyExecutingCommand(boolean executingCommand) {
@@ -242,13 +240,11 @@ public class EventRecorder {
 		return mAssistSession;
 	}
 
-	public void addDocumentChangeListener(
-			DocumentChangeListener docChangeListener) {
+	public void addDocumentChangeListener(DocumentChangeListener docChangeListener) {
 		mDocumentChangeListeners.add(docChangeListener);
 	}
 
-	public void removeDocumentChangeListener(
-			DocumentChangeListener docChangeListener) {
+	public void removeDocumentChangeListener(DocumentChangeListener docChangeListener) {
 		mDocumentChangeListeners.remove(docChangeListener);
 	}
 
@@ -284,8 +280,7 @@ public class EventRecorder {
 		}
 	}
 
-	public synchronized void fireDocumentChangeFinalizedEvent(
-			BaseDocumentChangeEvent docChange) {
+	public synchronized void fireDocumentChangeFinalizedEvent(BaseDocumentChangeEvent docChange) {
 		if (docChange instanceof FileOpenCommand) {
 			return;
 		}
@@ -293,13 +288,11 @@ public class EventRecorder {
 		if (docChange == mLastFiredDocumentChange) {
 			return;
 		}
-		
 
 		for (Object listenerObj : mDocumentChangeListeners.getListeners()) {
-//			System.out.println ("ASYNC EXEC ProCESSED");
+			// System.out.println ("ASYNC EXEC ProCESSED");
 
-			((DocumentChangeListener) listenerObj)
-					.documentChangeFinalized(docChange);
+			((DocumentChangeListener) listenerObj).documentChangeFinalized(docChange);
 		}
 
 		mLastFiredDocumentChange = docChange;
@@ -334,11 +327,9 @@ public class EventRecorder {
 				mLastSelectionStart = styledText.getSelection().x;
 				mLastSelectionEnd = styledText.getSelection().y;
 				if (mLastSelectionStart != mLastSelectionEnd) {
-					recordCommand(new SelectTextCommand(mLastSelectionStart,
-							mLastSelectionEnd, mLastCaretOffset));
+					recordCommand(new SelectTextCommand(mLastSelectionStart, mLastSelectionEnd, mLastCaretOffset));
 				} else {
-					recordCommand(new MoveCaretCommand(mLastCaretOffset, viewer
-							.getSelectedRange().x));
+					recordCommand(new MoveCaretCommand(mLastCaretOffset, viewer.getSelectedRange().x));
 				}
 			}
 		});
@@ -374,8 +365,7 @@ public class EventRecorder {
 		if (ate != null) {
 			mSavedFindAction = ate.getAction(ITextEditorActionConstants.FIND);
 			IAction findAction = new FindAction();
-			findAction
-					.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_FIND_AND_REPLACE);
+			findAction.setActionDefinitionId(IWorkbenchCommandConstants.EDIT_FIND_AND_REPLACE);
 			ate.setAction(ITextEditorActionConstants.FIND, findAction);
 		}
 
@@ -412,22 +402,24 @@ public class EventRecorder {
 			mScheduledTasks.add(runnable);
 		}
 	}
-	
-//	protected void maybeCreateDifficultyPredictionThread() {
-//		if (predictorThreadOption == PredictorThreadOption.SINGLE_THREAD && pendingPredictionCommands == null) {
-//			// create the difficulty prediction thread
-//			difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
-//			pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
-//			difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
-//			difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
-//			difficultyPredictionThread.setPriority(Math.min(
-//					Thread.currentThread().getPriority(),
-//					DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
-//			difficultyPredictionThread.start();
-//			PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
-//			}
-//	}
-	
+
+	// protected void maybeCreateDifficultyPredictionThread() {
+	// if (predictorThreadOption == PredictorThreadOption.SINGLE_THREAD &&
+	// pendingPredictionCommands == null) {
+	// // create the difficulty prediction thread
+	// difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
+	// pendingPredictionCommands =
+	// difficultyPredictionRunnable.getPendingCommands();
+	// difficultyPredictionThread = new Thread(difficultyPredictionRunnable);
+	// difficultyPredictionThread.setName(DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_NAME);
+	// difficultyPredictionThread.setPriority(Math.min(
+	// Thread.currentThread().getPriority(),
+	// DifficultyPredictionRunnable.DIFFICULTY_PREDICTION_THREAD_PRIORITY));
+	// difficultyPredictionThread.start();
+	// PluginThreadCreated.newCase(difficultyPredictionThread.getName(), this);
+	// }
+	// }
+
 	public void initCommands() {
 		setPlugInMode(false);
 		MacroRecordingStarted.newCase(this);
@@ -435,29 +427,29 @@ public class EventRecorder {
 		mNormalCommands = new LinkedList<ICommand>();
 		mDocumentChangeCommands = new LinkedList<ICommand>();
 		mCurrentlyExecutingCommand = false;
-		System.out.println (" Recording started");
+		System.out.println(" Recording started");
 		mRecordCommands = true;
 		mStartTimestamp = Calendar.getInstance().getTime().getTime();
 		ADifficultyPredictionPluginEventProcessor.getInstance().commandProcessingStarted();
-		
+
 		// later commands
 		initializeLogger();
 
 		// Set the combine time threshold.
-//		IPreferenceStore prefStore = edu.cmu.scs.fluorite.plugin.Activator
-//				.getDefault().getPreferenceStore();
-//
-//		setCombineCommands(prefStore
-//				.getBoolean(Initializer.Pref_CombineCommands));
-//		setCombineTimeThreshold(prefStore
-//				.getInt(Initializer.Pref_CombineTimeThreshold));
+		// IPreferenceStore prefStore = edu.cmu.scs.fluorite.plugin.Activator
+		// .getDefault().getPreferenceStore();
+		//
+		// setCombineCommands(prefStore
+		// .getBoolean(Initializer.Pref_CombineCommands));
+		// setCombineTimeThreshold(prefStore
+		// .getInt(Initializer.Pref_CombineTimeThreshold));
 
 		mStarted = true;
 
 	}
-	
+
 	protected boolean plugInMode = false;
-	
+
 	public boolean isPlugInMode() {
 		return plugInMode;
 	}
@@ -469,19 +461,19 @@ public class EventRecorder {
 	public void start() {
 		initCommands();
 		setPlugInMode(true);
-//		FactoriesSelector.configureFactories();
-//		MacroRecordingStarted.newCase(this);
-//		EventLoggerConsole.getConsole().writeln("***Started macro recording",
-//				EventLoggerConsole.Type_RecordingCommand);
-//		mCommands = new LinkedList<ICommand>();
-//		mNormalCommands = new LinkedList<ICommand>();
-//		mDocumentChangeCommands = new LinkedList<ICommand>();
-//		mCurrentlyExecutingCommand = false;
-//		System.out.println (" Recording started");
-//		mRecordCommands = true;
-//		mStartTimestamp = Calendar.getInstance().getTime().getTime();
+		// FactoriesSelector.configureFactories();
+		// MacroRecordingStarted.newCase(this);
+		// EventLoggerConsole.getConsole().writeln("***Started macro recording",
+		// EventLoggerConsole.Type_RecordingCommand);
+		// mCommands = new LinkedList<ICommand>();
+		// mNormalCommands = new LinkedList<ICommand>();
+		// mDocumentChangeCommands = new LinkedList<ICommand>();
+		// mCurrentlyExecutingCommand = false;
+		// System.out.println (" Recording started");
+		// mRecordCommands = true;
+		// mStartTimestamp = Calendar.getInstance().getTime().getTime();
 		ADifficultyPredictionPluginEventProcessor.getInstance().commandProcessingStarted();
-//		maybeCreateDifficultyPredictionThread();
+		// maybeCreateDifficultyPredictionThread();
 
 		// have to create the tray icon on the UI thread
 		PlatformUI.getWorkbench().getDisplay().asyncExec(new Runnable() {
@@ -491,63 +483,51 @@ public class EventRecorder {
 			}
 		});
 
-		for (IWorkbenchWindow window : PlatformUI.getWorkbench()
-				.getWorkbenchWindows()) {
+		for (IWorkbenchWindow window : PlatformUI.getWorkbench().getWorkbenchWindows()) {
 			IPartService service = window.getPartService();
 			if (service != null) {
 				service.addPartListener(PartRecorder.getInstance());
 				PartListenerAdded.newCase(service, PartRecorder.getInstance(), this);
 
 				if (service.getActivePart() instanceof IEditorPart) {
-					PartRecorder.getInstance().partActivated(
-							service.getActivePart());
+					PartRecorder.getInstance().partActivated(service.getActivePart());
 				}
 			}
 		}
 
-		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell()
-				.addShellListener(ShellRecorder.getInstance());
+		PlatformUI.getWorkbench().getActiveWorkbenchWindow().getShell().addShellListener(ShellRecorder.getInstance());
 
-		DebugPlugin.getDefault().addDebugEventListener(
-				DebugEventSetRecorder.getInstance());
+		DebugPlugin.getDefault().addDebugEventListener(DebugEventSetRecorder.getInstance());
 
 		// listen for exceptions
-		ConsolePlugin.getDefault().getConsoleManager()
-				.addConsoleListener(ConsoleRecorder.getInstance());
+		ConsolePlugin.getDefault().getConsoleManager().addConsoleListener(ConsoleRecorder.getInstance());
 
 		// listen for adding breakpoints and removing breakpoints
-		DebugPlugin.getDefault().getBreakpointManager()
-				.addBreakpointListener(BreakPointRecorder.getInstance());
-		
-//		try {
-//			VariablesPlugin plugIn = VariablesPlugin.getDefault();
-//			IStringVariableManager manager = plugIn.getStringVariableManager();
-//			manager.addValueVariableListener(VariableValueRecorder.getInstance());
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-		
+		DebugPlugin.getDefault().getBreakpointManager().addBreakpointListener(BreakPointRecorder.getInstance());
 
-//		initializeLogger();
-//
-//		// Set the combine time threshold.
-		IPreferenceStore prefStore = edu.cmu.scs.fluorite.plugin.Activator
-				.getDefault().getPreferenceStore();
+		// try {
+		// VariablesPlugin plugIn = VariablesPlugin.getDefault();
+		// IStringVariableManager manager = plugIn.getStringVariableManager();
+		// manager.addValueVariableListener(VariableValueRecorder.getInstance());
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
 
-		setCombineCommands(prefStore
-				.getBoolean(Initializer.Pref_CombineCommands));
-		setCombineTimeThreshold(prefStore
-				.getInt(Initializer.Pref_CombineTimeThreshold));
+		// initializeLogger();
+		//
+		// // Set the combine time threshold.
+		IPreferenceStore prefStore = edu.cmu.scs.fluorite.plugin.Activator.getDefault().getPreferenceStore();
 
-//		mStarted = true;
+		setCombineCommands(prefStore.getBoolean(Initializer.Pref_CombineCommands));
+		setCombineTimeThreshold(prefStore.getInt(Initializer.Pref_CombineTimeThreshold));
+
+		// mStarted = true;
 
 		// Execute all the scheduled tasks.
 		for (Runnable runnable : mScheduledTasks) {
 			runnable.run();
 		}
-		
-	
-		
+
 	}
 
 	private final static String ICON_PATH = "icons/spy.png";
@@ -559,11 +539,9 @@ public class EventRecorder {
 		// check is for systems that don't support Tray
 		if (tray != null) {
 			try {
-				URL url = new URL(edu.cmu.scs.fluorite.plugin.Activator
-						.getDefault().getDescriptor().getInstallURL(),
+				URL url = new URL(edu.cmu.scs.fluorite.plugin.Activator.getDefault().getDescriptor().getInstallURL(),
 						ICON_PATH);
-				ImageDescriptor imageDescriptior = ImageDescriptor
-						.createFromURL(url);
+				ImageDescriptor imageDescriptior = ImageDescriptor.createFromURL(url);
 				Image image = imageDescriptior.createImage();
 				trayItem = new TrayItem(tray, SWT.NONE);
 				trayItem.setImage(image);
@@ -572,7 +550,7 @@ public class EventRecorder {
 			}
 		}
 	}
-	
+
 	public static TrayItem getTrayItem() {
 		return trayItem;
 	}
@@ -599,8 +577,7 @@ public class EventRecorder {
 				if (window != null) {
 					IPartService partService = window.getPartService();
 					if (partService != null) {
-						partService.removePartListener(PartRecorder
-								.getInstance());
+						partService.removePartListener(PartRecorder.getInstance());
 					}
 				}
 			}
@@ -608,16 +585,16 @@ public class EventRecorder {
 			e.printStackTrace();
 		}
 
-//		try {
-//			DebugPlugin.getDefault().removeDebugEventListener(
-//					DebugEventSetRecorder.getInstance());
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-		
+		// try {
+		// DebugPlugin.getDefault().removeDebugEventListener(
+		// DebugEventSetRecorder.getInstance());
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+
 		try {
-			VariablesPlugin.getDefault().getStringVariableManager().removeValueVariableListener(
-					VariableValueRecorder.getInstance());
+			VariablesPlugin.getDefault().getStringVariableManager()
+					.removeValueVariableListener(VariableValueRecorder.getInstance());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -626,7 +603,7 @@ public class EventRecorder {
 		getTimer().cancel();
 		getTimer().purge();
 		ADifficultyPredictionPluginEventProcessor.getInstance().commandProcessingStopped();
-//		pendingPredictionCommands.add(new AnEndOfQueueCommand());
+		// pendingPredictionCommands.add(new AnEndOfQueueCommand());
 	}
 
 	private void initializeLogger() {
@@ -635,9 +612,7 @@ public class EventRecorder {
 		File outputFile = null;
 		try {
 			File logLocation = getLogLocation();
-			outputFile = new File(logLocation,
-					EventRecorder.getUniqueMacroNameByTimestamp(
-							getStartTimestamp(), false));
+			outputFile = new File(logLocation, EventRecorder.getUniqueMacroNameByTimestamp(getStartTimestamp(), false));
 			LogFileCreated.newCase(outputFile.getName(), this);
 
 			FileHandler handler = new FileHandler(outputFile.getPath());
@@ -656,20 +631,19 @@ public class EventRecorder {
 	}
 
 	public Events getRecordedEvents(List<ICommand> commands) {
-		return new Events(commands, "", Long.toString(getStartTimestamp()), "",
-				getStartTimestamp());
+		return new Events(commands, "", Long.toString(getStartTimestamp()), "", getStartTimestamp());
 	}
 
 	private File getLogLocation() throws Exception {
 		try {
-		File logLocation = edu.cmu.scs.fluorite.plugin.Activator.getDefault()
-				.getStateLocation().append("Logs").toFile();
-		if (!logLocation.exists()) {
-			if (!logLocation.mkdirs()) {
-				throw new Exception("Could not make log directory!");
+			File logLocation = edu.cmu.scs.fluorite.plugin.Activator.getDefault().getStateLocation().append("Logs")
+					.toFile();
+			if (!logLocation.exists()) {
+				if (!logLocation.mkdirs()) {
+					throw new Exception("Could not make log directory!");
+				}
 			}
-		}
-		return logLocation;
+			return logLocation;
 		} catch (Exception e) {
 			return new File("Logs");
 		}
@@ -705,7 +679,7 @@ public class EventRecorder {
 			FindCommand findCommand = new FindCommand(selectionText);
 			findCommand.setSearchForward(mIncrementalFindForward);
 			recordCommand(findCommand);
-//			System.out.println("Incremental find string: " + selectionText);
+			// System.out.println("Incremental find string: " + selectionText);
 		}
 	}
 
@@ -737,105 +711,113 @@ public class EventRecorder {
 	public void resumeRecording() {
 		mRecordCommands = true;
 	}
-	
+
 	boolean isPredictionRelatedCommand(final ICommand newCommand) {
-		return newCommand instanceof PredictionCommand ||
-				newCommand instanceof DifficulyStatusCommand;
+		return newCommand instanceof PredictionCommand || newCommand instanceof DifficulyStatusCommand;
 	}
 
 	public void recordCommand(final ICommand newCommand) {
 		System.out.println("Recording command:" + newCommand);
-		
+
 		if (!mRecordCommands) {
 			System.out.println("Ignoring command:" + newCommand);
 
 			return;
 		}
-
+		// long values cannot be null, but they are initialized by default to 0L
+//		if (newCommand.getTimestamp() == 0L) {
+//			long timestamp = Calendar.getInstance().getTime().getTime();
+//			timestamp -= mStartTimestamp;
+//			NewMacroCommand.newCase(newCommand.getName(), timestamp, this);
+//			newCommand.setTimestamp(timestamp);
+//			newCommand.setTimestamp2(timestamp);
+//		} else {
+//				NewMacroCommand.newCase(newCommand.getName(), newCommand.getTimestamp(), this);
+//				newCommand.setTimestamp(newCommand.getTimestamp() - mStartTimestamp);
+//				newCommand.setTimestamp2(newCommand.getTimestamp() - mStartTimestamp);
+//		}
 		long timestamp = Calendar.getInstance().getTime().getTime();
 		timestamp -= mStartTimestamp;
 		NewMacroCommand.newCase(newCommand.getName(), timestamp, this);
-//		EventLoggerConsole.getConsole().writeln(
-//				"*Command added to macro: " + newCommand.getName()
-//						+ "\ttimestamp: " + timestamp,
-//				EventLoggerConsole.Type_RecordingCommand);
 		newCommand.setTimestamp(timestamp);
 		newCommand.setTimestamp2(timestamp);
+		// NewMacroCommand.newCase(newCommand.getName(),
+		// newCommand.getTimestamp(), this);
+		// newCommand.setTimestamp(newCommand.getTimestamp() - mStartTimestamp);
+		// newCommand.setTimestamp2(newCommand.getTimestamp() -
+		// mStartTimestamp);
+		// EventLoggerConsole.getConsole().writeln(
+		// "*Command added to macro: " + newCommand.getName()
+		// + "\ttimestamp: " + timestamp,
+		// EventLoggerConsole.Type_RecordingCommand);
 
 		final boolean isDocChange = (newCommand instanceof BaseDocumentChangeEvent);
-		final LinkedList<ICommand> commands = isDocChange ? mDocumentChangeCommands
-				: mNormalCommands;
-		System.out.println( " isDocChange" + isDocChange + " commandslist:" + commands);
-
+		final LinkedList<ICommand> commands = isDocChange ? mDocumentChangeCommands : mNormalCommands;
+		System.out.println(" isDocChange" + isDocChange + " commandslist:" + commands);
 
 		boolean combined = false;
-		final ICommand lastCommand = commands.size() > 0 ? commands
-				.get(commands.size() - 1) : null;
+		final ICommand lastCommand = commands.size() > 0 ? commands.get(commands.size() - 1) : null;
 
 		// See if combining with previous command is possible .
 		if (!isPredictionRelatedCommand(newCommand) && lastCommand != null
 				&& isCombineEnabled(newCommand, lastCommand, isDocChange)) {
 			combined = lastCommand.combineWith(newCommand);
 		}
-		System.out.println ("Combining command:" + combined + " newCommand" + newCommand + " lastCommand " + lastCommand);
+		System.out
+				.println("Combining command:" + combined + " newCommand" + newCommand + " lastCommand " + lastCommand);
 		// If combining is failed, just add it.
 		if (!combined) {
-			System.out.println ("Adding command:" + newCommand + " to both commands and mCommands");
+			System.out.println("Adding command:" + newCommand + " to both commands and mCommands");
 			commands.add(newCommand);
 			mCommands.add(newCommand);
 
-			if (newCommand instanceof BaseDocumentChangeEvent
-					&& !(newCommand instanceof FileOpenCommand)) {
+			if (newCommand instanceof BaseDocumentChangeEvent && !(newCommand instanceof FileOpenCommand)) {
 				fireDocumentChangedEvent((BaseDocumentChangeEvent) newCommand);
 
-				if (lastCommand instanceof BaseDocumentChangeEvent
-						&& lastCommand != mLastFiredDocumentChange) {
+				if (lastCommand instanceof BaseDocumentChangeEvent && lastCommand != mLastFiredDocumentChange) {
 					fireDocumentChangeFinalizedEvent((BaseDocumentChangeEvent) lastCommand);
 				}
 			}
-			
+
 		}
 
-
-		if (mCommands.getFirst() != commands.getFirst() ) {
+		if (mCommands.getFirst() != commands.getFirst()) {
 			System.err.println("Commands and mcommands have diverged");
 		}
-		
-		
-		
-		
-		// moving to where the command i logged so that one can get the combined event
-//		ADifficultyPredictionPluginEventProcessor.getInstance().newCommand(newCommand);
+
+		// moving to where the command i logged so that one can get the combined
+		// event
+		// ADifficultyPredictionPluginEventProcessor.getInstance().newCommand(newCommand);
 		MacroCommandsLogBegin.newCase(commands, this);
 		// Log to the file.
-		while (commands.size() > 1
-				&& commands.getFirst() == mCommands.getFirst()) {
+		while (commands.size() > 1 && commands.getFirst() == mCommands.getFirst()) {
 			final ICommand firstCmd = commands.getFirst();
 			LOGGER.log(Level.FINE, null, firstCmd);
-//			System.out.println ("LOGGING COMMAND:" + firstCmd + " THIS is what should be sent to prediction, not individual commands");
+			// System.out.println ("LOGGING COMMAND:" + firstCmd + " THIS is
+			// what should be sent to prediction, not individual commands");
 
 			// Remove the first item from the list
 			commands.removeFirst();
 			mCommands.removeFirst();
-			System.out.println ("Giving command to pluginevent processor" + firstCmd);
+			System.out.println("Giving command to pluginevent processor" + firstCmd);
 			ADifficultyPredictionPluginEventProcessor.getInstance().newCommand(firstCmd);
 
 		}
 		MacroCommandsLogEnd.newCase(commands, this);
 		RecordedCommandsCleared.newCase(commands, this);
-		
-		if (!isAsyncFireEvent()) return;
+
+		if (!isAsyncFireEvent())
+			return;
 		// perhaps this is screwing performance
 
 		// WHY do we need all of the stuff below
 		if (isPlugInMode()) {
-		StyledText styledText = Utilities.getStyledText(Utilities
-				.getActiveEditor());
-		if (styledText != null) {
-			this.mLastCaretOffset = styledText.getCaretOffset();
-			this.mLastSelectionStart = styledText.getSelection().x;
-			this.mLastSelectionEnd = styledText.getSelection().y;
-		}
+			StyledText styledText = Utilities.getStyledText(Utilities.getActiveEditor());
+			if (styledText != null) {
+				this.mLastCaretOffset = styledText.getCaretOffset();
+				this.mLastSelectionStart = styledText.getSelection().x;
+				this.mLastSelectionEnd = styledText.getSelection().y;
+			}
 		}
 
 		// Deal with timer.
@@ -848,17 +830,16 @@ public class EventRecorder {
 
 			mDocChangeTimerTask = new TimerTask() {
 				public void run() {
-//					System.out.println("NEW THREAD! THIS MAY BE THE ISSUE WITH PERFOMANCE");
+					// System.out.println("NEW THREAD! THIS MAY BE THE ISSUE
+					// WITH PERFOMANCE");
 					mDocChangeCombinable = false;
-//					System.out.println("COMBINABLE: FALSE");
+					// System.out.println("COMBINABLE: FALSE");
 
 					try {
 
-						final ICommand lastCommand = (mDocumentChangeCommands
-								.size() > 0) ? mDocumentChangeCommands
-								.get(mDocumentChangeCommands.size() - 1) : null;
-						if (lastCommand != null
-								&& lastCommand != mLastFiredDocumentChange) {
+						final ICommand lastCommand = (mDocumentChangeCommands.size() > 0)
+								? mDocumentChangeCommands.get(mDocumentChangeCommands.size() - 1) : null;
+						if (lastCommand != null && lastCommand != mLastFiredDocumentChange) {
 							Display.getDefault().asyncExec(new Runnable() {
 								public void run() {
 									fireDocumentChangeFinalizedEvent((BaseDocumentChangeEvent) lastCommand);
@@ -871,10 +852,9 @@ public class EventRecorder {
 					}
 				}
 			};
-			getTimer().schedule(mDocChangeTimerTask,
-					(long) getCombineTimeThreshold());
+			getTimer().schedule(mDocChangeTimerTask, (long) getCombineTimeThreshold());
 			mDocChangeCombinable = true;
-//			System.out.println(" EVENT Recorder Combinable ");
+			// System.out.println(" EVENT Recorder Combinable ");
 		} else {
 			if (mNormalTimerTask != null) {
 				mNormalTimerTask.cancel();
@@ -885,68 +865,62 @@ public class EventRecorder {
 					mNormalCommandCombinable = false;
 				}
 			};
-			getTimer().schedule(mNormalTimerTask,
-					(long) getCombineTimeThreshold());
+			getTimer().schedule(mNormalTimerTask, (long) getCombineTimeThreshold());
 			mNormalCommandCombinable = true;
 		}
 	}
 
-//	public void changeStatusInHelpView(PredictionCommand predictionCommand) {
-//		String status = "";
-//		switch (predictionCommand.getPredictionType()) {
-//		case MakingProgress:
-//			status = StatusConsts.MAKING_PROGRESS_STATUS;
-//			break;
-//		case HavingDifficulty:
-//			status = StatusConsts.SLOW_PROGRESS_STATUS;
-//			break;
-//		case Indeterminate:
-//			status = StatusConsts.INDETERMINATE;
-//			break;
-//		}
-//
-//		showStatusInBallonTip(status);
-//		HelpViewPart.displayStatusInformation(status);
-//	}
+	// public void changeStatusInHelpView(PredictionCommand predictionCommand) {
+	// String status = "";
+	// switch (predictionCommand.getPredictionType()) {
+	// case MakingProgress:
+	// status = StatusConsts.MAKING_PROGRESS_STATUS;
+	// break;
+	// case HavingDifficulty:
+	// status = StatusConsts.SLOW_PROGRESS_STATUS;
+	// break;
+	// case Indeterminate:
+	// status = StatusConsts.INDETERMINATE;
+	// break;
+	// }
+	//
+	// showStatusInBallonTip(status);
+	// HelpViewPart.displayStatusInformation(status);
+	// }
 
-//	private void showStatusInBallonTip(String status) {
-//		if (balloonTip == null) {
-//			balloonTip = new ToolTip(PlatformUI.getWorkbench()
-//					.getActiveWorkbenchWindow().getShell(), SWT.BALLOON
-//					| SWT.ICON_INFORMATION);
-//
-//		}
-//
-//		if (!balloonTip.isDisposed()) {
-//			balloonTip.setMessage("Status: " + status);
-//			balloonTip.setText("Status Change Notification");
-//			trayItem.setToolTip(balloonTip);
-//			balloonTip.setVisible(true);
-//		}
-//
-//	}
+	// private void showStatusInBallonTip(String status) {
+	// if (balloonTip == null) {
+	// balloonTip = new ToolTip(PlatformUI.getWorkbench()
+	// .getActiveWorkbenchWindow().getShell(), SWT.BALLOON
+	// | SWT.ICON_INFORMATION);
+	//
+	// }
+	//
+	// if (!balloonTip.isDisposed()) {
+	// balloonTip.setMessage("Status: " + status);
+	// balloonTip.setText("Status Change Notification");
+	// trayItem.setToolTip(balloonTip);
+	// balloonTip.setVisible(true);
+	// }
+	//
+	// }
 
-	private boolean isCombineEnabled(ICommand newCommand, ICommand lastCommand,
-			boolean isDocChange) {
-		return getCombineCommands()
-				&& (isDocChange ? mDocChangeCombinable
-						: mNormalCommandCombinable);
+	private boolean isCombineEnabled(ICommand newCommand, ICommand lastCommand, boolean isDocChange) {
+		return getCombineCommands() && (isDocChange ? mDocChangeCombinable : mNormalCommandCombinable);
 	}
 
 	public long getStartTimestamp() {
 		return mStartTimestamp;
 	}
+
 	// in replay mode
 	public void setStartTimeStamp(long newVal) {
 		mStartTimestamp = newVal;
 	}
 
-	public static String getUniqueMacroNameByTimestamp(long timestamp,
-			boolean autosave) {
-		SimpleDateFormat format = new SimpleDateFormat(
-				"yyyy-MM-dd-HH-mm-ss-SSS");
-		return "Log" + format.format(new Date(timestamp))
-				+ (autosave ? "-Autosave" : "") + ".xml";
+	public static String getUniqueMacroNameByTimestamp(long timestamp, boolean autosave) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss-SSS");
+		return "Log" + format.format(new Date(timestamp)) + (autosave ? "-Autosave" : "") + ".xml";
 	}
 
 	public static Document createDocument(Events events) {
@@ -1000,6 +974,7 @@ public class EventRecorder {
 		Document doc = createDocument(macro);
 		return outputXML(doc);
 	}
+
 	public static boolean isAsyncFireEvent() {
 		return asyncFireEvent;
 	}
