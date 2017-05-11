@@ -15,7 +15,7 @@ import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Text;
 
-import context.saros.SarosAccessorFactory;
+//import context.saros.SarosAccessorFactory;
 import dayton.ServerConnection;
 
 public class InsurmountableDialog extends

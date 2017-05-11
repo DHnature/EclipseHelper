@@ -8,7 +8,7 @@ import org.eclipse.ui.IEditorPart;
 import org.eclipse.ui.IPartListener;
 import org.eclipse.ui.IWorkbenchPart;
 
-import context.saros.SarosAccessorFactory;
+//import context.saros.SarosAccessorFactory;
 //import de.fu_berlin.inf.dpp.ui.views.SarosView;
 import trace.workbench.PartActivated;
 import trace.workbench.PartOpened;

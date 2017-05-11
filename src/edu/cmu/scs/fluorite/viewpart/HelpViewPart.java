@@ -14,7 +14,7 @@ import org.eclipse.swt.widgets.Shell;
 import org.eclipse.ui.part.ViewPart;
 
 import config.LiveModePredictionConfigurer;
-import context.saros.SarosAccessorFactory;
+//import context.saros.SarosAccessorFactory;
 import analyzer.ui.APredictionController;
 import bus.uigen.ObjectEditor;
 import trace.view.help.HelpViewCreated;
@@ -136,7 +136,7 @@ public class HelpViewPart extends ViewPart {
 //		HelpViewCreated.newCase(parent, this);
 		btnExportWorkspace.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				SarosAccessorFactory.getSingleton().resetIncomingHandler();
+//				SarosAccessorFactory.getSingleton().resetIncomingHandler();
 
 //				APredictionController.createUI();
 //				LiveModePredictionConfigurer.visualizePrediction();
@@ -152,7 +152,7 @@ public class HelpViewPart extends ViewPart {
 //		HelpViewCreated.newCase(parent, this);
 		btnGetWorkspace.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
-				SarosAccessorFactory.getSingleton().shareFixedProjectWithFixedUser();
+//				SarosAccessorFactory.getSingleton().shareFixedProjectWithFixedUser();
 
 //				APredictionController.createUI();
 //				LiveModePredictionConfigurer.visualizePrediction();
