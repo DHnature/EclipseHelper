@@ -21,5 +21,6 @@
 	<classpathentry kind="lib" path="lib/smackx-3.4.1-0cec571.jar"/>
 	<classpathentry kind="lib" path="lib/smackx-debug-3.4.1-0cec571.jar"/>
 	<classpathentry kind="lib" path="lib/commons-lang-2.6.jar"/>
+	<classpathentry kind="lib" path="D:/dewan_backup/Java/lib/swt.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

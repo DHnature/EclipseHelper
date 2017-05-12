@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Eclipse Helper
-Bundle-SymbolicName: edu.cmu.scs.fluorite;singleton:=true
+Bundle-SymbolicName: cs.unc.EclipseHelper;singleton:=true
 Bundle-Version: 0.5.3.qualifier
 Bundle-Activator: edu.cmu.scs.fluorite.plugin.Activator
 Require-Bundle: org.eclipse.ui,
