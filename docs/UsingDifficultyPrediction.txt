@@ -1,3 +1,7 @@
+Plugin logs are in:D:\dewan_backup\Java\eclipse\runtime-EclipseHelper2\.metadata\.plugins\edu.cmu.scs.fluorite\Logs
+workspace/euntime-configuration/.metadata/plugin-name/Logs
+
+
 Here is a quick doc on how to use the dfiiculty prediction modules of EclipseHelper without the rest of the code.
 
 To understand this properly, you should look at the Carter and Dewan group paper on the architecture of prediction softwrae.
@@ -8,9 +12,11 @@ The mediator interface is implemented by the class DifficultyRobot, which is the
 
 If you run the ANAnaylizer main, and put breakpoints on each method in this class, you see the algorithm in action.
 
-AnAnalyzer  has a UI that allows replay of logs of previous participants. When the window comes up, execute loadlogs, which whould populate the pariticpants combobox menu. Select one of the pariticpants (say 16) and then execute replay.
+AnAnalyzer  has a UI that allows replay of logs of previous participants. 
+When the window comes up, execute loadlogs, which whould populate the pariticpants combobox menu. 
+Select one of the pariticpants (say 16) and then execute replay.
  
-We do not want the predictions to refer to the plugin windows, so youy need to execute:
+We do not want the predictions to refer to the plugin windows, so you need to execute:
 		DifficultyPredictionSettings.setReplayMode(true);
 to indicate that the plugin is not involved.
 
@@ -33,7 +39,10 @@ This is all setup. The main task is to feed commands to the prediction module an
 
 To feed commands, you need the following object:
 	DifficultyPredictionPluginEventProcessor.getInstance();
-Once you have this object, you need some more setup perhaps (I am not sure if you do not do this, the defaullt is ADIsjointChunksAnalyzer, Kevin seems to have implemented this one, Jason the default one. You may try your code with and without this code):
+Once you have this object, you need some more setup perhaps 
+(I am not sure if you do not do this, the defaullt is ADIsjointChunksAnalyzer,
+ Kevin seems to have implemented this one, Jason the default one. 
+ You may try your code with and without this code):
         Mediator mediator = difficultyEventProcessor.getDifficultyPredictionRunnable().getMediator();
 		EventAggregator eventAggregator = mediator.getEventAggregator();
 		eventAggregator.setEventAggregationStrategy(new DiscreteChunksAnalyzer("" + PredictionParametersSetterSelector.getSingleton().getSegmentLength()));
