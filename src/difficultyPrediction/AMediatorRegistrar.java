@@ -31,13 +31,15 @@ import difficultyPrediction.statusManager.StatusAggregationDiscreteChunks;
 import difficultyPrediction.statusManager.StatusListener;
 import difficultyPrediction.statusManager.StatusManager;
 import difficultyPrediction.statusManager.StatusManagerDetails;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
-import edu.cmu.scs.fluorite.model.EventRecorder;
 
 
 
+
+import fluorite.commands.EHICommand;
+import fluorite.commands.PredictionCommand;
+import fluorite.commands.PredictionCommand.PredictionType;
+
+import fluorite.model.EHEventRecorder;
 
 //import main.Server;
 import java.util.ArrayList;
@@ -378,7 +380,7 @@ public class AMediatorRegistrar implements MediatorRegistrar {
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#notifyRecordCommand(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public synchronized void notifyNewCommand(ICommand aCommand) {
+	public synchronized void notifyNewCommand(EHICommand aCommand) {
 		for (PluginEventListener aListener:listeners) {
 			// let us not block the prediction runnable on vagaries of the listeners
 //			GlobalRunnableExecutor.getSingleton().asyncExecute(

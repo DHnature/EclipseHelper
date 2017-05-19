@@ -26,10 +26,10 @@ import difficultyPrediction.DifficultyRobot;
 import difficultyPrediction.extension.APrintingDifficultyPredictionListener;
 import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeatures;
-import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand;
-import edu.cmu.scs.fluorite.model.EventRecorder;
+import fluorite.commands.DifficulyStatusCommand;
+import fluorite.commands.EHICommand;
+import fluorite.commands.PredictionCommand;
+import fluorite.model.EHEventRecorder;
 
 public class CopyOfAnAnalyzerProcessor extends APrintingDifficultyPredictionListener implements AnalyzerProcessor{
 	static Analyzer analyzer;
@@ -294,23 +294,23 @@ public class CopyOfAnAnalyzerProcessor extends APrintingDifficultyPredictionList
 		}
 		return -1;
 	}
-	void maybeInitializeTimeStamp(ICommand newCommand) {
+	void maybeInitializeTimeStamp(EHICommand newCommand) {
 		if (newCommand.getTimestamp() == 0 && newCommand.getTimestamp2() != 0) {
 			newStartTimeStamp(newCommand.getTimestamp2() );
 		}
 	}
-	void maybeProcessPrediction(ICommand newCommand) {
+	void maybeProcessPrediction(EHICommand newCommand) {
 		if (newCommand instanceof PredictionCommand) {
 			lastPrediction = toInt((PredictionCommand) newCommand);
 		}
 	}
-	void maybeProcessCorrection(ICommand newCommand) {
+	void maybeProcessCorrection(EHICommand newCommand) {
 		if (newCommand instanceof DifficulyStatusCommand) {
 			lastCorrection = toInt((DifficulyStatusCommand) newCommand);
 		}
 	}
 	@Override
-	public void newCommand(ICommand newCommand) {
+	public void newCommand(EHICommand newCommand) {
 		maybeInitializeTimeStamp(newCommand);
 		maybeProcessPrediction(newCommand);
 		maybeProcessCorrection(newCommand);
@@ -363,7 +363,7 @@ public class CopyOfAnAnalyzerProcessor extends APrintingDifficultyPredictionList
 	}
 	public void startTimeStamp(long aStartTimeStamp) {
 		System.out.println("start time stamp:" + aStartTimeStamp);	
-		EventRecorder.getInstance().setStartTimeStamp(aStartTimeStamp);
+		EHEventRecorder.getInstance().setStartTimeStamp(aStartTimeStamp);
 
 		//		currentTime = aStartTimeStamp;
 		//		RatioFeatures aRatioFetaures = new ARatioFeatures();
@@ -372,7 +372,7 @@ public class CopyOfAnAnalyzerProcessor extends APrintingDifficultyPredictionList
 	}
 	// this seems to be called in addition to the previous pne
 	void newStartTimeStamp(long aStartTimeStamp) {
-		EventRecorder.getInstance().setStartTimeStamp(aStartTimeStamp);
+		EHEventRecorder.getInstance().setStartTimeStamp(aStartTimeStamp);
 		//		System.out.println("Extension**Difficulty Prediction Started");	
 		startTime = aStartTimeStamp;
 		//System.out.println("New time stamp: " + startTime );

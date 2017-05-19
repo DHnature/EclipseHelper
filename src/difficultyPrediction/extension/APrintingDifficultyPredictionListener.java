@@ -2,12 +2,12 @@ package difficultyPrediction.extension;
 
 import difficultyPrediction.DifficultyPredictionEventListener;
 import difficultyPrediction.featureExtraction.RatioFeatures;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public class APrintingDifficultyPredictionListener implements DifficultyPredictionEventListener{
 
 	@Override
-	public void newCommand(ICommand newCommand) {
+	public void newCommand(EHICommand newCommand) {
 		System.out.println("Extension**New User/Prediction Command:" + newCommand);		
 	}
 	@Override

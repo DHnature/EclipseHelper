@@ -1,8 +1,8 @@
 package difficultyPrediction.eventAggregation;
 
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 
 public interface EventAggregationStrategy {
-	public void performAggregation(ICommand event, EventAggregator eventAggregator);
+	public void performAggregation(EHICommand event, EventAggregator eventAggregator);
 }

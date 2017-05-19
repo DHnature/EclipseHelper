@@ -2,7 +2,7 @@ package difficultyPrediction.eventAggregation;
 
 import java.util.List;
 
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public interface EventAggregator {
 	public long getStartTimestamp();
@@ -14,6 +14,6 @@ public interface EventAggregator {
 	
 	public EventAggregationStrategy getEventAggregationStrategy() ;
 	
-	public void onEventsHandOff(List<ICommand> genericActions) ;
+	public void onEventsHandOff(List<EHICommand> genericActions) ;
 
 }

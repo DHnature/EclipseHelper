@@ -11,24 +11,24 @@ import analyzer.extension.AnAnalyzerProcessor;
 import trace.difficultyPrediction.CommandIgnoredBecauseQueueFull;
 import config.PredictorConfigurer;
 import dayton.ServerConnection;
-import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand;
-import edu.cmu.scs.fluorite.model.EventRecorder;
-import edu.cmu.scs.fluorite.model.StatusConsts;
-import edu.cmu.scs.fluorite.viewpart.HelpViewPart;
+import fluorite.commands.DifficulyStatusCommand;
+import fluorite.commands.EHICommand;
+import fluorite.commands.PredictionCommand;
+import fluorite.model.EHEventRecorder;
+import fluorite.model.StatusConsts;
+import fluorite.viewpart.HelpViewPart;
 
 public class ADifficultyPredictionRunnable implements
 		DifficultyPredictionRunnable {
 	public static final int NUM_PENDING_SEGMENTS = 4;
 	public static final int NUM_PENDING_COMMANDS = 40096;
 	// NUM_PENDING_SEGMENTS*ADisjointDiscreteChunks.DEFAULT_IGNORE_NUM;
-	BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue(
+	BlockingQueue<EHICommand> pendingCommands = new LinkedBlockingQueue(
 			NUM_PENDING_COMMANDS);
 	// BlockingQueue<ICommand> pendingCommands = new LinkedBlockingQueue();
 
 	protected Mediator mediator = null;
-	ICommand newCommand;
+	EHICommand newCommand;
 //	protected ToolTip ballonTip;
 	// protected TrayItem trayItem;
 	static DifficultyPredictionRunnable instance;
@@ -295,7 +295,7 @@ public class ADifficultyPredictionRunnable implements
 	boolean full;
 
 	@Override
-	public void add(ICommand newCommand) {
+	public void add(EHICommand newCommand) {
 		try {
 			if (!(newCommand instanceof AnEndOfQueueCommand)
 					&& pendingCommands.size() > NUM_PENDING_COMMANDS - 2) {

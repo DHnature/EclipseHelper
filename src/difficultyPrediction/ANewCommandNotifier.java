@@ -1,11 +1,11 @@
 package difficultyPrediction;
 
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public class ANewCommandNotifier  implements Runnable{
 	PluginEventListener listener;
-	ICommand command;
-	public ANewCommandNotifier(PluginEventListener aListener, ICommand aCommand) {		
+	EHICommand command;
+	public ANewCommandNotifier(PluginEventListener aListener, EHICommand aCommand) {		
 			listener = aListener;
 			command = aCommand;		
 	}

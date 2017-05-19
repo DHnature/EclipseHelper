@@ -1,9 +1,9 @@
 package difficultyPrediction;
 
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public interface PluginEventListener {
-	void newCommand(final ICommand newCommand);
+	void newCommand(final EHICommand newCommand);
 	void commandProcessingStarted();
 	void commandProcessingStopped();
 

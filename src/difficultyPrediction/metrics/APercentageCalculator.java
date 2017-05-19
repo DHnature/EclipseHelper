@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import difficultyPrediction.featureExtraction.RatioFeatures;
-import edu.cmu.scs.fluorite.commands.CompilationCommand;
-import edu.cmu.scs.fluorite.commands.EclipseCommand;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHCompilationCommand;
+import fluorite.commands.EHEclipseCommand;
+import fluorite.commands.EHICommand;
 
 
 public class APercentageCalculator implements RatioCalculator {
@@ -21,7 +21,7 @@ public class APercentageCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isDebugEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public boolean isDebugEvent(ICommand event) {
+	public boolean isDebugEvent(EHICommand event) {
 		boolean isDebugEvent = false;
 		if ((event.getCommandType().equals("BreakPointCommand"))
 				|| (event.getCommandType().equals("ExceptionCommand"))
@@ -31,7 +31,7 @@ public class APercentageCalculator implements RatioCalculator {
 		
 		if(event.getCommandType().equals("CompilationCommand"))
 		{
-			CompilationCommand command = (CompilationCommand)event;
+			EHCompilationCommand command = (EHCompilationCommand)event;
 			//if the compilation is an error
 			if(! command.getIsWarning())
 			{
@@ -54,7 +54,7 @@ public class APercentageCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isEditEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public boolean isInsertOrEditEvent(ICommand event) {
+	public boolean isInsertOrEditEvent(EHICommand event) {
 		boolean isEditEvent = false;
 		if ((event.getCommandType().equals("CopyCommand"))
 				|| (event.getCommandType().equals("CutCommand"))
@@ -72,7 +72,7 @@ public class APercentageCalculator implements RatioCalculator {
 		}
 
 		if (event.getCommandType().equals("EclipseCommand")) {
-			EclipseCommand eclipseCommand = (EclipseCommand) event;
+			EHEclipseCommand eclipseCommand = (EHEclipseCommand) event;
 			if (eclipseCommand.getCommandID().toLowerCase().contains("edit")) {
 				isEditEvent = true;
 			}
@@ -96,10 +96,10 @@ public class APercentageCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isNavigationEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public boolean isNavigationEvent(ICommand event) {
+	public boolean isNavigationEvent(EHICommand event) {
 		boolean isNavigationEvent = false;
 		if (event.getCommandType().equals("EclipseCommand")) {
-			EclipseCommand eclipseCommand = (EclipseCommand) event;
+			EHEclipseCommand eclipseCommand = (EHEclipseCommand) event;
 			if (eclipseCommand.getCommandID().toLowerCase().contains("view")) {
 				isNavigationEvent = true;
 			}
@@ -144,7 +144,7 @@ public class APercentageCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isFocusEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public boolean isFocusEvent(ICommand event) {
+	public boolean isFocusEvent(EHICommand event) {
 		boolean isFocusEvent = false;
 
 		if (event.getCommandType().equals("ShellCommand")) {
@@ -165,7 +165,7 @@ public class APercentageCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isAddRemoveEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public boolean isAddRemoveEvent(ICommand event) {
+	public boolean isAddRemoveEvent(EHICommand event) {
 		boolean isAddRemoveEvent = false;
 		// only had code for visual studio events here
 		return isAddRemoveEvent;
@@ -262,7 +262,7 @@ public class APercentageCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#computeMetrics(java.util.List)
 	 */
 	@Override
-	public ArrayList<Double> computeMetrics(List<ICommand> userActions) {
+	public ArrayList<Double> computeMetrics(List<EHICommand> userActions) {
 		ArrayList<Integer> metrics = getPercentageData(userActions);
 		double debugPercentage = computeDebugPercentage(metrics);
 		double editPercentage = computeEditPercentage(metrics);
@@ -285,7 +285,7 @@ public class APercentageCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#getPercentageData(java.util.List)
 	 */
 	@Override
-	public  ArrayList<Integer> getPercentageData(List<ICommand> userActions) {
+	public  ArrayList<Integer> getPercentageData(List<EHICommand> userActions) {
 		int numberOfDebugEvents = 0;
 		int numberOfSearchEvents = 0;
 		int numberOfEditEvents = 0;
@@ -293,7 +293,7 @@ public class APercentageCalculator implements RatioCalculator {
 		int numberOfRemoveEvents = 0;
 
 		for (int i = 0; i < userActions.size(); i++) {
-			ICommand myEvent = userActions.get(i);
+			EHICommand myEvent = userActions.get(i);
 
 			if (isInsertOrEditEvent(myEvent)) {
 				numberOfEditEvents++;
@@ -332,7 +332,7 @@ public class APercentageCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#getFeatureName(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public  String getFeatureName(ICommand myEvent) {
+	public  String getFeatureName(EHICommand myEvent) {
 		
 			if (isInsertOrEditEvent(myEvent)) {
 				return "Edit";
@@ -362,13 +362,13 @@ public class APercentageCalculator implements RatioCalculator {
 //	}
 
 	@Override
-	public RatioFeatures computeRatioFeatures(List<ICommand> userActions) {
+	public RatioFeatures computeRatioFeatures(List<EHICommand> userActions) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public RatioFeatures computeFeatures(List<ICommand> userActions) {
+	public RatioFeatures computeFeatures(List<EHICommand> userActions) {
 		// TODO Auto-generated method stub
 		return null;
 	}

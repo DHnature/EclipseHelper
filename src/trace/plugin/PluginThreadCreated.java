@@ -2,7 +2,7 @@ package trace.plugin;
 
 import util.trace.Tracer;
 import util.trace.session.ThreadCreated;
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import fluorite.util.EventLoggerConsole;
 
 public class PluginThreadCreated extends ThreadCreated{
 //	String threadName;

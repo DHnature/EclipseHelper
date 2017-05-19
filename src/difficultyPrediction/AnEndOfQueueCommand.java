@@ -7,9 +7,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 
-public class AnEndOfQueueCommand implements ICommand {
+public class AnEndOfQueueCommand implements EHICommand {
 	public AnEndOfQueueCommand() {
 		
 	}
@@ -146,16 +147,40 @@ public class AnEndOfQueueCommand implements ICommand {
 		return 0;
 	}
 
-	@Override
-	public boolean combineWith(ICommand anotherCommand) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+//	@Override
+//	public boolean combineWith(EHICommand anotherCommand) {
+//		// TODO Auto-generated method stub
+//		return false;
+//	}
 
 	@Override
 	public String getCommandTag() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean combineWith(ICommand arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public long getSessionId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setCommandIndex(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSessionId(long arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

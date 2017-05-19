@@ -4,7 +4,7 @@ import java.util.List;
 
 import analyzer.FeatureExtractorAnalyzer;
 import analyzer.TimeandEventBasedPercentage;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public class ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime implements
 		FeatureExtractionStrategy {
@@ -25,7 +25,7 @@ public class ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime implements
 	private static final int EXCEPTIONS_PER_RUNS_PERCENTAGE = 7;
 
 	@Override
-	public void performFeatureExtraction(List<ICommand> actions,
+	public void performFeatureExtraction(List<EHICommand> actions,
 			RatioBasedFeatureExtractor featureExtractor) {
 		
 //		List<Double> percentages = null;
@@ -38,7 +38,7 @@ public class ExtractRatiosBasedOnNumberOfEventsAndBasedOnTime implements
 
 	}
 
-	public void performFeatureExtraction(List<ICommand> actions,
+	public void performFeatureExtraction(List<EHICommand> actions,
 			FeatureExtractorAnalyzer featureExtractorAnalyzer) {
 //		List<Double> percentages = null;
 //		percentages = metrics.computeMetrics(actions);

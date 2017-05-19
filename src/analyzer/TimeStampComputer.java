@@ -1,9 +1,9 @@
 package analyzer;
 
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public interface TimeStampComputer {
-	public long computeTimestamp(ICommand aCommand);
+	public long computeTimestamp(EHICommand aCommand);
 
 	void reset();
 

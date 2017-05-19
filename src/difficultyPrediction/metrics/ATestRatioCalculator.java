@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import difficultyPrediction.APredictionParameters;
+import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import analyzer.TimeandEventBasedPercentage;
-import edu.cmu.scs.fluorite.commands.CompilationCommand;
-import edu.cmu.scs.fluorite.commands.EclipseCommand;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHCompilationCommand;
+import fluorite.commands.EHEclipseCommand;
+import fluorite.commands.EHICommand;
 
 
 public class ATestRatioCalculator implements RatioCalculator {
@@ -48,7 +49,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isDebugEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public boolean isDebugEvent(ICommand event) {
+	public boolean isDebugEvent(EHICommand event) {
 		boolean isDebugEvent = false;
 		if ((event.getCommandType().equals("BreakPointCommand"))
 				|| (event.getCommandType().equals("ExceptionCommand"))
@@ -58,7 +59,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 
 		if(event.getCommandType().equals("CompilationCommand"))
 		{
-			CompilationCommand command = (CompilationCommand)event;
+			EHCompilationCommand command = (EHCompilationCommand)event;
 			//if the compilation is an error
 			if(! command.getIsWarning())
 			{
@@ -80,7 +81,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isEditEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public boolean isInsertOrEditEvent(ICommand event) {
+	public boolean isInsertOrEditEvent(EHICommand event) {
 		boolean isEditEvent = false;
 		if ((event.getCommandType().equals("CopyCommand"))
 
@@ -100,7 +101,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 		}
 
 		if (event.getCommandType().equals("EclipseCommand")) {
-			EclipseCommand eclipseCommand = (EclipseCommand) event;
+			EHEclipseCommand eclipseCommand = (EHEclipseCommand) event;
 			if (eclipseCommand.getCommandID().toLowerCase().contains("edit")) {
 				isEditEvent = true;
 			}
@@ -124,10 +125,10 @@ public class ATestRatioCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isNavigationEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public boolean isNavigationEvent(ICommand event) {
+	public boolean isNavigationEvent(EHICommand event) {
 		boolean isNavigationEvent = false;
 		if (event.getCommandType().equals("EclipseCommand")) {
-			EclipseCommand eclipseCommand = (EclipseCommand) event;
+			EHEclipseCommand eclipseCommand = (EHEclipseCommand) event;
 			if (eclipseCommand.getCommandID().toLowerCase().contains("view")) {
 				isNavigationEvent = true;
 			}
@@ -172,7 +173,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isFocusEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public boolean isFocusEvent(ICommand event) {
+	public boolean isFocusEvent(EHICommand event) {
 		boolean isFocusEvent = false;
 
 		if (event.getCommandType().equals("ShellCommand")) {
@@ -193,7 +194,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#isAddRemoveEvent(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public boolean isAddRemoveEvent(ICommand event) {
+	public boolean isAddRemoveEvent(EHICommand event) {
 		boolean isAddRemoveEvent = false;
 
 		if (event.getCommandType().equals("Delete")
@@ -295,7 +296,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#computeMetrics(java.util.List)
 	 */
 	@Override
-	public ArrayList<Double> computeMetrics(List<ICommand> userActions) {
+	public ArrayList<Double> computeMetrics(List<EHICommand> userActions) {
 		ArrayList<Integer> metrics = getPercentageData(userActions);
 		double debugPercentage = computeDebugPercentage(metrics);
 		double editPercentage = computeEditPercentage(metrics);
@@ -319,7 +320,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#getPercentageData(java.util.List)
 	 */
 	@Override
-	public  ArrayList<Integer> getPercentageData(List<ICommand> userActions) {
+	public  ArrayList<Integer> getPercentageData(List<EHICommand> userActions) {
 		int numberOfDebugEvents = 0;
 		int numberOfSearchEvents = 0;
 		int numberOfEditOrInsertEvents = 0;
@@ -329,7 +330,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 
 		for (int i = 0; i < userActions.size(); i++) {
 			int foo = 1;
-			ICommand myEvent = userActions.get(i);
+			EHICommand myEvent = userActions.get(i);
 			CommandCategory aCommandCategory = AGenericRatioCalculator.toCommandCategory(myEvent);
 
 			switch(APredictionParameters.getInstance().getCommandClassificationScheme()) {
@@ -536,7 +537,7 @@ public class ATestRatioCalculator implements RatioCalculator {
 	 * @see difficultyPrediction.metrics.FeatureCalculator#getFeatureName(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public  String getFeatureName(ICommand myEvent) {
+	public  String getFeatureName(EHICommand myEvent) {
 
 		if (isInsertOrEditEvent(myEvent)) {
 			return "Edit";
@@ -565,14 +566,17 @@ public class ATestRatioCalculator implements RatioCalculator {
 	//		return instance;
 	//	}
 	@Override
-	public RatioFeatures computeRatioFeatures(List<ICommand> userActions) {
+	public RatioFeatures computeRatioFeatures(List<EHICommand> userActions) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	@Override
-	public RatioFeatures computeFeatures(List<ICommand> userActions) {
+	public RatioFeatures computeFeatures(List<EHICommand> userActions) {
 		// TODO Auto-generated method stub
-		return null;
+		RatioFeatures retVal = new ARatioFeatures();
+		System.out.println ("returning dummy ratio features");
+
+		return retVal;
 	}
 
 }

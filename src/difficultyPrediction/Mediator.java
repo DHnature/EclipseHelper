@@ -11,7 +11,7 @@ import difficultyPrediction.predictionManagement.PredictionManager;
 import difficultyPrediction.statusManager.StatusListener;
 import difficultyPrediction.statusManager.StatusManager;
 import difficultyPrediction.statusManager.StatusManagerDetails;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 
 public interface Mediator extends MediatorRegistrar {
@@ -21,7 +21,7 @@ public interface Mediator extends MediatorRegistrar {
 	public void statusManager_HandOffStatus(StatusManager manager, StatusManagerDetails details);
 	void featureExtractor_HandOffFeatures(RatioBasedFeatureExtractor extractor,
 			RatioFeatures details);
-	void processEvent(ICommand e);
+	void processEvent(EHICommand e);
 	public EventAggregator getEventAggregator();
 
 

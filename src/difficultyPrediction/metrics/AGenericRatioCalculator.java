@@ -10,9 +10,9 @@ import difficultyPrediction.APredictionParameters;
 import difficultyPrediction.featureExtraction.ARatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeaturesFactorySelector;
-import edu.cmu.scs.fluorite.commands.CompilationCommand;
-import edu.cmu.scs.fluorite.commands.EclipseCommand;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHCompilationCommand;
+import fluorite.commands.EHEclipseCommand;
+import fluorite.commands.EHICommand;
 
 public class AGenericRatioCalculator implements RatioCalculator {
 	
@@ -29,19 +29,19 @@ public class AGenericRatioCalculator implements RatioCalculator {
 	}
 	
 
-	public static CommandCategory toCommandCategory(ICommand aCommand) {
+	public static CommandCategory toCommandCategory(EHICommand aCommand) {
 		CommandCategoryMapping aCommandCategories = APredictionParameters.getInstance().
 						getCommandClassificationScheme().
 							getCommandCategoryMapping();
 		String aCommandString = aCommand.getCommandType();
-		if (aCommand instanceof CompilationCommand) {
-			CompilationCommand command = (CompilationCommand)aCommand;
+		if (aCommand instanceof EHCompilationCommand) {
+			EHCompilationCommand command = (EHCompilationCommand)aCommand;
 			if (!command.getIsWarning()) {
 				return aCommandCategories.getCommandCategory(CommandName.CompileError);
 			}
 		}
-		if (aCommand instanceof EclipseCommand) {
-			aCommandString = ((EclipseCommand) aCommand).getCommandID();
+		if (aCommand instanceof EHEclipseCommand) {
+			aCommandString = ((EHEclipseCommand) aCommand).getCommandID();
 			return aCommandCategories.searchCommandCategory(aCommandString);
 			
 		} else {
@@ -58,30 +58,30 @@ public class AGenericRatioCalculator implements RatioCalculator {
 	}
 	
 	@Override
-	public boolean isDebugEvent(ICommand event) {
+	public boolean isDebugEvent(EHICommand event) {
 		return toCommandCategory(event) == CommandCategory.DEBUG;
 	}
 
 	@Override
-	public boolean isInsertOrEditEvent(ICommand event) {
+	public boolean isInsertOrEditEvent(EHICommand event) {
 		return toCommandCategory(event) == CommandCategory.EDIT_OR_INSERT;
 
 	}
 
 	@Override
-	public boolean isNavigationEvent(ICommand event) {
+	public boolean isNavigationEvent(EHICommand event) {
 		return toCommandCategory(event) == CommandCategory.NAVIGATION;
 
 	}
 
 	@Override
-	public boolean isFocusEvent(ICommand event) {
+	public boolean isFocusEvent(EHICommand event) {
 		return toCommandCategory(event) == CommandCategory.FOCUS;
 
 	}
 
 	@Override
-	public boolean isAddRemoveEvent(ICommand event) {
+	public boolean isAddRemoveEvent(EHICommand event) {
 		return toCommandCategory(event) == CommandCategory.REMOVE;
 	}
 	public static double computeDebugPercentage(ArrayList<Integer> eventData) {
@@ -173,7 +173,7 @@ public class AGenericRatioCalculator implements RatioCalculator {
 	
 
 	@Override
-	public ArrayList<Double> computeMetrics(List<ICommand> userActions) {
+	public ArrayList<Double> computeMetrics(List<EHICommand> userActions) {
 		ArrayList<Integer> metrics = getPercentageData(userActions);
 		double debugPercentage = computeDebugPercentage(metrics);
 		double editPercentage = computeEditPercentage(metrics);
@@ -192,11 +192,11 @@ public class AGenericRatioCalculator implements RatioCalculator {
 		return percentages;
 	}
 	@Override
-	public RatioFeatures computeFeatures(List<ICommand> userActions) {
+	public RatioFeatures computeFeatures(List<EHICommand> userActions) {
 		return computeRatioFeatures(userActions);
 	}
 	@Override
-	public  ArrayList<Integer> getPercentageData(List<ICommand> userActions) {
+	public  ArrayList<Integer> getPercentageData(List<EHICommand> userActions) {
 		int numberOfDebugEvents = 0;
 		int numberOfSearchEvents = 0;
 		int numberOfEditOrInsertEvents = 0;
@@ -204,7 +204,7 @@ public class AGenericRatioCalculator implements RatioCalculator {
 		int numberOfRemoveEvents = 0;
 
 		for (int i = 0; i < userActions.size(); i++) {
-			ICommand myEvent = userActions.get(i);
+			EHICommand myEvent = userActions.get(i);
 			
 			CommandCategory aCommandCategory = toCommandCategory(myEvent);
 			if (aCommandCategory == null) {
@@ -269,7 +269,7 @@ public class AGenericRatioCalculator implements RatioCalculator {
 		return eventData;
 	}
 	@Override
-	public  RatioFeatures computeRatioFeatures(List<ICommand> userActions) {
+	public  RatioFeatures computeRatioFeatures(List<EHICommand> userActions) {
 		double numberOfDebugEvents = 0;
 		double numberOfSearchEvents = 0;
 		double numberOfEditOrInsertEvents = 0;
@@ -277,7 +277,7 @@ public class AGenericRatioCalculator implements RatioCalculator {
 		double numberOfRemoveEvents = 0;
 
 		for (int i = 0; i < userActions.size(); i++) {
-			ICommand myEvent = userActions.get(i);
+			EHICommand myEvent = userActions.get(i);
 			
 			CommandCategory aCommandCategory = toCommandCategory(myEvent);
 			if (aCommandCategory == null) {
@@ -352,7 +352,7 @@ public class AGenericRatioCalculator implements RatioCalculator {
 	}
 
 	@Override
-	public  String getFeatureName(ICommand myEvent) {
+	public  String getFeatureName(EHICommand myEvent) {
 		CommandCategory aCommandCategory = toCommandCategory(myEvent);
 		return commandCategoryToFetaureName.get(aCommandCategory);
 		

@@ -24,7 +24,7 @@ import difficultyPrediction.predictionManagement.PredictionManager;
 import difficultyPrediction.statusManager.StatusListener;
 import difficultyPrediction.statusManager.StatusManager;
 import difficultyPrediction.statusManager.StatusManagerDetails;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public class AnalyzerMediator implements Mediator {
 	FeatureExtractorAnalyzer featureExtractorAnalyzer;
@@ -131,7 +131,7 @@ public class AnalyzerMediator implements Mediator {
 	}
 
 	@Override
-	public void processEvent(ICommand e) {
+	public void processEvent(EHICommand e) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -259,7 +259,7 @@ public class AnalyzerMediator implements Mediator {
 	}
 
 	@Override
-	public void notifyNewCommand(ICommand aCommand) {
+	public void notifyNewCommand(EHICommand aCommand) {
 		// TODO Auto-generated method stub
 		
 	}

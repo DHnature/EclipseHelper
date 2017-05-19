@@ -13,12 +13,12 @@ import analyzer.ui.SessionPlayerFactory;
 import analyzer.ui.graphics.PlayAndRewindCounter;
 import bus.uigen.OEFrame;
 import difficultyPrediction.featureExtraction.RatioFeatures;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
-import edu.cmu.scs.fluorite.model.StatusConsts;
+import fluorite.commands.EHICommand;
+import fluorite.commands.PredictionCommand.PredictionType;
+import fluorite.model.StatusConsts;
 
 public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator implements PropertyChangeListener {
-	protected List<List<ICommand>> allCommands = new ArrayList();
+	protected List<List<EHICommand>> allCommands = new ArrayList();
 //	protected List<StringBuffer> allCommandBuffers = new ArrayList();
 //	protected List<ICommand> allCommands = new ArrayList();
 
@@ -73,7 +73,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 	
 	@Override
 	@Visible(false)
-	public void newCommand(ICommand newCommand) {
+	public void newCommand(EHICommand newCommand) {
 //		if (!isPlayBack()) {
 		allCommands.get(nextFeatureIndex).add(newCommand);
 //			allCommands.add(newCommand);
@@ -259,7 +259,7 @@ public class ARewindableMultiLevelAggregator extends AMultiLevelAggregator imple
 		String anAggregatedStatus = StatusConsts.INDETERMINATE;
 		suppressNotifications();
 		for (int featureIndex = 0; featureIndex <= currentFeatureIndex; featureIndex++) {
-			for (ICommand aCommand:allCommands.get(featureIndex)) {
+			for (EHICommand aCommand:allCommands.get(featureIndex)) {
 				super.newCommand(aCommand);				
 			}
 			super.newRatios(allFeatures.get(featureIndex));

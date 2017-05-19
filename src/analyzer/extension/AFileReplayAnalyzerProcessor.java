@@ -6,7 +6,7 @@ import analyzer.RatioFilePlayerFactory;
 import analyzer.ui.graphics.DuriRatioFeaturesListener;
 import analyzer.ui.graphics.RatioFileComponents;
 import difficultyPrediction.featureExtraction.RatioFeatures;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public class AFileReplayAnalyzerProcessor extends ALiveAnalyzerProcessor{
 	public AFileReplayAnalyzerProcessor() {
@@ -14,7 +14,7 @@ public class AFileReplayAnalyzerProcessor extends ALiveAnalyzerProcessor{
 		RatioFilePlayerFactory.getSingleton().addRatioFeaturesListener(this);
 	}
 	// do nothing, the new Ratios has everything needed
-	public void newCommand(ICommand newCommand) {
+	public void newCommand(EHICommand newCommand) {
 //		maybeInitializeTimeStamp(newCommand);
 //		maybeProcessPrediction(newCommand);
 //		maybeProcessCorrection(newCommand);

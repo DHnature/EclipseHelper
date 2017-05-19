@@ -5,7 +5,7 @@ import org.eclipse.ui.IPartService;
 
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import fluorite.util.EventLoggerConsole;
 
 public class PartListenerAdded extends TraceableInfo{
 	IPartListener partListener;

@@ -13,8 +13,8 @@ import java.util.Vector;
 
 import difficultyPrediction.Mediator;
 import difficultyPrediction.eventAggregation.AnEventAggregator;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.util.LogReader;
+import fluorite.commands.EHICommand;
+import fluorite.util.LogReader;
 
 public class MainConsoleUI {
 
@@ -63,7 +63,7 @@ public class MainConsoleUI {
 
 			String participantId;
 			String numberOfSegments;
-			List<List<ICommand>> commandsList;
+			List<List<EHICommand>> commandsList;
 			Scanner scanIn = new Scanner(System.in);
 			participantId = scanIn.nextLine();
 
@@ -102,7 +102,7 @@ public class MainConsoleUI {
 
 	}
 
-	public static void processCommands(String aFolder, List<List<ICommand>> commandsList,
+	public static void processCommands(String aFolder, List<List<EHICommand>> commandsList,
 			String numberOfSegments, String participantId) {
 		
 		
@@ -112,7 +112,7 @@ public class MainConsoleUI {
 		
 		long startTimeStamp = 0;
 		for (int index = 0; index < commandsList.size(); index++) {
-			List<ICommand> commands = commandsList.get(index);
+			List<EHICommand> commands = commandsList.get(index);
 			for (int i = 0; i < commands.size(); i++) {
 				if ((commands.get(i).getTimestamp() == 0)
 						&& (commands.get(i).getTimestamp2() > 0)) {
@@ -147,9 +147,9 @@ public class MainConsoleUI {
 		}
 	}
 
-	public static List<List<ICommand>> convertXMLLogToObjects(
+	public static List<List<EHICommand>> convertXMLLogToObjects(
 			String participantId) {
-		List<List<ICommand>> listOfListOFcommands = new Vector<List<ICommand>>();
+		List<List<EHICommand>> listOfListOFcommands = new Vector<List<EHICommand>>();
 		String participantDirectory = PARTICIPANT_INFORMATION_DIRECTORY
 				+ participantId + "/";
 		File folder = new File(participantDirectory);
@@ -165,7 +165,7 @@ public class MainConsoleUI {
 			System.out.println("Reading " + aFileName);
 //			List<ICommand> commands;
 			try {
-			List<ICommand> commands = reader.readAll(aFileName);
+			List<EHICommand> commands = reader.readAll(aFileName);
 			listOfListOFcommands.add(commands);
 
 			} catch (Exception e) {

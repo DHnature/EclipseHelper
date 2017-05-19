@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import util.annotations.Position;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 
 public class ACategorizedCommand implements CategorizedCommand {

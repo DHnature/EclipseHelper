@@ -13,7 +13,7 @@ import difficultyPrediction.predictionManagement.PredictionManager;
 import difficultyPrediction.statusManager.StatusListener;
 import difficultyPrediction.statusManager.StatusManager;
 import difficultyPrediction.statusManager.StatusManagerDetails;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public interface MediatorRegistrar {
 	
@@ -40,7 +40,7 @@ public interface MediatorRegistrar {
 
 	public abstract void notifyStopCommand();
 
-	public abstract void notifyNewCommand(ICommand aCommand);
+	public abstract void notifyNewCommand(EHICommand aCommand);
 
 	void addBarrierListener(BarrierListener aListener);
 

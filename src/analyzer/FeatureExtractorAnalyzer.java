@@ -6,7 +6,7 @@ import difficultyPrediction.Mediator;
 import difficultyPrediction.featureExtraction.FeatureExtractionStrategy;
 import difficultyPrediction.featureExtraction.RatioFeatures;
 import difficultyPrediction.featureExtraction.RatioFeaturesFactorySelector;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public class FeatureExtractorAnalyzer {
 
@@ -28,7 +28,7 @@ public class FeatureExtractorAnalyzer {
 	private static final int DELETION_PERCENTAGE = 6;
 	private static final int EXCEPTIONS_PER_RUNS_PERCENTAGE = 7;
 
-	public void performFeatureExtraction(List<ICommand> actions,
+	public void performFeatureExtraction(List<EHICommand> actions,
 			FeatureExtractorAnalyzer featureExtractorAnalyzer, long startTimeStamp) {
 		List<Double> percentages = null;
 		percentages = metrics.computeMetrics(actions, startTimeStamp);

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.2"?>
 <plugin>
+  
    <extension
          point="org.eclipse.core.runtime.preferences">
       <initializer
-            class="edu.cmu.scs.fluorite.preferences.Initializer">
+            class="fluorite.preferences.Initializer">
       </initializer>
       <initializer
             class="dayton.InitializeConnection">
@@ -15,21 +16,22 @@
    <extension
          point="org.eclipse.ui.commands">
       <command
-            defaultHandler="edu.cmu.scs.fluorite.ui.handlers.AnnotateCommandHandler"
+            defaultHandler="fluorite.ui.handlers.AnnotateCommandHandler"
             description="Annotate current intention"
-            id="edu.cmu.scs.fluorite.annotateCommand"
+            id="fluorite.annotateCommand"
             name="Annotate">
       </command>
       <command
             description="View the last recorded log file in xml format"
-            id="edu.cmu.scs.fluorite.actions.viewLastLog"
+            id="fluorite.actions.viewLastLog"
             name="View Last Log">
       </command>
    </extension>
+   <!--
    <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="edu.cmu.scs.fluorite.actions.viewLastLog"
+            commandId="fluorite.actions.viewLastLog"
             contextId="org.eclipse.ui.textEditorScope"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
             sequence="M1+M3+V">
@@ -38,64 +40,71 @@
    <extension
          point="org.eclipse.ui.preferencePages">
       <page
-            class="edu.cmu.scs.fluorite.dialogs.OptionsPage"
-            id="edu.cmu.scs.fluorite.optionsPage"
+            class="fluorite.dialogs.OptionsPage"
+            id="fluorite.optionsPage"
             name="Fluorite">
       </page>
    </extension>
+   -->
+  
    <extension
          point="org.eclipse.ui.startup">
       <startup
-            class="edu.cmu.scs.fluorite.plugin.EventLoggerStartup">
+            class="fluorite.plugin.EHEventLoggerStartup">
       </startup>
    </extension>
+   
    <extension
          point="org.eclipse.ui.views">
+      
       <view
             allowMultiple="false"
-            category="edu.cmu.scs.fluorite.category"
-            class="edu.cmu.scs.fluorite.viewpart.IDViewPart"
-            id="edu.cmu.scs.fluorite.idview"
-            name="Current ID"
+            category="fluorite.category"
+            class="fluorite.viewpart.IDViewPart"
+            id="EclipseHelper.idview"
+            name="Eclipse Helper Current ID"
             restorable="true">
       </view>
+       
       <category
-            id="edu.cmu.scs.fluorite.category"
-            name="Fluorite">
+            id="fluorite.category"
+            name="EclipseHelper">
       </category>
+      
       <view
             allowMultiple="false"
-            category="edu.cmu.scs.fluorite.category"
-            class="edu.cmu.scs.fluorite.viewpart.HelpViewPart"
-            id="edu.cmu.scs.fluorite.helpview"
-            name="Help"
+            category="fluorite.category"
+            class="fluorite.viewpart.HelpViewPart"
+            id="fluorite.helpview"
+            name="EclipseHelperHelp"
             restorable="true">
       </view>
       <view
-            category="edu.cmu.scs.fluorite.category"
-            class="edu.cmu.scs.fluorite.viewpart.BuddyListViewPart"
+            category="fluorite.category"
+            class="fluorite.viewpart.BuddyListViewPart"
             id="EclipseHelper.ChatsView"
             name="Buddy List"
             restorable="true">
       </view>
       <view
-            category="edu.cmu.scs.fluorite.category"
+            category="fluorite.category"
             class="dayton.ContactsView"
             id="EclipseHelper.ContactsView"
             name="Contacts"
             restorable="true">
       </view>
    </extension>
+  <!--
    <extension
          point="org.eclipse.ui.menus">
       <menuContribution
             allPopups="false"
             locationURI="toolbar:org.eclipse.ui.main.toolbar">
          <toolbar
-               id="edu.cmu.scs.fluorite.toolbar1"
-               label="Fluorite Toolbar">
+               id="fluorite.toolbar1"
+               label="Eclipse Helper Toolbar">
             <command
-                  commandId="edu.cmu.scs.fluorite.annotateCommand"
+                  commandId="fluorite.annotateCommand"
                   icon="icons/annotation.png"
                   style="push">
             </command>
@@ -105,24 +114,25 @@
    <extension
          point="org.eclipse.ui.commandImages">
       <image
-            commandId="edu.cmu.scs.fluorite.annotateCommand"
+            commandId="fluorite.annotateCommand"
             icon="icons/annotation.png">
       </image>
    </extension>
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            commandId="edu.cmu.scs.fluorite.annotateCommand">
+            commandId="fluorite.annotateCommand">
       </handler>
    </extension>
+   -->
+   
    <extension
          point="org.eclipse.jdt.core.compilationParticipant">
       <compilationParticipant
-            class="edu.cmu.scs.fluorite.recorders.CompilationParticipantRecorder"
+            class="fluorite.recorders.EHCompilationParticipantRecorder"
             id="TestProject.compilationParticipantRecorder"
             modifiesEnvironment="true">
       </compilationParticipant>
    </extension>
-
-
+ 
 </plugin>

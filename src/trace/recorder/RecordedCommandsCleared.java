@@ -4,27 +4,27 @@ import java.util.LinkedList;
 
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import fluorite.commands.EHICommand;
+import fluorite.util.EventLoggerConsole;
 
 public class RecordedCommandsCleared extends TraceableInfo{
-	LinkedList<ICommand> commands;
-	public RecordedCommandsCleared(String aMessage, LinkedList<ICommand> aCommands,  Object aFinder) {
+	LinkedList<EHICommand> commands;
+	public RecordedCommandsCleared(String aMessage, LinkedList<EHICommand> aCommands,  Object aFinder) {
 		 super(aMessage, aFinder);
 		 commands = aCommands;
 	}
-	public LinkedList<ICommand> getCommands() {
+	public LinkedList<EHICommand> getCommands() {
 		return commands;
 	}
 	
 	
-    public static String toString(LinkedList<ICommand> aCommands) {
+    public static String toString(LinkedList<EHICommand> aCommands) {
     	return("(" + 
 //    				aCommands.toString() + 
     			"commands" + // do not read the list as it may mutate
     				")");
     }
-    public static RecordedCommandsCleared newCase (String aMessage, LinkedList<ICommand> aCommands,  Object aFinder) {
+    public static RecordedCommandsCleared newCase (String aMessage, LinkedList<EHICommand> aCommands,  Object aFinder) {
     	if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(RecordedCommandsCleared.class))
       	  EventLoggerConsole.getConsole().getMessageConsoleStream().println(Tracer.infoPrintBody(RecordedCommandsCleared.class) + ") " + aMessage);
     	if (shouldInstantiate(RecordedCommandsCleared.class)) {
@@ -38,7 +38,7 @@ public class RecordedCommandsCleared extends TraceableInfo{
 
     	return null;
     }
-    public static RecordedCommandsCleared newCase (LinkedList<ICommand> aCommands,  Object aFinder) {
+    public static RecordedCommandsCleared newCase (LinkedList<EHICommand> aCommands,  Object aFinder) {
     	String aMessage = toString(aCommands);
     	return newCase(aMessage, aCommands, aFinder);
 //    	ExcludedCommand retVal = new ExcludedCommand(aMessage, aCommands, aFinder);

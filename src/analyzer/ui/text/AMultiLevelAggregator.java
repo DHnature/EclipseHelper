@@ -41,11 +41,11 @@ import difficultyPrediction.metrics.RatioCalculator;
 import difficultyPrediction.metrics.RatioCalculatorSelector;
 import difficultyPrediction.predictionManagement.PredictionManagerStrategy;
 import difficultyPrediction.statusManager.StatusAggregationDiscreteChunks;
-import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
-import edu.cmu.scs.fluorite.model.StatusConsts;
+import fluorite.commands.DifficulyStatusCommand;
+import fluorite.commands.EHICommand;
+import fluorite.commands.PredictionCommand;
+import fluorite.commands.PredictionCommand.PredictionType;
+import fluorite.model.StatusConsts;
 
 public class AMultiLevelAggregator implements MultiLevelAggregator{
 	static OEFrame oeFrame;
@@ -150,7 +150,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 
 	@Override
     @Visible(false)
-	public void newCommand(ICommand newCommand) {
+	public void newCommand(EHICommand newCommand) {
 		// we wil get this as aggregated status as
 		// prediction command does not seem to be in sync wuth aggregated status
 		if (newCommand instanceof PredictionCommand && 
@@ -332,7 +332,7 @@ public class AMultiLevelAggregator implements MultiLevelAggregator{
 		return aggregatedStatus;
 	}
     @Visible(false)
-	protected  String toClassifiedString (ICommand aCommand) {
+	protected  String toClassifiedString (EHICommand aCommand) {
 		String featureName = ratioCalculator.getFeatureName(aCommand);
 		return 
 				featureName + " " + ATimeStampComputer.toDateString(TimeStampComputerFactory.getSingleton().computeTimestamp(aCommand)) + 

@@ -4,7 +4,7 @@ import java.util.logging.FileHandler;
 
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import fluorite.util.EventLoggerConsole;
 
 public class LogHandlerBound extends TraceableInfo{
 	FileHandler fileHandler;

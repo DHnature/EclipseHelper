@@ -6,7 +6,7 @@ import analyzer.extension.StuckInterval;
 import analyzer.extension.StuckPoint;
 import analyzer.ui.graphics.ARatioFileComponents;
 import analyzer.ui.graphics.RatioFileComponents;
-import edu.cmu.scs.fluorite.model.EventRecorder;
+import fluorite.model.EHEventRecorder;
 
 public class ARatioFeatures implements RatioFeatures {
 	protected double editRatio;
@@ -138,7 +138,7 @@ public class ARatioFeatures implements RatioFeatures {
 	Date date = new Date();
 	// add other ratios later
 	public String toString () {
-		date.setTime(getSavedTimeStamp() + EventRecorder.getInstance().getStartTimestamp());
+		date.setTime(getSavedTimeStamp() + EHEventRecorder.getInstance().getStartTimestamp());
 		return date
 				+ "Edit (" + getEditRatio() + ") "
 				+ "Debug (" + getDebugRatio() + ") " 

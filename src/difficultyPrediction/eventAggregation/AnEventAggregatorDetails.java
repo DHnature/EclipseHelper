@@ -5,19 +5,19 @@ import java.util.List;
 
 import org.codehaus.jackson.map.ObjectMapper;
 
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 public class AnEventAggregatorDetails {
 	
-	public List<ICommand> actions;
+	public List<EHICommand> actions;
 	public long startTimeStamp;
 	
 	public AnEventAggregatorDetails () {
-		actions = new ArrayList<ICommand>();
+		actions = new ArrayList<EHICommand>();
 	}
 	
-	public AnEventAggregatorDetails(List<ICommand> actions) {
-		this.actions = new ArrayList<ICommand>();
-		for(ICommand event : actions) {
+	public AnEventAggregatorDetails(List<EHICommand> actions) {
+		this.actions = new ArrayList<EHICommand>();
+		for(EHICommand event : actions) {
 			this.actions.add(event);
 		}
 	}

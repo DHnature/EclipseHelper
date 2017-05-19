@@ -8,11 +8,14 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.eclipse.core.runtime.IPluginDescriptor;
+
 import config.HelperConfigurationManagerFactory;
 import weka.classifiers.Classifier;
 import weka.classifiers.trees.J48;
 import difficultyPrediction.APredictionParameters;
 import difficultyPrediction.DifficultyPredictionSettings;
+import fluorite.plugin.Activator;
 
 public class DecisionTreeModel implements PredictionManagerStrategy {
 	public PredictionManager predictionManager;
@@ -53,11 +56,24 @@ public class DecisionTreeModel implements PredictionManagerStrategy {
 			if (DifficultyPredictionSettings.isReplayMode()) {
 				inputStream = new FileInputStream( wekaDataFileLocation());
 			} else {
-			url = new URL(edu.cmu.scs.fluorite.plugin.Activator.getDefault()
-					.getDescriptor().getInstallURL(), wekaDataFileLocation());
-			
+//				Activator anActivator = fluorite.plugin.Activator.getDefault();
+////				URL anInstallURL = null;
+////				IPluginDescriptor aDescriptor = anActivator.getDescriptor();
+////				if (aDescriptor != null) {
+////					anInstallURL = aDescriptor.getInstallURL();
+////				} else {
+////					anInstallURL = anActivator.getBundle().getEntry("/");
+////				}
+//			URL anInstallURL = anActivator.getBundle().getEntry("/");	
+//			url = new URL(anInstallURL, wekaDataFileLocation());
+//				
+////			url = new URL(fluorite.plugin.Activator.getDefault()
+////					.getDescriptor().getInstallURL(), wekaDataFileLocation());
+////			
+//
+////			InputStream inputStream = url.openConnection().getInputStream();
+			url = new URL(Activator.getInstallURL(), wekaDataFileLocation());
 
-//			InputStream inputStream = url.openConnection().getInputStream();
 			inputStream = url.openConnection().getInputStream();
 			}
 

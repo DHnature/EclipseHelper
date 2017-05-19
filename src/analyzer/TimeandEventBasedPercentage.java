@@ -7,8 +7,8 @@ import org.joda.time.DateTime;
 
 import difficultyPrediction.metrics.APercentageCalculator;
 import difficultyPrediction.metrics.RatioCalculator;
-import edu.cmu.scs.fluorite.commands.EclipseCommand;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHEclipseCommand;
+import fluorite.commands.EHICommand;
 
 public class TimeandEventBasedPercentage {
 
@@ -190,7 +190,7 @@ public class TimeandEventBasedPercentage {
 	}
 	
 	private long startTimeStamp;
-	public ArrayList<Double> computeMetrics(List<ICommand> userActions, long startTimeStamp) {
+	public ArrayList<Double> computeMetrics(List<EHICommand> userActions, long startTimeStamp) {
 		
 		
 		this.startTimeStamp = startTimeStamp;
@@ -219,7 +219,7 @@ public class TimeandEventBasedPercentage {
 		return percentages;
 	}
 
-	public boolean isEditEvent(ICommand event) {
+	public boolean isEditEvent(EHICommand event) {
 		boolean isEditEvent = false;
 		if ((event.getCommandType().equals("CopyCommand"))
 				|| (event.getCommandType().equals("CutCommand"))
@@ -238,7 +238,7 @@ public class TimeandEventBasedPercentage {
 		}
 
 		if (event.getCommandType().equals("EclipseCommand")) {
-			EclipseCommand eclipseCommand = (EclipseCommand) event;
+			EHEclipseCommand eclipseCommand = (EHEclipseCommand) event;
 			if (eclipseCommand.getName().toLowerCase().contains("edit")) {
 				isEditEvent = true;
 			}
@@ -247,7 +247,7 @@ public class TimeandEventBasedPercentage {
 		return isEditEvent;
 	}
 
-	public boolean isExceptionEvent(ICommand event) {
+	public boolean isExceptionEvent(EHICommand event) {
 		boolean isExceptionEvent = false;
 
 		if ((event.getCommandType().equals("Exception"))) {
@@ -256,7 +256,7 @@ public class TimeandEventBasedPercentage {
 		return isExceptionEvent;
 	}
 
-	public boolean isInsertionEvent(ICommand event) {
+	public boolean isInsertionEvent(EHICommand event) {
 		boolean isInsertionEvent = false;
 		if ((event.getCommandType().equals("CopyCommand"))
 				|| (event.getCommandType().equals("Insert"))
@@ -269,7 +269,7 @@ public class TimeandEventBasedPercentage {
 		}
 
 		if (event.getCommandType().equals("EclipseCommand")) {
-			EclipseCommand eclipseCommand = (EclipseCommand) event;
+			EHEclipseCommand eclipseCommand = (EHEclipseCommand) event;
 			if (eclipseCommand.getCommandID().toLowerCase().contains("edit")) {
 				isInsertionEvent = true;
 			}
@@ -278,7 +278,7 @@ public class TimeandEventBasedPercentage {
 		return isInsertionEvent;
 	}
 
-	public boolean isDeletionEvent(ICommand event) {
+	public boolean isDeletionEvent(EHICommand event) {
 		boolean isDeletionEvent = false;
 		if ((event.getCommandType().equals("CutCommand"))
 				|| (event.getCommandType().equals("Delete"))) {
@@ -286,7 +286,7 @@ public class TimeandEventBasedPercentage {
 		}
 
 		if (event.getCommandType().equals("EclipseCommand")) {
-			EclipseCommand eclipseCommand = (EclipseCommand) event;
+			EHEclipseCommand eclipseCommand = (EHEclipseCommand) event;
 			if (eclipseCommand.getCommandID().toLowerCase().contains("delete")) {
 				isDeletionEvent = true;
 			}
@@ -295,7 +295,7 @@ public class TimeandEventBasedPercentage {
 		return isDeletionEvent;
 	}
 	
-	public boolean isDebugEvent(ICommand event) {
+	public boolean isDebugEvent(EHICommand event) {
 		boolean isDebugEvent = false;
 		if ((event.getCommandType().equals("BreakPointCommand"))
 				|| (event.getCommandType().equals("ExceptionCommand"))
@@ -333,7 +333,7 @@ public class TimeandEventBasedPercentage {
 //	from the delete timestamp
 //	and don't do any more subtraction until i see an insertion
 	//current - previous
-	public ArrayList<Integer> getPercentageData(List<ICommand> userActions) {
+	public ArrayList<Integer> getPercentageData(List<EHICommand> userActions) {
 		int numberOfDebugEvents = 0;
 		int numberOfSearchEvents = 0;
 		int numberOfEditEvents = 0;
@@ -346,7 +346,7 @@ public class TimeandEventBasedPercentage {
 		long currentTime = 0;
 		long insertionTime = 0;
 		for (int i = 0; i < userActions.size(); i++) {
-			ICommand myEvent = userActions.get(i);
+			EHICommand myEvent = userActions.get(i);
 			
 			
 		

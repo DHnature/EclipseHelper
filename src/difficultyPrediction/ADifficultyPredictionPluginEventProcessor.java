@@ -7,11 +7,11 @@ import org.eclipse.ui.PlatformUI;
 import trace.plugin.PluginThreadCreated;
 import config.FactorySingletonInitializer;
 import difficultyPrediction.extension.ADifficultyPredictionRegistry;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand;
-import edu.cmu.scs.fluorite.model.EventRecorder;
-import edu.cmu.scs.fluorite.model.StatusConsts;
-import edu.cmu.scs.fluorite.viewpart.HelpViewPart;
+import fluorite.commands.EHICommand;
+import fluorite.commands.PredictionCommand;
+import fluorite.model.EHEventRecorder;
+import fluorite.model.StatusConsts;
+import fluorite.viewpart.HelpViewPart;
 
 public class ADifficultyPredictionPluginEventProcessor implements DifficultyPredictionPluginEventProcessor {
 	protected Thread difficultyPredictionThread;	
@@ -105,7 +105,8 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 //		this.pendingPredictionCommands = pendingPredictionCommands;
 //	}
 	protected void maybeCreateDifficultyPredictionThread() {
-		if (predictorThreadOption == PredictorThreadOption.SINGLE_THREAD && difficultyPredictionRunnable == null) {
+		if (predictorThreadOption == PredictorThreadOption.SINGLE_THREAD && 
+				(difficultyPredictionRunnable == null || !difficultyPredictionThread.isAlive())) {
 			// create the difficulty prediction thread
 			difficultyPredictionRunnable = new ADifficultyPredictionRunnable();
 //			pendingPredictionCommands = difficultyPredictionRunnable.getPendingCommands();
@@ -125,7 +126,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 	 * @see difficultyPrediction.DifficultyPredictionPluginEventProcessor#recordCommand(edu.cmu.scs.fluorite.commands.ICommand)
 	 */
 	@Override
-	public void newCommand(final ICommand newCommand) {
+	public void newCommand(final EHICommand newCommand) {
 		switch (predictorThreadOption) {
 		case NO_PROCESSING:
 			break;
@@ -261,7 +262,7 @@ public class ADifficultyPredictionPluginEventProcessor implements DifficultyPred
 		if (!balloonTip.isDisposed()) {
 			balloonTip.setMessage("Status: " + status);
 			balloonTip.setText("Status Change Notification");
-			EventRecorder.getInstance().getTrayItem().setToolTip(balloonTip);
+			EHEventRecorder.getInstance().getTrayItem().setToolTip(balloonTip);
 			balloonTip.setVisible(true);
 		}
 

@@ -7,9 +7,10 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 
-public class AStartOfQueueCommand implements ICommand {
+public class AStartOfQueueCommand implements EHICommand {
 
 	@Override
 	public boolean execute(IEditorPart target) {
@@ -143,8 +144,8 @@ public class AStartOfQueueCommand implements ICommand {
 		return 0;
 	}
 
-	@Override
-	public boolean combineWith(ICommand anotherCommand) {
+//	@Override
+	public boolean combineWith(EHICommand anotherCommand) {
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -153,6 +154,30 @@ public class AStartOfQueueCommand implements ICommand {
 	public String getCommandTag() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean combineWith(ICommand arg0) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public long getSessionId() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void setCommandIndex(int arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setSessionId(long arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

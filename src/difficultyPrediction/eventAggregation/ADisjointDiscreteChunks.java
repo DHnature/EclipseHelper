@@ -1,7 +1,7 @@
 package difficultyPrediction.eventAggregation;
 
 import difficultyPrediction.APredictionParameters;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public class ADisjointDiscreteChunks implements EventAggregationStrategy {
 
@@ -29,7 +29,7 @@ public class ADisjointDiscreteChunks implements EventAggregationStrategy {
 	return APredictionParameters.getInstance().getSegmentLength();
 
 }
-	public void performAggregation(ICommand event,
+	public void performAggregation(EHICommand event,
 			EventAggregator eventAggregator) {
 		
 

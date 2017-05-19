@@ -4,8 +4,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.ToolTip;
 import org.eclipse.ui.PlatformUI;
 
-import edu.cmu.scs.fluorite.model.EventRecorder;
-import edu.cmu.scs.fluorite.viewpart.HelpViewPart;
+import fluorite.model.EHEventRecorder;
+import fluorite.viewpart.HelpViewPart;
 
 public class ADifficultyStatusDisplayer implements DifficultyStatusDisplayer {
 	protected ToolTip ballonTip;
@@ -46,7 +46,7 @@ public class ADifficultyStatusDisplayer implements DifficultyStatusDisplayer {
 			// ballonTip.setMessage("Status: " + status);
 			ballonTip.setMessage(status);
 			ballonTip.setText("Status Change Notification");
-			EventRecorder.getTrayItem().setToolTip(ballonTip);
+			EHEventRecorder.getTrayItem().setToolTip(ballonTip);
 			ballonTip.setVisible(true);
 		}
 

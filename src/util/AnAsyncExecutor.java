@@ -3,7 +3,7 @@ package util;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public class AnAsyncExecutor implements RunnableExecutor {
 	public static final int NUM_PENDING_RUNNABLES = 20024;

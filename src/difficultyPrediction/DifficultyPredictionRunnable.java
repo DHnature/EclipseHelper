@@ -2,7 +2,7 @@ package difficultyPrediction;
 
 import org.eclipse.swt.widgets.ToolTip;
 
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public interface DifficultyPredictionRunnable extends Runnable {
 	final String DIFFICULTY_PREDICTION_THREAD_NAME = "Difficulty Prediction Thread";
@@ -10,7 +10,7 @@ public interface DifficultyPredictionRunnable extends Runnable {
 //	public BlockingQueue<ICommand> getPendingCommands() ;
 	public Mediator getMediator() ;
 	public ToolTip getBallonTip();
-	public void add(ICommand newCommand);
+	public void add(EHICommand newCommand);
 	void showStatusInBallonTip(String status);
 	void asyncShowStatusInBallonTip(String status);
 	void changeStatusInHelpView(String status);

@@ -56,10 +56,10 @@ import difficultyPrediction.Mediator;
 import difficultyPrediction.PredictionParametersSetterSelector;
 import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.featureExtraction.RatioFeatures;
-import edu.cmu.scs.fluorite.commands.DifficulyStatusCommand;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand;
-import edu.cmu.scs.fluorite.util.LogReader;
+import fluorite.commands.DifficulyStatusCommand;
+import fluorite.commands.EHICommand;
+import fluorite.commands.PredictionCommand;
+import fluorite.util.LogReader;
 
 @LayoutName(AttributeNames.GRID_BAG_LAYOUT)
 public class AnAnalyzer implements Analyzer {
@@ -92,7 +92,7 @@ public class AnAnalyzer implements Analyzer {
 	static RatioFileReader ratioFileReader;
 
 	static long startTimeStamp;
-	List<List<ICommand>> nestedCommandsList;
+	List<List<EHICommand>> nestedCommandsList;
 
 	FileSetterModel participantsFolder, outputFolder, experimentalData;
 	AnalyzerParameters parameters;
@@ -762,9 +762,9 @@ public class AnAnalyzer implements Analyzer {
 	protected void playNestedCommandList() {
 		startTimeStamp = 0;
 		for (int index = 0; index < nestedCommandsList.size(); index++) {
-			List<ICommand> commands = nestedCommandsList.get(index);
+			List<EHICommand> commands = nestedCommandsList.get(index);
 			for (int i = 0; i < commands.size(); i++) {
-				ICommand aCommand = commands.get(i);
+				EHICommand aCommand = commands.get(i);
 				maybeProcessPrediction(aCommand);
 				maybeProcessCorrection(aCommand);
 
@@ -815,9 +815,9 @@ public class AnAnalyzer implements Analyzer {
 	 * @see analyzer.Analyzer#convertXMLLogToObjects(java.lang.String)
 	 */
 	@Override
-	public List<List<ICommand>> convertXMLLogToObjects(String aFolderName) {
+	public List<List<EHICommand>> convertXMLLogToObjects(String aFolderName) {
 
-		List<List<ICommand>> listOfListOFcommands = new Vector<List<ICommand>>();
+		List<List<EHICommand>> listOfListOFcommands = new Vector<List<EHICommand>>();
 		// String fullName = participantsFolder.getText()
 		// + aFolderName + "/";
 		String fullName = aFolderName;
@@ -844,7 +844,7 @@ public class AnAnalyzer implements Analyzer {
 			System.out.println("Reading " + aFileName);
 			// List<ICommand> commands;
 			try {
-				List<ICommand> commands = reader.readAll(aFileName);
+				List<EHICommand> commands = reader.readAll(aFileName);
 				listOfListOFcommands.add(commands);
 
 			} catch (Exception e) {
@@ -1019,7 +1019,7 @@ public class AnAnalyzer implements Analyzer {
 
 	}
 
-	void maybeProcessPrediction(ICommand newCommand) {
+	void maybeProcessPrediction(EHICommand newCommand) {
 		if (newCommand instanceof PredictionCommand) {
 			lastPrediction = AnAnalyzerProcessor
 					.toInt((PredictionCommand) newCommand);
@@ -1028,7 +1028,7 @@ public class AnAnalyzer implements Analyzer {
 		}
 	}
 
-	void maybeProcessCorrection(ICommand newCommand) {
+	void maybeProcessCorrection(EHICommand newCommand) {
 		if (newCommand instanceof DifficulyStatusCommand
 		// && ((DifficulyStatusCommand) newCommand).getStatus() != null
 		) {

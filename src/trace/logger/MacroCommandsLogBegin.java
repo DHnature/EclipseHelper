@@ -4,27 +4,27 @@ import java.util.LinkedList;
 
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import fluorite.commands.EHICommand;
+import fluorite.util.EventLoggerConsole;
 
 public class MacroCommandsLogBegin extends TraceableInfo{
-	LinkedList<ICommand> commands;
-	public MacroCommandsLogBegin(String aMessage, LinkedList<ICommand> aCommands,  Object aFinder) {
+	LinkedList<EHICommand> commands;
+	public MacroCommandsLogBegin(String aMessage, LinkedList<EHICommand> aCommands,  Object aFinder) {
 		 super(aMessage, aFinder);
 		 commands = aCommands;
 	}
-	public LinkedList<ICommand> getCommands() {
+	public LinkedList<EHICommand> getCommands() {
 		return commands;
 	}
 	
 	
-    public static String toString(LinkedList<ICommand> aCommands) {
+    public static String toString(LinkedList<EHICommand> aCommands) {
     	return("(" + 
 //    				aCommands.toString() + 
  			"commands" +
     				")");
     }
-    public static MacroCommandsLogBegin newCase (String aMessage, LinkedList<ICommand> aCommands,  Object aFinder) {
+    public static MacroCommandsLogBegin newCase (String aMessage, LinkedList<EHICommand> aCommands,  Object aFinder) {
     	try {
     	if (Tracer.isPrintInfoEnabled(aFinder) || Tracer.isPrintInfoEnabled(MacroCommandsLogBegin.class))
 	    	  EventLoggerConsole.getConsole().getMessageConsoleStream().println("(" + Tracer.infoPrintBody(MacroCommandsLogBegin.class) + ") " +aMessage);
@@ -40,7 +40,7 @@ public class MacroCommandsLogBegin extends TraceableInfo{
 
     	return null;
     }
-    public static MacroCommandsLogBegin newCase (LinkedList<ICommand> aCommands,  Object aFinder) {
+    public static MacroCommandsLogBegin newCase (LinkedList<EHICommand> aCommands,  Object aFinder) {
     	String aMessage = toString(aCommands);
     	return newCase(aMessage, aCommands, aFinder);
 //    	ExcludedCommand retVal = new ExcludedCommand(aMessage, aCommands, aFinder);

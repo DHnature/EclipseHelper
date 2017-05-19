@@ -1,7 +1,7 @@
 package difficultyPrediction.metrics;
 
-import edu.cmu.scs.fluorite.commands.EclipseCommand;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHEclipseCommand;
+import fluorite.commands.EHICommand;
 
 public class ACommandDescriptor {
 	String kind;	

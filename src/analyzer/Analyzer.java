@@ -9,7 +9,7 @@ import analyzer.extension.StuckInterval;
 import analyzer.extension.StuckPoint;
 import bus.uigen.models.FileSetterModel;
 import difficultyPrediction.DifficultyPredictionPluginEventProcessor;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public interface Analyzer extends PropertyListenerRegisterer{
 
@@ -40,7 +40,7 @@ public interface Analyzer extends PropertyListenerRegisterer{
 
 	public abstract void processParticipant(String aParticipantId,String outPath,String dataPath, boolean generateRatioFiles);
 
-	public abstract List<List<ICommand>> convertXMLLogToObjects(
+	public abstract List<List<EHICommand>> convertXMLLogToObjects(
 			String aFolderName);
 
 	public abstract AnalyzerParameters getAnalyzerParameters();

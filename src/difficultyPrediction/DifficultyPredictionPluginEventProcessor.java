@@ -1,6 +1,6 @@
 package difficultyPrediction;
 
-import edu.cmu.scs.fluorite.commands.PredictionCommand;
+import fluorite.commands.PredictionCommand;
 
 public interface DifficultyPredictionPluginEventProcessor extends PluginEventListener{
 

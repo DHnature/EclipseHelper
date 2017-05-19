@@ -4,7 +4,7 @@ import difficultyPrediction.PredictionParametersSetterSelector;
 import difficultyPrediction.eventAggregation.EventAggregationStrategy;
 import difficultyPrediction.eventAggregation.EventAggregator;
 import difficultyPrediction.eventAggregation.EventAggregatorArray;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public class DiscreteChunksAnalyzer implements EventAggregationStrategy {
 
@@ -32,7 +32,7 @@ public class DiscreteChunksAnalyzer implements EventAggregationStrategy {
 //	}
 
 	@Override
-	public void performAggregation(ICommand event,
+	public void performAggregation(EHICommand event,
 			EventAggregator eventAggregator) {
 		actions.addEvents(event);
 		if (ignoreEvents) {

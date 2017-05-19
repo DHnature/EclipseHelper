@@ -4,7 +4,7 @@ import java.util.List;
 
 import trace.difficultyPrediction.NewEventSegmentAggregation;
 import difficultyPrediction.Mediator;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 
 public class AnEventAggregator implements EventAggregator {
@@ -36,7 +36,7 @@ public class AnEventAggregator implements EventAggregator {
 		return eventAggregationStrategy;
 	}
 	
-	public void onEventsHandOff(List<ICommand> genericActions) {
+	public void onEventsHandOff(List<EHICommand> genericActions) {
 		if(mediator != null) {
 			AnEventAggregatorDetails args = new AnEventAggregatorDetails(genericActions);
 			args.startTimeStamp = this.startTimestamp;

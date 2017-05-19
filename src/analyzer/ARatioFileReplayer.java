@@ -11,13 +11,13 @@ import analyzer.ui.graphics.RatioFileComponents;
 import analyzer.ui.graphics.RatioFileReader;
 import difficultyPrediction.AMediatorRegistrar;
 import difficultyPrediction.predictionManagement.PredictionManagerStrategy;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand;
+import fluorite.commands.EHICommand;
+import fluorite.commands.PredictionCommand;
 
 public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFilePlayer  {
 //	List<List<ICommand>> nestedCommandsList;
 	String ratioFileName;
-	List<ICommand> flattenedCommandsList;
+	List<EHICommand> flattenedCommandsList;
 	RatioFileReader ratioFileReader;
 	TimeStampComputer timeStampComputer;
 	long startTimeStamp;
@@ -39,7 +39,7 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 	 * @see analyzer.RatioFilePlayer#setReplayedData(java.util.List, java.lang.String)
 	 */
 	@Override
-	public void setReplayedData(List<List<ICommand>> aNestedCommandsList, String aRatioFileName) {
+	public void setReplayedData(List<List<EHICommand>> aNestedCommandsList, String aRatioFileName) {
 //		nestedCommandsList = aNestedCommandsList;
 		timeStampComputer.reset();
 		flattenCommandsList(aNestedCommandsList);
@@ -50,12 +50,12 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 	
 	}
 	
-	void flattenCommandsList(List<List<ICommand>> aNestedCommandsList) {
+	void flattenCommandsList(List<List<EHICommand>> aNestedCommandsList) {
 		flattenedCommandsList.clear();
 		for (int index = 0; index < aNestedCommandsList.size(); index++) {
-			List<ICommand> commands = aNestedCommandsList.get(index);
+			List<EHICommand> commands = aNestedCommandsList.get(index);
 			for (int i = 0; i < commands.size(); i++) {
-				ICommand aCommand = commands.get(i);
+				EHICommand aCommand = commands.get(i);
 				flattenedCommandsList.add(aCommand);				
 				if ((aCommand.getTimestamp() == 0)
 						&& (aCommand.getTimestamp2() > 0)) {
@@ -103,7 +103,7 @@ public class ARatioFileReplayer extends AMediatorRegistrar implements RatioFileP
 		System.out.println("ratio time stamp" + aTimeStampString + " segment number:" + segmentNumber);
 		segmentNumber++;
 		for (int anIndex = nextStartCommandIndex; anIndex < flattenedCommandsList.size(); anIndex++) {
-			ICommand nextCommand = flattenedCommandsList.get(anIndex);
+			EHICommand nextCommand = flattenedCommandsList.get(anIndex);
 			long aComputedTimeStamp = timeStampComputer.computeTimestamp(nextCommand);
 			String aComputedTimeStampString =  ATimeStampComputer.toDateString( aComputedTimeStamp);
 			System.out.println(anIndex + " computed time stamp" + aComputedTimeStampString);

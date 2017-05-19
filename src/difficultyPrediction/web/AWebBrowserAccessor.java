@@ -11,11 +11,11 @@ import org.eclipse.ui.internal.browser.BrowserViewer;
 import org.eclipse.ui.internal.browser.WebBrowserEditor;
 import org.eclipse.ui.internal.browser.WebBrowserView;
 
-import edu.cmu.scs.fluorite.recorders.PartRecorder;
+import fluorite.recorders.EHPartRecorder;
 
 public class AWebBrowserAccessor implements WebBrowserAccessor {
 	public AWebBrowserAccessor() {
-		PartRecorder.getInstance().addPartListener(this);
+		EHPartRecorder.getInstance().addPartListener(this);
 	}
 
 	@Override

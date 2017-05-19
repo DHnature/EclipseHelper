@@ -2,7 +2,7 @@ package analyzer;
 
 import org.joda.time.DateTime;
 
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public class ATimeStampComputer implements TimeStampComputer {
 	long startTimeStamp = 0;
@@ -13,7 +13,7 @@ public class ATimeStampComputer implements TimeStampComputer {
 	public void reset() {
 		startTimeStamp = 0;
 	}
-	public long computeTimestamp(ICommand aCommand) {
+	public long computeTimestamp(EHICommand aCommand) {
 		long aTimeStamp2 = aCommand.getTimestamp2();
 		if (aTimeStamp2 > startTimeStamp) {
 //				System.out.println ("TS 2 " + aTimeStamp2);			

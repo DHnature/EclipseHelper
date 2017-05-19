@@ -3,7 +3,7 @@ package trace.difficultyPrediction;
 import util.trace.TraceableInfo;
 import util.trace.Tracer;
 import difficultyPrediction.eventAggregation.AnEventAggregatorDetails;
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import fluorite.util.EventLoggerConsole;
 
 
 public class NewEventSegmentAggregation extends TraceableInfo {

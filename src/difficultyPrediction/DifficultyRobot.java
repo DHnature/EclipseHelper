@@ -28,10 +28,11 @@ import difficultyPrediction.statusManager.StatusAggregationDiscreteChunks;
 import difficultyPrediction.statusManager.StatusListener;
 import difficultyPrediction.statusManager.StatusManager;
 import difficultyPrediction.statusManager.StatusManagerDetails;
-import edu.cmu.scs.fluorite.commands.ICommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand;
-import edu.cmu.scs.fluorite.commands.PredictionCommand.PredictionType;
-import edu.cmu.scs.fluorite.model.EventRecorder;
+import fluorite.commands.EHICommand;
+import fluorite.commands.PredictionCommand;
+import fluorite.commands.PredictionCommand.PredictionType;
+
+import fluorite.model.EHEventRecorder;
 
 //import main.Server;
 import java.util.ArrayList;
@@ -77,7 +78,7 @@ public class DifficultyRobot extends AMediatorRegistrar implements Mediator {
 	//Aggregate events using aggregator class
 	// this should fire plugin events
 	@Override
-	public void processEvent(ICommand e) {
+	public void processEvent(EHICommand e) {
 		NewCommand.newCase(this);
 		notifyNewCommand(e);
 //		Tracer.info(this, "difficultyRobot.processEvent");
@@ -187,7 +188,7 @@ public class DifficultyRobot extends AMediatorRegistrar implements Mediator {
          }
     
          PredictionCommand predictionCommand = new PredictionCommand(predictionType);
-         EventRecorder.getInstance().recordCommand(predictionCommand);
+         EHEventRecorder.getInstance().recordCommand(predictionCommand);
     }
 
 

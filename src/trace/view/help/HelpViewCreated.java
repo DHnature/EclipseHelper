@@ -4,7 +4,7 @@ import org.eclipse.swt.widgets.Composite;
 
 import trace.view.ViewCreated;
 import util.trace.Tracer;
-import edu.cmu.scs.fluorite.util.EventLoggerConsole;
+import fluorite.util.EventLoggerConsole;
 
 
 public class HelpViewCreated extends ViewCreated {

@@ -8,7 +8,7 @@ import difficultyPrediction.DifficultyPredictionSettings;
 import difficultyPrediction.metrics.AGenericRatioCalculator;
 import difficultyPrediction.metrics.RatioCalculator;
 import difficultyPrediction.metrics.RatioCalculatorSelector;
-import edu.cmu.scs.fluorite.commands.ICommand;
+import fluorite.commands.EHICommand;
 
 public class ExtractRatiosBasedOnNumberOfEvents implements
 		FeatureExtractionStrategy {
@@ -39,7 +39,7 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
  		
  	}
 	
-	public void performFeatureExtraction(List<ICommand> actions, RatioBasedFeatureExtractor featureExtractor) {
+	public void performFeatureExtraction(List<EHICommand> actions, RatioBasedFeatureExtractor featureExtractor) {
 			List<Double> percentages = null;
 			int i = 2;
 			percentages = ratioCalculator.computeMetrics(actions);
@@ -48,13 +48,15 @@ public class ExtractRatiosBasedOnNumberOfEvents implements
 //			if (!(percentages.equals(genericPercentages))) {
 //				System.err.println ("Generic and specific percentages diverge:" + percentages + " " + genericPercentages);
 //			}
-			ICommand lastCommand = actions.get(actions.size() - 1);
+			EHICommand lastCommand = actions.get(actions.size() - 1);
 			long timeStamp = lastCommand.getTimestamp();
 			if (DifficultyPredictionSettings.isReplayMode() && !DifficultyPredictionSettings.isReplayRatioFiles()) {
 				// we are playing store rations through mediator
 				timeStamp = TimeStampComputerFactory.getSingleton().computeTimestamp(lastCommand);
 			}
+//			if (aRatioFeatures != null) { // this should not be null
 			aRatioFeatures.setSavedTimeStamp(timeStamp);
+//			}
 			boolean correctRatios = compare(percentages.get(EDIT_PERCENTAGE), percentages.get(DEBUG_PERCENTAGE), 
                     percentages.get(NAVIGATION_PERCENTAGE), percentages.get(FOCUS_PERCENTAGE), percentages.get(REMOVE_PERCENTAGE), timeStamp, aRatioFeatures);
 				
